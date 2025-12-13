@@ -12,6 +12,8 @@ import BuyerRegistration from "./pages/BuyerRegistration";
 import AdminDashboard from "./pages/AdminDashboard";
 import FeedstockCreate from "./pages/FeedstockCreate";
 import SendInquiry from "./pages/SendInquiry";
+import MapView from "./pages/MapView";
+import CertificateUpload from "./pages/CertificateUpload";
 
 function Router() {
   return (
@@ -24,6 +26,8 @@ function Router() {
       <Route path="/admin" component={AdminDashboard} />
       <Route path="/feedstock/create" component={FeedstockCreate} />
       <Route path="/inquiry/send" component={SendInquiry} />
+      <Route path="/map" component={MapView} />
+      <Route path="/certificate/upload" component={CertificateUpload} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
