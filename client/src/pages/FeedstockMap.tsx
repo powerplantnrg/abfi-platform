@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Layers, Search, Download, Target } from "lucide-react";
 import { createPopupHTML } from "@/lib/popupTemplates";
 import { buildLayerFilter } from "@/lib/mapFilters";
+import { analyzeRadius, type AnalysisResults } from "@/lib/radiusAnalysis";
 
 // Mapbox access token (using Manus proxy)
 mapboxgl.accessToken = "pk.eyJ1Ijoic3RlZWxkcmFnb242NjYiLCJhIjoiY21keGFwNmxjMmM1MjJscTM0NHMwMWo5aSJ9.3mvzNah-7rzwxCZ2L81-YA";
@@ -31,6 +32,8 @@ export default function FeedstockMap() {
   const [selectedStates, setSelectedStates] = useState<string[]>(["QLD", "NSW", "VIC", "SA", "WA", "TAS"]);
   const [searchQuery, setSearchQuery] = useState("");
   const [radiusCenter, setRadiusCenter] = useState<[number, number] | null>(null);
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   
   const [layers, setLayers] = useState<LayerConfig[]>([
     { id: "sugar-mills", name: "Sugar Mills", type: "circle", source: "/geojson/sugar_mills.json", color: "#8B4513", visible: true },
@@ -309,12 +312,13 @@ export default function FeedstockMap() {
     }
   };
 
-  // Draw 50km radius
-  const draw50kmRadius = () => {
+  // Draw 50km radius and analyze
+  const draw50kmRadius = async () => {
     if (!map.current) return;
 
     const center = map.current.getCenter();
     setRadiusCenter([center.lng, center.lat]);
+    setIsAnalyzing(true);
 
     // Remove existing radius if any
     if (map.current.getLayer("radius-circle")) {
@@ -359,6 +363,31 @@ export default function FeedstockMap() {
         "line-dasharray": [2, 2],
       },
     });
+
+    // Run analysis
+    try {
+      const results = await analyzeRadius(center.lat, center.lng, 50);
+      setAnalysisResults(results);
+    } catch (error) {
+      console.error("Analysis failed:", error);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  // Clear radius and analysis
+  const clearRadius = () => {
+    if (!map.current) return;
+
+    if (map.current.getLayer("radius-circle")) {
+      map.current.removeLayer("radius-circle");
+    }
+    if (map.current.getSource("radius-circle")) {
+      map.current.removeSource("radius-circle");
+    }
+
+    setRadiusCenter(null);
+    setAnalysisResults(null);
   };
 
   return (
@@ -381,15 +410,147 @@ export default function FeedstockMap() {
 
           {/* Map Controls */}
           <div className="mt-4 flex gap-2">
-            <Button onClick={draw50kmRadius} variant="outline">
+            <Button onClick={draw50kmRadius} variant="outline" disabled={isAnalyzing}>
               <Target className="h-4 w-4 mr-2" />
-              Draw 50km Radius
+              {isAnalyzing ? "Analyzing..." : "Draw 50km Radius"}
             </Button>
+            {radiusCenter && (
+              <Button onClick={clearRadius} variant="outline">
+                Clear Radius
+              </Button>
+            )}
             <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
               Export GeoJSON
             </Button>
           </div>
+
+          {/* Analysis Results */}
+          {analysisResults && (
+            <Card className="mt-4">
+              <CardHeader>
+                <CardTitle>50km Radius Analysis</CardTitle>
+                <CardDescription>
+                  Supply chain feasibility assessment for selected area
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Feasibility Score */}
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium">Feasibility Score</span>
+                    <Badge
+                      variant={analysisResults.feasibilityScore >= 70 ? "default" : analysisResults.feasibilityScore >= 40 ? "secondary" : "destructive"}
+                    >
+                      {analysisResults.feasibilityScore}/100
+                    </Badge>
+                  </div>
+                  <div className="w-full bg-secondary rounded-full h-2">
+                    <div
+                      className="bg-primary h-2 rounded-full transition-all"
+                      style={{ width: `${analysisResults.feasibilityScore}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Facilities Count */}
+                <div>
+                  <h4 className="text-sm font-medium mb-3">Facilities Within Radius</h4>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Sugar Mills:</span>
+                      <span className="font-medium">{analysisResults.facilities.sugarMills}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Biogas:</span>
+                      <span className="font-medium">{analysisResults.facilities.biogasFacilities}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Biofuel Plants:</span>
+                      <span className="font-medium">{analysisResults.facilities.biofuelPlants}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Ports:</span>
+                      <span className="font-medium">{analysisResults.facilities.ports}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Grain Hubs:</span>
+                      <span className="font-medium">{analysisResults.facilities.grainHubs}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Feedstock Tonnes */}
+                <div>
+                  <h4 className="text-sm font-medium mb-3">Estimated Annual Feedstock (tonnes)</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Bagasse:</span>
+                      <span className="font-medium">{analysisResults.feedstockTonnes.bagasse.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Grain Stubble:</span>
+                      <span className="font-medium">{analysisResults.feedstockTonnes.grainStubble.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Forestry Residue:</span>
+                      <span className="font-medium">{analysisResults.feedstockTonnes.forestryResidue.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Biogas:</span>
+                      <span className="font-medium">{analysisResults.feedstockTonnes.biogas.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm font-bold pt-2 border-t">
+                      <span>Total:</span>
+                      <span>{analysisResults.feedstockTonnes.total.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Infrastructure */}
+                {(analysisResults.infrastructure.ports.length > 0 || analysisResults.infrastructure.railLines.length > 0) && (
+                  <div>
+                    <h4 className="text-sm font-medium mb-3">Transport Infrastructure</h4>
+                    {analysisResults.infrastructure.ports.length > 0 && (
+                      <div className="mb-2">
+                        <span className="text-xs text-muted-foreground">Ports:</span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {analysisResults.infrastructure.ports.map((port) => (
+                            <Badge key={port} variant="outline" className="text-xs">{port}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {analysisResults.infrastructure.railLines.length > 0 && (
+                      <div>
+                        <span className="text-xs text-muted-foreground">Rail Lines:</span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {analysisResults.infrastructure.railLines.map((rail) => (
+                            <Badge key={rail} variant="outline" className="text-xs">{rail}</Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Recommendations */}
+                {analysisResults.recommendations.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-medium mb-2">Recommendations</h4>
+                    <ul className="space-y-1">
+                      {analysisResults.recommendations.map((rec, idx) => (
+                        <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+                          <span className="text-primary mt-0.5">•</span>
+                          <span>{rec}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         {/* Sidebar Controls */}

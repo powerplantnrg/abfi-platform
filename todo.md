@@ -181,3 +181,14 @@
 - [x] Build filter logic to update map layer visibility
 - [x] Add "Reset Filters" button
 - [ ] Show active filter count badge
+
+## Enhanced 50km Radius Analysis (Session 3)
+- [x] Build calculation engine for feedstock tonnes within radius
+- [x] Count facilities by category (sugar mills, biogas, biofuel, ports)
+- [x] Calculate grain stubble availability within intersecting regions
+- [x] Calculate forestry residue availability within intersecting regions
+- [x] Identify transport infrastructure within radius
+- [x] Create results display panel with metrics breakdown
+- [x] Add supply chain feasibility scoring (0-100 with recommendations)
+- [ ] Implement PDF export for analysis reports
+- [x] Add "Clear Radius" button
