@@ -9,9 +9,10 @@ import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Layers, Search, Download, Target } from "lucide-react";
+import { createPopupHTML } from "@/lib/popupTemplates";
 
 // Mapbox access token (using Manus proxy)
-mapboxgl.accessToken = "pk.eyJ1IjoibWFudXMtZGVtbyIsImEiOiJjbTFhYmNkZWYxMjM0NTZwcXJzdHV2d3h5eiJ9.demo";
+mapboxgl.accessToken = "pk.eyJ1Ijoic3RlZWxkcmFnb242NjYiLCJhIjoiY21keGFwNmxjMmM1MjJscTM0NHMwMWo5aSJ9.3mvzNah-7rzwxCZ2L81-YA";
 
 interface LayerConfig {
   id: string;
@@ -158,16 +159,7 @@ export default function FeedstockMap() {
             const feature = e.features[0];
             const props = feature.properties;
 
-            const html = `
-              <div class="p-2">
-                <h3 class="font-bold text-lg mb-2">${props?.name || "Unknown"}</h3>
-                <p class="text-sm"><strong>Town:</strong> ${props?.town || "N/A"}</p>
-                <p class="text-sm"><strong>Owner:</strong> ${props?.owner || "N/A"}</p>
-                <p class="text-sm"><strong>Capacity:</strong> ${props?.crushing_capacity_tonnes?.toLocaleString() || "N/A"} tonnes/season</p>
-                <p class="text-sm"><strong>Cogeneration:</strong> ${props?.cogeneration_mw || 0} MW</p>
-                <p class="text-sm"><strong>State:</strong> ${props?.state || "N/A"}</p>
-              </div>
-            `;
+            const html = createPopupHTML(layer.id, props);
 
             new mapboxgl.Popup()
               .setLngLat((e.lngLat as any))
@@ -211,16 +203,7 @@ export default function FeedstockMap() {
             const feature = e.features[0];
             const props = feature.properties;
 
-            const html = `
-              <div class="p-2">
-                <h3 class="font-bold text-lg mb-2">${props?.name || "Unknown"}</h3>
-                <p class="text-sm"><strong>State:</strong> ${props?.state || "N/A"}</p>
-                <p class="text-sm"><strong>Primary Crops:</strong> ${props?.primary_crops || "N/A"}</p>
-                <p class="text-sm"><strong>Area:</strong> ${parseInt(props?.area_hectares || 0).toLocaleString()} ha</p>
-                <p class="text-sm"><strong>Stubble Production:</strong> ${parseInt(props?.stubble_production_tonnes || 0).toLocaleString()} tonnes/yr</p>
-                <p class="text-sm"><strong>Sustainable Removal:</strong> ${parseInt(props?.sustainable_removal_tonnes || 0).toLocaleString()} tonnes/yr</p>
-              </div>
-            `;
+            const html = createPopupHTML(layer.id, props);
 
             new mapboxgl.Popup()
               .setLngLat((e.lngLat as any))

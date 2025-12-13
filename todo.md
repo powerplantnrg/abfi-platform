@@ -155,6 +155,9 @@
 - [x] Implement 50km radius analysis tool
 - [x] Add clustering for point layers
 - [x] Create interactive popups with facility details
+- [x] Enhance popups with layer-specific templates (sugar mills, grain regions, forestry, biogas, biofuel, transport)
+- [x] Add detailed capacity metrics and operational information to popups
+- [x] Fix Mapbox access token configuration
 - [x] Add search functionality placeholder
 - [x] Complete remaining GeoJSON layers (forestry, biogas, biofuel, transport)
 - [ ] Implement advanced filtering by state and capacity
