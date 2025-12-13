@@ -26,7 +26,7 @@
 - [x] Implement ABN validation
 - [x] Build supplier dashboard homepage
 - [x] Add suppliers.get API method
-- [ ] Create company profile management page
+- [x] Create company profile management page
 - [ ] Build settings interface
 
 ## Phase 4: Feedstock Management
