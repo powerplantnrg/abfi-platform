@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, decimal, json, boolean, index, unique } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, date, varchar, decimal, json, boolean, index, unique } from "drizzle-orm/mysql-core";
 
 /**
  * ABFI Platform Database Schema
@@ -64,6 +64,301 @@ export const suppliers = mysqlTable("suppliers", {
 
 export type Supplier = typeof suppliers.$inferSelect;
 export type InsertSupplier = typeof suppliers.$inferInsert;
+
+// ============================================================================
+// PRODUCER PROPERTIES
+// ============================================================================
+
+export const properties = mysqlTable("properties", {
+  id: int("id").autoincrement().primaryKey(),
+  supplierId: int("supplierId").notNull().references(() => suppliers.id),
+  
+  // Property identification
+  propertyName: varchar("propertyName", { length: 255 }).notNull(),
+  primaryAddress: varchar("primaryAddress", { length: 500 }),
+  latitude: varchar("latitude", { length: 20 }),
+  longitude: varchar("longitude", { length: 20 }),
+  state: mysqlEnum("state", ["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]),
+  postcode: varchar("postcode", { length: 4 }),
+  region: varchar("region", { length: 100 }),
+  
+  // Land details
+  totalLandArea: int("totalLandArea"), // hectares
+  cultivatedArea: int("cultivatedArea"), // hectares
+  propertyType: mysqlEnum("propertyType", ["freehold", "leasehold", "mixed"]),
+  
+  // Water access
+  waterAccessType: mysqlEnum("waterAccessType", [
+    "irrigated_surface",
+    "irrigated_groundwater",
+    "irrigated_recycled",
+    "dryland",
+    "mixed_irrigation"
+  ]),
+  
+  // Legal identifiers
+  lotPlanNumbers: text("lotPlanNumbers"),
+  boundaryFileUrl: varchar("boundaryFileUrl", { length: 500 }), // KML/Shapefile in S3
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  supplierIdIdx: index("properties_supplierId_idx").on(table.supplierId),
+}));
+
+export type Property = typeof properties.$inferSelect;
+export type InsertProperty = typeof properties.$inferInsert;
+
+// ============================================================================
+// PRODUCTION HISTORY
+// ============================================================================
+
+export const productionHistory = mysqlTable("production_history", {
+  id: int("id").autoincrement().primaryKey(),
+  propertyId: int("propertyId").notNull().references(() => properties.id),
+  
+  // Season data
+  seasonYear: int("seasonYear").notNull(),
+  cropType: varchar("cropType", { length: 100 }),
+  plantedArea: int("plantedArea"), // hectares
+  totalHarvest: int("totalHarvest"), // tonnes
+  yieldPerHectare: int("yieldPerHectare"), // auto-calculated: t/ha
+  
+  // Weather impact
+  weatherImpact: mysqlEnum("weatherImpact", ["normal", "drought", "flood", "other"]),
+  notes: text("notes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  propertyIdIdx: index("production_history_propertyId_idx").on(table.propertyId),
+  seasonYearIdx: index("production_history_seasonYear_idx").on(table.seasonYear),
+}));
+
+export type ProductionHistory = typeof productionHistory.$inferSelect;
+export type InsertProductionHistory = typeof productionHistory.$inferInsert;
+
+// ============================================================================
+// CARBON PRACTICES
+// ============================================================================
+
+export const carbonPractices = mysqlTable("carbon_practices", {
+  id: int("id").autoincrement().primaryKey(),
+  propertyId: int("propertyId").notNull().references(() => properties.id),
+  
+  // Tillage
+  tillagePractice: mysqlEnum("tillagePractice", [
+    "no_till",
+    "minimum_till",
+    "conventional",
+    "multiple_passes"
+  ]),
+  
+  // Fertilizer
+  nitrogenKgPerHa: int("nitrogenKgPerHa"),
+  fertiliserType: mysqlEnum("fertiliserType", [
+    "urea",
+    "anhydrous_ammonia",
+    "dap_map",
+    "organic_compost",
+    "controlled_release",
+    "mixed_blend"
+  ]),
+  applicationMethod: mysqlEnum("applicationMethod", [
+    "broadcast",
+    "banded",
+    "injected",
+    "fertigation",
+    "variable_rate"
+  ]),
+  soilTestingFrequency: mysqlEnum("soilTestingFrequency", [
+    "annual",
+    "biennial",
+    "rarely",
+    "never"
+  ]),
+  
+  // Crop protection
+  herbicideApplicationsPerSeason: int("herbicideApplicationsPerSeason"),
+  pesticideApplicationsPerSeason: int("pesticideApplicationsPerSeason"),
+  integratedPestManagementCertified: boolean("integratedPestManagementCertified").default(false),
+  organicCertified: boolean("organicCertified").default(false),
+  
+  // Machinery & energy
+  heavyMachineryDaysPerYear: int("heavyMachineryDaysPerYear"),
+  primaryTractorFuelType: mysqlEnum("primaryTractorFuelType", [
+    "diesel",
+    "biodiesel_blend",
+    "electric",
+    "other"
+  ]),
+  annualDieselConsumptionLitres: int("annualDieselConsumptionLitres"),
+  harvesterType: mysqlEnum("harvesterType", ["owned", "contractor"]),
+  irrigationPumpEnergySource: mysqlEnum("irrigationPumpEnergySource", [
+    "grid",
+    "solar",
+    "diesel",
+    "none"
+  ]),
+  
+  // Transport
+  averageOnFarmDistanceKm: int("averageOnFarmDistanceKm"),
+  onFarmTransportMethod: mysqlEnum("onFarmTransportMethod", [
+    "truck",
+    "tractor_trailer",
+    "conveyor",
+    "pipeline"
+  ]),
+  
+  // Land use & sequestration
+  previousLandUse: mysqlEnum("previousLandUse", [
+    "native_vegetation",
+    "improved_pasture",
+    "other_cropping",
+    "plantation_forestry",
+    "existing_crop_10plus"
+  ]),
+  nativeVegetationClearedDate: date("nativeVegetationClearedDate"),
+  coverCroppingPracticed: boolean("coverCroppingPracticed").default(false),
+  stubbleManagement: mysqlEnum("stubbleManagement", [
+    "retain",
+    "burn",
+    "remove",
+    "incorporate"
+  ]),
+  permanentVegetationHa: int("permanentVegetationHa"),
+  registeredCarbonProject: boolean("registeredCarbonProject").default(false),
+  carbonProjectId: varchar("carbonProjectId", { length: 100 }),
+  
+  // Calculated score
+  estimatedCarbonIntensity: int("estimatedCarbonIntensity"), // gCO2e/MJ
+  abfiRating: varchar("abfiRating", { length: 2 }), // A+, A, B+, etc.
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  propertyIdIdx: index("carbon_practices_propertyId_idx").on(table.propertyId),
+}));
+
+export type CarbonPractice = typeof carbonPractices.$inferSelect;
+export type InsertCarbonPractice = typeof carbonPractices.$inferInsert;
+
+// ============================================================================
+// EXISTING CONTRACTS
+// ============================================================================
+
+export const existingContracts = mysqlTable("existing_contracts", {
+  id: int("id").autoincrement().primaryKey(),
+  supplierId: int("supplierId").notNull().references(() => suppliers.id),
+  
+  buyerName: varchar("buyerName", { length: 255 }),
+  isConfidential: boolean("isConfidential").default(false),
+  contractedVolumeTonnes: int("contractedVolumeTonnes"),
+  contractEndDate: date("contractEndDate"),
+  isExclusive: boolean("isExclusive").default(false),
+  hasFirstRightOfRefusal: boolean("hasFirstRightOfRefusal").default(false),
+  renewalLikelihood: mysqlEnum("renewalLikelihood", ["likely", "unlikely", "unknown"]),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  supplierIdIdx: index("existing_contracts_supplierId_idx").on(table.supplierId),
+}));
+
+export type ExistingContract = typeof existingContracts.$inferSelect;
+export type InsertExistingContract = typeof existingContracts.$inferInsert;
+
+// ============================================================================
+// MARKETPLACE LISTINGS
+// ============================================================================
+
+export const marketplaceListings = mysqlTable("marketplace_listings", {
+  id: int("id").autoincrement().primaryKey(),
+  supplierId: int("supplierId").notNull().references(() => suppliers.id),
+  feedstockId: int("feedstockId").references(() => feedstocks.id),
+  
+  // Volume availability
+  tonnesAvailableThisSeason: int("tonnesAvailableThisSeason"),
+  tonnesAvailableAnnually: int("tonnesAvailableAnnually"),
+  minimumContractVolumeTonnes: int("minimumContractVolumeTonnes"),
+  maximumSingleBuyerAllocationPercent: int("maximumSingleBuyerAllocationPercent"),
+  spotSaleParcelsAvailable: boolean("spotSaleParcelsAvailable").default(false),
+  
+  // Contract timeline
+  contractDurationPreference: mysqlEnum("contractDurationPreference", [
+    "spot_only",
+    "up_to_1_year",
+    "up_to_3_years",
+    "up_to_5_years",
+    "up_to_10_years",
+    "flexible"
+  ]),
+  availableFromDate: date("availableFromDate"),
+  availableUntilDate: date("availableUntilDate"),
+  deliveryFlexibility: mysqlEnum("deliveryFlexibility", [
+    "fixed_windows",
+    "flexible",
+    "call_off"
+  ]),
+  storageAvailableOnFarm: boolean("storageAvailableOnFarm").default(false),
+  storageCapacityTonnes: int("storageCapacityTonnes"),
+  
+  // Pricing (sensitive - never shown publicly)
+  breakEvenPricePerTonne: int("breakEvenPricePerTonne"),
+  minimumAcceptablePricePerTonne: int("minimumAcceptablePricePerTonne"),
+  targetMarginDollars: int("targetMarginDollars"),
+  targetMarginPercent: int("targetMarginPercent"),
+  priceIndexPreference: mysqlEnum("priceIndexPreference", [
+    "fixed_price",
+    "index_linked",
+    "hybrid",
+    "open_to_discussion"
+  ]),
+  premiumLowCarbonCert: int("premiumLowCarbonCert"),
+  premiumLongTermCommitment: int("premiumLongTermCommitment"),
+  premiumExclusivity: int("premiumExclusivity"),
+  
+  // Logistics
+  deliveryTermsPreferred: mysqlEnum("deliveryTermsPreferred", [
+    "ex_farm",
+    "delivered_to_buyer",
+    "fob_port",
+    "flexible"
+  ]),
+  nearestTransportHub: varchar("nearestTransportHub", { length: 255 }),
+  roadTrainAccessible: boolean("roadTrainAccessible").default(false),
+  railSidingAccess: boolean("railSidingAccess").default(false),
+  schedulingConstraints: text("schedulingConstraints"),
+  
+  // Visibility settings
+  showPropertyLocation: mysqlEnum("showPropertyLocation", [
+    "region_only",
+    "lga",
+    "exact_address"
+  ]).default("region_only"),
+  showBusinessName: boolean("showBusinessName").default(false),
+  showProductionVolumes: mysqlEnum("showProductionVolumes", [
+    "show",
+    "show_range",
+    "hide_until_matched"
+  ]).default("show_range"),
+  showCarbonScore: boolean("showCarbonScore").default(true),
+  allowDirectContact: boolean("allowDirectContact").default(false),
+  
+  // Status
+  status: mysqlEnum("status", ["draft", "published", "paused", "expired"]).default("draft"),
+  profileCompletenessPercent: int("profileCompletenessPercent"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  publishedAt: timestamp("publishedAt"),
+}, (table) => ({
+  supplierIdIdx: index("marketplace_listings_supplierId_idx").on(table.supplierId),
+  statusIdx: index("marketplace_listings_status_idx").on(table.status),
+}));
+
+export type MarketplaceListing = typeof marketplaceListings.$inferSelect;
+export type InsertMarketplaceListing = typeof marketplaceListings.$inferInsert;
 
 // ============================================================================
 // BUYERS

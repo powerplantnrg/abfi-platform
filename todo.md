@@ -305,3 +305,58 @@ Note: Seed script encounters schema mismatches. Recommend using UI workflows to 
 - [x] Add Open Graph tags for social sharing
 - [x] Add Twitter Card tags
 - [x] Test SEO improvements
+
+## Producer Registration Portal (Session 10)
+### Phase 1: Database Schema
+- [x] Design properties table (location, land area, water access, boundaries)
+- [x] Design production_history table (yearly yields, weather impacts)
+- [x] Design carbon_practices table (tillage, fertilizer, machinery, energy)
+- [x] Design contracts table (existing commitments, volumes, dates)
+- [x] Design marketplace_listings table (available volumes, pricing, delivery terms)
+- [x] Extend suppliers table with ABN, verification status, profile completeness
+
+### Phase 2: Welcome & Account Creation (Screens 1.1-1.2)
+- [ ] Create producer landing page with value propositions
+- [ ] Build ABN validation with ABR API integration
+- [ ] Implement SMS/email verification flow
+- [ ] Add trust indicators (CANEGROWERS logo, certifications)
+
+### Phase 3: Property Registration (Screens 2.1-2.3)
+- [ ] Build interactive Australia map with agricultural zones
+- [ ] Implement property details form with validation
+- [ ] Add multi-property handler for producers with multiple sites
+- [ ] Support KML/Shapefile upload for property boundaries
+
+### Phase 4: Production Profile (Screens 3.1-3.3)
+- [ ] Create visual feedstock type selector (cards with icons)
+- [ ] Build historical yield data table (1-10 years)
+- [ ] Add current season status form
+- [ ] Calculate rolling average yields with trends
+
+### Phase 5: Carbon Intensity Calculator (Screens 4.1-4.4)
+- [ ] Build agricultural practices questionnaire
+- [ ] Create machinery & energy use form
+- [ ] Add land use & sequestration tracking
+- [ ] Implement real-time ABFI score calculation
+- [ ] Show score improvement suggestions
+
+### Phase 6: Commitments & Availability (Screens 5.1-6.4)
+- [ ] Build existing contracts tracker
+- [ ] Auto-calculate available volumes
+- [ ] Create contract timeline preferences form
+- [ ] Build pricing requirements (sensitive data)
+- [ ] Add logistics & delivery terms
+
+### Phase 7: Review & Publish (Screens 7.1-7.3)
+- [ ] Create profile summary dashboard
+- [ ] Build visibility settings controls
+- [ ] Add terms acceptance and publish flow
+- [ ] Implement draft saving functionality
+
+### Technical Requirements
+- [ ] Add progressive form saving (localStorage + API sync)
+- [ ] Ensure mobile-responsive design
+- [ ] Add auto-save on field changes
+- [ ] Implement progress bar for journey completion
+- [ ] Add contextual help tooltips
+- [ ] Ensure WCAG 2.1 AA accessibility compliance
