@@ -174,19 +174,19 @@
 ## PHASE 4: ABFI Score Explainability
 
 ### Backend Schema
-- [ ] Create `score_calculations` table
+- [x] Create `score_calculations` table
   - score_id, score_type (abfi, bankability, grower_qual)
   - calculation_timestamp, calculated_by_user_id
   - inputs_snapshot (JSON), weights_used (JSON)
   - contributions (JSON - input → weight → contribution)
   - final_score, rating
 
-- [ ] Create `score_sensitivity_analysis` table
+- [x] Create `score_sensitivity_analysis` table
   - calculation_id, input_field, current_value
   - delta_plus_10, delta_minus_10
   - sensitivity_coefficient
 
-- [ ] Create `score_improvement_simulations` table
+- [x] Create `score_improvement_simulations` table
   - score_id, simulation_date, target_rating
   - required_changes (JSON array of field → target value)
   - feasibility_score, estimated_timeline
@@ -198,10 +198,10 @@
 - [ ] GET /api/scores/:id/consistency-check - Check for contradictions
 
 ### Calculation Metadata Layer
-- [ ] Store calculation metadata with every score
-- [ ] Record which evidence influenced which score components
-- [ ] Track admin overrides with justification
-- [ ] Log calculation engine version used
+- [x] Store calculation metadata with every score
+- [x] Record which evidence influenced which score components
+- [x] Track admin overrides with justification
+- [x] Log calculation engine version used
 
 ### UI Components
 - [ ] ScoreDecomposition component - Input → Weight → Contribution table

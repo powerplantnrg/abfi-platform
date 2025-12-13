@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "c5b252ee-fb03-41b4-9c31-bd0dc5fe75c0",
-  "prevId": "417c7f9f-c7ed-499a-8431-fe7b4e2ef8e7",
+  "id": "e411562b-e3a4-420b-a3d1-8f616739e7f0",
+  "prevId": "4cadea88-35dc-4b19-b92e-04112d842a4b",
   "tables": {
     "auditLogs": {
       "name": "auditLogs",
@@ -3561,6 +3561,427 @@
       "compositePrimaryKeys": {
         "savedSearches_id": {
           "name": "savedSearches_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "scoreCalculations": {
+      "name": "scoreCalculations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "scoreId": {
+          "name": "scoreId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "scoreType": {
+          "name": "scoreType",
+          "type": "enum('abfi_composite','abfi_sustainability','abfi_carbon','abfi_quality','abfi_reliability','bankability_composite','bankability_volume_security','bankability_counterparty','bankability_contract','bankability_concentration','bankability_operational','grower_qualification')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "calculationTimestamp": {
+          "name": "calculationTimestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "calculatedBy": {
+          "name": "calculatedBy",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "calculationEngineVersion": {
+          "name": "calculationEngineVersion",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "inputsSnapshot": {
+          "name": "inputsSnapshot",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "weightsUsed": {
+          "name": "weightsUsed",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contributions": {
+          "name": "contributions",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "evidenceIds": {
+          "name": "evidenceIds",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "finalScore": {
+          "name": "finalScore",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "rating": {
+          "name": "rating",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "isOverridden": {
+          "name": "isOverridden",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "overrideReason": {
+          "name": "overrideReason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "overriddenBy": {
+          "name": "overriddenBy",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "overriddenAt": {
+          "name": "overriddenAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "scoreCalculations_scoreId_idx": {
+          "name": "scoreCalculations_scoreId_idx",
+          "columns": [
+            "scoreId"
+          ],
+          "isUnique": false
+        },
+        "scoreCalculations_scoreType_idx": {
+          "name": "scoreCalculations_scoreType_idx",
+          "columns": [
+            "scoreType"
+          ],
+          "isUnique": false
+        },
+        "scoreCalculations_timestamp_idx": {
+          "name": "scoreCalculations_timestamp_idx",
+          "columns": [
+            "calculationTimestamp"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "scoreCalculations_calculatedBy_users_id_fk": {
+          "name": "scoreCalculations_calculatedBy_users_id_fk",
+          "tableFrom": "scoreCalculations",
+          "tableTo": "users",
+          "columnsFrom": [
+            "calculatedBy"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "scoreCalculations_overriddenBy_users_id_fk": {
+          "name": "scoreCalculations_overriddenBy_users_id_fk",
+          "tableFrom": "scoreCalculations",
+          "tableTo": "users",
+          "columnsFrom": [
+            "overriddenBy"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "scoreCalculations_id": {
+          "name": "scoreCalculations_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "scoreImprovementSimulations": {
+      "name": "scoreImprovementSimulations",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "scoreId": {
+          "name": "scoreId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "scoreType": {
+          "name": "scoreType",
+          "type": "enum('abfi_composite','bankability_composite','grower_qualification')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "simulationDate": {
+          "name": "simulationDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "targetRating": {
+          "name": "targetRating",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "requiredChanges": {
+          "name": "requiredChanges",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "feasibilityScore": {
+          "name": "feasibilityScore",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "estimatedTimelineDays": {
+          "name": "estimatedTimelineDays",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "estimatedCost": {
+          "name": "estimatedCost",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "recommendations": {
+          "name": "recommendations",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "simulatedBy": {
+          "name": "simulatedBy",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "scoreImprovementSimulations_scoreId_idx": {
+          "name": "scoreImprovementSimulations_scoreId_idx",
+          "columns": [
+            "scoreId"
+          ],
+          "isUnique": false
+        },
+        "scoreImprovementSimulations_targetRating_idx": {
+          "name": "scoreImprovementSimulations_targetRating_idx",
+          "columns": [
+            "targetRating"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "scoreImprovementSimulations_simulatedBy_users_id_fk": {
+          "name": "scoreImprovementSimulations_simulatedBy_users_id_fk",
+          "tableFrom": "scoreImprovementSimulations",
+          "tableTo": "users",
+          "columnsFrom": [
+            "simulatedBy"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "scoreImprovementSimulations_id": {
+          "name": "scoreImprovementSimulations_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "scoreSensitivityAnalysis": {
+      "name": "scoreSensitivityAnalysis",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "calculationId": {
+          "name": "calculationId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "inputField": {
+          "name": "inputField",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "currentValue": {
+          "name": "currentValue",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "deltaPlus10": {
+          "name": "deltaPlus10",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deltaMinus10": {
+          "name": "deltaMinus10",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sensitivityCoefficient": {
+          "name": "sensitivityCoefficient",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "impactLevel": {
+          "name": "impactLevel",
+          "type": "enum('low','medium','high','critical')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "scoreSensitivityAnalysis_calculationId_idx": {
+          "name": "scoreSensitivityAnalysis_calculationId_idx",
+          "columns": [
+            "calculationId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "scoreSensitivityAnalysis_calculationId_scoreCalculations_id_fk": {
+          "name": "scoreSensitivityAnalysis_calculationId_scoreCalculations_id_fk",
+          "tableFrom": "scoreSensitivityAnalysis",
+          "tableTo": "scoreCalculations",
+          "columnsFrom": [
+            "calculationId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "scoreSensitivityAnalysis_id": {
+          "name": "scoreSensitivityAnalysis_id",
           "columns": [
             "id"
           ]

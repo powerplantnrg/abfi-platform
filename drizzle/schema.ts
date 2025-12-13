@@ -1241,3 +1241,144 @@ export const yieldEstimates = mysqlTable("yieldEstimates", {
 
 export type YieldEstimate = typeof yieldEstimates.$inferSelect;
 export type InsertYieldEstimate = typeof yieldEstimates.$inferInsert;
+
+// ============================================================================
+// SCORE EXPLAINABILITY (Phase 4)
+// ============================================================================
+
+export const scoreCalculations = mysqlTable("scoreCalculations", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Score reference
+  scoreId: int("scoreId").notNull(), // References feedstock.id, bankabilityAssessment.id, etc.
+  scoreType: mysqlEnum("scoreType", [
+    "abfi_composite",
+    "abfi_sustainability",
+    "abfi_carbon",
+    "abfi_quality",
+    "abfi_reliability",
+    "bankability_composite",
+    "bankability_volume_security",
+    "bankability_counterparty",
+    "bankability_contract",
+    "bankability_concentration",
+    "bankability_operational",
+    "grower_qualification"
+  ]).notNull(),
+  
+  // Calculation metadata
+  calculationTimestamp: timestamp("calculationTimestamp").notNull(),
+  calculatedBy: int("calculatedBy").references(() => users.id),
+  calculationEngineVersion: varchar("calculationEngineVersion", { length: 50 }), // e.g., "v2.1.3"
+  
+  // Inputs and weights
+  inputsSnapshot: json("inputsSnapshot").$type<Record<string, any>>(), // All inputs used
+  weightsUsed: json("weightsUsed").$type<Record<string, number>>(), // Weight for each component
+  
+  // Contribution breakdown
+  contributions: json("contributions").$type<Array<{
+    component: string;
+    inputValue: any;
+    weight: number;
+    contribution: number;
+    notes?: string;
+  }>>(),
+  
+  // Evidence linkages
+  evidenceIds: json("evidenceIds").$type<number[]>(), // Which evidence influenced this score
+  
+  // Final result
+  finalScore: int("finalScore").notNull(),
+  rating: varchar("rating", { length: 20 }), // e.g., "AAA", "GQ1"
+  
+  // Admin overrides
+  isOverridden: boolean("isOverridden").default(false),
+  overrideReason: text("overrideReason"),
+  overriddenBy: int("overriddenBy").references(() => users.id),
+  overriddenAt: timestamp("overriddenAt"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  scoreIdIdx: index("scoreCalculations_scoreId_idx").on(table.scoreId),
+  scoreTypeIdx: index("scoreCalculations_scoreType_idx").on(table.scoreType),
+  timestampIdx: index("scoreCalculations_timestamp_idx").on(table.calculationTimestamp),
+}));
+
+export type ScoreCalculation = typeof scoreCalculations.$inferSelect;
+export type InsertScoreCalculation = typeof scoreCalculations.$inferInsert;
+
+// ============================================================================
+// SCORE SENSITIVITY ANALYSIS (Phase 4)
+// ============================================================================
+
+export const scoreSensitivityAnalysis = mysqlTable("scoreSensitivityAnalysis", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  calculationId: int("calculationId").notNull().references(() => scoreCalculations.id),
+  
+  // Input field being analyzed
+  inputField: varchar("inputField", { length: 100 }).notNull(),
+  currentValue: varchar("currentValue", { length: 255 }).notNull(),
+  
+  // Sensitivity results
+  deltaPlus10: int("deltaPlus10"), // Score change if input increases 10%
+  deltaMinus10: int("deltaMinus10"), // Score change if input decreases 10%
+  sensitivityCoefficient: int("sensitivityCoefficient"), // Stored as integer (multiply by 100)
+  
+  // Interpretation
+  impactLevel: mysqlEnum("impactLevel", ["low", "medium", "high", "critical"]),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  calculationIdIdx: index("scoreSensitivityAnalysis_calculationId_idx").on(table.calculationId),
+}));
+
+export type ScoreSensitivityAnalysis = typeof scoreSensitivityAnalysis.$inferSelect;
+export type InsertScoreSensitivityAnalysis = typeof scoreSensitivityAnalysis.$inferInsert;
+
+// ============================================================================
+// SCORE IMPROVEMENT SIMULATIONS (Phase 4)
+// ============================================================================
+
+export const scoreImprovementSimulations = mysqlTable("scoreImprovementSimulations", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  scoreId: int("scoreId").notNull(),
+  scoreType: mysqlEnum("scoreType", [
+    "abfi_composite",
+    "bankability_composite",
+    "grower_qualification"
+  ]).notNull(),
+  
+  // Simulation parameters
+  simulationDate: timestamp("simulationDate").notNull(),
+  targetRating: varchar("targetRating", { length: 20 }).notNull(), // e.g., "AAA", "GQ1"
+  
+  // Required changes
+  requiredChanges: json("requiredChanges").$type<Array<{
+    field: string;
+    currentValue: any;
+    targetValue: any;
+    changePercent: number;
+    difficulty: "easy" | "moderate" | "hard" | "very_hard";
+  }>>(),
+  
+  // Feasibility assessment
+  feasibilityScore: int("feasibilityScore"), // 0-100
+  estimatedTimelineDays: int("estimatedTimelineDays"),
+  estimatedCost: int("estimatedCost"), // AUD
+  
+  // Recommendations
+  recommendations: json("recommendations").$type<string[]>(),
+  
+  // Metadata
+  simulatedBy: int("simulatedBy").references(() => users.id),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  scoreIdIdx: index("scoreImprovementSimulations_scoreId_idx").on(table.scoreId),
+  targetRatingIdx: index("scoreImprovementSimulations_targetRating_idx").on(table.targetRating),
+}));
+
+export type ScoreImprovementSimulation = typeof scoreImprovementSimulations.$inferSelect;
+export type InsertScoreImprovementSimulation = typeof scoreImprovementSimulations.$inferInsert;
