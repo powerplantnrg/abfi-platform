@@ -215,6 +215,11 @@ export default function Dashboard() {
                     </div>
                     <p className="text-sm text-gray-600 mb-4">Active listings</p>
                     <div className="flex gap-2">
+                      <Link href="/supplier/feedstocks">
+                        <Button className="w-full" size="sm" variant="outline">
+                          View All
+                        </Button>
+                      </Link>
                       <Link href="/feedstock/create">
                         <Button className="w-full" size="sm">
                           Add New

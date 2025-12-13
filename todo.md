@@ -36,7 +36,7 @@
 - [x] Create certificate management interface
 - [ ] Add quality test report upload
 - [ ] Build availability calendar
-- [ ] Implement feedstock list/grid view for suppliers
+- [x] Implement feedstock list/grid view for suppliers
 - [ ] Add feedstock detail/edit page
 - [x] Create status workflow (draft, pending, active, suspended)
 
@@ -129,7 +129,7 @@
 - [x] Implement Operational Readiness scoring (10% weight)
 - [x] Build composite bankability score calculator (AAA-CCC rating)
 - [x] Build database helpers for projects, agreements, qualifications
-- [ ] Create tRPC routers for bankability moduleier 1, Tier 2, Options, ROFR)
+- [x] Create tRPC routers for bankability moduleier 1, Tier 2, Options, ROFR)
 - [ ] Create agreement CRUD interface
 - [ ] Build concentration analysis view with HHI and geographic distribution
 - [ ] Implement grower qualification assessment workflow

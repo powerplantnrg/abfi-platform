@@ -17,6 +17,7 @@ import MapView from "./pages/MapView";
 import CertificateUpload from "./pages/CertificateUpload";
 import SupplierInquiries from "./pages/SupplierInquiries";
 import BuyerInquiries from "./pages/BuyerInquiries";
+import SupplierFeedstocks from "./pages/SupplierFeedstocks";
 
 function Router() {
   return (
@@ -31,6 +32,7 @@ function Router() {
       <Route path="/inquiry/send" component={SendInquiry} />
       <Route path="/inquiries/supplier" component={SupplierInquiries} />
       <Route path="/inquiries/buyer" component={BuyerInquiries} />
+      <Route path="/supplier/feedstocks" component={SupplierFeedstocks} />
       <Route path="/map" component={MapView} />
       <Route path="/certificate/upload" component={CertificateUpload} />
       <Route path="/404" component={NotFound} />

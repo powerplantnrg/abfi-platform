@@ -783,6 +783,247 @@ export const appRouter = router({
         return await db.getAuditLogs(input);
       }),
   }),
+  
+  // ============================================================================
+  // BANKABILITY MODULE
+  // ============================================================================
+  
+  bankability: router({
+    // Projects
+    createProject: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+        description: z.string().optional(),
+        facilityLocation: z.string().optional(),
+        state: z.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+        latitude: z.string().optional(),
+        longitude: z.string().optional(),
+        nameplateCapacity: z.number(),
+        feedstockType: z.string().optional(),
+        targetCOD: z.date().optional(),
+        financialCloseTarget: z.date().optional(),
+        debtTenor: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const projectId = await db.createProject({
+          userId: ctx.user.id,
+          ...input,
+        });
+        
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'create_project',
+          entityType: 'project',
+          entityId: projectId,
+        });
+        
+        return { projectId };
+      }),
+    
+    getMyProjects: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await db.getProjectsByUserId(ctx.user.id);
+      }),
+    
+    getProjectById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.id);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'NOT_FOUND' });
+        }
+        return project;
+      }),
+    
+    updateProject: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        description: z.string().optional(),
+        status: z.enum(["planning", "development", "financing", "construction", "operational", "suspended"]).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, ...updates } = input;
+        const project = await db.getProjectById(id);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'NOT_FOUND' });
+        }
+        
+        await db.updateProject(id, updates);
+        
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'update_project',
+          entityType: 'project',
+          entityId: id,
+        });
+        
+        return { success: true };
+      }),
+    
+    // Supply Agreements
+    createAgreement: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        supplierId: z.number(),
+        tier: z.enum(["tier1", "tier2", "option", "rofr"]),
+        annualVolume: z.number(),
+        termYears: z.number(),
+        startDate: z.date(),
+        endDate: z.date(),
+        pricingMechanism: z.enum(["fixed", "fixed_with_escalation", "index_linked", "index_with_floor_ceiling", "spot_reference"]),
+        takeOrPayPercentage: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        
+        const agreementId = await db.createSupplyAgreement(input);
+        
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'create_agreement',
+          entityType: 'supply_agreement',
+          entityId: agreementId,
+        });
+        
+        return { agreementId };
+      }),
+    
+    getProjectAgreements: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        return await db.getSupplyAgreementsByProjectId(input.projectId);
+      }),
+    
+    // Grower Qualifications
+    createQualification: protectedProcedure
+      .input(z.object({
+        supplierId: z.number(),
+        level: z.enum(["GQ1", "GQ2", "GQ3", "GQ4"]),
+        compositeScore: z.number(),
+        assessmentDate: z.date(),
+        validFrom: z.date(),
+        validUntil: z.date(),
+        financialStrengthScore: z.number().optional(),
+        productionCapacityScore: z.number().optional(),
+        landTenureScore: z.number().optional(),
+        creditScore: z.number().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const qualificationId = await db.createGrowerQualification(input);
+        
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'create_qualification',
+          entityType: 'grower_qualification',
+          entityId: qualificationId,
+        });
+        
+        return { qualificationId };
+      }),
+    
+    getSupplierQualifications: protectedProcedure
+      .input(z.object({ supplierId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getGrowerQualificationsBySupplierId(input.supplierId);
+      }),
+    
+    // Bankability Assessments
+    createAssessment: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        assessmentNumber: z.string(),
+        assessmentDate: z.date(),
+        volumeSecurityScore: z.number(),
+        counterpartyQualityScore: z.number(),
+        contractStructureScore: z.number(),
+        concentrationRiskScore: z.number(),
+        operationalReadinessScore: z.number(),
+        compositeScore: z.number(),
+        rating: z.enum(["AAA", "AA", "A", "BBB", "BB", "B", "CCC"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        
+        const assessmentId = await db.createBankabilityAssessment(input);
+        
+        await createAuditLog({
+          userId: ctx.user.id,
+          action: 'create_assessment',
+          entityType: 'bankability_assessment',
+          entityId: assessmentId,
+        });
+        
+        return { assessmentId };
+      }),
+    
+    getProjectAssessments: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        return await db.getBankabilityAssessmentsByProjectId(input.projectId);
+      }),
+    
+    getLatestAssessment: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        return await db.getLatestBankabilityAssessment(input.projectId);
+      }),
+    
+    // Lender Access
+    grantLenderAccess: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        lenderName: z.string(),
+        lenderEmail: z.string(),
+        lenderContact: z.string().optional(),
+        validFrom: z.date(),
+        validUntil: z.date(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        
+        const accessToken = Math.random().toString(36).substring(2, 15);
+        
+        const accessId = await db.createLenderAccess({
+          ...input,
+          accessToken,
+          grantedBy: ctx.user.id,
+        });
+        
+        return { accessId, accessToken };
+      }),
+    
+    getProjectLenderAccess: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const project = await db.getProjectById(input.projectId);
+        if (!project || project.userId !== ctx.user.id) {
+          throw new TRPCError({ code: 'FORBIDDEN' });
+        }
+        return await db.getLenderAccessByProjectId(input.projectId);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
