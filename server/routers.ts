@@ -1743,6 +1743,190 @@ export const appRouter = router({
         return { success: true };
       }),
   }),
+  
+  // Compliance & Audit (Phase 8)
+  compliance: router({
+    // Audit logs
+    queryAuditLogs: protectedProcedure
+      .input(z.object({
+        userId: z.number().optional(),
+        entityType: z.string().optional(),
+        entityId: z.number().optional(),
+        action: z.string().optional(),
+        startDate: z.date().optional(),
+        endDate: z.date().optional(),
+        limit: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        const { queryAuditLogs } = await import("./compliance.js");
+        return await queryAuditLogs(input);
+      }),
+    
+    // Admin overrides
+    recordOverride: protectedProcedure
+      .input(z.object({
+        overrideType: z.enum(["score", "rating", "status", "expiry", "certification", "evidence_validity"]),
+        entityType: z.string(),
+        entityId: z.number(),
+        originalValue: z.any(),
+        overrideValue: z.any(),
+        justification: z.string(),
+        riskAssessment: z.string().optional(),
+        expiryDate: z.date().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { recordAdminOverride } = await import("./compliance.js");
+        return await recordAdminOverride({
+          ...input,
+          requestedBy: ctx.user.id,
+          approvedBy: ctx.user.role === "admin" ? ctx.user.id : undefined,
+        });
+      }),
+    
+    getActiveOverrides: protectedProcedure
+      .input(z.object({
+        entityType: z.string(),
+        entityId: z.number(),
+      }))
+      .query(async ({ input }) => {
+        const { getActiveOverrides } = await import("./compliance.js");
+        return await getActiveOverrides(input.entityType, input.entityId);
+      }),
+    
+    revokeOverride: protectedProcedure
+      .input(z.object({
+        overrideId: z.number(),
+        revocationReason: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { revokeOverride } = await import("./compliance.js");
+        await revokeOverride({
+          ...input,
+          revokedBy: ctx.user.id,
+        });
+        return { success: true };
+      }),
+    
+    // User consents
+    recordConsent: protectedProcedure
+      .input(z.object({
+        consentType: z.enum(["terms_of_service", "privacy_policy", "data_processing", "marketing", "third_party_sharing", "certification_reliance"]),
+        consentVersion: z.string(),
+        consentText: z.string(),
+        granted: z.boolean(),
+        ipAddress: z.string().optional(),
+        userAgent: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { recordUserConsent } = await import("./compliance.js");
+        return await recordUserConsent({
+          ...input,
+          userId: ctx.user.id,
+        });
+      }),
+    
+    getUserConsents: protectedProcedure
+      .input(z.object({
+        consentType: z.string().optional(),
+      }))
+      .query(async ({ input, ctx }) => {
+        const { getUserConsents } = await import("./compliance.js");
+        return await getUserConsents(ctx.user.id, input.consentType);
+      }),
+    
+    withdrawConsent: protectedProcedure
+      .input(z.object({ consentId: z.number() }))
+      .mutation(async ({ input }) => {
+        const { withdrawConsent } = await import("./compliance.js");
+        await withdrawConsent(input.consentId);
+        return { success: true };
+      }),
+    
+    // Certificate legal metadata
+    createCertificateLegalMetadata: protectedProcedure
+      .input(z.object({
+        certificateId: z.number(),
+        issuerName: z.string(),
+        issuerRole: z.string(),
+        certificationScope: z.string(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { createCertificateLegalMetadata } = await import("./compliance.js");
+        return await createCertificateLegalMetadata({
+          ...input,
+          createdBy: ctx.user.id,
+        });
+      }),
+    
+    // Disputes
+    submitDispute: protectedProcedure
+      .input(z.object({
+        disputeType: z.enum(["score_accuracy", "certificate_validity", "evidence_authenticity", "contract_interpretation", "service_quality", "billing"]),
+        respondent: z.number().optional(),
+        relatedEntityType: z.string().optional(),
+        relatedEntityId: z.number().optional(),
+        title: z.string(),
+        description: z.string(),
+        desiredOutcome: z.string().optional(),
+        supportingEvidence: z.array(z.object({
+          type: z.string(),
+          url: z.string(),
+          description: z.string(),
+        })).optional(),
+        priority: z.enum(["low", "medium", "high", "urgent"]).optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { submitDispute } = await import("./compliance.js");
+        return await submitDispute({
+          ...input,
+          raisedBy: ctx.user.id,
+        });
+      }),
+    
+    updateDisputeStatus: protectedProcedure
+      .input(z.object({
+        disputeId: z.number(),
+        status: z.enum(["submitted", "under_review", "investigation", "mediation", "arbitration", "resolved", "closed"]),
+        assignedTo: z.number().optional(),
+        resolutionSummary: z.string().optional(),
+        resolutionOutcome: z.enum(["upheld", "partially_upheld", "rejected", "withdrawn", "settled"]).optional(),
+        remediationActions: z.array(z.object({
+          action: z.string(),
+          responsible: z.string(),
+          deadline: z.string(),
+          completed: z.boolean(),
+        })).optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { updateDisputeStatus } = await import("./compliance.js");
+        await updateDisputeStatus(input);
+        return { success: true };
+      }),
+    
+    getUserDisputes: protectedProcedure
+      .input(z.object({
+        status: z.string().optional(),
+      }))
+      .query(async ({ input, ctx }) => {
+        const { getUserDisputes } = await import("./compliance.js");
+        return await getUserDisputes(ctx.user.id, input.status);
+      }),
+    
+    // Legal templates
+    getLegalTemplates: publicProcedure
+      .query(async () => {
+        const { LEGAL_TEMPLATES } = await import("./compliance.js");
+        return LEGAL_TEMPLATES;
+      }),
+    
+    // Retention policies
+    getRetentionPolicy: protectedProcedure
+      .input(z.object({ entityType: z.string() }))
+      .query(async ({ input }) => {
+        const { getRetentionPolicy } = await import("./compliance.js");
+        return await getRetentionPolicy(input.entityType);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

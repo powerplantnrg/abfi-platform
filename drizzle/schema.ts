@@ -1646,3 +1646,271 @@ export const lenderReports = mysqlTable("lenderReports", {
 
 export type LenderReport = typeof lenderReports.$inferSelect;
 export type InsertLenderReport = typeof lenderReports.$inferInsert;
+
+// ============================================================================
+// ADMIN OVERRIDES (Phase 8)
+// ============================================================================
+
+export const adminOverrides = mysqlTable("adminOverrides", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Override details
+  overrideType: mysqlEnum("overrideType", [
+    "score",
+    "rating",
+    "status",
+    "expiry",
+    "certification",
+    "evidence_validity"
+  ]).notNull(),
+  
+  entityType: varchar("entityType", { length: 50 }).notNull(),
+  entityId: int("entityId").notNull(),
+  
+  // Values
+  originalValue: text("originalValue").notNull(), // JSON string
+  overrideValue: text("overrideValue").notNull(), // JSON string
+  
+  // Justification (required for compliance)
+  justification: text("justification").notNull(),
+  riskAssessment: text("riskAssessment"), // Why this override is acceptable
+  
+  // Approval workflow
+  requestedBy: int("requestedBy").notNull().references(() => users.id),
+  approvedBy: int("approvedBy").references(() => users.id),
+  overrideDate: timestamp("overrideDate").notNull(),
+  approvalDate: timestamp("approvalDate"),
+  
+  // Expiry and revocation
+  expiryDate: timestamp("expiryDate"),
+  revoked: boolean("revoked").default(false).notNull(),
+  revokedDate: timestamp("revokedDate"),
+  revokedBy: int("revokedBy").references(() => users.id),
+  revocationReason: text("revocationReason"),
+  
+  // Audit trail
+  auditLogId: int("auditLogId").references(() => auditLogs.id),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  entityIdx: index("adminOverrides_entity_idx").on(table.entityType, table.entityId),
+  overrideTypeIdx: index("adminOverrides_overrideType_idx").on(table.overrideType),
+  revokedIdx: index("adminOverrides_revoked_idx").on(table.revoked),
+}));
+
+export type AdminOverride = typeof adminOverrides.$inferSelect;
+export type InsertAdminOverride = typeof adminOverrides.$inferInsert;
+
+// ============================================================================
+// CERTIFICATE LEGAL METADATA (Phase 8)
+// ============================================================================
+
+export const certificateLegalMetadata = mysqlTable("certificateLegalMetadata", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  certificateId: int("certificateId").notNull().references(() => certificates.id),
+  version: int("version").notNull().default(1),
+  
+  // Validity and provenance
+  validityPeriod: varchar("validityPeriod", { length: 100 }), // e.g., "12 months from issuance"
+  snapshotId: int("snapshotId").references(() => certificateSnapshots.id),
+  
+  // Issuer information
+  issuerName: varchar("issuerName", { length: 255 }).notNull(),
+  issuerRole: varchar("issuerRole", { length: 100 }).notNull(),
+  issuerLicenseNumber: varchar("issuerLicenseNumber", { length: 100 }),
+  
+  // Legal framework
+  governingLaw: varchar("governingLaw", { length: 100 }).notNull().default("New South Wales, Australia"),
+  jurisdiction: varchar("jurisdiction", { length: 100 }).notNull().default("Australia"),
+  
+  // Disclaimers and limitations
+  limitationStatements: text("limitationStatements").notNull(),
+  disclaimers: text("disclaimers").notNull(),
+  relianceTerms: text("relianceTerms").notNull(),
+  liabilityCap: varchar("liabilityCap", { length: 255 }),
+  
+  // Certification scope
+  certificationScope: text("certificationScope").notNull(),
+  exclusions: text("exclusions"),
+  assumptions: text("assumptions"),
+  
+  // Verification
+  verificationUrl: varchar("verificationUrl", { length: 500 }),
+  qrCodeUrl: varchar("qrCodeUrl", { length: 500 }),
+  
+  // Metadata
+  createdBy: int("createdBy").references(() => users.id),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  certificateIdIdx: index("certificateLegalMetadata_certificateId_idx").on(table.certificateId),
+  versionIdx: index("certificateLegalMetadata_version_idx").on(table.version),
+}));
+
+export type CertificateLegalMetadata = typeof certificateLegalMetadata.$inferSelect;
+export type InsertCertificateLegalMetadata = typeof certificateLegalMetadata.$inferInsert;
+
+// ============================================================================
+// USER CONSENTS (Phase 8)
+// ============================================================================
+
+export const userConsents = mysqlTable("userConsents", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  userId: int("userId").notNull().references(() => users.id),
+  
+  // Consent details
+  consentType: mysqlEnum("consentType", [
+    "terms_of_service",
+    "privacy_policy",
+    "data_processing",
+    "marketing",
+    "third_party_sharing",
+    "certification_reliance"
+  ]).notNull(),
+  
+  consentVersion: varchar("consentVersion", { length: 20 }).notNull(), // e.g., "1.0", "2.1"
+  consentText: text("consentText").notNull(), // Full text at time of consent
+  
+  // Consent status
+  granted: boolean("granted").notNull(),
+  grantedDate: timestamp("grantedDate"),
+  
+  // Withdrawal
+  withdrawn: boolean("withdrawn").default(false).notNull(),
+  withdrawnDate: timestamp("withdrawnDate"),
+  
+  // Tracking
+  ipAddress: varchar("ipAddress", { length: 45 }),
+  userAgent: text("userAgent"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  userIdIdx: index("userConsents_userId_idx").on(table.userId),
+  consentTypeIdx: index("userConsents_consentType_idx").on(table.consentType),
+  grantedIdx: index("userConsents_granted_idx").on(table.granted),
+}));
+
+export type UserConsent = typeof userConsents.$inferSelect;
+export type InsertUserConsent = typeof userConsents.$inferInsert;
+
+// ============================================================================
+// DISPUTE RESOLUTION (Phase 8)
+// ============================================================================
+
+export const disputeResolutions = mysqlTable("disputeResolutions", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Dispute details
+  disputeType: mysqlEnum("disputeType", [
+    "score_accuracy",
+    "certificate_validity",
+    "evidence_authenticity",
+    "contract_interpretation",
+    "service_quality",
+    "billing"
+  ]).notNull(),
+  
+  // Parties
+  raisedBy: int("raisedBy").notNull().references(() => users.id),
+  respondent: int("respondent").references(() => users.id),
+  
+  // Related entities
+  relatedEntityType: varchar("relatedEntityType", { length: 50 }),
+  relatedEntityId: int("relatedEntityId"),
+  
+  // Dispute content
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  desiredOutcome: text("desiredOutcome"),
+  
+  // Evidence
+  supportingEvidence: json("supportingEvidence").$type<Array<{
+    type: string;
+    url: string;
+    description: string;
+  }>>(),
+  
+  // Status
+  status: mysqlEnum("status", [
+    "submitted",
+    "under_review",
+    "investigation",
+    "mediation",
+    "arbitration",
+    "resolved",
+    "closed"
+  ]).notNull().default("submitted"),
+  
+  priority: mysqlEnum("priority", ["low", "medium", "high", "urgent"]).notNull().default("medium"),
+  
+  // Resolution
+  assignedTo: int("assignedTo").references(() => users.id),
+  resolutionDate: timestamp("resolutionDate"),
+  resolutionSummary: text("resolutionSummary"),
+  resolutionOutcome: mysqlEnum("resolutionOutcome", [
+    "upheld",
+    "partially_upheld",
+    "rejected",
+    "withdrawn",
+    "settled"
+  ]),
+  
+  // Remediation
+  remediationActions: json("remediationActions").$type<Array<{
+    action: string;
+    responsible: string;
+    deadline: string;
+    completed: boolean;
+  }>>(),
+  
+  // Dates
+  submittedDate: timestamp("submittedDate").notNull(),
+  reviewStartDate: timestamp("reviewStartDate"),
+  targetResolutionDate: timestamp("targetResolutionDate"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  raisedByIdx: index("disputeResolutions_raisedBy_idx").on(table.raisedBy),
+  statusIdx: index("disputeResolutions_status_idx").on(table.status),
+  priorityIdx: index("disputeResolutions_priority_idx").on(table.priority),
+  submittedDateIdx: index("disputeResolutions_submittedDate_idx").on(table.submittedDate),
+}));
+
+export type DisputeResolution = typeof disputeResolutions.$inferSelect;
+export type InsertDisputeResolution = typeof disputeResolutions.$inferInsert;
+
+// ============================================================================
+// DATA RETENTION POLICIES (Phase 8)
+// ============================================================================
+
+export const dataRetentionPolicies = mysqlTable("dataRetentionPolicies", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Policy details
+  entityType: varchar("entityType", { length: 50 }).notNull().unique(),
+  retentionPeriodDays: int("retentionPeriodDays").notNull(),
+  
+  // Deletion rules
+  autoDelete: boolean("autoDelete").default(false).notNull(),
+  archiveBeforeDelete: boolean("archiveBeforeDelete").default(true).notNull(),
+  
+  // Legal basis
+  legalBasis: text("legalBasis").notNull(),
+  regulatoryRequirement: varchar("regulatoryRequirement", { length: 255 }),
+  
+  // Policy metadata
+  policyVersion: varchar("policyVersion", { length: 20 }).notNull(),
+  effectiveDate: timestamp("effectiveDate").notNull(),
+  reviewDate: timestamp("reviewDate"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type DataRetentionPolicy = typeof dataRetentionPolicies.$inferSelect;
+export type InsertDataRetentionPolicy = typeof dataRetentionPolicies.$inferInsert;

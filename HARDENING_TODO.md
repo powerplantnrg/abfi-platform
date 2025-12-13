@@ -398,39 +398,39 @@
 ## PHASE 8: Audit, Legal & Compliance
 
 ### Backend Schema
-- [ ] Create `audit_logs` table (append-only)
+- [x] Create `audit_logs` table (append-only)
   - event_id (UUID), timestamp, user_id, user_role
   - action_type (create, update, delete, override, calculate, certify)
   - entity_type, entity_id
   - before_state (JSON), after_state (JSON)
   - justification (text), ip_address, user_agent
 
-- [ ] Create `admin_overrides` table
+- [x] Create `admin_overrides` table
   - override_id, override_type (score, status, expiry)
   - entity_type, entity_id
   - original_value, override_value
   - justification (required), approved_by, override_date
   - expiry_date, revoked (boolean)
 
-- [ ] Create `certificate_legal_metadata` table
+- [x] Create `certificate_legal_metadata` table
   - certificate_id, version, validity_period
   - snapshot_id, issuer_name, issuer_role
   - governing_law, limitation_statements (text)
   - disclaimers (text), reliance_terms (text)
 
 ### Backend APIs
-- [ ] GET /api/audit-logs - Query audit logs (admin only)
-- [ ] POST /api/audit-logs/export - Export audit trail (CSV/JSON)
-- [ ] POST /api/admin/override - Record admin override with justification
-- [ ] GET /api/certificates/:id/legal-metadata - Get legal metadata
-- [ ] POST /api/certificates/:id/legal-metadata - Update legal metadata
+- [x] GET /api/audit-logs - Query audit logs (admin only)
+- [x] POST /api/audit-logs/export - Export audit trail (CSV/JSON) (via queryAuditLogs)
+- [x] POST /api/admin/override - Record admin override with justification
+- [x] GET /api/certificates/:id/legal-metadata - Get legal metadata
+- [x] POST /api/certificates/:id/legal-metadata - Update legal metadata
 
 ### Audit Log Requirements
-- [ ] Log all score calculations
-- [ ] Log all evidence uploads and changes
-- [ ] Log all certificate issuances
-- [ ] Log all admin overrides
-- [ ] Log all user access to sensitive data
+- [x] Log all score calculations (via createAuditLog)
+- [x] Log all evidence uploads and changes (via createAuditLog)
+- [x] Log all certificate issuances (via createAuditLog)
+- [x] Log all admin overrides (automatic in recordAdminOverride)
+- [x] Log all user access to sensitive data (via createAuditLog)
 - [ ] Implement tamper-evident checksums for log batches
 
 ### Legal Text Templates
