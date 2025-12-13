@@ -553,3 +553,210 @@ export async function getPlatformStats() {
     transactionCount: transactionCount[0]?.count || 0,
   };
 }
+
+
+// ============================================================================
+// BANKABILITY MODULE
+// ============================================================================
+
+import {
+  projects, InsertProject,
+  supplyAgreements, InsertSupplyAgreement,
+  growerQualifications, InsertGrowerQualification,
+  bankabilityAssessments, InsertBankabilityAssessment,
+  lenderAccess, InsertLenderAccess,
+  covenantMonitoring, InsertCovenantMonitoring
+} from "../drizzle/schema";
+
+// Projects
+export async function createProject(project: InsertProject): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(projects).values(project);
+  return Number(result[0].insertId);
+}
+
+export async function getProjectById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(projects).where(eq(projects.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getProjectsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(projects).where(eq(projects.userId, userId));
+}
+
+export async function updateProject(id: number, updates: Partial<InsertProject>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(projects).set(updates).where(eq(projects.id, id));
+}
+
+// Supply Agreements
+export async function createSupplyAgreement(agreement: InsertSupplyAgreement): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(supplyAgreements).values(agreement);
+  return Number(result[0].insertId);
+}
+
+export async function getSupplyAgreementById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(supplyAgreements).where(eq(supplyAgreements.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getSupplyAgreementsByProjectId(projectId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(supplyAgreements).where(eq(supplyAgreements.projectId, projectId));
+}
+
+export async function updateSupplyAgreement(id: number, updates: Partial<InsertSupplyAgreement>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(supplyAgreements).set(updates).where(eq(supplyAgreements.id, id));
+}
+
+// Grower Qualifications
+export async function createGrowerQualification(qualification: InsertGrowerQualification): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(growerQualifications).values(qualification);
+  return Number(result[0].insertId);
+}
+
+export async function getGrowerQualificationById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(growerQualifications).where(eq(growerQualifications.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getGrowerQualificationsBySupplierId(supplierId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(growerQualifications).where(eq(growerQualifications.supplierId, supplierId));
+}
+
+export async function updateGrowerQualification(id: number, updates: Partial<InsertGrowerQualification>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(growerQualifications).set(updates).where(eq(growerQualifications.id, id));
+}
+
+// Bankability Assessments
+export async function createBankabilityAssessment(assessment: InsertBankabilityAssessment): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(bankabilityAssessments).values(assessment);
+  return Number(result[0].insertId);
+}
+
+export async function getBankabilityAssessmentById(id: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(bankabilityAssessments).where(eq(bankabilityAssessments.id, id)).limit(1);
+  return result[0];
+}
+
+export async function getBankabilityAssessmentsByProjectId(projectId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(bankabilityAssessments)
+    .where(eq(bankabilityAssessments.projectId, projectId))
+    .orderBy(desc(bankabilityAssessments.createdAt));
+}
+
+export async function getLatestBankabilityAssessment(projectId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(bankabilityAssessments)
+    .where(eq(bankabilityAssessments.projectId, projectId))
+    .orderBy(desc(bankabilityAssessments.createdAt))
+    .limit(1);
+  
+  return result[0];
+}
+
+export async function updateBankabilityAssessment(id: number, updates: Partial<InsertBankabilityAssessment>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(bankabilityAssessments).set(updates).where(eq(bankabilityAssessments.id, id));
+}
+
+// Lender Access
+export async function createLenderAccess(access: InsertLenderAccess): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(lenderAccess).values(access);
+  return Number(result[0].insertId);
+}
+
+export async function getLenderAccessByProjectId(projectId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(lenderAccess).where(eq(lenderAccess.projectId, projectId));
+}
+
+export async function getLenderAccessByGrantedBy(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(lenderAccess).where(eq(lenderAccess.grantedBy, userId));
+}
+
+export async function updateLenderAccess(id: number, updates: Partial<InsertLenderAccess>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(lenderAccess).set(updates).where(eq(lenderAccess.id, id));
+}
+
+// Covenant Monitoring
+export async function createCovenantMonitoring(monitoring: InsertCovenantMonitoring): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(covenantMonitoring).values(monitoring);
+  return Number(result[0].insertId);
+}
+
+export async function getCovenantMonitoringByProjectId(projectId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(covenantMonitoring)
+    .where(eq(covenantMonitoring.projectId, projectId))
+    .orderBy(desc(covenantMonitoring.createdAt));
+}
+
+export async function updateCovenantMonitoring(id: number, updates: Partial<InsertCovenantMonitoring>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db.update(covenantMonitoring).set(updates).where(eq(covenantMonitoring.id, id));
+}

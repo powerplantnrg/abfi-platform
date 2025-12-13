@@ -234,9 +234,11 @@ export default function Dashboard() {
                       0
                     </div>
                     <p className="text-sm text-gray-600 mb-4">Pending responses</p>
-                    <Button className="w-full" size="sm">
-                      View Inquiries
-                    </Button>
+                    <Link href="/inquiries/supplier">
+                      <Button className="w-full" size="sm">
+                        View Inquiries
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
 
@@ -291,9 +293,11 @@ export default function Dashboard() {
                       0
                     </div>
                     <p className="text-sm text-gray-600 mb-4">Total inquiries</p>
-                    <Button className="w-full" size="sm">
-                      View All
-                    </Button>
+                    <Link href="/inquiries/buyer">
+                      <Button className="w-full" size="sm">
+                        View All
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
 

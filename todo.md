@@ -72,11 +72,11 @@
 
 ## Phase 8: Inquiry & Communication
 - [x] Create inquiry form (buyer to supplier)
-- [ ] Build inquiry list for suppliers
-- [ ] Build inquiry list for buyers
-- [ ] Implement inquiry response interface
-- [ ] Set up email notification system
-- [ ] Build in-app notification center
+- [x] Build inquiry list for suppliers
+- [x] Build inquiry list for buyers
+- [ ] Add inquiry response interface
+- [x] Implement status tracking
+- [ ] Create notification system integration center
 - [ ] Create communication history view
 - [ ] Add inquiry status tracking
 - [ ] Implement notification preferences
@@ -114,9 +114,7 @@
 - [x] Admin verification dashboard
 - [x] Browse feedstocks with advanced filters
 - [x] Feedstock creation form
-- [x] Inquiry/RFQ system
-
-## Phase 11: Bankability Accreditation Module
+- [x] Inquiry/RFQ syst## Phase 11: Bankability Accreditation Module
 - [x] Create projects table for bioenergy project tracking
 - [x] Create supply_agreements table (Tier 1, Tier 2, Options, ROFR)
 - [x] Create grower_qualifications table (GQ1-GQ4 levels)
@@ -130,8 +128,8 @@
 - [x] Implement Concentration Risk scoring (15% weight - HHI calculation)
 - [x] Implement Operational Readiness scoring (10% weight)
 - [x] Build composite bankability score calculator (AAA-CCC rating)
-- [ ] Create project developer dashboard with supply position visualization
-- [ ] Build agreement pipeline view (Tier 1, Tier 2, Options, ROFR)
+- [x] Build database helpers for projects, agreements, qualifications
+- [ ] Create tRPC routers for bankability moduleier 1, Tier 2, Options, ROFR)
 - [ ] Create agreement CRUD interface
 - [ ] Build concentration analysis view with HHI and geographic distribution
 - [ ] Implement grower qualification assessment workflow
