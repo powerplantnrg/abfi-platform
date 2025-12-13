@@ -33,6 +33,16 @@ import LenderPortal from "./pages/LenderPortal";
 import ComplianceDashboard from "./pages/ComplianceDashboard";
 import EvidenceManagement from "./pages/EvidenceManagement";
 import FeedstockMap from "./pages/FeedstockMap";
+import ProducerRegistration from "./pages/ProducerRegistration";
+import ProducerAccountSetup from "./pages/ProducerAccountSetup";
+import ProducerPropertyMap from "./pages/ProducerPropertyMap";
+import ProducerPropertyDetails from "./pages/ProducerPropertyDetails";
+import ProducerProductionProfile from "./pages/ProducerProductionProfile";
+import ProducerCarbonCalculator from "./pages/ProducerCarbonCalculator";
+import ProducerContracts from "./pages/ProducerContracts";
+import ProducerMarketplaceListing from "./pages/ProducerMarketplaceListing";
+import ProducerReview from "./pages/ProducerReview";
+import ProducerSuccess from "./pages/ProducerSuccess";
 
 function Router() {
   return (
@@ -65,6 +75,16 @@ function Router() {
       <Route path="/admin/evidence" component={EvidenceManagement} />
       <Route path="/map" component={MapView} />
       <Route path="/feedstock-map" component={FeedstockMap} />
+      <Route path="/producer-registration" component={ProducerRegistration} />
+      <Route path="/producer-registration/account-setup" component={ProducerAccountSetup} />
+      <Route path="/producer-registration/property-map" component={ProducerPropertyMap} />
+      <Route path="/producer-registration/property-details" component={ProducerPropertyDetails} />
+      <Route path="/producer-registration/production-profile" component={ProducerProductionProfile} />
+      <Route path="/producer-registration/carbon-calculator" component={ProducerCarbonCalculator} />
+      <Route path="/producer-registration/contracts" component={ProducerContracts} />
+      <Route path="/producer-registration/marketplace-listing" component={ProducerMarketplaceListing} />
+      <Route path="/producer-registration/review" component={ProducerReview} />
+      <Route path="/producer-registration/success" component={ProducerSuccess} />
       <Route path="/certificate/upload" component={CertificateUpload} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

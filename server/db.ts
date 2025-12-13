@@ -19,7 +19,12 @@ import {
   deliveryEvents, InsertDeliveryEvent,
   seasonalityProfiles, InsertSeasonalityProfile,
   climateExposure, InsertClimateExposure,
-  yieldEstimates, InsertYieldEstimate
+  yieldEstimates, InsertYieldEstimate,
+  properties, InsertProperty,
+  productionHistory, InsertProductionHistory,
+  carbonPractices, InsertCarbonPractice,
+  existingContracts, InsertExistingContract,
+  marketplaceListings, InsertMarketplaceListing
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
