@@ -1,0 +1,167 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[150.5, -27.0], [152.5, -27.0], [152.5, -29.0], [150.5, -29.0], [150.5, -27.0]]]
+      },
+      "properties": {
+        "name": "Darling Downs",
+        "type": "grain_region",
+        "state": "QLD",
+        "primary_crops": ["wheat", "sorghum", "cotton"],
+        "area_hectares": 3500000,
+        "stubble_production_tonnes": 4200000,
+        "sustainable_removal_tonnes": 2500000,
+        "key_towns": ["Toowoomba", "Dalby", "Goondiwindi"],
+        "harvest_months": ["October", "November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[149.0, -30.0], [151.5, -30.0], [151.5, -32.0], [149.0, -32.0], [149.0, -30.0]]]
+      },
+      "properties": {
+        "name": "Liverpool Plains",
+        "type": "grain_region",
+        "state": "NSW",
+        "primary_crops": ["wheat", "barley", "canola"],
+        "area_hectares": 2800000,
+        "stubble_production_tonnes": 3500000,
+        "sustainable_removal_tonnes": 2100000,
+        "key_towns": ["Gunnedah", "Tamworth"],
+        "harvest_months": ["November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[147.0, -32.0], [149.5, -32.0], [149.5, -34.0], [147.0, -34.0], [147.0, -32.0]]]
+      },
+      "properties": {
+        "name": "Central West NSW",
+        "type": "grain_region",
+        "state": "NSW",
+        "primary_crops": ["wheat", "canola", "barley"],
+        "area_hectares": 4200000,
+        "stubble_production_tonnes": 5000000,
+        "sustainable_removal_tonnes": 3000000,
+        "key_towns": ["Dubbo", "Forbes", "Parkes"],
+        "harvest_months": ["November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[145.0, -34.0], [148.5, -34.0], [148.5, -36.0], [145.0, -36.0], [145.0, -34.0]]]
+      },
+      "properties": {
+        "name": "Riverina",
+        "type": "grain_region",
+        "state": "NSW",
+        "primary_crops": ["wheat", "rice", "canola"],
+        "area_hectares": 5500000,
+        "stubble_production_tonnes": 6500000,
+        "sustainable_removal_tonnes": 3900000,
+        "key_towns": ["Wagga Wagga", "Griffith", "Leeton"],
+        "harvest_months": ["November", "December", "January"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[141.0, -36.0], [143.5, -36.0], [143.5, -37.5], [141.0, -37.5], [141.0, -36.0]]]
+      },
+      "properties": {
+        "name": "Wimmera",
+        "type": "grain_region",
+        "state": "VIC",
+        "primary_crops": ["wheat", "barley", "canola"],
+        "area_hectares": 2500000,
+        "stubble_production_tonnes": 3000000,
+        "sustainable_removal_tonnes": 1800000,
+        "key_towns": ["Horsham", "Nhill"],
+        "harvest_months": ["November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[141.5, -33.5], [144.0, -33.5], [144.0, -35.5], [141.5, -35.5], [141.5, -33.5]]]
+      },
+      "properties": {
+        "name": "Mallee VIC",
+        "type": "grain_region",
+        "state": "VIC",
+        "primary_crops": ["wheat", "barley", "almonds"],
+        "area_hectares": 3200000,
+        "stubble_production_tonnes": 3800000,
+        "sustainable_removal_tonnes": 2300000,
+        "key_towns": ["Mildura", "Swan Hill"],
+        "harvest_months": ["November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[137.5, -32.5], [140.0, -32.5], [140.0, -34.5], [137.5, -34.5], [137.5, -32.5]]]
+      },
+      "properties": {
+        "name": "Mid-North SA",
+        "type": "grain_region",
+        "state": "SA",
+        "primary_crops": ["wheat", "barley"],
+        "area_hectares": 2000000,
+        "stubble_production_tonnes": 2400000,
+        "sustainable_removal_tonnes": 1400000,
+        "key_towns": ["Clare", "Jamestown"],
+        "harvest_months": ["November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[133.0, -32.0], [136.5, -32.0], [136.5, -35.0], [133.0, -35.0], [133.0, -32.0]]]
+      },
+      "properties": {
+        "name": "Eyre Peninsula",
+        "type": "grain_region",
+        "state": "SA",
+        "primary_crops": ["wheat", "barley"],
+        "area_hectares": 2800000,
+        "stubble_production_tonnes": 3400000,
+        "sustainable_removal_tonnes": 2000000,
+        "key_towns": ["Port Lincoln", "Ceduna"],
+        "harvest_months": ["November", "December"]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[114.0, -28.0], [122.0, -28.0], [122.0, -34.0], [114.0, -34.0], [114.0, -28.0]]]
+      },
+      "properties": {
+        "name": "Western Australia Wheatbelt",
+        "type": "grain_region",
+        "state": "WA",
+        "primary_crops": ["wheat", "barley", "canola"],
+        "area_hectares": 8500000,
+        "stubble_production_tonnes": 10000000,
+        "sustainable_removal_tonnes": 6000000,
+        "key_towns": ["Geraldton", "Merredin", "Northam", "Katanning", "Esperance"],
+        "harvest_months": ["November", "December"]
+      }
+    }
+  ]
+}

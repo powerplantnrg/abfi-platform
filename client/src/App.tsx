@@ -32,6 +32,7 @@ import BankabilityAssessment from "./pages/BankabilityAssessment";
 import LenderPortal from "./pages/LenderPortal";
 import ComplianceDashboard from "./pages/ComplianceDashboard";
 import EvidenceManagement from "./pages/EvidenceManagement";
+import FeedstockMap from "./pages/FeedstockMap";
 
 function Router() {
   return (
@@ -62,6 +63,7 @@ function Router() {
       <Route path="/compliance-dashboard" component={ComplianceDashboard} />
       <Route path="/admin/evidence" component={EvidenceManagement} />
       <Route path="/map" component={MapView} />
+      <Route path="/feedstock-map" component={FeedstockMap} />
       <Route path="/certificate/upload" component={CertificateUpload} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />

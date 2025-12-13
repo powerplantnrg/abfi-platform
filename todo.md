@@ -147,6 +147,20 @@
 ## Recently Completed (Session 2)
 - [x] Create agreement CRUD interface (list view with supply position visualization)
 
+## Interactive Feedstock Mapping (Session 3)
+- [x] Create GeoJSON data files (sugar mills, grain regions)
+- [x] Build Mapbox GL JS interactive map component
+- [x] Implement layer controls with visibility toggles
+- [x] Add opacity sliders for each layer
+- [x] Implement 50km radius analysis tool
+- [x] Add clustering for point layers
+- [x] Create interactive popups with facility details
+- [x] Add search functionality placeholder
+- [ ] Complete remaining GeoJSON layers (forestry, biogas, biofuel, transport)
+- [ ] Implement advanced filtering by state and capacity
+- [ ] Add data export (GeoJSON/CSV)
+- [ ] Integrate with existing feedstock database
+
 ## Compliance Reporting (New Request - Session 3)
 - [x] Create compliance metrics aggregation functions
 - [x] Build quarterly report generation engine

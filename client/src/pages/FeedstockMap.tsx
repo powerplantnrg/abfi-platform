@@ -1,0 +1,470 @@
+import { useEffect, useRef, useState } from "react";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Layers, Search, Download, Target } from "lucide-react";
+
+// Mapbox access token (using Manus proxy)
+mapboxgl.accessToken = "pk.eyJ1IjoibWFudXMtZGVtbyIsImEiOiJjbTFhYmNkZWYxMjM0NTZwcXJzdHV2d3h5eiJ9.demo";
+
+interface LayerConfig {
+  id: string;
+  name: string;
+  type: "circle" | "fill" | "symbol";
+  source: string;
+  color: string;
+  visible: boolean;
+}
+
+export default function FeedstockMap() {
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<mapboxgl.Map | null>(null);
+  const [mapLoaded, setMapLoaded] = useState(false);
+  const [selectedState, setSelectedState] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [radiusCenter, setRadiusCenter] = useState<[number, number] | null>(null);
+  
+  const [layers, setLayers] = useState<LayerConfig[]>([
+    { id: "sugar-mills", name: "Sugar Mills", type: "circle", source: "/geojson/sugar_mills.json", color: "#8B4513", visible: true },
+    { id: "grain-regions", name: "Grain Regions", type: "fill", source: "/geojson/grain_regions.json", color: "#DAA520", visible: true },
+  ]);
+
+  const [layerOpacity, setLayerOpacity] = useState<Record<string, number>>({
+    "sugar-mills": 100,
+    "grain-regions": 30,
+  });
+
+  // Initialize map
+  useEffect(() => {
+    if (!mapContainer.current || map.current) return;
+
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/light-v11",
+      center: [133.7751, -25.2744], // Australia center
+      zoom: 4,
+    });
+
+    map.current.on("load", () => {
+      setMapLoaded(true);
+      loadLayers();
+    });
+
+    // Add navigation controls
+    map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
+
+    // Add scale
+    map.current.addControl(new mapboxgl.ScaleControl(), "bottom-left");
+
+    return () => {
+      map.current?.remove();
+    };
+  }, []);
+
+  // Load GeoJSON layers
+  const loadLayers = async () => {
+    if (!map.current) return;
+
+    for (const layer of layers) {
+      try {
+        const response = await fetch(layer.source);
+        const data = await response.json();
+
+        // Add source
+        map.current.addSource(layer.id, {
+          type: "geojson",
+          data: data,
+          cluster: layer.type === "circle",
+          clusterMaxZoom: 8,
+          clusterRadius: 50,
+        });
+
+        // Add layer based on type
+        if (layer.type === "circle") {
+          // Add clusters
+          map.current.addLayer({
+            id: `${layer.id}-clusters`,
+            type: "circle",
+            source: layer.id,
+            filter: ["has", "point_count"],
+            paint: {
+              "circle-color": [
+                "step",
+                ["get", "point_count"],
+                layer.color,
+                10,
+                "#f28cb1",
+                20,
+                "#f1f075",
+              ],
+              "circle-radius": ["step", ["get", "point_count"], 20, 10, 30, 20, 40],
+              "circle-opacity": layerOpacity[layer.id] / 100,
+            },
+          });
+
+          // Add cluster count
+          map.current.addLayer({
+            id: `${layer.id}-cluster-count`,
+            type: "symbol",
+            source: layer.id,
+            filter: ["has", "point_count"],
+            layout: {
+              "text-field": "{point_count_abbreviated}",
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-size": 12,
+            },
+          });
+
+          // Add unclustered points
+          map.current.addLayer({
+            id: layer.id,
+            type: "circle",
+            source: layer.id,
+            filter: ["!", ["has", "point_count"]],
+            paint: {
+              "circle-color": layer.color,
+              "circle-radius": [
+                "interpolate",
+                ["linear"],
+                ["get", "crushing_capacity_tonnes"],
+                500000,
+                8,
+                4000000,
+                20,
+              ],
+              "circle-stroke-width": 2,
+              "circle-stroke-color": "#ffffff",
+              "circle-opacity": layerOpacity[layer.id] / 100,
+            },
+          });
+
+          // Add click handler for popups
+          map.current.on("click", layer.id, (e: mapboxgl.MapMouseEvent) => {
+            if (!e.features || e.features.length === 0) return;
+            const feature = e.features[0];
+            const props = feature.properties;
+
+            const html = `
+              <div class="p-2">
+                <h3 class="font-bold text-lg mb-2">${props?.name || "Unknown"}</h3>
+                <p class="text-sm"><strong>Town:</strong> ${props?.town || "N/A"}</p>
+                <p class="text-sm"><strong>Owner:</strong> ${props?.owner || "N/A"}</p>
+                <p class="text-sm"><strong>Capacity:</strong> ${props?.crushing_capacity_tonnes?.toLocaleString() || "N/A"} tonnes/season</p>
+                <p class="text-sm"><strong>Cogeneration:</strong> ${props?.cogeneration_mw || 0} MW</p>
+                <p class="text-sm"><strong>State:</strong> ${props?.state || "N/A"}</p>
+              </div>
+            `;
+
+            new mapboxgl.Popup()
+              .setLngLat((e.lngLat as any))
+              .setHTML(html)
+              .addTo(map.current!);
+          });
+
+          // Change cursor on hover
+          map.current.on("mouseenter", layer.id, () => {
+            if (map.current) map.current.getCanvas().style.cursor = "pointer";
+          });
+          map.current.on("mouseleave", layer.id, () => {
+            if (map.current) map.current.getCanvas().style.cursor = "";
+          });
+        } else if (layer.type === "fill") {
+          // Add polygon fill
+          map.current.addLayer({
+            id: layer.id,
+            type: "fill",
+            source: layer.id,
+            paint: {
+              "fill-color": layer.color,
+              "fill-opacity": layerOpacity[layer.id] / 100,
+            },
+          });
+
+          // Add polygon outline
+          map.current.addLayer({
+            id: `${layer.id}-outline`,
+            type: "line",
+            source: layer.id,
+            paint: {
+              "line-color": layer.color,
+              "line-width": 2,
+            },
+          });
+
+          // Add click handler for popups
+          map.current.on("click", layer.id, (e: mapboxgl.MapMouseEvent) => {
+            if (!e.features || e.features.length === 0) return;
+            const feature = e.features[0];
+            const props = feature.properties;
+
+            const html = `
+              <div class="p-2">
+                <h3 class="font-bold text-lg mb-2">${props?.name || "Unknown"}</h3>
+                <p class="text-sm"><strong>State:</strong> ${props?.state || "N/A"}</p>
+                <p class="text-sm"><strong>Primary Crops:</strong> ${props?.primary_crops || "N/A"}</p>
+                <p class="text-sm"><strong>Area:</strong> ${parseInt(props?.area_hectares || 0).toLocaleString()} ha</p>
+                <p class="text-sm"><strong>Stubble Production:</strong> ${parseInt(props?.stubble_production_tonnes || 0).toLocaleString()} tonnes/yr</p>
+                <p class="text-sm"><strong>Sustainable Removal:</strong> ${parseInt(props?.sustainable_removal_tonnes || 0).toLocaleString()} tonnes/yr</p>
+              </div>
+            `;
+
+            new mapboxgl.Popup()
+              .setLngLat((e.lngLat as any))
+              .setHTML(html)
+              .addTo(map.current!);
+          });
+
+          // Change cursor on hover
+          map.current.on("mouseenter", layer.id, () => {
+            if (map.current) map.current.getCanvas().style.cursor = "pointer";
+          });
+          map.current.on("mouseleave", layer.id, () => {
+            if (map.current) map.current.getCanvas().style.cursor = "";
+          });
+        }
+      } catch (error) {
+        console.error(`Failed to load layer ${layer.id}:`, error);
+      }
+    }
+  };
+
+  // Toggle layer visibility
+  const toggleLayer = (layerId: string) => {
+    if (!map.current) return;
+
+    const layer = layers.find((l) => l.id === layerId);
+    if (!layer) return;
+
+    const newVisibility = !layer.visible;
+
+    // Update state
+    setLayers(layers.map((l) => (l.id === layerId ? { ...l, visible: newVisibility } : l)));
+
+    // Update map
+    const visibility = newVisibility ? "visible" : "none";
+    if (map.current.getLayer(layerId)) {
+      map.current.setLayoutProperty(layerId, "visibility", visibility);
+    }
+    if (map.current.getLayer(`${layerId}-clusters`)) {
+      map.current.setLayoutProperty(`${layerId}-clusters`, "visibility", visibility);
+    }
+    if (map.current.getLayer(`${layerId}-cluster-count`)) {
+      map.current.setLayoutProperty(`${layerId}-cluster-count`, "visibility", visibility);
+    }
+    if (map.current.getLayer(`${layerId}-outline`)) {
+      map.current.setLayoutProperty(`${layerId}-outline`, "visibility", visibility);
+    }
+  };
+
+  // Update layer opacity
+  const updateOpacity = (layerId: string, opacity: number) => {
+    if (!map.current) return;
+
+    setLayerOpacity({ ...layerOpacity, [layerId]: opacity });
+
+    const layer = layers.find((l) => l.id === layerId);
+    if (!layer) return;
+
+    if (layer.type === "circle") {
+      if (map.current.getLayer(layerId)) {
+        map.current.setPaintProperty(layerId, "circle-opacity", opacity / 100);
+      }
+      if (map.current.getLayer(`${layerId}-clusters`)) {
+        map.current.setPaintProperty(`${layerId}-clusters`, "circle-opacity", opacity / 100);
+      }
+    } else if (layer.type === "fill") {
+      if (map.current.getLayer(layerId)) {
+        map.current.setPaintProperty(layerId, "fill-opacity", opacity / 100);
+      }
+    }
+  };
+
+  // Draw 50km radius
+  const draw50kmRadius = () => {
+    if (!map.current) return;
+
+    const center = map.current.getCenter();
+    setRadiusCenter([center.lng, center.lat]);
+
+    // Remove existing radius if any
+    if (map.current.getLayer("radius-circle")) {
+      map.current.removeLayer("radius-circle");
+    }
+    if (map.current.getSource("radius-circle")) {
+      map.current.removeSource("radius-circle");
+    }
+
+    // Create circle (50km = ~0.45 degrees at equator)
+    const radius = 50 / 111; // Convert km to degrees (approximate)
+    const points = 64;
+    const coordinates: [number, number][] = [];
+
+    for (let i = 0; i < points; i++) {
+      const angle = (i / points) * 2 * Math.PI;
+      const lng = center.lng + radius * Math.cos(angle);
+      const lat = center.lat + radius * Math.sin(angle);
+      coordinates.push([lng, lat]);
+    }
+    coordinates.push(coordinates[0]); // Close the circle
+
+    map.current.addSource("radius-circle", {
+      type: "geojson",
+      data: {
+        type: "Feature",
+        geometry: {
+          type: "Polygon",
+          coordinates: [coordinates],
+        },
+        properties: {},
+      },
+    });
+
+    map.current.addLayer({
+      id: "radius-circle",
+      type: "line",
+      source: "radius-circle",
+      paint: {
+        "line-color": "#FF0000",
+        "line-width": 2,
+        "line-dasharray": [2, 2],
+      },
+    });
+  };
+
+  return (
+    <div className="container py-8">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold mb-2">Australian Bioenergy Feedstock Map</h1>
+        <p className="text-muted-foreground">
+          Interactive GIS visualization of feedstock resources, facilities, and infrastructure
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-4 gap-6">
+        {/* Map Container */}
+        <div className="md:col-span-3">
+          <Card>
+            <CardContent className="p-0">
+              <div ref={mapContainer} className="w-full h-[600px] rounded-lg" />
+            </CardContent>
+          </Card>
+
+          {/* Map Controls */}
+          <div className="mt-4 flex gap-2">
+            <Button onClick={draw50kmRadius} variant="outline">
+              <Target className="h-4 w-4 mr-2" />
+              Draw 50km Radius
+            </Button>
+            <Button variant="outline">
+              <Download className="h-4 w-4 mr-2" />
+              Export GeoJSON
+            </Button>
+          </div>
+        </div>
+
+        {/* Sidebar Controls */}
+        <div className="space-y-4">
+          {/* Search */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Search className="h-5 w-5" />
+                Search
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                placeholder="Search facilities or regions..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </CardContent>
+          </Card>
+
+          {/* Layer Controls */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Layers className="h-5 w-5" />
+                Layers
+              </CardTitle>
+              <CardDescription>Toggle visibility and adjust opacity</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {layers.map((layer) => (
+                <div key={layer.id} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        checked={layer.visible}
+                        onCheckedChange={() => toggleLayer(layer.id)}
+                      />
+                      <Label className="text-sm font-medium">{layer.name}</Label>
+                    </div>
+                    <div
+                      className="w-4 h-4 rounded-full border"
+                      style={{ backgroundColor: layer.color }}
+                    />
+                  </div>
+                  {layer.visible && (
+                    <div className="ml-6 space-y-1">
+                      <div className="flex justify-between text-xs text-muted-foreground">
+                        <span>Opacity</span>
+                        <span>{layerOpacity[layer.id]}%</span>
+                      </div>
+                      <Slider
+                        value={[layerOpacity[layer.id]]}
+                        onValueChange={([value]) => updateOpacity(layer.id, value)}
+                        max={100}
+                        step={10}
+                        className="w-full"
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Legend */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Legend</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full" style={{ backgroundColor: "#8B4513" }} />
+                <span className="text-sm">Sugar Mills (size = capacity)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4" style={{ backgroundColor: "#DAA520", opacity: 0.3 }} />
+                <span className="text-sm">Grain Regions</span>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Stats */}
+          {radiusCenter && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">50km Radius Analysis</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground mb-2">
+                  Center: {radiusCenter[1].toFixed(2)}°, {radiusCenter[0].toFixed(2)}°
+                </p>
+                <Badge>Analysis feature coming soon</Badge>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

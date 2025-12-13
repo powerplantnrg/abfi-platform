@@ -1,0 +1,337 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [145.30, -17.15] },
+      "properties": {
+        "name": "Tableland Mill",
+        "town": "Arriga",
+        "owner": "MSF Sugar",
+        "region": "Far North Queensland",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1000000,
+        "cogeneration_mw": 24,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [145.78, -17.10] },
+      "properties": {
+        "name": "Mulgrave Mill",
+        "town": "Gordonvale",
+        "owner": "MSF Sugar",
+        "region": "Far North Queensland",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1300000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [146.05, -17.62] },
+      "properties": {
+        "name": "South Johnstone Mill",
+        "town": "South Johnstone",
+        "owner": "MSF Sugar",
+        "region": "Far North Queensland",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1732500,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [145.92, -17.94] },
+      "properties": {
+        "name": "Tully Mill",
+        "town": "Tully",
+        "owner": "COFCO",
+        "region": "Far North Queensland",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 2500000,
+        "cogeneration_mw": 35,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [146.18, -18.65] },
+      "properties": {
+        "name": "Victoria Mill",
+        "town": "Ingham",
+        "owner": "Wilmar Sugar",
+        "region": "Herbert",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 3000000,
+        "cogeneration_mw": 35,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [146.26, -18.57] },
+      "properties": {
+        "name": "Macknade Mill",
+        "town": "Macknade",
+        "owner": "Wilmar Sugar",
+        "region": "Herbert",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1500000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [147.10, -19.52] },
+      "properties": {
+        "name": "Invicta Mill",
+        "town": "Giru",
+        "owner": "Wilmar Sugar",
+        "region": "Burdekin",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 3000000,
+        "cogeneration_mw": 42,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [147.36, -19.57] },
+      "properties": {
+        "name": "Pioneer Mill",
+        "town": "Brandon",
+        "owner": "Wilmar Sugar",
+        "region": "Burdekin",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1700000,
+        "cogeneration_mw": 69,
+        "status": "operational",
+        "grid_export": true,
+        "year_round_operation": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [147.41, -19.52] },
+      "properties": {
+        "name": "Kalamia Mill",
+        "town": "Ayr",
+        "owner": "Wilmar Sugar",
+        "region": "Burdekin",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1500000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [147.43, -19.67] },
+      "properties": {
+        "name": "Inkerman Mill",
+        "town": "Home Hill",
+        "owner": "Wilmar Sugar",
+        "region": "Burdekin",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1700000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [148.58, -20.40] },
+      "properties": {
+        "name": "Proserpine Mill",
+        "town": "Proserpine",
+        "owner": "Wilmar Sugar",
+        "region": "Mackay-Proserpine",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1700000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [149.22, -21.42] },
+      "properties": {
+        "name": "Plane Creek Mill",
+        "town": "Sarina",
+        "owner": "Wilmar Sugar",
+        "region": "Mackay-Proserpine",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1200000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [149.13, -21.17] },
+      "properties": {
+        "name": "Racecourse Mill",
+        "town": "Mackay",
+        "owner": "Mackay Sugar",
+        "region": "Mackay-Proserpine",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1700000,
+        "cogeneration_mw": 40,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [148.94, -21.14] },
+      "properties": {
+        "name": "Marian Mill",
+        "town": "Marian",
+        "owner": "Mackay Sugar",
+        "region": "Mackay-Proserpine",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 3650000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [149.00, -21.10] },
+      "properties": {
+        "name": "Farleigh Mill",
+        "town": "Farleigh",
+        "owner": "Mackay Sugar",
+        "region": "Mackay-Proserpine",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1500000,
+        "cogeneration_mw": 8,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [152.37, -24.86] },
+      "properties": {
+        "name": "Millaquin Mill",
+        "town": "Bundaberg",
+        "owner": "Bundaberg Sugar",
+        "region": "Bundaberg/Isis",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1500000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [152.20, -25.20] },
+      "properties": {
+        "name": "Isis Central Mill",
+        "town": "Childers",
+        "owner": "Grower co-op",
+        "region": "Bundaberg/Isis",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 1000000,
+        "cogeneration_mw": 25,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [152.70, -25.53] },
+      "properties": {
+        "name": "Maryborough Mill",
+        "town": "Maryborough",
+        "owner": "MSF Sugar",
+        "region": "Bundaberg/Isis",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 700000,
+        "cogeneration_mw": 0,
+        "status": "operational",
+        "grid_export": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [153.32, -27.72] },
+      "properties": {
+        "name": "Rocky Point Mill",
+        "town": "Woongoolba",
+        "owner": "Stanwell/WH Heck",
+        "region": "Southeast Queensland",
+        "state": "QLD",
+        "crushing_capacity_tonnes": 600000,
+        "cogeneration_mw": 30,
+        "status": "operational",
+        "grid_export": true,
+        "year_round_operation": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [153.22, -29.42] },
+      "properties": {
+        "name": "Harwood Mill",
+        "town": "Harwood Island",
+        "owner": "Sunshine Sugar",
+        "region": "Northern Rivers",
+        "state": "NSW",
+        "crushing_capacity_tonnes": 800000,
+        "cogeneration_mw": 30,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [153.43, -29.00] },
+      "properties": {
+        "name": "Broadwater Mill",
+        "town": "Broadwater",
+        "owner": "Sunshine Sugar",
+        "region": "Northern Rivers",
+        "state": "NSW",
+        "crushing_capacity_tonnes": 900000,
+        "cogeneration_mw": 30,
+        "status": "operational",
+        "grid_export": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [153.45, -28.32] },
+      "properties": {
+        "name": "Condong Mill",
+        "town": "Condong",
+        "owner": "Sunshine Sugar",
+        "region": "Northern Rivers",
+        "state": "NSW",
+        "crushing_capacity_tonnes": 700000,
+        "cogeneration_mw": 30,
+        "status": "operational",
+        "grid_export": true
+      }
+    }
+  ]
+}

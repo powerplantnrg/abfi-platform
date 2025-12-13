@@ -45,16 +45,16 @@ export default function Home() {
             with buyers across Australia. Transparent ratings, certified quality, and
             sustainable sourcing.
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 justify-center">
             <Link href="/browse">
               <Button size="lg" className="text-lg px-8 py-6">
                 Browse Feedstocks
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-            <Link href="/map">
+            <Link href="/feedstock-map">
               <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-                Map View
+                Interactive Map
               </Button>
             </Link>
             {!isAuthenticated && (
