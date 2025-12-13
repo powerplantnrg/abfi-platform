@@ -274,12 +274,12 @@
 ## PHASE 6: Bankability Stress-Testing
 
 ### Backend Schema
-- [ ] Create `stress_scenarios` table
+- [x] Create `stress_scenarios` table
   - scenario_name, scenario_type (supplier_loss, region_shock, shortfall)
   - parameters (JSON - which supplier, what percentage loss, etc.)
   - created_by, created_date
 
-- [ ] Create `stress_test_results` table
+- [x] Create `stress_test_results` table
   - project_id, scenario_id, test_date
   - base_rating, stress_rating, rating_delta
   - base_hhi, stress_hhi
@@ -287,24 +287,24 @@
   - covenant_breaches (JSON array)
   - narrative_summary (text)
 
-- [ ] Create `contract_enforceability_scores` table
+- [x] Create `contract_enforceability_scores` table
   - agreement_id, governing_law, jurisdiction
   - termination_clause_score, step_in_rights_score
   - security_package_score, remedies_score
   - overall_enforceability_score
 
 ### Backend APIs
-- [ ] POST /api/stress-tests - Run stress test
-- [ ] GET /api/stress-tests/:projectId/scenarios - List available scenarios
-- [ ] GET /api/stress-tests/:id/results - Get detailed results
-- [ ] POST /api/agreements/:id/enforceability-assessment - Score contract enforceability
+- [x] POST /api/stress-tests - Run stress test
+- [x] GET /api/stress-tests/:projectId/scenarios - List available scenarios
+- [x] GET /api/stress-tests/:id/results - Get detailed results
+- [x] POST /api/agreements/:id/enforceability-assessment - Score contract enforceability
 
 ### Scenario Engine
-- [ ] Implement "loss of top supplier" scenario
+- [x] Implement "loss of top supplier" scenario
 - [ ] Implement "regional event" scenario (all suppliers in region)
-- [ ] Implement "supply shortfall" scenario (X% reduction)
-- [ ] Implement HHI recalculation under stress
-- [ ] Calculate covenant breach impact
+- [x] Implement "supply shortfall" scenario (X% reduction)
+- [x] Implement HHI recalculation under stress
+- [x] Calculate covenant breach impact
 
 ### Expanded Scoring Logic
 - [ ] Add contract enforceability to Bankability score (new component)

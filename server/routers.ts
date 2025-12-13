@@ -1559,6 +1559,87 @@ export const appRouter = router({
         return await db.getLatestYieldEstimate(input.feedstockId);
       }),
   }),
+  
+  // Stress-Testing Engine (Phase 6)
+  stressTesting: router({
+    // Run stress test
+    runStressTest: protectedProcedure
+      .input(z.object({
+        projectId: z.number(),
+        scenarioType: z.enum(["supplier_loss", "supply_shortfall", "regional_shock"]),
+        scenarioParams: z.object({
+          supplierId: z.number().optional(),
+          shortfallPercent: z.number().optional(),
+          region: z.string().optional(),
+        }),
+        baseScore: z.number(),
+        baseRating: z.string(),
+        covenants: z.array(z.object({
+          type: z.string(),
+          threshold: z.number(),
+        })).optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        // Get project agreements
+        const agreements = await db.getSupplyAgreementsByProjectId(input.projectId);
+        const agreementData = agreements.map(a => ({
+          id: a.id,
+          supplierId: a.supplierId,
+          committedVolume: (a as any).committedVolume || 0,
+        }));
+        
+        const { runStressTest } = await import("./stressTesting.js");
+        return await runStressTest({
+          ...input,
+          agreements: agreementData,
+          testedBy: ctx.user.id,
+        });
+      }),
+    
+    // Get stress test results for a project
+    getProjectResults: protectedProcedure
+      .input(z.object({ projectId: z.number() }))
+      .query(async ({ input }) => {
+        const { getStressTestResults } = await import("./stressTesting.js");
+        return await getStressTestResults(input.projectId);
+      }),
+    
+    // Get specific stress test result
+    getResult: protectedProcedure
+      .input(z.object({ resultId: z.number() }))
+      .query(async ({ input }) => {
+        const { getStressTestResult } = await import("./stressTesting.js");
+        return await getStressTestResult(input.resultId);
+      }),
+    
+    // Assess contract enforceability
+    assessEnforceability: protectedProcedure
+      .input(z.object({
+        agreementId: z.number(),
+        governingLaw: z.string(),
+        jurisdiction: z.string(),
+        disputeResolution: z.enum(["litigation", "arbitration", "mediation", "expert_determination"]),
+        hasTerminationProtections: z.boolean(),
+        hasStepInRights: z.boolean(),
+        hasSecurityPackage: z.boolean(),
+        hasRemedies: z.boolean(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const { assessContractEnforceability } = await import("./stressTesting.js");
+        return await assessContractEnforceability({
+          ...input,
+          assessedBy: ctx.user.id,
+        });
+      }),
+    
+    // Get contract enforceability score
+    getEnforceabilityScore: protectedProcedure
+      .input(z.object({ agreementId: z.number() }))
+      .query(async ({ input }) => {
+        const { getContractEnforceabilityScore } = await import("./stressTesting.js");
+        return await getContractEnforceabilityScore(input.agreementId);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

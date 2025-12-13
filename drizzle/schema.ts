@@ -1382,3 +1382,158 @@ export const scoreImprovementSimulations = mysqlTable("scoreImprovementSimulatio
 
 export type ScoreImprovementSimulation = typeof scoreImprovementSimulations.$inferSelect;
 export type InsertScoreImprovementSimulation = typeof scoreImprovementSimulations.$inferInsert;
+
+// ============================================================================
+// STRESS-TESTING ENGINE (Phase 6)
+// ============================================================================
+
+export const stressScenarios = mysqlTable("stressScenarios", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  // Scenario definition
+  scenarioName: varchar("scenarioName", { length: 255 }).notNull(),
+  scenarioType: mysqlEnum("scenarioType", [
+    "supplier_loss",
+    "regional_shock",
+    "supply_shortfall",
+    "price_spike",
+    "quality_degradation",
+    "cascading_failure"
+  ]).notNull(),
+  
+  // Parameters (JSON structure depends on scenario type)
+  parameters: json("parameters").$type<{
+    supplierId?: number;
+    supplierIds?: number[];
+    region?: string;
+    shortfallPercent?: number;
+    priceIncreasePercent?: number;
+    qualityDropPoints?: number;
+    cascadeDepth?: number;
+  }>(),
+  
+  // Metadata
+  description: text("description"),
+  createdBy: int("createdBy").references(() => users.id),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  
+  // Reusability
+  isTemplate: boolean("isTemplate").default(false),
+}, (table) => ({
+  scenarioTypeIdx: index("stressScenarios_scenarioType_idx").on(table.scenarioType),
+}));
+
+export type StressScenario = typeof stressScenarios.$inferSelect;
+export type InsertStressScenario = typeof stressScenarios.$inferInsert;
+
+// ============================================================================
+// STRESS TEST RESULTS (Phase 6)
+// ============================================================================
+
+export const stressTestResults = mysqlTable("stressTestResults", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  projectId: int("projectId").notNull().references(() => projects.id),
+  scenarioId: int("scenarioId").notNull().references(() => stressScenarios.id),
+  
+  // Test metadata
+  testDate: timestamp("testDate").notNull(),
+  testedBy: int("testedBy").references(() => users.id),
+  
+  // Base case (before stress)
+  baseRating: varchar("baseRating", { length: 20 }).notNull(), // e.g., "AAA"
+  baseScore: int("baseScore").notNull(),
+  baseHhi: int("baseHhi"), // Herfindahl-Hirschman Index (0-10000)
+  baseTier1Coverage: int("baseTier1Coverage"), // Percentage
+  
+  // Stress case (after stress)
+  stressRating: varchar("stressRating", { length: 20 }).notNull(),
+  stressScore: int("stressScore").notNull(),
+  stressHhi: int("stressHhi"),
+  stressTier1Coverage: int("stressTier1Coverage"),
+  
+  // Deltas
+  ratingDelta: int("ratingDelta"), // Number of notches (e.g., AAA → AA = -1)
+  scoreDelta: int("scoreDelta"),
+  hhiDelta: int("hhiDelta"),
+  
+  // Supply impact
+  supplyShortfallPercent: int("supplyShortfallPercent"), // 0-100
+  remainingSuppliers: int("remainingSuppliers"),
+  
+  // Covenant breaches
+  covenantBreaches: json("covenantBreaches").$type<Array<{
+    covenantType: string;
+    threshold: number;
+    actualValue: number;
+    breachSeverity: "minor" | "moderate" | "major" | "critical";
+  }>>(),
+  
+  // Narrative
+  narrativeSummary: text("narrativeSummary"),
+  recommendations: json("recommendations").$type<string[]>(),
+  
+  // Pass/fail
+  passesStressTest: boolean("passesStressTest").notNull(),
+  minimumRatingMaintained: boolean("minimumRatingMaintained"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, (table) => ({
+  projectIdIdx: index("stressTestResults_projectId_idx").on(table.projectId),
+  scenarioIdIdx: index("stressTestResults_scenarioId_idx").on(table.scenarioId),
+  testDateIdx: index("stressTestResults_testDate_idx").on(table.testDate),
+}));
+
+export type StressTestResult = typeof stressTestResults.$inferSelect;
+export type InsertStressTestResult = typeof stressTestResults.$inferInsert;
+
+// ============================================================================
+// CONTRACT ENFORCEABILITY SCORES (Phase 6)
+// ============================================================================
+
+export const contractEnforceabilityScores = mysqlTable("contractEnforceabilityScores", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  agreementId: int("agreementId").notNull().references(() => supplyAgreements.id),
+  
+  // Legal framework
+  governingLaw: varchar("governingLaw", { length: 100 }), // e.g., "New South Wales"
+  jurisdiction: varchar("jurisdiction", { length: 100 }), // e.g., "Supreme Court of NSW"
+  disputeResolution: mysqlEnum("disputeResolution", [
+    "litigation",
+    "arbitration",
+    "mediation",
+    "expert_determination"
+  ]),
+  
+  // Component scores (0-10 each)
+  terminationClauseScore: int("terminationClauseScore"), // Protections against early termination
+  stepInRightsScore: int("stepInRightsScore"), // Lender ability to step in
+  securityPackageScore: int("securityPackageScore"), // Collateral, guarantees
+  remediesScore: int("remediesScore"), // Damages, specific performance
+  jurisdictionScore: int("jurisdictionScore"), // Quality of legal system
+  
+  // Overall
+  overallEnforceabilityScore: int("overallEnforceabilityScore").notNull(), // 0-50
+  enforceabilityRating: mysqlEnum("enforceabilityRating", [
+    "strong",
+    "adequate",
+    "weak",
+    "very_weak"
+  ]).notNull(),
+  
+  // Assessment metadata
+  assessedBy: int("assessedBy").references(() => users.id),
+  assessedDate: timestamp("assessedDate").notNull(),
+  legalOpinionAttached: boolean("legalOpinionAttached").default(false),
+  
+  notes: text("notes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  agreementIdIdx: index("contractEnforceabilityScores_agreementId_idx").on(table.agreementId),
+}));
+
+export type ContractEnforceabilityScore = typeof contractEnforceabilityScores.$inferSelect;
+export type InsertContractEnforceabilityScore = typeof contractEnforceabilityScores.$inferInsert;
