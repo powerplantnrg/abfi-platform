@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "8f313954-53ec-42e5-8daf-2059eb455047",
-  "prevId": "b4d099e2-502f-4808-865b-14147b35ebb5",
+  "id": "4cadea88-35dc-4b19-b92e-04112d842a4b",
+  "prevId": "417c7f9f-c7ed-499a-8431-fe7b4e2ef8e7",
   "tables": {
     "auditLogs": {
       "name": "auditLogs",
@@ -539,19 +539,6 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "bankabilityAssessments_supersededById_bankabilityAssessments_id_fk": {
-          "name": "bankabilityAssessments_supersededById_bankabilityAssessments_id_fk",
-          "tableFrom": "bankabilityAssessments",
-          "tableTo": "bankabilityAssessments",
-          "columnsFrom": [
-            "supersededById"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -1052,13 +1039,209 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "certificates_id": {
+          "name": "certificates_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "climateExposure": {
+      "name": "climateExposure",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
         },
-        "certificates_supersededById_certificates_id_fk": {
-          "name": "certificates_supersededById_certificates_id_fk",
-          "tableFrom": "certificates",
-          "tableTo": "certificates",
+        "supplierId": {
+          "name": "supplierId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "feedstockId": {
+          "name": "feedstockId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "exposureType": {
+          "name": "exposureType",
+          "type": "enum('drought','flood','bushfire','frost','heatwave','cyclone','pest_outbreak')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "riskLevel": {
+          "name": "riskLevel",
+          "type": "enum('low','medium','high','extreme')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "probabilityPercent": {
+          "name": "probabilityPercent",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "impactSeverity": {
+          "name": "impactSeverity",
+          "type": "enum('minor','moderate','major','catastrophic')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mitigationMeasures": {
+          "name": "mitigationMeasures",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "insuranceCoverage": {
+          "name": "insuranceCoverage",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "insuranceValue": {
+          "name": "insuranceValue",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "assessedDate": {
+          "name": "assessedDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "assessedBy": {
+          "name": "assessedBy",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "nextReviewDate": {
+          "name": "nextReviewDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastEventDate": {
+          "name": "lastEventDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastEventImpact": {
+          "name": "lastEventImpact",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "climateExposure_supplierId_idx": {
+          "name": "climateExposure_supplierId_idx",
+          "columns": [
+            "supplierId"
+          ],
+          "isUnique": false
+        },
+        "climateExposure_feedstockId_idx": {
+          "name": "climateExposure_feedstockId_idx",
+          "columns": [
+            "feedstockId"
+          ],
+          "isUnique": false
+        },
+        "climateExposure_riskLevel_idx": {
+          "name": "climateExposure_riskLevel_idx",
+          "columns": [
+            "riskLevel"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "climateExposure_supplierId_suppliers_id_fk": {
+          "name": "climateExposure_supplierId_suppliers_id_fk",
+          "tableFrom": "climateExposure",
+          "tableTo": "suppliers",
           "columnsFrom": [
-            "supersededById"
+            "supplierId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "climateExposure_feedstockId_feedstocks_id_fk": {
+          "name": "climateExposure_feedstockId_feedstocks_id_fk",
+          "tableFrom": "climateExposure",
+          "tableTo": "feedstocks",
+          "columnsFrom": [
+            "feedstockId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "climateExposure_assessedBy_users_id_fk": {
+          "name": "climateExposure_assessedBy_users_id_fk",
+          "tableFrom": "climateExposure",
+          "tableTo": "users",
+          "columnsFrom": [
+            "assessedBy"
           ],
           "columnsTo": [
             "id"
@@ -1068,8 +1251,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "certificates_id": {
-          "name": "certificates_id",
+        "climateExposure_id": {
+          "name": "climateExposure_id",
           "columns": [
             "id"
           ]
@@ -1269,6 +1452,181 @@
       "compositePrimaryKeys": {
         "covenantMonitoring_id": {
           "name": "covenantMonitoring_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "deliveryEvents": {
+      "name": "deliveryEvents",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "agreementId": {
+          "name": "agreementId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "scheduledDate": {
+          "name": "scheduledDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actualDate": {
+          "name": "actualDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "committedVolume": {
+          "name": "committedVolume",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actualVolume": {
+          "name": "actualVolume",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "variancePercent": {
+          "name": "variancePercent",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "varianceReason": {
+          "name": "varianceReason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "onTime": {
+          "name": "onTime",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "qualityMet": {
+          "name": "qualityMet",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "qualityTestId": {
+          "name": "qualityTestId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "enum('scheduled','in_transit','delivered','partial','cancelled','failed')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'scheduled'"
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "deliveryEvents_agreementId_idx": {
+          "name": "deliveryEvents_agreementId_idx",
+          "columns": [
+            "agreementId"
+          ],
+          "isUnique": false
+        },
+        "deliveryEvents_scheduledDate_idx": {
+          "name": "deliveryEvents_scheduledDate_idx",
+          "columns": [
+            "scheduledDate"
+          ],
+          "isUnique": false
+        },
+        "deliveryEvents_status_idx": {
+          "name": "deliveryEvents_status_idx",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "deliveryEvents_agreementId_supplyAgreements_id_fk": {
+          "name": "deliveryEvents_agreementId_supplyAgreements_id_fk",
+          "tableFrom": "deliveryEvents",
+          "tableTo": "supplyAgreements",
+          "columnsFrom": [
+            "agreementId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "deliveryEvents_qualityTestId_qualityTests_id_fk": {
+          "name": "deliveryEvents_qualityTestId_qualityTests_id_fk",
+          "tableFrom": "deliveryEvents",
+          "tableTo": "qualityTests",
+          "columnsFrom": [
+            "qualityTestId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "deliveryEvents_id": {
+          "name": "deliveryEvents_id",
           "columns": [
             "id"
           ]
@@ -1990,19 +2348,6 @@
           "tableTo": "users",
           "columnsFrom": [
             "verifiedBy"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "feedstocks_supersededById_feedstocks_id_fk": {
-          "name": "feedstocks_supersededById_feedstocks_id_fk",
-          "tableFrom": "feedstocks",
-          "tableTo": "feedstocks",
-          "columnsFrom": [
-            "supersededById"
           ],
           "columnsTo": [
             "id"
@@ -3224,6 +3569,133 @@
       "uniqueConstraints": {},
       "checkConstraint": {}
     },
+    "seasonalityProfiles": {
+      "name": "seasonalityProfiles",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "feedstockId": {
+          "name": "feedstockId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "month": {
+          "name": "month",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "availabilityPercent": {
+          "name": "availabilityPercent",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "isPeakSeason": {
+          "name": "isPeakSeason",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "harvestWindowStart": {
+          "name": "harvestWindowStart",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "harvestWindowEnd": {
+          "name": "harvestWindowEnd",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "historicalYield": {
+          "name": "historicalYield",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "seasonalityProfiles_feedstockId_idx": {
+          "name": "seasonalityProfiles_feedstockId_idx",
+          "columns": [
+            "feedstockId"
+          ],
+          "isUnique": false
+        },
+        "seasonalityProfiles_month_idx": {
+          "name": "seasonalityProfiles_month_idx",
+          "columns": [
+            "month"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "seasonalityProfiles_feedstockId_feedstocks_id_fk": {
+          "name": "seasonalityProfiles_feedstockId_feedstocks_id_fk",
+          "tableFrom": "seasonalityProfiles",
+          "tableTo": "feedstocks",
+          "columnsFrom": [
+            "feedstockId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "seasonalityProfiles_id": {
+          "name": "seasonalityProfiles_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
     "suppliers": {
       "name": "suppliers",
       "columns": {
@@ -3780,19 +4252,6 @@
           ],
           "onDelete": "no action",
           "onUpdate": "no action"
-        },
-        "supplyAgreements_supersededById_supplyAgreements_id_fk": {
-          "name": "supplyAgreements_supersededById_supplyAgreements_id_fk",
-          "tableFrom": "supplyAgreements",
-          "tableTo": "supplyAgreements",
-          "columnsFrom": [
-            "supersededById"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
@@ -4152,6 +4611,173 @@
           ]
         }
       },
+      "checkConstraint": {}
+    },
+    "yieldEstimates": {
+      "name": "yieldEstimates",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "feedstockId": {
+          "name": "feedstockId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "year": {
+          "name": "year",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "season": {
+          "name": "season",
+          "type": "enum('summer','autumn','winter','spring','annual')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "p50Yield": {
+          "name": "p50Yield",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "p75Yield": {
+          "name": "p75Yield",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "p90Yield": {
+          "name": "p90Yield",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confidenceLevel": {
+          "name": "confidenceLevel",
+          "type": "enum('low','medium','high')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "methodology": {
+          "name": "methodology",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "weatherDependencyScore": {
+          "name": "weatherDependencyScore",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "estimatedBy": {
+          "name": "estimatedBy",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "estimatedDate": {
+          "name": "estimatedDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {
+        "yieldEstimates_feedstockId_idx": {
+          "name": "yieldEstimates_feedstockId_idx",
+          "columns": [
+            "feedstockId"
+          ],
+          "isUnique": false
+        },
+        "yieldEstimates_year_idx": {
+          "name": "yieldEstimates_year_idx",
+          "columns": [
+            "year"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "yieldEstimates_feedstockId_feedstocks_id_fk": {
+          "name": "yieldEstimates_feedstockId_feedstocks_id_fk",
+          "tableFrom": "yieldEstimates",
+          "tableTo": "feedstocks",
+          "columnsFrom": [
+            "feedstockId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "yieldEstimates_estimatedBy_users_id_fk": {
+          "name": "yieldEstimates_estimatedBy_users_id_fk",
+          "tableFrom": "yieldEstimates",
+          "tableTo": "users",
+          "columnsFrom": [
+            "estimatedBy"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "yieldEstimates_id": {
+          "name": "yieldEstimates_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
       "checkConstraint": {}
     }
   },

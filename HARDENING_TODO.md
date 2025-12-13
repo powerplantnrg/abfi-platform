@@ -117,24 +117,24 @@
 ## PHASE 3: Physical Reality & Supply Risk
 
 ### Backend Schema
-- [ ] Create `yield_estimates` table
+- [x] Create `yield_estimates` table
   - feedstock_id, year, season
   - p50_yield, p75_yield, p90_yield (tonnes/hectare)
   - confidence_level, methodology, estimated_by
   - weather_dependency_score (1-10)
   - created_at, updated_at
 
-- [ ] Create `delivery_events` table
+- [x] Create `delivery_events` table
   - agreement_id, scheduled_date, actual_date
   - committed_volume, actual_volume
   - variance_percentage, variance_reason
   - on_time (boolean), quality_met (boolean)
 
-- [ ] Create `seasonality_profiles` table
+- [x] Create `seasonality_profiles` table
   - feedstock_id, month, availability_percentage
   - peak_season (boolean), harvest_window_start, harvest_window_end
 
-- [ ] Create `climate_exposure` table
+- [x] Create `climate_exposure` table
   - supplier_id, site_id, exposure_type (drought, flood, fire, frost)
   - risk_level (low, medium, high, extreme)
   - mitigation_measures (text)
@@ -149,13 +149,13 @@
   - Add total_hectares, site_count
 
 ### Backend APIs
-- [ ] POST /api/yield-estimates - Add yield estimate
-- [ ] GET /api/feedstocks/:id/yield-confidence - Get P50/P75/P90 data
-- [ ] POST /api/delivery-events - Record delivery event
-- [ ] GET /api/agreements/:id/delivery-performance - Get fill rate, variance
+- [x] POST /api/yield-estimates - Add yield estimate
+- [x] GET /api/feedstocks/:id/yield-confidence - Get P50/P75/P90 data
+- [x] POST /api/delivery-events - Record delivery event
+- [x] GET /api/agreements/:id/delivery-performance - Get fill rate, variance
 - [ ] GET /api/suppliers/:id/sites - List supplier sites
 - [ ] POST /api/suppliers/:id/sites - Add supplier site
-- [ ] GET /api/feedstocks/:id/seasonality - Get availability by month
+- [x] GET /api/feedstocks/:id/seasonality - Get availability by month
 
 ### Scoring Adjustments
 - [ ] Update Volume Security score to factor in P50/P75/P90

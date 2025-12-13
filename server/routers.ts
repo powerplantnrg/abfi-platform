@@ -1423,6 +1423,142 @@ export const appRouter = router({
         return compareVersions(oldVersion, newVersion);
       }),
   }),
+  
+  // Physical Reality & Supply Risk (Phase 3)
+  physicalReality: router({
+    // Delivery Events
+    recordDelivery: protectedProcedure
+      .input(z.object({
+        agreementId: z.number(),
+        scheduledDate: z.date(),
+        actualDate: z.date().optional(),
+        committedVolume: z.number(),
+        actualVolume: z.number().optional(),
+        onTime: z.boolean().optional(),
+        qualityMet: z.boolean().optional(),
+        status: z.enum(["scheduled", "in_transit", "delivered", "partial", "cancelled", "failed"]),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const variancePercent = input.actualVolume && input.committedVolume
+          ? Math.round(((input.actualVolume - input.committedVolume) / input.committedVolume) * 100)
+          : null;
+        
+        return await db.createDeliveryEvent({
+          ...input,
+          variancePercent,
+          varianceReason: null,
+          qualityTestId: null,
+        });
+      }),
+    
+    getDeliveryHistory: protectedProcedure
+      .input(z.object({ agreementId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getDeliveryEventsByAgreement(input.agreementId);
+      }),
+    
+    getDeliveryPerformance: protectedProcedure
+      .input(z.object({ agreementId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getDeliveryPerformanceMetrics(input.agreementId);
+      }),
+    
+    // Seasonality
+    addSeasonality: protectedProcedure
+      .input(z.object({
+        feedstockId: z.number(),
+        month: z.number().min(1).max(12),
+        availabilityPercent: z.number().min(0).max(100),
+        isPeakSeason: z.boolean().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        return await db.createSeasonalityProfile({
+          ...input,
+          harvestWindowStart: null,
+          harvestWindowEnd: null,
+          historicalYield: null,
+        });
+      }),
+    
+    getSeasonality: protectedProcedure
+      .input(z.object({ feedstockId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getSeasonalityByFeedstock(input.feedstockId);
+      }),
+    
+    // Climate Exposure
+    addClimateRisk: protectedProcedure
+      .input(z.object({
+        supplierId: z.number(),
+        feedstockId: z.number().optional(),
+        exposureType: z.enum(["drought", "flood", "bushfire", "frost", "heatwave", "cyclone", "pest_outbreak"]),
+        riskLevel: z.enum(["low", "medium", "high", "extreme"]),
+        probabilityPercent: z.number().min(0).max(100).optional(),
+        impactSeverity: z.enum(["minor", "moderate", "major", "catastrophic"]).optional(),
+        mitigationMeasures: z.string().optional(),
+        insuranceCoverage: z.boolean().optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return await db.createClimateExposure({
+          ...input,
+          assessedDate: new Date(),
+          assessedBy: ctx.user.id,
+          nextReviewDate: null,
+          lastEventDate: null,
+          lastEventImpact: null,
+          insuranceValue: null,
+        });
+      }),
+    
+    getSupplierClimateRisks: protectedProcedure
+      .input(z.object({ supplierId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getClimateExposureBySupplier(input.supplierId);
+      }),
+    
+    getFeedstockClimateRisks: protectedProcedure
+      .input(z.object({ feedstockId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getClimateExposureByFeedstock(input.feedstockId);
+      }),
+    
+    // Yield Estimates
+    addYieldEstimate: protectedProcedure
+      .input(z.object({
+        feedstockId: z.number(),
+        year: z.number(),
+        season: z.enum(["summer", "autumn", "winter", "spring", "annual"]).optional(),
+        p50Yield: z.number(),
+        p75Yield: z.number().optional(),
+        p90Yield: z.number().optional(),
+        confidenceLevel: z.enum(["low", "medium", "high"]),
+        methodology: z.string().optional(),
+        weatherDependencyScore: z.number().min(1).max(10).optional(),
+        notes: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        return await db.createYieldEstimate({
+          ...input,
+          estimatedBy: ctx.user.id,
+          estimatedDate: new Date(),
+        });
+      }),
+    
+    getYieldEstimates: protectedProcedure
+      .input(z.object({ feedstockId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getYieldEstimatesByFeedstock(input.feedstockId);
+      }),
+    
+    getLatestYield: protectedProcedure
+      .input(z.object({ feedstockId: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getLatestYieldEstimate(input.feedstockId);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

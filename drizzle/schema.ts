@@ -1067,3 +1067,177 @@ export const certificateSnapshots = mysqlTable("certificateSnapshots", {
 
 export type CertificateSnapshot = typeof certificateSnapshots.$inferSelect;
 export type InsertCertificateSnapshot = typeof certificateSnapshots.$inferInsert;
+
+// ============================================================================
+// DELIVERY EVENTS (Phase 3: Physical Reality)
+// ============================================================================
+
+export const deliveryEvents = mysqlTable("deliveryEvents", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  agreementId: int("agreementId").notNull().references(() => supplyAgreements.id),
+  
+  // Scheduled vs Actual
+  scheduledDate: timestamp("scheduledDate").notNull(),
+  actualDate: timestamp("actualDate"),
+  
+  // Volume
+  committedVolume: int("committedVolume").notNull(), // tonnes
+  actualVolume: int("actualVolume"), // tonnes
+  variancePercent: int("variancePercent"), // Calculated: (actual - committed) / committed * 100
+  varianceReason: text("varianceReason"),
+  
+  // Performance flags
+  onTime: boolean("onTime"), // actualDate <= scheduledDate
+  qualityMet: boolean("qualityMet"),
+  
+  // Quality parameters (if tested)
+  qualityTestId: int("qualityTestId").references(() => qualityTests.id),
+  
+  // Status
+  status: mysqlEnum("status", [
+    "scheduled",
+    "in_transit",
+    "delivered",
+    "partial",
+    "cancelled",
+    "failed"
+  ]).default("scheduled").notNull(),
+  
+  notes: text("notes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  agreementIdIdx: index("deliveryEvents_agreementId_idx").on(table.agreementId),
+  scheduledDateIdx: index("deliveryEvents_scheduledDate_idx").on(table.scheduledDate),
+  statusIdx: index("deliveryEvents_status_idx").on(table.status),
+}));
+
+export type DeliveryEvent = typeof deliveryEvents.$inferSelect;
+export type InsertDeliveryEvent = typeof deliveryEvents.$inferInsert;
+
+// ============================================================================
+// SEASONALITY PROFILES (Phase 3: Physical Reality)
+// ============================================================================
+
+export const seasonalityProfiles = mysqlTable("seasonalityProfiles", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  feedstockId: int("feedstockId").notNull().references(() => feedstocks.id),
+  
+  // Monthly availability (1-12)
+  month: int("month").notNull(), // 1 = January, 12 = December
+  availabilityPercent: int("availabilityPercent").notNull(), // 0-100
+  
+  // Peak season flags
+  isPeakSeason: boolean("isPeakSeason").default(false),
+  harvestWindowStart: timestamp("harvestWindowStart"),
+  harvestWindowEnd: timestamp("harvestWindowEnd"),
+  
+  // Historical data
+  historicalYield: int("historicalYield"), // tonnes in this month (historical average)
+  
+  notes: text("notes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  feedstockIdIdx: index("seasonalityProfiles_feedstockId_idx").on(table.feedstockId),
+  monthIdx: index("seasonalityProfiles_month_idx").on(table.month),
+}));
+
+export type SeasonalityProfile = typeof seasonalityProfiles.$inferSelect;
+export type InsertSeasonalityProfile = typeof seasonalityProfiles.$inferInsert;
+
+// ============================================================================
+// CLIMATE EXPOSURE (Phase 3: Physical Reality)
+// ============================================================================
+
+export const climateExposure = mysqlTable("climateExposure", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  supplierId: int("supplierId").notNull().references(() => suppliers.id),
+  feedstockId: int("feedstockId").references(() => feedstocks.id), // Optional: specific feedstock
+  
+  // Exposure type
+  exposureType: mysqlEnum("exposureType", [
+    "drought",
+    "flood",
+    "bushfire",
+    "frost",
+    "heatwave",
+    "cyclone",
+    "pest_outbreak"
+  ]).notNull(),
+  
+  // Risk assessment
+  riskLevel: mysqlEnum("riskLevel", ["low", "medium", "high", "extreme"]).notNull(),
+  probabilityPercent: int("probabilityPercent"), // Annual probability (0-100)
+  impactSeverity: mysqlEnum("impactSeverity", ["minor", "moderate", "major", "catastrophic"]),
+  
+  // Mitigation
+  mitigationMeasures: text("mitigationMeasures"),
+  insuranceCoverage: boolean("insuranceCoverage").default(false),
+  insuranceValue: int("insuranceValue"), // AUD
+  
+  // Assessment metadata
+  assessedDate: timestamp("assessedDate").notNull(),
+  assessedBy: int("assessedBy").references(() => users.id),
+  nextReviewDate: timestamp("nextReviewDate"),
+  
+  // Historical events
+  lastEventDate: timestamp("lastEventDate"),
+  lastEventImpact: text("lastEventImpact"),
+  
+  notes: text("notes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  supplierIdIdx: index("climateExposure_supplierId_idx").on(table.supplierId),
+  feedstockIdIdx: index("climateExposure_feedstockId_idx").on(table.feedstockId),
+  riskLevelIdx: index("climateExposure_riskLevel_idx").on(table.riskLevel),
+}));
+
+export type ClimateExposure = typeof climateExposure.$inferSelect;
+export type InsertClimateExposure = typeof climateExposure.$inferInsert;
+
+// ============================================================================
+// YIELD ESTIMATES (Phase 3: Physical Reality)
+// ============================================================================
+
+export const yieldEstimates = mysqlTable("yieldEstimates", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  feedstockId: int("feedstockId").notNull().references(() => feedstocks.id),
+  
+  // Time period
+  year: int("year").notNull(),
+  season: mysqlEnum("season", ["summer", "autumn", "winter", "spring", "annual"]),
+  
+  // Probabilistic estimates (tonnes/hectare)
+  p50Yield: int("p50Yield").notNull(), // Median (50% confidence)
+  p75Yield: int("p75Yield"), // 75% confidence (conservative)
+  p90Yield: int("p90Yield"), // 90% confidence (very conservative)
+  
+  // Confidence and methodology
+  confidenceLevel: mysqlEnum("confidenceLevel", ["low", "medium", "high"]).notNull(),
+  methodology: text("methodology"), // e.g., "Historical average", "Agronomic model", "Expert judgment"
+  weatherDependencyScore: int("weatherDependencyScore"), // 1-10 (10 = highly weather dependent)
+  
+  // Metadata
+  estimatedBy: int("estimatedBy").references(() => users.id),
+  estimatedDate: timestamp("estimatedDate").notNull(),
+  
+  notes: text("notes"),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  feedstockIdIdx: index("yieldEstimates_feedstockId_idx").on(table.feedstockId),
+  yearIdx: index("yieldEstimates_year_idx").on(table.year),
+}));
+
+export type YieldEstimate = typeof yieldEstimates.$inferSelect;
+export type InsertYieldEstimate = typeof yieldEstimates.$inferInsert;

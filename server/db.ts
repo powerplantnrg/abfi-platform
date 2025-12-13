@@ -14,7 +14,11 @@ import {
   auditLogs, InsertAuditLog,
   evidence, InsertEvidence,
   evidenceLinkages, InsertEvidenceLinkage,
-  certificateSnapshots, InsertCertificateSnapshot
+  certificateSnapshots, InsertCertificateSnapshot,
+  deliveryEvents, InsertDeliveryEvent,
+  seasonalityProfiles, InsertSeasonalityProfile,
+  climateExposure, InsertClimateExposure,
+  yieldEstimates, InsertYieldEstimate
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -940,5 +944,155 @@ export async function getCertificateSnapshotByHash(snapshotHash: string) {
   
   const results = await db.select().from(certificateSnapshots)
     .where(eq(certificateSnapshots.snapshotHash, snapshotHash));
+  return results[0] || null;
+}
+
+// ============================================================================
+// PHYSICAL REALITY & SUPPLY RISK (Phase 3)
+// ============================================================================
+
+/**
+ * Delivery Events
+ */
+export async function createDeliveryEvent(data: InsertDeliveryEvent) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(deliveryEvents).values(data);
+  return Number(result[0].insertId);
+}
+
+export async function getDeliveryEventsByAgreement(agreementId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(deliveryEvents)
+    .where(eq(deliveryEvents.agreementId, agreementId))
+    .orderBy(desc(deliveryEvents.scheduledDate));
+}
+
+export async function getDeliveryPerformanceMetrics(agreementId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const events = await db
+    .select()
+    .from(deliveryEvents)
+    .where(
+      and(
+        eq(deliveryEvents.agreementId, agreementId),
+        eq(deliveryEvents.status, "delivered")
+      )
+    );
+  
+  if (events.length === 0) return null;
+  
+  const totalCommitted = events.reduce((sum, e) => sum + (e.committedVolume || 0), 0);
+  const totalActual = events.reduce((sum, e) => sum + (e.actualVolume || 0), 0);
+  const onTimeCount = events.filter(e => e.onTime).length;
+  const qualityMetCount = events.filter(e => e.qualityMet).length;
+  
+  return {
+    totalEvents: events.length,
+    fillRate: totalCommitted > 0 ? (totalActual / totalCommitted) * 100 : 0,
+    onTimePercent: (onTimeCount / events.length) * 100,
+    qualityMetPercent: (qualityMetCount / events.length) * 100,
+    totalCommitted,
+    totalActual,
+    variance: totalActual - totalCommitted,
+    variancePercent: totalCommitted > 0 ? ((totalActual - totalCommitted) / totalCommitted) * 100 : 0,
+  };
+}
+
+/**
+ * Seasonality Profiles
+ */
+export async function createSeasonalityProfile(data: InsertSeasonalityProfile) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(seasonalityProfiles).values(data);
+  return Number(result[0].insertId);
+}
+
+export async function getSeasonalityByFeedstock(feedstockId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(seasonalityProfiles)
+    .where(eq(seasonalityProfiles.feedstockId, feedstockId))
+    .orderBy(seasonalityProfiles.month);
+}
+
+/**
+ * Climate Exposure
+ */
+export async function createClimateExposure(data: InsertClimateExposure) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(climateExposure).values(data);
+  return Number(result[0].insertId);
+}
+
+export async function getClimateExposureBySupplier(supplierId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(climateExposure)
+    .where(eq(climateExposure.supplierId, supplierId))
+    .orderBy(desc(climateExposure.riskLevel));
+}
+
+export async function getClimateExposureByFeedstock(feedstockId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(climateExposure)
+    .where(eq(climateExposure.feedstockId, feedstockId))
+    .orderBy(desc(climateExposure.riskLevel));
+}
+
+/**
+ * Yield Estimates
+ */
+export async function createYieldEstimate(data: InsertYieldEstimate) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const result = await db.insert(yieldEstimates).values(data);
+  return Number(result[0].insertId);
+}
+
+export async function getYieldEstimatesByFeedstock(feedstockId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db
+    .select()
+    .from(yieldEstimates)
+    .where(eq(yieldEstimates.feedstockId, feedstockId))
+    .orderBy(desc(yieldEstimates.year));
+}
+
+export async function getLatestYieldEstimate(feedstockId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const results = await db
+    .select()
+    .from(yieldEstimates)
+    .where(eq(yieldEstimates.feedstockId, feedstockId))
+    .orderBy(desc(yieldEstimates.year))
+    .limit(1);
+  
   return results[0] || null;
 }
