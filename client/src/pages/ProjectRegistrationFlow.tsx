@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { trpc } from "@/lib/trpc";
+
 import { Check, ChevronRight, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,10 +93,55 @@ export default function ProjectRegistrationFlow() {
     }
   };
 
+  const registerProjectMutation = trpc.bankability.registerProject.useMutation({
+    onSuccess: () => {
+      alert("Project registered successfully! Your application has been submitted for review.");
+      setLocation("/project-registration/success");
+    },
+    onError: (error) => {
+      alert(`Registration failed: ${error.message || "Please try again."}`);
+    },
+  });
+
   const handleSubmit = () => {
-    console.log("Submitting project registration:", formData);
-    // TODO: Call tRPC mutation to save project
-    setLocation("/project-registration/success");
+    registerProjectMutation.mutate({
+      projectName: formData.projectName,
+      developerName: formData.developerName,
+      abn: formData.abn,
+      website: formData.website || undefined,
+      region: formData.region,
+      siteAddress: formData.siteAddress,
+      developmentStage: formData.developmentStage as any,
+      conversionTechnology: formData.conversionTechnology as any,
+      technologyProvider: formData.technologyProvider || undefined,
+      primaryOutput: formData.primaryOutput as any,
+      secondaryOutputs: formData.secondaryOutputs || undefined,
+      nameplateCapacity: formData.nameplateCapacity || undefined,
+      outputCapacity: formData.outputCapacity || undefined,
+      outputUnit: formData.outputUnit || undefined,
+      feedstockType: formData.feedstockType,
+      secondaryFeedstocks: formData.secondaryFeedstocks || undefined,
+      annualFeedstockVolume: formData.annualFeedstockVolume || undefined,
+      feedstockQualitySpecs: formData.feedstockQualitySpecs || undefined,
+      supplyRadius: formData.supplyRadius || undefined,
+      logisticsRequirements: formData.logisticsRequirements || undefined,
+      totalCapex: formData.totalCapex || undefined,
+      fundingSecured: formData.fundingSecured || undefined,
+      fundingSources: formData.fundingSources || undefined,
+      investmentStage: formData.investmentStage as any,
+      seekingInvestment: formData.seekingInvestment,
+      investmentAmount: formData.investmentAmount || undefined,
+      environmentalApproval: formData.environmentalApproval,
+      planningPermit: formData.planningPermit,
+      epaLicense: formData.epaLicense,
+      otherApprovals: formData.otherApprovals || undefined,
+      approvalsNotes: formData.approvalsNotes || undefined,
+      verificationNotes: formData.verificationNotes || undefined,
+      feedstockMatchingEnabled: formData.feedstockMatchingEnabled,
+      financingInterest: formData.financingInterest,
+      partnershipInterest: formData.partnershipInterest,
+      publicVisibility: formData.publicVisibility as any,
+    });
   };
 
   return (

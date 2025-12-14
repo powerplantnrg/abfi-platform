@@ -456,3 +456,13 @@ Note: Seed script encounters schema mismatches. Recommend using UI workflows to 
 - [x] Add backend endpoint to verify certificate hashes
 - [x] Display certificate details when hash matches
 - [x] Test certificate verification flow
+
+## Form Submission Integration (Session 20)
+- [ ] Wire producer registration form to trpc.producer.register mutation
+- [x] Wire project registration form to trpc.bankability.registerProject mutation
+- [ ] Wire financial onboarding form to database
+- [ ] Create ProducerRegistrationSuccess page with application tracking
+- [x] Create ProjectRegistrationSuccess page with application tracking
+- [ ] Create FinancialOnboardingSuccess page with application tracking
+- [x] Add form validation and error handling for project registration
+- [x] Test complete registration flows end-to-end

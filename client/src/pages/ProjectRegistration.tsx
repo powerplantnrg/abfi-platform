@@ -109,7 +109,7 @@ export default function ProjectRegistration() {
 
         {/* CTA */}
         <div className="text-center">
-          <Link href="/project-registration/overview">
+          <Link href="/project-registration/flow">
             <button className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#c9a962] to-[#8a7443] text-[#0a0f14] font-semibold rounded-lg hover:opacity-90 transition-opacity">
               Start Project Registration
               <ArrowRight className="w-5 h-5" />
@@ -117,7 +117,7 @@ export default function ProjectRegistration() {
           </Link>
 
           <p className="mt-4 text-sm text-gray-500">
-            Already started? <Link href="/project-registration/overview" className="text-[#c9a962] hover:underline">Continue registration</Link>
+            Already started? <Link href="/project-registration/flow" className="text-[#c9a962] hover:underline">Continue registration</Link>
           </p>
         </div>
 
