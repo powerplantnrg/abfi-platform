@@ -22,6 +22,7 @@ import {
   ClipboardList,
   Megaphone,
   Factory,
+  LineChart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -48,6 +49,7 @@ const supplierNavItems: NavItem[] = [
 const buyerNavItems: NavItem[] = [
   { title: "Dashboard", href: "/buyer", icon: LayoutDashboard },
   { title: "Search Feedstocks", href: "/buyer/search", icon: Search },
+  { title: "Markets", href: "/buyer/markets", icon: LineChart },
   { title: "Shortlist", href: "/buyer/shortlist", icon: Star },
   { title: "Bankability", href: "/buyer/bankability", icon: TrendingUp },
   { title: "My Inquiries", href: "/buyer/inquiries", icon: MessageSquare },
