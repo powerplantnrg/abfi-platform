@@ -1,16 +1,18 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { AUSTRALIAN_STATES } from "@/const";
 import { trpc } from "@/lib/trpc";
-import { ArrowLeft, ShoppingCart, Leaf } from "lucide-react";
+import { ArrowLeft, ShoppingCart, Leaf, CheckCircle2, Info, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 export default function BuyerRegistration() {
   const { user, isAuthenticated } = useAuth();
@@ -54,11 +56,14 @@ export default function BuyerRegistration() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle>Authentication Required</CardTitle>
-            <CardDescription>Please sign in to register as a buyer</CardDescription>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card variant="elevated" className="max-w-md">
+          <CardHeader className="text-center">
+            <div className="p-3 rounded-xl bg-primary/10 w-fit mx-auto mb-4">
+              <ShoppingCart className="h-8 w-8 text-primary" />
+            </div>
+            <CardTitle className="heading-3">Authentication Required</CardTitle>
+            <CardDescription className="body-lg">Please sign in to register as a buyer</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -66,18 +71,20 @@ export default function BuyerRegistration() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="border-b bg-white">
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-10">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">ABFI</span>
+            <div className="flex items-center gap-2 cursor-pointer group">
+              <div className="p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Leaf className="h-6 w-6 text-primary" />
+              </div>
+              <span className="text-xl font-bold text-foreground">ABFI</span>
             </div>
           </Link>
           <Link href="/dashboard">
-            <Button variant="ghost">
-              <ArrowLeft className="h-4 w-4 mr-2" />
+            <Button variant="ghost" leftIcon={<ArrowLeft className="h-4 w-4" />}>
               Back to Dashboard
             </Button>
           </Link>
@@ -85,25 +92,34 @@ export default function BuyerRegistration() {
       </header>
 
       <div className="container mx-auto px-4 py-8 max-w-3xl">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">Buyer Registration</h1>
-          <p className="text-gray-600">
-            Source verified biofuel feedstocks from trusted suppliers
+        {/* Page Header */}
+        <div className="mb-8 text-center">
+          <Badge variant="outline" className="mb-4">
+            <ShoppingCart className="h-3.5 w-3.5 mr-1.5" />
+            Buyer Registration
+          </Badge>
+          <h1 className="heading-1 text-foreground mb-2">Register as a Buyer</h1>
+          <p className="text-muted-foreground body-lg max-w-xl mx-auto">
+            Source verified biofuel feedstocks from trusted suppliers across Australia
           </p>
         </div>
 
-        <Card>
+        <Card variant="elevated">
           <CardHeader>
-            <div className="flex items-center gap-2">
-              <ShoppingCart className="h-6 w-6 text-primary" />
-              <CardTitle>Buyer Information</CardTitle>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <ShoppingCart className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <CardTitle>Buyer Information</CardTitle>
+                <CardDescription>
+                  Provide your company details to start sourcing feedstocks
+                </CardDescription>
+              </div>
             </div>
-            <CardDescription>
-              Provide your company details to start sourcing feedstocks
-            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
+          <CardContent className="space-y-5">
+            <div className="space-y-2">
               <Label htmlFor="abn">Australian Business Number (ABN) *</Label>
               <Input
                 id="abn"
@@ -111,10 +127,12 @@ export default function BuyerRegistration() {
                 value={abn}
                 onChange={(e) => setAbn(e.target.value.replace(/\D/g, "").slice(0, 11))}
                 maxLength={11}
+                className="font-mono"
               />
+              <p className="text-xs text-muted-foreground">11 digits, no spaces</p>
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="companyName">Company Name *</Label>
               <Input
                 id="companyName"
@@ -124,7 +142,7 @@ export default function BuyerRegistration() {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="contactEmail">Contact Email *</Label>
               <Input
                 id="contactEmail"
@@ -135,7 +153,7 @@ export default function BuyerRegistration() {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="contactPhone">Contact Phone</Label>
               <Input
                 id="contactPhone"
@@ -146,7 +164,7 @@ export default function BuyerRegistration() {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="facilityName">Facility Name</Label>
               <Input
                 id="facilityName"
@@ -156,7 +174,7 @@ export default function BuyerRegistration() {
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="facilityAddress">Facility Address</Label>
               <Input
                 id="facilityAddress"
@@ -167,7 +185,7 @@ export default function BuyerRegistration() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-4">
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="city">City</Label>
                 <Input
                   id="city"
@@ -177,7 +195,7 @@ export default function BuyerRegistration() {
                 />
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="state">State</Label>
                 <Select value={state} onValueChange={setState}>
                   <SelectTrigger id="state">
@@ -193,7 +211,7 @@ export default function BuyerRegistration() {
                 </Select>
               </div>
 
-              <div>
+              <div className="space-y-2">
                 <Label htmlFor="postcode">Postcode</Label>
                 <Input
                   id="postcode"
@@ -201,11 +219,12 @@ export default function BuyerRegistration() {
                   value={postcode}
                   onChange={(e) => setPostcode(e.target.value.slice(0, 4))}
                   maxLength={4}
+                  className="font-mono"
                 />
               </div>
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="annualDemand">Annual Demand (tonnes)</Label>
               <Input
                 id="annualDemand"
@@ -213,10 +232,11 @@ export default function BuyerRegistration() {
                 placeholder="e.g., 10000"
                 value={annualDemand}
                 onChange={(e) => setAnnualDemand(e.target.value)}
+                className="font-mono"
               />
             </div>
 
-            <div>
+            <div className="space-y-2">
               <Label htmlFor="feedstockTypes">Feedstock Types of Interest</Label>
               <Textarea
                 id="feedstockTypes"
@@ -227,22 +247,43 @@ export default function BuyerRegistration() {
               />
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-900 mb-2">What You'll Get</h4>
-              <ul className="text-sm text-blue-800 space-y-1">
-                <li>• Access to verified feedstock suppliers across Australia</li>
-                <li>• Advanced search with ABFI ratings and carbon intensity filters</li>
-                <li>• Send inquiries and RFQs directly to suppliers</li>
-                <li>• Save searches and receive alerts for new listings</li>
-              </ul>
+            <div className="bg-info/10 border border-info/30 rounded-xl p-4">
+              <div className="flex items-start gap-3">
+                <div className="p-1.5 rounded-lg bg-info/20 shrink-0">
+                  <Info className="h-4 w-4 text-info" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">What You'll Get</h4>
+                  <ul className="text-sm text-muted-foreground space-y-1.5">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />
+                      <span>Access to verified feedstock suppliers across Australia</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />
+                      <span>Advanced search with ABFI ratings and carbon intensity filters</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />
+                      <span>Send inquiries and RFQs directly to suppliers</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />
+                      <span>Save searches and receive alerts for new listings</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
-            <div className="flex justify-end gap-2 pt-4">
+            <div className="flex justify-end gap-2 pt-4 border-t">
               <Button
                 onClick={handleSubmit}
                 disabled={!canSubmit || registerMutation.isPending}
+                loading={registerMutation.isPending}
+                rightIcon={<ArrowRight className="h-4 w-4" />}
               >
-                {registerMutation.isPending ? "Submitting..." : "Submit Registration"}
+                Submit Registration
               </Button>
             </div>
           </CardContent>

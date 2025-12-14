@@ -1,12 +1,14 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, StatsCard } from "@/components/ui/card";
+import { Badge, StatusBadge, RatingBadge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
-import { Plus, TrendingUp, AlertCircle, FileText, Users } from "lucide-react";
+import { Plus, TrendingUp, AlertCircle, FileText, Users, Leaf, Bell, ArrowRight, Building2 } from "lucide-react";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
+import { ScoreGauge } from "@/components/ScoreCard";
 
 export default function BankabilityDashboard() {
   const { user, loading: authLoading } = useAuth();
@@ -18,45 +20,81 @@ export default function BankabilityDashboard() {
 
   if (authLoading || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Skeleton className="h-8 w-64 mx-auto mb-4" />
-          <Skeleton className="h-4 w-48 mx-auto" />
+      <div className="min-h-screen bg-background">
+        <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-10">
+          <div className="container mx-auto px-4 py-4">
+            <Skeleton className="h-8 w-32" />
+          </div>
+        </header>
+        <div className="container mx-auto px-4 py-8">
+          <Skeleton className="h-10 w-64 mb-2" />
+          <Skeleton className="h-5 w-48 mb-8" />
+          <div className="grid md:grid-cols-3 gap-6">
+            {[1, 2, 3].map(i => (
+              <Skeleton key={i} className="h-48 rounded-xl" />
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 
-  const getRatingColor = (rating: string) => {
-    if (["AAA", "AA", "A"].includes(rating)) return "bg-green-100 text-green-800";
-    if (["BBB", "BB"].includes(rating)) return "bg-yellow-100 text-yellow-800";
-    return "bg-red-100 text-red-800";
-  };
-
-  const getStatusColor = (status: string) => {
+  const getStatusVariant = (status: string): "verified" | "pending" | "draft" | "rejected" | undefined => {
     switch (status) {
-      case "operational": return "bg-green-100 text-green-800";
-      case "construction": return "bg-blue-100 text-blue-800";
-      case "financing": return "bg-purple-100 text-purple-800";
-      case "development": return "bg-yellow-100 text-yellow-800";
-      case "planning": return "bg-gray-100 text-gray-800";
-      case "suspended": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "operational": return "verified";
+      case "construction":
+      case "financing":
+      case "development": return "pending";
+      case "planning": return "draft";
+      case "suspended": return "rejected";
+      default: return "draft";
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container py-8">
-        <div className="mb-8 flex justify-between items-center">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">Bankability Dashboard</h1>
-            <p className="text-muted-foreground">
-              Manage bioenergy projects and supply agreements
-            </p>
+      {/* Header */}
+      <header className="border-b bg-card/80 backdrop-blur-md sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <Link href="/">
+            <div className="flex items-center gap-2 cursor-pointer group">
+              <div className="p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                <Leaf className="h-6 w-6 text-primary" />
+              </div>
+              <span className="text-xl font-bold text-foreground">ABFI</span>
+            </div>
+          </Link>
+          <div className="flex items-center gap-4">
+            <Link href="/notifications">
+              <Button variant="ghost" size="icon">
+                <Bell className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button variant="ghost">Dashboard</Button>
+            </Link>
+            <Link href="/browse">
+              <Button variant="outline" size="sm">Browse Feedstocks</Button>
+            </Link>
           </div>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-8">
+        {/* Page Header */}
+        <div className="mb-8 flex justify-between items-start">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <TrendingUp className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h1 className="heading-1 text-foreground">Bankability Dashboard</h1>
+              <p className="text-muted-foreground body-lg">
+                Manage bioenergy projects and supply agreements
+              </p>
+            </div>
+          </div>
+          <Button rightIcon={<Plus className="h-4 w-4" />}>
             New Project
           </Button>
         </div>
@@ -78,81 +116,79 @@ export default function BankabilityDashboard() {
         ) : projects && projects.length > 0 ? (
           <div className="space-y-6">
             {projects.map((project: any) => (
-              <Card key={project.id} className="hover:shadow-lg transition-shadow">
+              <Card key={project.id} hover className="group">
                 <CardHeader>
                   <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <CardTitle className="flex items-center gap-2">
-                        <TrendingUp className="h-5 w-5" />
-                        {project.name}
-                      </CardTitle>
-                      <CardDescription className="mt-2">
-                        {project.description || "No description"}
-                      </CardDescription>
+                    <div className="flex items-start gap-3 flex-1">
+                      <div className="p-2 rounded-lg bg-primary/10">
+                        <Building2 className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle className="group-hover:text-primary transition-colors">{project.name}</CardTitle>
+                        <CardDescription className="mt-1">
+                          {project.description || "No description provided"}
+                        </CardDescription>
+                      </div>
                     </div>
-                    <div className="flex gap-2">
-                      <Badge className={getStatusColor(project.status)}>
+                    <div className="flex gap-2 shrink-0">
+                      <Badge variant={getStatusVariant(project.status)}>
                         {project.status?.toUpperCase()}
                       </Badge>
                       {project.bankabilityRating && (
-                        <Badge className={getRatingColor(project.bankabilityRating)}>
-                          {project.bankabilityRating}
-                        </Badge>
+                        <RatingBadge rating={project.bankabilityRating as any} />
                       )}
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Project Details */}
-                  <div className="grid md:grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <div className="text-muted-foreground">Capacity</div>
-                      <div className="font-medium">
-                        {project.nameplateCapacity?.toLocaleString()} MW
-                      </div>
+                  <div className="grid md:grid-cols-4 gap-4">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Capacity</p>
+                      <p className="font-medium font-mono">
+                        {project.nameplateCapacity?.toLocaleString()} <span className="text-muted-foreground text-xs">MW</span>
+                      </p>
                     </div>
-                    <div>
-                      <div className="text-muted-foreground">Location</div>
-                      <div className="font-medium">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Location</p>
+                      <p className="font-medium">
                         {project.facilityLocation || project.state || "TBD"}
-                      </div>
+                      </p>
                     </div>
-                    <div>
-                      <div className="text-muted-foreground">Target COD</div>
-                      <div className="font-medium">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Target COD</p>
+                      <p className="font-medium">
                         {project.targetCOD ? new Date(project.targetCOD).toLocaleDateString() : "TBD"}
-                      </div>
+                      </p>
                     </div>
-                    <div>
-                      <div className="text-muted-foreground">Debt Tenor</div>
-                      <div className="font-medium">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Debt Tenor</p>
+                      <p className="font-medium">
                         {project.debtTenor ? `${project.debtTenor} years` : "TBD"}
-                      </div>
+                      </p>
                     </div>
                   </div>
 
                   {/* Supply Position */}
-                  <div className="space-y-3">
+                  <div className="p-4 rounded-xl bg-muted/30 space-y-4">
                     <div className="flex justify-between items-center">
                       <h4 className="font-semibold">Supply Position</h4>
-                      <span className="text-sm text-muted-foreground">
-                        Target: 150% of capacity
-                      </span>
+                      <Badge variant="outline" size="sm">Target: 150% of capacity</Badge>
                     </div>
-                    
-                    <div className="space-y-2">
+
+                    <div className="space-y-3">
                       <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Primary Coverage (Tier 1)</span>
-                          <span className="font-medium">0% / 120%</span>
+                        <div className="flex justify-between text-sm mb-2">
+                          <span className="text-muted-foreground">Primary Coverage (Tier 1)</span>
+                          <span className="font-medium font-mono">0% / 120%</span>
                         </div>
                         <Progress value={0} className="h-2" />
                       </div>
-                      
+
                       <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Secondary Coverage (Tier 2)</span>
-                          <span className="font-medium">0% / 30%</span>
+                        <div className="flex justify-between text-sm mb-2">
+                          <span className="text-muted-foreground">Secondary Coverage (Tier 2)</span>
+                          <span className="font-medium font-mono">0% / 30%</span>
                         </div>
                         <Progress value={0} className="h-2" />
                       </div>
@@ -161,29 +197,27 @@ export default function BankabilityDashboard() {
 
                   {/* Bankability Score Breakdown */}
                   {project.bankabilityScore && (
-                    <div className="space-y-3">
+                    <div className="p-4 rounded-xl border space-y-4">
                       <h4 className="font-semibold">Bankability Assessment</h4>
-                      <div className="grid md:grid-cols-5 gap-3 text-sm">
+                      <div className="grid md:grid-cols-5 gap-4">
                         <div className="text-center">
-                          <div className="text-2xl font-bold text-primary mb-1">
-                            {project.bankabilityScore.toFixed(0)}
-                          </div>
-                          <div className="text-xs text-muted-foreground">Composite</div>
+                          <ScoreGauge score={Math.round(project.bankabilityScore)} size="md" />
+                          <div className="text-xs text-muted-foreground mt-1">Composite</div>
                         </div>
-                        <div className="text-center">
-                          <div className="text-xl font-semibold mb-1">--</div>
+                        <div className="text-center p-3 rounded-lg bg-muted/30">
+                          <div className="metric-md mb-1">--</div>
                           <div className="text-xs text-muted-foreground">Volume (30%)</div>
                         </div>
-                        <div className="text-center">
-                          <div className="text-xl font-semibold mb-1">--</div>
+                        <div className="text-center p-3 rounded-lg bg-muted/30">
+                          <div className="metric-md mb-1">--</div>
                           <div className="text-xs text-muted-foreground">Quality (25%)</div>
                         </div>
-                        <div className="text-center">
-                          <div className="text-xl font-semibold mb-1">--</div>
+                        <div className="text-center p-3 rounded-lg bg-muted/30">
+                          <div className="metric-md mb-1">--</div>
                           <div className="text-xs text-muted-foreground">Structure (20%)</div>
                         </div>
-                        <div className="text-center">
-                          <div className="text-xl font-semibold mb-1">--</div>
+                        <div className="text-center p-3 rounded-lg bg-muted/30">
+                          <div className="metric-md mb-1">--</div>
                           <div className="text-xs text-muted-foreground">Risk (15%)</div>
                         </div>
                       </div>
@@ -192,11 +226,13 @@ export default function BankabilityDashboard() {
 
                   {/* Alerts */}
                   {(!project.bankabilityRating || project.bankabilityRating === "CCC") && (
-                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-start gap-2">
-                      <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
+                    <div className="bg-warning/10 border border-warning/30 rounded-xl p-4 flex items-start gap-3">
+                      <div className="p-1.5 rounded-lg bg-warning/20">
+                        <AlertCircle className="h-4 w-4 text-warning" />
+                      </div>
                       <div className="text-sm">
-                        <div className="font-medium text-yellow-900">Action Required</div>
-                        <div className="text-yellow-700">
+                        <div className="font-medium text-foreground">Action Required</div>
+                        <div className="text-muted-foreground">
                           Complete supply agreements to improve bankability rating
                         </div>
                       </div>
@@ -204,20 +240,17 @@ export default function BankabilityDashboard() {
                   )}
 
                   {/* Actions */}
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <Link href={`/dashboard/projects/${project.id}/agreements`}>
-                      <Button variant="outline" size="sm">
-                        <FileText className="h-4 w-4 mr-2" />
+                      <Button variant="outline" size="sm" leftIcon={<FileText className="h-4 w-4" />}>
                         View Agreements
                       </Button>
                     </Link>
-                    <Button variant="outline" size="sm">
-                      <Users className="h-4 w-4 mr-2" />
+                    <Button variant="outline" size="sm" leftIcon={<Users className="h-4 w-4" />}>
                       Manage Suppliers
                     </Button>
                     <Link href={`/bankability/assess/${project.id}`}>
-                      <Button variant="outline" size="sm">
-                        <TrendingUp className="h-4 w-4 mr-2" />
+                      <Button size="sm" rightIcon={<ArrowRight className="h-4 w-4" />}>
                         Run Assessment
                       </Button>
                     </Link>
@@ -227,16 +260,17 @@ export default function BankabilityDashboard() {
             ))}
           </div>
         ) : (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No projects yet</h3>
-              <p className="text-muted-foreground mb-4">
-                Create your first bioenergy project to start managing supply agreements
+          <Card variant="outlined" className="border-dashed">
+            <CardContent className="py-16 text-center">
+              <div className="p-4 rounded-full bg-muted/50 w-fit mx-auto mb-4">
+                <Building2 className="h-10 w-10 text-muted-foreground" />
+              </div>
+              <h3 className="heading-3 mb-2">No projects yet</h3>
+              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                Create your first bioenergy project to start managing supply agreements and tracking bankability
               </p>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                Create Project
+              <Button size="lg" rightIcon={<ArrowRight className="h-4 w-4" />}>
+                Create Your First Project
               </Button>
             </CardContent>
           </Card>
