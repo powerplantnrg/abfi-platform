@@ -1,4 +1,5 @@
 import { Shield, TrendingUp, DollarSign, Users, FileCheck, Award, ArrowRight, X, Check } from "lucide-react";
+import EarningsCalculator from "../components/EarningsCalculator";
 
 export default function GrowerBenefits() {
   const problems = [
@@ -286,6 +287,11 @@ export default function GrowerBenefits() {
               * Actual prices vary by region, quality, and market conditions. Platform shows live regional averages.
             </p>
           </div>
+        </section>
+
+        {/* Earnings Calculator */}
+        <section className="mb-16">
+          <EarningsCalculator />
         </section>
 
         {/* Additional Benefits */}

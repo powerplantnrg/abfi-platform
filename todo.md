@@ -413,3 +413,11 @@ Note: Seed script encounters schema mismatches. Recommend using UI workflows to 
 - [x] Include visual flow showing producer journey
 - [x] Add route and navigation to grower benefits page
 - [x] Test page with grower-appropriate styling
+
+## Interactive Earnings Calculator (Session 15)
+- [x] Design earnings calculator component with input fields
+- [x] Add calculation logic for profit comparison
+- [x] Create visual results display with charts/metrics
+- [x] Integrate calculator into grower benefits page
+- [x] Add responsive design for mobile use
+- [x] Test calculator with various input values
