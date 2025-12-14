@@ -448,3 +448,11 @@ Note: Seed script encounters schema mismatches. Recommend using UI workflows to 
 - [x] Build 7-step project registration flow components
 - [x] Add backend tRPC procedures for project data
 - [x] Test complete project registration flow
+
+## Certificate Hashing Tool (Session 19)
+- [x] Review reference design for certificate verification
+- [x] Create CertificateVerification page with hash input
+- [x] Implement SHA-256 hashing for certificate verification
+- [x] Add backend endpoint to verify certificate hashes
+- [x] Display certificate details when hash matches
+- [x] Test certificate verification flow

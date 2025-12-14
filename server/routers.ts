@@ -2691,6 +2691,95 @@ export const appRouter = router({
         };
       }),
   }),
+
+  // ============================================================================
+  // CERTIFICATE VERIFICATION
+  // ============================================================================
+  certificateVerification: router({
+    verifyHash: publicProcedure
+      .input(z.object({
+        hash: z.string().length(64), // SHA-256 hash is 64 hex characters
+      }))
+      .query(async ({ input }) => {
+        const snapshot = await db.getCertificateSnapshotByHash(input.hash);
+        
+        if (!snapshot) {
+          return { valid: false, message: "Certificate hash not found" };
+        }
+
+        const certificate = await db.getCertificateById(snapshot.certificateId);
+        if (!certificate) {
+          return { valid: false, message: "Certificate not found" };
+        }
+
+        const feedstock = await db.getFeedstockById(certificate.feedstockId);
+        const supplier = feedstock ? await db.getSupplierById(feedstock.supplierId) : null;
+
+        return {
+          valid: true,
+          certificate: {
+            id: certificate.id,
+            certificateNumber: certificate.certificateNumber,
+            type: certificate.type,
+            status: certificate.status,
+            issuedDate: certificate.issuedDate,
+            expiryDate: certificate.expiryDate,
+            ratingGrade: certificate.ratingGrade,
+          },
+          supplier: supplier ? {
+            companyName: supplier.companyName,
+          } : null,
+          feedstock: feedstock ? {
+            type: feedstock.type,
+            category: feedstock.category,
+          } : null,
+          snapshot: {
+            snapshotDate: snapshot.snapshotDate,
+            frozenScoreData: snapshot.frozenScoreData,
+          },
+        };
+      }),
+
+    generateHash: protectedProcedure
+      .input(z.object({
+        certificateId: z.number(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const certificate = await db.getCertificateById(input.certificateId);
+        if (!certificate) {
+          throw new TRPCError({ code: 'NOT_FOUND', message: 'Certificate not found' });
+        }
+
+        // Check if snapshot already exists
+        const existingSnapshot = await db.getCertificateSnapshotByCertificateId(input.certificateId);
+        if (existingSnapshot) {
+          return { hash: existingSnapshot.snapshotHash, existing: true };
+        }
+
+        // Generate hash from certificate data
+        const crypto = await import('crypto');
+        const dataToHash = JSON.stringify({
+          certificateId: certificate.id,
+          certificateNumber: certificate.certificateNumber,
+          type: certificate.type,
+          issuedDate: certificate.issuedDate,
+          expiryDate: certificate.expiryDate,
+          feedstockId: certificate.feedstockId,
+        });
+        const hash = crypto.createHash('sha256').update(dataToHash).digest('hex');
+
+        // Create snapshot
+        await db.createCertificateSnapshot({
+          certificateId: input.certificateId,
+          snapshotHash: hash,
+          frozenScoreData: {},
+          frozenEvidenceSet: [],
+          createdBy: ctx.user.id,
+        });
+
+        return { hash, existing: false };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

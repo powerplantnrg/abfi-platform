@@ -1210,3 +1210,33 @@ export async function getProductionHistoryByProperty(propertyId: number) {
     .where(eq(productionHistory.propertyId, propertyId))
     .orderBy(desc(productionHistory.seasonYear));
 }
+
+// ============================================================================
+// CERTIFICATE VERIFICATION
+// ============================================================================
+
+export async function getCertificateById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const results = await db
+    .select()
+    .from(certificates)
+    .where(eq(certificates.id, id))
+    .limit(1);
+  
+  return results[0] || null;
+}
+
+export async function getCertificateSnapshotByCertificateId(certificateId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const results = await db
+    .select()
+    .from(certificateSnapshots)
+    .where(eq(certificateSnapshots.certificateId, certificateId))
+    .limit(1);
+  
+  return results[0] || null;
+}
