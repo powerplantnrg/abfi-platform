@@ -17,10 +17,13 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
+  Area,
+  AreaChart,
 } from "recharts";
 import { Loader2, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { getScoreTier } from "@/lib/rating/calculator";
 
 interface RatingHistoryEntry {
   id: string;
@@ -44,6 +47,17 @@ interface ScoreTrendProps {
   height?: number;
   className?: string;
 }
+
+// Premium chart colors using design tokens
+const CHART_COLORS = {
+  primary: "hsl(var(--primary))",
+  sustainability: "hsl(var(--success))",
+  reliability: "hsl(var(--info))",
+  quality: "hsl(var(--accent))",
+  traceability: "hsl(var(--warning))",
+  grid: "hsl(var(--border))",
+  text: "hsl(var(--muted-foreground))",
+};
 
 export function ScoreTrend({
   entityType,
@@ -77,9 +91,12 @@ export function ScoreTrend({
 
   if (loading) {
     return (
-      <Card className={className}>
-        <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      <Card className={cn("overflow-hidden", className)}>
+        <CardContent className="flex items-center justify-center py-16">
+          <div className="flex flex-col items-center gap-3">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="text-sm text-muted-foreground">Loading history...</p>
+          </div>
         </CardContent>
       </Card>
     );
@@ -87,12 +104,20 @@ export function ScoreTrend({
 
   if (error || history.length === 0) {
     return (
-      <Card className={className}>
+      <Card className={cn("overflow-hidden", className)}>
         <CardHeader>
-          <CardTitle className="text-lg">Score History</CardTitle>
+          <CardTitle className="text-lg font-display">Score History</CardTitle>
         </CardHeader>
-        <CardContent className="text-center py-8 text-muted-foreground">
-          {error || "No historical data available yet"}
+        <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="rounded-full bg-muted p-4 mb-4">
+            <TrendingUp className="h-8 w-8 text-muted-foreground" />
+          </div>
+          <p className="text-muted-foreground">
+            {error || "No historical data available yet"}
+          </p>
+          <p className="text-xs text-muted-foreground mt-1">
+            Score history will appear here as ratings are recorded
+          </p>
         </CardContent>
       </Card>
     );
@@ -119,10 +144,12 @@ export function ScoreTrend({
   const scoreDiff =
     latestScore && previousScore ? latestScore - previousScore : 0;
 
+  const tier = latestScore ? getScoreTier(latestScore) : null;
+
   const getTrendIcon = () => {
-    if (scoreDiff > 0) return <TrendingUp className="h-4 w-4 text-green-600" />;
-    if (scoreDiff < 0) return <TrendingDown className="h-4 w-4 text-red-600" />;
-    return <Minus className="h-4 w-4 text-gray-400" />;
+    if (scoreDiff > 0) return <TrendingUp className="h-4 w-4" />;
+    if (scoreDiff < 0) return <TrendingDown className="h-4 w-4" />;
+    return <Minus className="h-4 w-4" />;
   };
 
   const getTrendText = () => {
@@ -132,71 +159,87 @@ export function ScoreTrend({
   };
 
   return (
-    <Card className={className}>
-      <CardHeader>
+    <Card className={cn("overflow-hidden", className)}>
+      <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-lg">Score History</CardTitle>
+            <CardTitle className="text-lg font-display">Score History</CardTitle>
             <CardDescription>
               ABFI score over time ({history.length} data points)
             </CardDescription>
           </div>
-          <div className="flex items-center gap-2 text-sm">
+          <div
+            className={cn(
+              "flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium",
+              scoreDiff > 0 && "bg-success/10 text-success",
+              scoreDiff < 0 && "bg-destructive/10 text-destructive",
+              scoreDiff === 0 && "bg-muted text-muted-foreground"
+            )}
+          >
             {getTrendIcon()}
-            <span
-              className={cn(
-                scoreDiff > 0
-                  ? "text-green-600"
-                  : scoreDiff < 0
-                    ? "text-red-600"
-                    : "text-gray-500"
-              )}
-            >
-              {getTrendText()}
-            </span>
+            <span className="font-mono">{getTrendText()}</span>
           </div>
         </div>
       </CardHeader>
       <CardContent>
         <div style={{ width: "100%", height }}>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart
+            <AreaChart
               data={chartData}
-              margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+              margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <defs>
+                <linearGradient id="colorAbfi" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={CHART_COLORS.primary} stopOpacity={0.2} />
+                  <stop offset="95%" stopColor={CHART_COLORS.primary} stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke={CHART_COLORS.grid}
+                vertical={false}
+              />
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 11, fill: CHART_COLORS.text }}
                 tickLine={false}
-                axisLine={{ stroke: "#e5e7eb" }}
+                axisLine={{ stroke: CHART_COLORS.grid }}
               />
               <YAxis
                 domain={[0, 100]}
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 11, fill: CHART_COLORS.text }}
                 tickLine={false}
-                axisLine={{ stroke: "#e5e7eb" }}
+                axisLine={false}
+                width={35}
               />
               <Tooltip
-                content={({ active, payload, label }) => {
+                content={({ active, payload }) => {
                   if (!active || !payload?.length) return null;
                   const data = payload[0].payload;
+                  const scoreTier = data.abfiScore ? getScoreTier(data.abfiScore) : null;
                   return (
-                    <div className="bg-white border rounded-lg shadow-lg p-3">
-                      <div className="font-medium mb-2">{data.fullDate}</div>
+                    <div className="rounded-xl border bg-card p-3 shadow-lg">
+                      <div className="flex items-center justify-between gap-4 mb-2">
+                        <span className="font-medium">{data.fullDate}</span>
+                        {scoreTier && (
+                          <span className={cn("text-xs font-medium px-2 py-0.5 rounded", scoreTier.bgClass, scoreTier.colorClass)}>
+                            {scoreTier.tier}
+                          </span>
+                        )}
+                      </div>
                       {payload.map((entry) => (
                         <div
                           key={entry.dataKey}
                           className="flex items-center gap-2 text-sm"
                         >
                           <div
-                            className="w-3 h-3 rounded-full"
+                            className="w-2.5 h-2.5 rounded-full"
                             style={{ backgroundColor: entry.color }}
                           />
                           <span className="text-muted-foreground">
                             {entry.name}:
                           </span>
-                          <span className="font-medium">
+                          <span className="font-mono font-medium">
                             {typeof entry.value === "number"
                               ? entry.value.toFixed(1)
                               : "-"}
@@ -207,15 +250,21 @@ export function ScoreTrend({
                   );
                 }}
               />
-              <Legend />
-              <Line
+              <Legend
+                wrapperStyle={{ paddingTop: 16 }}
+                formatter={(value) => (
+                  <span className="text-xs text-muted-foreground">{value}</span>
+                )}
+              />
+              <Area
                 type="monotone"
                 dataKey="abfiScore"
                 name="ABFI Score"
-                stroke="#1B4332"
+                stroke={CHART_COLORS.primary}
                 strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={{ r: 6 }}
+                fill="url(#colorAbfi)"
+                dot={{ r: 4, fill: CHART_COLORS.primary, strokeWidth: 0 }}
+                activeDot={{ r: 6, strokeWidth: 2, stroke: "white" }}
               />
               {showComponents && (
                 <>
@@ -223,41 +272,41 @@ export function ScoreTrend({
                     type="monotone"
                     dataKey="sustainability"
                     name="Sustainability"
-                    stroke="#22c55e"
-                    strokeWidth={1}
+                    stroke={CHART_COLORS.sustainability}
+                    strokeWidth={1.5}
                     dot={{ r: 2 }}
-                    strokeDasharray="5 5"
+                    strokeDasharray="4 4"
                   />
                   <Line
                     type="monotone"
                     dataKey="reliability"
                     name="Reliability"
-                    stroke="#3b82f6"
-                    strokeWidth={1}
+                    stroke={CHART_COLORS.reliability}
+                    strokeWidth={1.5}
                     dot={{ r: 2 }}
-                    strokeDasharray="5 5"
+                    strokeDasharray="4 4"
                   />
                   <Line
                     type="monotone"
                     dataKey="quality"
                     name="Quality"
-                    stroke="#f59e0b"
-                    strokeWidth={1}
+                    stroke={CHART_COLORS.quality}
+                    strokeWidth={1.5}
                     dot={{ r: 2 }}
-                    strokeDasharray="5 5"
+                    strokeDasharray="4 4"
                   />
                   <Line
                     type="monotone"
                     dataKey="traceability"
                     name="Traceability"
-                    stroke="#8b5cf6"
-                    strokeWidth={1}
+                    stroke={CHART_COLORS.traceability}
+                    strokeWidth={1.5}
                     dot={{ r: 2 }}
-                    strokeDasharray="5 5"
+                    strokeDasharray="4 4"
                   />
                 </>
               )}
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </CardContent>
@@ -266,7 +315,7 @@ export function ScoreTrend({
 }
 
 /**
- * Compact version for dashboards
+ * Compact version for dashboards - Mini sparkline
  */
 export function ScoreTrendMini({
   entityType,
@@ -312,25 +361,152 @@ export function ScoreTrendMini({
 
   const latestScore = history[0]?.abfi_score || 0;
   const previousScore = history[1]?.abfi_score || 0;
-  const trending = latestScore > previousScore ? "up" : latestScore < previousScore ? "down" : "flat";
+  const trending =
+    latestScore > previousScore
+      ? "up"
+      : latestScore < previousScore
+        ? "down"
+        : "flat";
+
+  const trendColor =
+    trending === "up"
+      ? "hsl(var(--success))"
+      : trending === "down"
+        ? "hsl(var(--destructive))"
+        : "hsl(var(--muted-foreground))";
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      <div className="h-8 w-20">
+      <div className="h-8 w-24">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
             <Line
               type="monotone"
               dataKey="score"
-              stroke={trending === "up" ? "#22c55e" : trending === "down" ? "#ef4444" : "#6b7280"}
+              stroke={trendColor}
               strokeWidth={1.5}
               dot={false}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
-      {trending === "up" && <TrendingUp className="h-3 w-3 text-green-600" />}
-      {trending === "down" && <TrendingDown className="h-3 w-3 text-red-600" />}
+      <div
+        className={cn(
+          "flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-medium",
+          trending === "up" && "bg-success/10 text-success",
+          trending === "down" && "bg-destructive/10 text-destructive",
+          trending === "flat" && "bg-muted text-muted-foreground"
+        )}
+      >
+        {trending === "up" && <TrendingUp className="h-3 w-3" />}
+        {trending === "down" && <TrendingDown className="h-3 w-3" />}
+        {trending === "flat" && <Minus className="h-3 w-3" />}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Score History Timeline - vertical list of score changes
+ */
+export function ScoreHistoryTimeline({
+  entityType,
+  entityId,
+  limit = 5,
+  className,
+}: {
+  entityType: "feedstock" | "supplier" | "ci_report";
+  entityId: string;
+  limit?: number;
+  className?: string;
+}) {
+  const [history, setHistory] = useState<RatingHistoryEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchHistory() {
+      try {
+        const response = await fetch(
+          `/api/rating-history?entity_type=${entityType}&entity_id=${entityId}&limit=${limit}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setHistory(data.history || []);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchHistory();
+  }, [entityType, entityId, limit]);
+
+  if (loading) {
+    return (
+      <div className={cn("flex justify-center py-8", className)}>
+        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  if (history.length === 0) {
+    return (
+      <p className={cn("text-center text-sm text-muted-foreground py-4", className)}>
+        No score history available
+      </p>
+    );
+  }
+
+  return (
+    <div className={cn("space-y-3", className)}>
+      {history.map((entry, index) => {
+        const tier = entry.abfi_score ? getScoreTier(entry.abfi_score) : null;
+        const prevEntry = history[index + 1];
+        const diff = entry.abfi_score && prevEntry?.abfi_score
+          ? entry.abfi_score - prevEntry.abfi_score
+          : null;
+
+        return (
+          <div
+            key={entry.id}
+            className="flex items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-muted/50"
+          >
+            {tier && (
+              <div
+                className={cn(
+                  "flex h-10 w-10 items-center justify-center rounded-lg font-mono font-bold text-sm",
+                  tier.bgClass,
+                  tier.colorClass
+                )}
+              >
+                {entry.abfi_score}
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-sm">
+                  {format(new Date(entry.calculation_date), "dd MMM yyyy")}
+                </span>
+                {diff !== null && diff !== 0 && (
+                  <span
+                    className={cn(
+                      "text-xs font-mono",
+                      diff > 0 ? "text-success" : "text-destructive"
+                    )}
+                  >
+                    {diff > 0 ? "+" : ""}
+                    {diff}
+                  </span>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground truncate">
+                {entry.trigger_type || "Automatic calculation"}
+              </p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

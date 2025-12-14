@@ -1,253 +1,261 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import { useState, useEffect, useCallback } from "react";
+import { MapPin, Layers, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-
-// Set Mapbox token
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
 interface FeedstockLocation {
   id: string;
   name: string;
-  feedstock_id: string;
-  category: string;
   latitude: number;
   longitude: number;
-  abfi_score: number;
-  available_volume: number;
-  state: string;
+  category?: string;
+  abfi_score?: number;
+  supplier_name?: string;
 }
 
 interface FeedstockMapProps {
-  feedstocks: FeedstockLocation[];
-  center?: [number, number]; // [lng, lat]
+  locations?: FeedstockLocation[];
+  center?: { lat: number; lng: number };
   zoom?: number;
-  onMarkerClick?: (feedstock: FeedstockLocation) => void;
+  onLocationClick?: (location: FeedstockLocation) => void;
+  selectedLocationId?: string;
   className?: string;
-  showSearch?: boolean;
-  searchRadius?: number; // in km
-  searchCenter?: [number, number];
+  height?: string | number;
 }
 
 export function FeedstockMap({
-  feedstocks,
-  center = [133.7751, -25.2744], // Australia center
+  locations = [],
+  center = { lat: -25.2744, lng: 133.7751 }, // Australia center
   zoom = 4,
-  onMarkerClick,
+  onLocationClick,
+  selectedLocationId,
   className,
-  showSearch = false,
-  searchRadius,
-  searchCenter,
+  height = 400,
 }: FeedstockMapProps) {
-  const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
-  const markersRef = useRef<mapboxgl.Marker[]>([]);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [currentZoom, setCurrentZoom] = useState(zoom);
+  const [hoveredLocation, setHoveredLocation] = useState<string | null>(null);
 
-  // Initialize map
+  // Placeholder for actual map implementation
+  // In production, this would integrate with Mapbox, Google Maps, or Leaflet
   useEffect(() => {
-    if (!mapContainer.current || map.current) return;
+    // Simulate map loading
+    const timer = setTimeout(() => setMapLoaded(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/light-v11",
-      center: center,
-      zoom: zoom,
-    });
+  const handleZoomIn = useCallback(() => {
+    setCurrentZoom((prev) => Math.min(prev + 1, 18));
+  }, []);
 
-    map.current.addControl(new mapboxgl.NavigationControl(), "top-right");
-    map.current.addControl(
-      new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
-        trackUserLocation: true,
-      }),
-      "top-right"
-    );
+  const handleZoomOut = useCallback(() => {
+    setCurrentZoom((prev) => Math.max(prev - 1, 1));
+  }, []);
 
-    map.current.on("load", () => {
-      setMapLoaded(true);
-    });
-
-    return () => {
-      map.current?.remove();
-      map.current = null;
+  // Calculate marker positions (simplified for placeholder)
+  const getMarkerStyle = (location: FeedstockLocation) => {
+    // Simplified positioning - in production use proper map projection
+    const x = ((location.longitude - 110) / 50) * 100;
+    const y = ((location.latitude + 10) / -35) * 100;
+    return {
+      left: `${Math.max(5, Math.min(95, x))}%`,
+      top: `${Math.max(5, Math.min(95, y))}%`,
     };
-  }, [center, zoom]);
+  };
 
-  // Add markers when feedstocks change
-  useEffect(() => {
-    if (!map.current || !mapLoaded) return;
-
-    // Remove existing markers
-    markersRef.current.forEach((marker) => marker.remove());
-    markersRef.current = [];
-
-    // Add new markers
-    feedstocks.forEach((feedstock) => {
-      const el = document.createElement("div");
-      el.className = "feedstock-marker";
-      el.innerHTML = `
-        <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shadow-lg cursor-pointer transition-transform hover:scale-110"
-             style="background-color: ${getScoreColor(feedstock.abfi_score)}; color: white;">
-          ${feedstock.abfi_score}
-        </div>
-      `;
-
-      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(`
-        <div class="p-2 min-w-[200px]">
-          <div class="font-semibold">${feedstock.name}</div>
-          <div class="text-xs text-gray-500">${feedstock.feedstock_id}</div>
-          <div class="mt-2 grid grid-cols-2 gap-2 text-sm">
-            <div>
-              <div class="text-gray-500">Category</div>
-              <div class="font-medium">${getCategoryLabel(feedstock.category)}</div>
-            </div>
-            <div>
-              <div class="text-gray-500">ABFI Score</div>
-              <div class="font-medium">${feedstock.abfi_score}/100</div>
-            </div>
-            <div>
-              <div class="text-gray-500">Volume</div>
-              <div class="font-medium">${feedstock.available_volume.toLocaleString()}t</div>
-            </div>
-            <div>
-              <div class="text-gray-500">State</div>
-              <div class="font-medium">${feedstock.state}</div>
-            </div>
-          </div>
-        </div>
-      `);
-
-      const marker = new mapboxgl.Marker(el)
-        .setLngLat([feedstock.longitude, feedstock.latitude])
-        .setPopup(popup)
-        .addTo(map.current!);
-
-      el.addEventListener("click", () => {
-        onMarkerClick?.(feedstock);
-      });
-
-      markersRef.current.push(marker);
-    });
-
-    // Fit bounds to show all markers
-    if (feedstocks.length > 0) {
-      const bounds = new mapboxgl.LngLatBounds();
-      feedstocks.forEach((f) => {
-        bounds.extend([f.longitude, f.latitude]);
-      });
-      map.current.fitBounds(bounds, { padding: 50, maxZoom: 10 });
-    }
-  }, [feedstocks, mapLoaded, onMarkerClick]);
-
-  // Add search radius circle
-  useEffect(() => {
-    if (!map.current || !mapLoaded || !showSearch || !searchRadius || !searchCenter)
-      return;
-
-    const sourceId = "search-radius";
-    const layerId = "search-radius-fill";
-
-    // Remove existing layer and source
-    if (map.current.getLayer(layerId)) {
-      map.current.removeLayer(layerId);
-    }
-    if (map.current.getSource(sourceId)) {
-      map.current.removeSource(sourceId);
-    }
-
-    // Create circle polygon
-    const circle = createGeoJSONCircle(searchCenter, searchRadius);
-
-    map.current.addSource(sourceId, {
-      type: "geojson",
-      data: circle,
-    });
-
-    map.current.addLayer({
-      id: layerId,
-      type: "fill",
-      source: sourceId,
-      paint: {
-        "fill-color": "#1B4332",
-        "fill-opacity": 0.1,
-      },
-    });
-
-    map.current.addLayer({
-      id: `${layerId}-outline`,
-      type: "line",
-      source: sourceId,
-      paint: {
-        "line-color": "#1B4332",
-        "line-width": 2,
-        "line-dasharray": [2, 2],
-      },
-    });
-  }, [mapLoaded, showSearch, searchRadius, searchCenter]);
+  const getScoreColor = (score?: number) => {
+    if (!score) return "bg-muted";
+    if (score >= 80) return "bg-rating-a";
+    if (score >= 60) return "bg-rating-b";
+    if (score >= 40) return "bg-rating-c";
+    return "bg-rating-d";
+  };
 
   return (
-    <div className={cn("relative w-full h-full min-h-[400px]", className)}>
-      <div ref={mapContainer} className="absolute inset-0 rounded-lg" />
-      {!mapLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-muted rounded-lg">
-          <div className="text-muted-foreground">Loading map...</div>
+    <Card className={cn("relative overflow-hidden", className)}>
+      <CardContent className="p-0">
+        {/* Map Container */}
+        <div
+          className="relative bg-gradient-to-b from-blue-50 to-blue-100 dark:from-slate-800 dark:to-slate-900"
+          style={{ height }}
+        >
+          {/* Loading State */}
+          {!mapLoaded && (
+            <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+              <div className="flex flex-col items-center gap-3">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+                <p className="text-sm text-muted-foreground">Loading map...</p>
+              </div>
+            </div>
+          )}
+
+          {/* Placeholder Map Background */}
+          {mapLoaded && (
+            <div className="absolute inset-0">
+              {/* Australia outline placeholder */}
+              <svg
+                viewBox="0 0 100 100"
+                className="absolute inset-0 w-full h-full opacity-10"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                <path
+                  d="M20,30 Q30,20 50,25 T80,35 Q85,50 75,70 T50,80 Q30,75 20,60 T20,30"
+                  fill="currentColor"
+                  className="text-primary"
+                />
+              </svg>
+
+              {/* Location Markers */}
+              <TooltipProvider>
+                {locations.map((location) => (
+                  <Tooltip key={location.id}>
+                    <TooltipTrigger asChild>
+                      <button
+                        className={cn(
+                          "absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200",
+                          "hover:scale-125 hover:z-10",
+                          selectedLocationId === location.id && "scale-125 z-10"
+                        )}
+                        style={getMarkerStyle(location)}
+                        onClick={() => onLocationClick?.(location)}
+                        onMouseEnter={() => setHoveredLocation(location.id)}
+                        onMouseLeave={() => setHoveredLocation(null)}
+                      >
+                        <div
+                          className={cn(
+                            "flex items-center justify-center rounded-full p-1.5 shadow-lg border-2 border-white",
+                            getScoreColor(location.abfi_score),
+                            selectedLocationId === location.id && "ring-2 ring-primary ring-offset-2",
+                            hoveredLocation === location.id && "ring-2 ring-primary/50"
+                          )}
+                        >
+                          <MapPin className="h-4 w-4 text-white" />
+                        </div>
+                        {/* Score badge */}
+                        {location.abfi_score && (
+                          <div className="absolute -top-1 -right-1 bg-white rounded-full px-1 text-[10px] font-bold shadow">
+                            {location.abfi_score}
+                          </div>
+                        )}
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-[200px]">
+                      <div className="space-y-1">
+                        <p className="font-medium">{location.name}</p>
+                        {location.supplier_name && (
+                          <p className="text-xs text-muted-foreground">
+                            {location.supplier_name}
+                          </p>
+                        )}
+                        {location.category && (
+                          <p className="text-xs text-muted-foreground capitalize">
+                            {location.category}
+                          </p>
+                        )}
+                        {location.abfi_score && (
+                          <p className="text-xs">
+                            ABFI Score: <span className="font-mono font-bold">{location.abfi_score}</span>
+                          </p>
+                        )}
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                ))}
+              </TooltipProvider>
+            </div>
+          )}
+
+          {/* Map Controls */}
+          <div className="absolute right-3 top-3 flex flex-col gap-1">
+            <Button
+              size="icon-sm"
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm shadow-sm"
+              onClick={handleZoomIn}
+            >
+              <ZoomIn className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon-sm"
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm shadow-sm"
+              onClick={handleZoomOut}
+            >
+              <ZoomOut className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon-sm"
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm shadow-sm"
+            >
+              <Layers className="h-4 w-4" />
+            </Button>
+            <Button
+              size="icon-sm"
+              variant="outline"
+              className="bg-white/90 backdrop-blur-sm shadow-sm"
+            >
+              <Maximize2 className="h-4 w-4" />
+            </Button>
+          </div>
+
+          {/* Location Count */}
+          <div className="absolute left-3 bottom-3 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-sm">
+            <p className="text-xs font-medium">
+              <span className="font-mono">{locations.length}</span> feedstock locations
+            </p>
+          </div>
+
+          {/* Zoom Level */}
+          <div className="absolute right-3 bottom-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-sm">
+            <p className="text-xs font-mono text-muted-foreground">
+              Zoom: {currentZoom}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+/**
+ * Mini Map - Compact version for cards
+ */
+export function FeedstockMapMini({
+  location,
+  className,
+}: {
+  location: { latitude: number; longitude: number; name?: string };
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "relative h-24 rounded-lg overflow-hidden bg-gradient-to-b from-blue-50 to-blue-100 dark:from-slate-800 dark:to-slate-900",
+        className
+      )}
+    >
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex items-center justify-center rounded-full bg-primary p-2 shadow-lg">
+          <MapPin className="h-4 w-4 text-primary-foreground" />
+        </div>
+      </div>
+      {location.name && (
+        <div className="absolute bottom-2 left-2 right-2 text-center">
+          <p className="text-xs font-medium truncate bg-white/80 rounded px-2 py-0.5">
+            {location.name}
+          </p>
         </div>
       )}
     </div>
   );
-}
-
-// Helper functions
-function getScoreColor(score: number): string {
-  if (score >= 85) return "#15803d"; // green-700
-  if (score >= 70) return "#059669"; // emerald-600
-  if (score >= 55) return "#ca8a04"; // yellow-600
-  if (score >= 40) return "#ea580c"; // orange-600
-  return "#dc2626"; // red-600
-}
-
-function getCategoryLabel(category: string): string {
-  const labels: Record<string, string> = {
-    oilseed: "Oilseed",
-    UCO: "Used Cooking Oil",
-    tallow: "Tallow",
-    lignocellulosic: "Lignocellulosic",
-    waste: "Waste",
-    algae: "Algae",
-    bamboo: "Bamboo",
-    other: "Other",
-  };
-  return labels[category] || category;
-}
-
-function createGeoJSONCircle(
-  center: [number, number],
-  radiusKm: number,
-  points: number = 64
-): GeoJSON.Feature<GeoJSON.Polygon> {
-  const coords: [number, number][] = [];
-  const distanceX = radiusKm / (111.32 * Math.cos((center[1] * Math.PI) / 180));
-  const distanceY = radiusKm / 110.574;
-
-  for (let i = 0; i < points; i++) {
-    const theta = (i / points) * (2 * Math.PI);
-    const x = distanceX * Math.cos(theta);
-    const y = distanceY * Math.sin(theta);
-    coords.push([center[0] + x, center[1] + y]);
-  }
-  coords.push(coords[0]); // Close the polygon
-
-  return {
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Polygon",
-      coordinates: [coords],
-    },
-  };
 }

@@ -2,75 +2,66 @@
 
 import { useState, useEffect, useRef } from "react";
 import { format } from "date-fns";
+import { Send, Loader2, MessageSquare, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import {
-  MessageSquare,
-  Send,
-  DollarSign,
-  Package,
-  Clock,
-  CheckCheck,
-  Loader2,
-  AlertCircle,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 interface Message {
   id: string;
   inquiry_id: string;
   sender_id: string;
-  message_type: "message" | "system" | "offer" | "counter_offer";
+  sender_type: "buyer" | "supplier";
   content: string;
-  offered_price?: number;
-  offered_volume?: number;
-  attachments?: { name: string; url: string }[];
-  read_at?: string;
   created_at: string;
+  read_at: string | null;
   sender?: {
-    id: string;
     full_name: string;
-    email: string;
+    company_name?: string;
   };
 }
 
 interface MessageThreadProps {
   inquiryId: string;
-  initialMessage?: string;
-  userRole: "buyer" | "supplier";
-  inquiryStatus: string;
-  onStatusChange?: () => void;
+  currentUserType: "buyer" | "supplier";
+  currentUserId: string;
+  className?: string;
 }
 
 export function MessageThread({
   inquiryId,
-  initialMessage,
-  userRole,
-  inquiryStatus,
-  onStatusChange,
+  currentUserType,
+  currentUserId,
+  className,
 }: MessageThreadProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const supabase = createClient();
 
   // Fetch messages
   useEffect(() => {
     async function fetchMessages() {
       try {
-        const response = await fetch(`/api/inquiries/${inquiryId}/messages`);
-        if (!response.ok) throw new Error("Failed to fetch messages");
-        const data = await response.json();
-        setMessages(data.messages || []);
+        const { data, error } = await supabase
+          .from("inquiry_messages")
+          .select(`
+            *,
+            sender:profiles!sender_id(full_name, company_name)
+          `)
+          .eq("inquiry_id", inquiryId)
+          .order("created_at", { ascending: true });
+
+        if (error) throw error;
+        setMessages(data || []);
       } catch (err) {
-        setError("Failed to load messages");
-        console.error(err);
+        console.error("Failed to fetch messages:", err);
+        toast.error("Failed to load messages");
       } finally {
         setLoading(false);
       }
@@ -78,283 +69,161 @@ export function MessageThread({
 
     fetchMessages();
 
-    // Poll for new messages every 30 seconds
-    const interval = setInterval(fetchMessages, 30000);
-    return () => clearInterval(interval);
-  }, [inquiryId]);
+    // Subscribe to new messages
+    const channel = supabase
+      .channel(`inquiry-${inquiryId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "inquiry_messages",
+          filter: `inquiry_id=eq.${inquiryId}`,
+        },
+        (payload) => {
+          setMessages((prev) => [...prev, payload.new as Message]);
+        }
+      )
+      .subscribe();
 
-  // Scroll to bottom when new messages arrive
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [inquiryId, supabase]);
+
+  // Scroll to bottom on new messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = async () => {
-    if (!newMessage.trim()) return;
+  // Send message
+  async function handleSend(e: React.FormEvent) {
+    e.preventDefault();
+    if (!newMessage.trim() || sending) return;
 
     setSending(true);
-    setError(null);
-
     try {
-      const response = await fetch(`/api/inquiries/${inquiryId}/messages`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: newMessage.trim() }),
+      const { error } = await supabase.from("inquiry_messages").insert({
+        inquiry_id: inquiryId,
+        sender_id: currentUserId,
+        sender_type: currentUserType,
+        content: newMessage.trim(),
       });
 
-      if (!response.ok) throw new Error("Failed to send message");
-
-      const message = await response.json();
-      setMessages((prev) => [...prev, message]);
+      if (error) throw error;
       setNewMessage("");
-      onStatusChange?.();
     } catch (err) {
-      setError("Failed to send message. Please try again.");
-      console.error(err);
+      console.error("Failed to send message:", err);
+      toast.error("Failed to send message");
     } finally {
       setSending(false);
     }
-  };
-
-  const getInitials = (name?: string, email?: string) => {
-    if (name) {
-      return name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2);
-    }
-    return email?.slice(0, 2).toUpperCase() || "??";
-  };
-
-  const getMessageTypeLabel = (type: string) => {
-    switch (type) {
-      case "offer":
-        return (
-          <Badge className="bg-green-100 text-green-800">
-            <DollarSign className="mr-1 h-3 w-3" />
-            Offer
-          </Badge>
-        );
-      case "counter_offer":
-        return (
-          <Badge className="bg-orange-100 text-orange-800">
-            <DollarSign className="mr-1 h-3 w-3" />
-            Counter Offer
-          </Badge>
-        );
-      case "system":
-        return (
-          <Badge variant="secondary">
-            <AlertCircle className="mr-1 h-3 w-3" />
-            System
-          </Badge>
-        );
-      default:
-        return null;
-    }
-  };
+  }
 
   if (loading) {
     return (
-      <Card>
-        <CardContent className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      <Card className={cn("flex flex-col", className)}>
+        <CardContent className="flex items-center justify-center py-12">
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
         </CardContent>
       </Card>
     );
   }
 
-  const canSendMessages =
-    inquiryStatus !== "rejected" &&
-    inquiryStatus !== "expired" &&
-    inquiryStatus !== "accepted";
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MessageSquare className="h-5 w-5" />
-          Communication History
+    <Card className={cn("flex flex-col", className)}>
+      <CardHeader className="border-b pb-4">
+        <CardTitle className="flex items-center gap-2 text-lg font-display">
+          <MessageSquare className="h-5 w-5 text-primary" />
+          Messages
           {messages.length > 0 && (
-            <Badge variant="secondary" className="ml-2">
-              {messages.length} messages
-            </Badge>
+            <span className="text-sm font-normal text-muted-foreground">
+              ({messages.length})
+            </span>
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Initial Inquiry Message */}
-        {initialMessage && (
-          <div className="rounded-lg bg-gray-50 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="outline">Initial Inquiry</Badge>
-              <span className="text-xs text-muted-foreground">
-                From {userRole === "buyer" ? "You" : "Buyer"}
-              </span>
+
+      <CardContent className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[400px]">
+        {messages.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-8 text-center">
+            <div className="rounded-full bg-muted p-4 mb-4">
+              <MessageSquare className="h-8 w-8 text-muted-foreground" />
             </div>
-            <p className="text-sm">{initialMessage}</p>
+            <p className="text-muted-foreground">No messages yet</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Start the conversation below
+            </p>
           </div>
-        )}
-
-        {messages.length > 0 && initialMessage && <Separator />}
-
-        {/* Message Thread */}
-        <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
-          {messages.map((message) => {
-            const isOwnMessage =
-              (userRole === "buyer" && message.sender_id !== message.inquiry_id) ||
-              (userRole === "supplier" && message.sender_id !== message.inquiry_id);
-            const isFromCurrentUser = message.sender?.email?.includes(userRole);
-
+        ) : (
+          messages.map((message) => {
+            const isOwn = message.sender_id === currentUserId;
             return (
               <div
                 key={message.id}
                 className={cn(
                   "flex gap-3",
-                  message.message_type === "system" ? "justify-center" : ""
+                  isOwn ? "flex-row-reverse" : "flex-row"
                 )}
               >
-                {message.message_type === "system" ? (
-                  <div className="bg-gray-100 rounded-lg px-4 py-2 text-sm text-muted-foreground">
+                <div
+                  className={cn(
+                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full",
+                    isOwn ? "bg-primary text-primary-foreground" : "bg-muted"
+                  )}
+                >
+                  <User className="h-4 w-4" />
+                </div>
+                <div
+                  className={cn(
+                    "flex flex-col max-w-[75%]",
+                    isOwn ? "items-end" : "items-start"
+                  )}
+                >
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-medium">
+                      {isOwn ? "You" : message.sender?.full_name || "Unknown"}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {format(new Date(message.created_at), "MMM d, h:mm a")}
+                    </span>
+                  </div>
+                  <div
+                    className={cn(
+                      "rounded-2xl px-4 py-2 text-sm",
+                      isOwn
+                        ? "bg-primary text-primary-foreground rounded-tr-sm"
+                        : "bg-muted rounded-tl-sm"
+                    )}
+                  >
                     {message.content}
                   </div>
-                ) : (
-                  <>
-                    <Avatar className="h-8 w-8 flex-shrink-0">
-                      <AvatarFallback className="text-xs">
-                        {getInitials(
-                          message.sender?.full_name,
-                          message.sender?.email
-                        )}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium">
-                          {message.sender?.full_name || message.sender?.email || "Unknown"}
-                        </span>
-                        {getMessageTypeLabel(message.message_type)}
-                        <span className="text-xs text-muted-foreground">
-                          {format(new Date(message.created_at), "dd MMM HH:mm")}
-                        </span>
-                        {message.read_at && (
-                          <CheckCheck className="h-3 w-3 text-blue-500" />
-                        )}
-                      </div>
-                      <div className="rounded-lg bg-gray-50 p-3">
-                        <p className="text-sm whitespace-pre-wrap">
-                          {message.content}
-                        </p>
-                        {(message.offered_price || message.offered_volume) && (
-                          <div className="mt-2 pt-2 border-t flex gap-4">
-                            {message.offered_price && (
-                              <div className="flex items-center gap-1 text-sm">
-                                <DollarSign className="h-4 w-4 text-green-600" />
-                                <span className="font-medium">
-                                  ${message.offered_price}/t
-                                </span>
-                              </div>
-                            )}
-                            {message.offered_volume && (
-                              <div className="flex items-center gap-1 text-sm">
-                                <Package className="h-4 w-4 text-blue-600" />
-                                <span className="font-medium">
-                                  {message.offered_volume.toLocaleString()} t
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                        {message.attachments && message.attachments.length > 0 && (
-                          <div className="mt-2 pt-2 border-t">
-                            <div className="text-xs text-muted-foreground mb-1">
-                              Attachments:
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                              {message.attachments.map((att, i) => (
-                                <a
-                                  key={i}
-                                  href={att.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-xs text-blue-600 hover:underline"
-                                >
-                                  {att.name}
-                                </a>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
+                </div>
               </div>
             );
-          })}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {messages.length === 0 && !initialMessage && (
-          <div className="text-center py-8 text-muted-foreground">
-            <MessageSquare className="h-8 w-8 mx-auto mb-2 opacity-50" />
-            <p>No messages yet</p>
-            <p className="text-sm">
-              {canSendMessages
-                ? "Start the conversation below"
-                : "This inquiry is closed"}
-            </p>
-          </div>
+          })
         )}
-
-        {/* New Message Input */}
-        {canSendMessages && (
-          <>
-            <Separator />
-            <div className="space-y-3">
-              {error && (
-                <div className="text-sm text-red-600 flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4" />
-                  {error}
-                </div>
-              )}
-              <Textarea
-                placeholder="Type your message..."
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                rows={3}
-                disabled={sending}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && e.ctrlKey) {
-                    handleSend();
-                  }
-                }}
-              />
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground">
-                  Press Ctrl+Enter to send
-                </span>
-                <Button onClick={handleSend} disabled={!newMessage.trim() || sending}>
-                  {sending ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="mr-2 h-4 w-4" />
-                  )}
-                  Send Message
-                </Button>
-              </div>
-            </div>
-          </>
-        )}
-
-        {!canSendMessages && (
-          <div className="text-center py-4 text-muted-foreground text-sm">
-            <Clock className="h-5 w-5 mx-auto mb-1" />
-            This inquiry is {inquiryStatus}. Messaging is disabled.
-          </div>
-        )}
+        <div ref={messagesEndRef} />
       </CardContent>
+
+      <div className="border-t p-4">
+        <form onSubmit={handleSend} className="flex gap-2">
+          <Input
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type your message..."
+            disabled={sending}
+            className="flex-1"
+          />
+          <Button type="submit" disabled={!newMessage.trim() || sending}>
+            {sending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
+          </Button>
+        </form>
+      </div>
     </Card>
   );
 }

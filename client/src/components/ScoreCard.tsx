@@ -1,14 +1,44 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Badge, RatingBadge as RatingBadgeComponent } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Award, TrendingUp, Shield } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+// Score tier configuration matching the design system
+type ScoreTier = {
+  tier: string;
+  label: string;
+  colorClass: string;
+  bgClass: string;
+  min: number;
+};
+
+const SCORE_TIERS: ScoreTier[] = [
+  { tier: "A+", label: "Excellent", colorClass: "text-rating-a-plus", bgClass: "bg-rating-a-plus/10", min: 90 },
+  { tier: "A", label: "Very Good", colorClass: "text-rating-a", bgClass: "bg-rating-a/10", min: 80 },
+  { tier: "B+", label: "Good", colorClass: "text-rating-b-plus", bgClass: "bg-rating-b-plus/10", min: 70 },
+  { tier: "B", label: "Above Average", colorClass: "text-rating-b", bgClass: "bg-rating-b/10", min: 60 },
+  { tier: "C+", label: "Average", colorClass: "text-rating-c-plus", bgClass: "bg-rating-c-plus/10", min: 50 },
+  { tier: "C", label: "Below Average", colorClass: "text-rating-c", bgClass: "bg-rating-c/10", min: 40 },
+  { tier: "D", label: "Poor", colorClass: "text-rating-d", bgClass: "bg-rating-d/10", min: 25 },
+  { tier: "F", label: "Failing", colorClass: "text-rating-f", bgClass: "bg-rating-f/10", min: 0 },
+];
+
+function getScoreTier(score: number): ScoreTier {
+  for (const tier of SCORE_TIERS) {
+    if (score >= tier.min) {
+      return tier;
+    }
+  }
+  return SCORE_TIERS[SCORE_TIERS.length - 1];
+}
 
 interface ScoreCardProps {
   title: string;
   score: number;
   maxScore?: number;
   description?: string;
-  variant?: "default" | "compact" | "detailed";
+  variant?: "default" | "compact" | "detailed" | "gauge";
   showProgress?: boolean;
   icon?: "award" | "trending" | "shield";
   className?: string;
@@ -25,34 +55,42 @@ export function ScoreCard({
   className = "",
 }: ScoreCardProps) {
   const percentage = (score / maxScore) * 100;
-  
-  const getScoreColor = (pct: number): string => {
-    if (pct >= 85) return "text-green-600";
-    if (pct >= 70) return "text-blue-600";
-    if (pct >= 55) return "text-yellow-600";
-    return "text-red-600";
-  };
-
-  const getScoreBadgeColor = (pct: number): string => {
-    if (pct >= 85) return "bg-green-100 text-green-800";
-    if (pct >= 70) return "bg-blue-100 text-blue-800";
-    if (pct >= 55) return "bg-yellow-100 text-yellow-800";
-    return "bg-red-100 text-red-800";
-  };
+  const tier = getScoreTier(score);
 
   const IconComponent = icon === "award" ? Award : icon === "trending" ? TrendingUp : Shield;
 
   if (variant === "compact") {
     return (
-      <div className={`flex items-center justify-between p-3 bg-muted/50 rounded-lg ${className}`}>
-        <div className="flex items-center gap-2">
-          <IconComponent className="h-4 w-4 text-muted-foreground" />
+      <div className={cn("flex items-center justify-between p-4 bg-card border rounded-xl", className)}>
+        <div className="flex items-center gap-3">
+          <div className={cn("p-2 rounded-lg", tier.bgClass)}>
+            <IconComponent className={cn("h-4 w-4", tier.colorClass)} />
+          </div>
           <span className="text-sm font-medium">{title}</span>
         </div>
-        <Badge className={getScoreBadgeColor(percentage)}>
-          {score}/{maxScore}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <span className={cn("font-mono font-bold text-lg", tier.colorClass)}>{score}</span>
+          <span className="text-xs text-muted-foreground">/ {maxScore}</span>
+        </div>
       </div>
+    );
+  }
+
+  if (variant === "gauge") {
+    return (
+      <Card className={className}>
+        <CardContent className="pt-6">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <IconComponent className="h-5 w-5 text-muted-foreground" />
+              <span className="font-medium">{title}</span>
+            </div>
+            <Badge variant="outline" className={cn(tier.colorClass)}>{tier.tier}</Badge>
+          </div>
+          <ScoreGauge score={score} size="lg" />
+          <p className="text-center text-sm text-muted-foreground mt-3">{tier.label}</p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -62,10 +100,12 @@ export function ScoreCard({
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-base flex items-center gap-2">
-              <IconComponent className="h-4 w-4" />
+              <div className={cn("p-1.5 rounded-lg", tier.bgClass)}>
+                <IconComponent className={cn("h-4 w-4", tier.colorClass)} />
+              </div>
               {title}
             </CardTitle>
-            <div className={`text-2xl font-bold ${getScoreColor(percentage)}`}>
+            <div className={cn("metric-lg", tier.colorClass)}>
               {score}
             </div>
           </div>
@@ -73,7 +113,7 @@ export function ScoreCard({
             <CardDescription className="text-xs">{description}</CardDescription>
           )}
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-3">
           {showProgress && (
             <div>
               <Progress value={percentage} className="h-2" />
@@ -83,41 +123,123 @@ export function ScoreCard({
               </div>
             </div>
           )}
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-muted-foreground">Performance</span>
-            <span className="font-medium">{percentage.toFixed(0)}%</span>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">Rating</span>
+            <Badge variant="outline" className={cn("font-mono font-semibold", tier.colorClass)}>
+              {tier.tier} - {tier.label}
+            </Badge>
           </div>
         </CardContent>
       </Card>
     );
   }
 
-  // Default variant
+  // Default variant with centered score
   return (
     <Card className={className}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            <IconComponent className="h-4 w-4" />
-            {title}
-          </CardTitle>
+      <CardHeader className="pb-2">
+        <div className="flex items-center gap-2">
+          <div className={cn("p-1.5 rounded-lg", tier.bgClass)}>
+            <IconComponent className={cn("h-4 w-4", tier.colorClass)} />
+          </div>
+          <CardTitle className="text-sm font-medium">{title}</CardTitle>
         </div>
         {description && (
           <CardDescription className="text-xs">{description}</CardDescription>
         )}
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-4">
         <div className="text-center">
-          <div className={`text-4xl font-bold ${getScoreColor(percentage)}`}>
+          <div className={cn("metric-xl", tier.colorClass)}>
             {score}
           </div>
           <div className="text-sm text-muted-foreground">out of {maxScore}</div>
+          <Badge variant="outline" className={cn("mt-2 font-mono", tier.colorClass)}>
+            {tier.tier}
+          </Badge>
         </div>
         {showProgress && (
           <Progress value={percentage} className="h-2" />
         )}
       </CardContent>
     </Card>
+  );
+}
+
+/**
+ * ScoreGauge - Circular gauge for scores
+ */
+interface ScoreGaugeProps {
+  score: number;
+  size?: "sm" | "md" | "lg" | "xl";
+  showTier?: boolean;
+  className?: string;
+}
+
+export function ScoreGauge({
+  score,
+  size = "md",
+  showTier = true,
+  className,
+}: ScoreGaugeProps) {
+  const tier = getScoreTier(score);
+
+  const sizeConfig = {
+    sm: { outer: 48, inner: 40, stroke: 4, fontSize: "text-sm", tierSize: "text-[8px]" },
+    md: { outer: 64, inner: 54, stroke: 5, fontSize: "text-lg", tierSize: "text-[10px]" },
+    lg: { outer: 80, inner: 68, stroke: 6, fontSize: "text-2xl", tierSize: "text-xs" },
+    xl: { outer: 120, inner: 104, stroke: 8, fontSize: "text-4xl", tierSize: "text-sm" },
+  };
+
+  const config = sizeConfig[size];
+  const radius = (config.inner - config.stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const progress = (score / 100) * circumference;
+  const offset = circumference - progress;
+
+  return (
+    <div className={cn("relative inline-flex items-center justify-center mx-auto", className)}>
+      <svg
+        width={config.outer}
+        height={config.outer}
+        viewBox={`0 0 ${config.outer} ${config.outer}`}
+        className="transform -rotate-90"
+      >
+        {/* Background circle */}
+        <circle
+          cx={config.outer / 2}
+          cy={config.outer / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={config.stroke}
+          className="text-muted/20"
+        />
+        {/* Progress circle */}
+        <circle
+          cx={config.outer / 2}
+          cy={config.outer / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={config.stroke}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          className={cn(tier.colorClass, "transition-all duration-1000 ease-out")}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className={cn("font-mono font-bold", config.fontSize, tier.colorClass)}>
+          {score}
+        </span>
+        {showTier && (
+          <span className={cn("font-medium text-muted-foreground", config.tierSize)}>
+            {tier.tier}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
 

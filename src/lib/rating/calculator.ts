@@ -296,39 +296,72 @@ export function calculateAbfiScore(
 }
 
 /**
- * Get score tier label
+ * Score tier configuration with design token classes
  */
-export function getScoreTier(score: number): {
+export type ScoreTier = {
   tier: string;
-  color: string;
-  bgColor: string;
-} {
-  if (score >= 85) {
-    return { tier: "Excellent", color: "text-green-700", bgColor: "bg-green-50" };
-  } else if (score >= 70) {
-    return { tier: "Good", color: "text-emerald-700", bgColor: "bg-emerald-50" };
-  } else if (score >= 55) {
-    return { tier: "Average", color: "text-yellow-700", bgColor: "bg-yellow-50" };
-  } else if (score >= 40) {
-    return { tier: "Below Average", color: "text-orange-700", bgColor: "bg-orange-50" };
-  } else {
-    return { tier: "Poor", color: "text-red-700", bgColor: "bg-red-50" };
+  label: string;
+  colorClass: string;
+  bgClass: string;
+  borderClass: string;
+  min: number;
+};
+
+export const SCORE_TIERS: ScoreTier[] = [
+  { tier: "A+", label: "Excellent", colorClass: "text-rating-a-plus", bgClass: "bg-rating-a-plus/10", borderClass: "border-rating-a-plus/30", min: 90 },
+  { tier: "A", label: "Very Good", colorClass: "text-rating-a", bgClass: "bg-rating-a/10", borderClass: "border-rating-a/30", min: 80 },
+  { tier: "B+", label: "Good", colorClass: "text-rating-b-plus", bgClass: "bg-rating-b-plus/10", borderClass: "border-rating-b-plus/30", min: 70 },
+  { tier: "B", label: "Above Average", colorClass: "text-rating-b", bgClass: "bg-rating-b/10", borderClass: "border-rating-b/30", min: 60 },
+  { tier: "C+", label: "Average", colorClass: "text-rating-c-plus", bgClass: "bg-rating-c-plus/10", borderClass: "border-rating-c-plus/30", min: 50 },
+  { tier: "C", label: "Below Average", colorClass: "text-rating-c", bgClass: "bg-rating-c/10", borderClass: "border-rating-c/30", min: 40 },
+  { tier: "D", label: "Poor", colorClass: "text-rating-d", bgClass: "bg-rating-d/10", borderClass: "border-rating-d/30", min: 25 },
+  { tier: "F", label: "Failing", colorClass: "text-rating-f", bgClass: "bg-rating-f/10", borderClass: "border-rating-f/30", min: 0 },
+];
+
+/**
+ * Get score tier with design token styling
+ */
+export function getScoreTier(score: number): ScoreTier {
+  for (const tier of SCORE_TIERS) {
+    if (score >= tier.min) {
+      return tier;
+    }
   }
+  return SCORE_TIERS[SCORE_TIERS.length - 1];
 }
 
 /**
- * Get carbon intensity rating color
+ * Carbon rating configuration with design token classes
+ */
+export type CarbonRating = {
+  rating: string;
+  colorClass: string;
+  bgClass: string;
+  maxCI: number;
+};
+
+export const CARBON_RATINGS: CarbonRating[] = [
+  { rating: "A+", colorClass: "text-rating-a-plus", bgClass: "bg-rating-a-plus/10", maxCI: 10 },
+  { rating: "A", colorClass: "text-rating-a", bgClass: "bg-rating-a/10", maxCI: 20 },
+  { rating: "B+", colorClass: "text-rating-b-plus", bgClass: "bg-rating-b-plus/10", maxCI: 30 },
+  { rating: "B", colorClass: "text-rating-b", bgClass: "bg-rating-b/10", maxCI: 40 },
+  { rating: "C+", colorClass: "text-rating-c-plus", bgClass: "bg-rating-c-plus/10", maxCI: 50 },
+  { rating: "C", colorClass: "text-rating-c", bgClass: "bg-rating-c/10", maxCI: 60 },
+  { rating: "D", colorClass: "text-rating-d", bgClass: "bg-rating-d/10", maxCI: 70 },
+  { rating: "F", colorClass: "text-rating-f", bgClass: "bg-rating-f/10", maxCI: Infinity },
+];
+
+/**
+ * Get carbon rating with design token styling
+ */
+export function getCarbonRatingStyle(rating: string): CarbonRating {
+  return CARBON_RATINGS.find((r) => r.rating === rating) || CARBON_RATINGS[CARBON_RATINGS.length - 1];
+}
+
+/**
+ * Get carbon intensity rating color (legacy support)
  */
 export function getCarbonRatingColor(rating: string): string {
-  const colors: Record<string, string> = {
-    "A+": "text-green-700 bg-green-50",
-    A: "text-green-600 bg-green-50",
-    "B+": "text-emerald-600 bg-emerald-50",
-    B: "text-yellow-600 bg-yellow-50",
-    "C+": "text-orange-500 bg-orange-50",
-    C: "text-orange-600 bg-orange-50",
-    D: "text-red-500 bg-red-50",
-    F: "text-red-700 bg-red-50",
-  };
-  return colors[rating] || "text-gray-600 bg-gray-50";
+  const style = getCarbonRatingStyle(rating);
+  return `${style.colorClass} ${style.bgClass}`;
 }
