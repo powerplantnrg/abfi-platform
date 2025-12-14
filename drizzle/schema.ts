@@ -2658,3 +2658,168 @@ export const platformTransactions = mysqlTable("platformTransactions", {
 
 export type PlatformTransaction = typeof platformTransactions.$inferSelect;
 export type InsertPlatformTransaction = typeof platformTransactions.$inferInsert;
+
+// ============================================================================
+// FEEDSTOCK FUTURES (Long-term Perennial Crop Projections)
+// ============================================================================
+
+export const feedstockFutures = mysqlTable("feedstock_futures", {
+  id: int("id").autoincrement().primaryKey(),
+  futuresId: varchar("futuresId", { length: 20 }).notNull().unique(), // FUT-2025-0001
+  supplierId: int("supplierId").notNull().references(() => suppliers.id),
+
+  // Crop details
+  cropType: mysqlEnum("cropType", [
+    "bamboo",
+    "rotation_forestry",
+    "eucalyptus",
+    "poplar",
+    "willow",
+    "miscanthus",
+    "switchgrass",
+    "arundo_donax",
+    "hemp",
+    "other_perennial"
+  ]).notNull(),
+  cropVariety: varchar("cropVariety", { length: 100 }),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+
+  // Location
+  state: mysqlEnum("state", ["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).notNull(),
+  region: varchar("region", { length: 100 }),
+  latitude: varchar("latitude", { length: 20 }),
+  longitude: varchar("longitude", { length: 20 }),
+
+  // Land
+  landAreaHectares: decimal("landAreaHectares", { precision: 10, scale: 2 }).notNull(),
+  landStatus: mysqlEnum("landStatus", [
+    "owned",
+    "leased",
+    "under_negotiation",
+    "planned_acquisition"
+  ]).default("owned"),
+
+  // Timeline
+  projectionStartYear: int("projectionStartYear").notNull(),
+  projectionEndYear: int("projectionEndYear").notNull(),
+  plantingDate: date("plantingDate"),
+  firstHarvestYear: int("firstHarvestYear"),
+
+  // Volumes (calculated from projections)
+  totalProjectedTonnes: decimal("totalProjectedTonnes", { precision: 12, scale: 2 }).default("0"),
+  totalContractedTonnes: decimal("totalContractedTonnes", { precision: 12, scale: 2 }).default("0"),
+  totalAvailableTonnes: decimal("totalAvailableTonnes", { precision: 12, scale: 2 }).default("0"),
+
+  // Pricing
+  indicativePricePerTonne: decimal("indicativePricePerTonne", { precision: 10, scale: 2 }),
+  priceEscalationPercent: decimal("priceEscalationPercent", { precision: 5, scale: 2 }).default("2.5"),
+  pricingNotes: text("pricingNotes"),
+
+  // Quality expectations
+  expectedCarbonIntensity: decimal("expectedCarbonIntensity", { precision: 6, scale: 2 }),
+  expectedMoistureContent: decimal("expectedMoistureContent", { precision: 5, scale: 2 }),
+  expectedEnergyContent: decimal("expectedEnergyContent", { precision: 6, scale: 2 }),
+
+  // Status
+  status: mysqlEnum("futuresStatus", [
+    "draft",
+    "active",
+    "partially_contracted",
+    "fully_contracted",
+    "expired",
+    "cancelled"
+  ]).default("draft").notNull(),
+  publishedAt: timestamp("publishedAt"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  supplierIdIdx: index("futures_supplierId_idx").on(table.supplierId),
+  statusIdx: index("futures_status_idx").on(table.status),
+  cropTypeIdx: index("futures_cropType_idx").on(table.cropType),
+  stateIdx: index("futures_state_idx").on(table.state),
+}));
+
+export type FeedstockFutures = typeof feedstockFutures.$inferSelect;
+export type InsertFeedstockFutures = typeof feedstockFutures.$inferInsert;
+
+// ============================================================================
+// FUTURES YIELD PROJECTIONS (Year-by-year projections)
+// ============================================================================
+
+export const futuresYieldProjections = mysqlTable("futures_yield_projections", {
+  id: int("id").autoincrement().primaryKey(),
+  futuresId: int("futuresId").notNull().references(() => feedstockFutures.id, { onDelete: "cascade" }),
+
+  projectionYear: int("projectionYear").notNull(),
+  harvestSeason: varchar("harvestSeason", { length: 50 }),
+  projectedTonnes: decimal("projectedTonnes", { precision: 10, scale: 2 }).notNull(),
+  contractedTonnes: decimal("contractedTonnes", { precision: 10, scale: 2 }).default("0"),
+  confidencePercent: int("confidencePercent").default(80),
+  notes: text("notes"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  futuresIdIdx: index("projections_futuresId_idx").on(table.futuresId),
+  yearIdx: index("projections_year_idx").on(table.projectionYear),
+  uniqueYearPerFutures: unique("projections_unique").on(table.futuresId, table.projectionYear),
+}));
+
+export type FuturesYieldProjection = typeof futuresYieldProjections.$inferSelect;
+export type InsertFuturesYieldProjection = typeof futuresYieldProjections.$inferInsert;
+
+// ============================================================================
+// FUTURES EOI (Expression of Interest from Buyers)
+// ============================================================================
+
+export const futuresEOI = mysqlTable("futures_eoi", {
+  id: int("id").autoincrement().primaryKey(),
+  eoiReference: varchar("eoiReference", { length: 20 }).notNull().unique(), // EOI-2025-0001
+  futuresId: int("futuresId").notNull().references(() => feedstockFutures.id),
+  buyerId: int("buyerId").notNull().references(() => buyers.id),
+
+  // Interest period
+  interestStartYear: int("interestStartYear").notNull(),
+  interestEndYear: int("interestEndYear").notNull(),
+
+  // Volume
+  annualVolumeTonnes: decimal("annualVolumeTonnes", { precision: 10, scale: 2 }).notNull(),
+  totalVolumeTonnes: decimal("totalVolumeTonnes", { precision: 12, scale: 2 }).notNull(),
+
+  // Pricing
+  offeredPricePerTonne: decimal("offeredPricePerTonne", { precision: 10, scale: 2 }),
+  priceTerms: text("priceTerms"),
+
+  // Delivery
+  deliveryLocation: varchar("deliveryLocation", { length: 255 }),
+  deliveryFrequency: varchar("deliveryFrequency", { length: 50 }).default("quarterly"),
+  logisticsNotes: text("logisticsNotes"),
+
+  // Terms
+  paymentTerms: varchar("paymentTerms", { length: 50 }).default("negotiable"),
+  additionalTerms: text("additionalTerms"),
+
+  // Status
+  status: mysqlEnum("eoiStatus", [
+    "pending",
+    "under_review",
+    "accepted",
+    "declined",
+    "expired",
+    "withdrawn"
+  ]).default("pending").notNull(),
+  supplierResponse: text("supplierResponse"),
+  respondedAt: timestamp("respondedAt"),
+
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+}, (table) => ({
+  futuresIdIdx: index("eoi_futuresId_idx").on(table.futuresId),
+  buyerIdIdx: index("eoi_buyerId_idx").on(table.buyerId),
+  statusIdx: index("eoi_status_idx").on(table.status),
+}));
+
+export type FuturesEOI = typeof futuresEOI.$inferSelect;
+export type InsertFuturesEOI = typeof futuresEOI.$inferInsert;

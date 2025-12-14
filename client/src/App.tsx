@@ -59,6 +59,12 @@ import ConcentrationAnalysis from "./pages/ConcentrationAnalysis";
 import CreateDemandSignal from "./pages/CreateDemandSignal";
 import BrowseDemandSignals from "./pages/BrowseDemandSignals";
 import DemandSignalDetail from "./pages/DemandSignalDetail";
+import SupplierFutures from "./pages/SupplierFutures";
+import FuturesCreate from "./pages/FuturesCreate";
+import FuturesDetailSupplier from "./pages/FuturesDetailSupplier";
+import FuturesMarketplace from "./pages/FuturesMarketplace";
+import FuturesDetailBuyer from "./pages/FuturesDetailBuyer";
+import MyEOIs from "./pages/MyEOIs";
 
 function Router() {
   return (
@@ -104,6 +110,12 @@ function Router() {
       <Route path="/demand-signals/create" component={CreateDemandSignal} />
       <Route path="/demand-signals" component={BrowseDemandSignals} />
       <Route path="/demand-signals/:id" component={DemandSignalDetail} />
+      <Route path="/supplier/futures" component={SupplierFutures} />
+      <Route path="/supplier/futures/create" component={FuturesCreate} />
+      <Route path="/supplier/futures/:id" component={FuturesDetailSupplier} />
+      <Route path="/futures" component={FuturesMarketplace} />
+      <Route path="/futures/:id" component={FuturesDetailBuyer} />
+      <Route path="/buyer/eois" component={MyEOIs} />
       <Route path="/map" component={MapView} />
       <Route path="/feedstock-map" component={FeedstockMap} />
       <Route path="/producer-registration" component={ProducerRegistration} />

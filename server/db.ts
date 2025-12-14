@@ -1,6 +1,6 @@
 import { eq, and, desc, asc, gte, lte, inArray, like, sql, or, isNull, isNotNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { 
+import {
   InsertUser, users,
   suppliers, InsertSupplier,
   buyers, InsertBuyer,
@@ -28,7 +28,10 @@ import {
   financialInstitutions, InsertFinancialInstitution,
   demandSignals, InsertDemandSignal,
   supplierResponses, InsertSupplierResponse,
-  platformTransactions, InsertPlatformTransaction
+  platformTransactions, InsertPlatformTransaction,
+  feedstockFutures, InsertFeedstockFutures,
+  futuresYieldProjections, InsertFuturesYieldProjection,
+  futuresEOI, InsertFuturesEOI
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -1490,4 +1493,318 @@ export async function updatePlatformTransaction(id: number, updates: Partial<Ins
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   await db.update(platformTransactions).set(updates).where(eq(platformTransactions.id, id));
+}
+
+// ============================================================================
+// FEEDSTOCK FUTURES (Long-term Perennial Crop Projections)
+// ============================================================================
+
+export async function generateFuturesId(): Promise<string> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const year = new Date().getFullYear();
+  const prefix = `FUT-${year}-`;
+
+  // Get the highest existing futures ID for this year
+  const result = await db.select({ futuresId: feedstockFutures.futuresId })
+    .from(feedstockFutures)
+    .where(like(feedstockFutures.futuresId, `${prefix}%`))
+    .orderBy(desc(feedstockFutures.futuresId))
+    .limit(1);
+
+  let nextNum = 1;
+  if (result.length > 0 && result[0].futuresId) {
+    const lastNum = parseInt(result[0].futuresId.replace(prefix, ''), 10);
+    if (!isNaN(lastNum)) {
+      nextNum = lastNum + 1;
+    }
+  }
+
+  return `${prefix}${nextNum.toString().padStart(4, '0')}`;
+}
+
+export async function createFutures(futures: InsertFeedstockFutures) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(feedstockFutures).values(futures);
+  return Number((result as any).insertId);
+}
+
+export async function getFuturesById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(feedstockFutures).where(eq(feedstockFutures.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getFuturesByFuturesId(futuresId: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(feedstockFutures).where(eq(feedstockFutures.futuresId, futuresId)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getFuturesBySupplierId(supplierId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select()
+    .from(feedstockFutures)
+    .where(eq(feedstockFutures.supplierId, supplierId))
+    .orderBy(desc(feedstockFutures.createdAt));
+}
+
+export async function searchActiveFutures(filters?: {
+  state?: string[];
+  cropType?: string[];
+  minVolume?: number;
+  limit?: number;
+  offset?: number;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+
+  const conditions = [eq(feedstockFutures.status, 'active')];
+
+  if (filters?.state && filters.state.length > 0) {
+    conditions.push(inArray(feedstockFutures.state, filters.state as any));
+  }
+  if (filters?.cropType && filters.cropType.length > 0) {
+    conditions.push(inArray(feedstockFutures.cropType, filters.cropType as any));
+  }
+  if (filters?.minVolume) {
+    conditions.push(gte(feedstockFutures.totalAvailableTonnes, filters.minVolume.toString()));
+  }
+
+  let query = db.select()
+    .from(feedstockFutures)
+    .where(and(...conditions))
+    .orderBy(desc(feedstockFutures.createdAt));
+
+  if (filters?.limit) {
+    query = query.limit(filters.limit) as any;
+  }
+  if (filters?.offset) {
+    query = query.offset(filters.offset) as any;
+  }
+
+  return await query;
+}
+
+export async function updateFutures(id: number, updates: Partial<InsertFeedstockFutures>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(feedstockFutures).set(updates).where(eq(feedstockFutures.id, id));
+}
+
+export async function deleteFutures(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  // Projections will be deleted via cascade
+  await db.delete(feedstockFutures).where(eq(feedstockFutures.id, id));
+}
+
+export async function recalculateFuturesTotals(futuresId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  // Sum all projections
+  const projections = await db.select()
+    .from(futuresYieldProjections)
+    .where(eq(futuresYieldProjections.futuresId, futuresId));
+
+  let totalProjected = 0;
+  let totalContracted = 0;
+
+  for (const p of projections) {
+    totalProjected += parseFloat(p.projectedTonnes) || 0;
+    totalContracted += parseFloat(p.contractedTonnes || '0') || 0;
+  }
+
+  const totalAvailable = totalProjected - totalContracted;
+
+  await db.update(feedstockFutures)
+    .set({
+      totalProjectedTonnes: totalProjected.toString(),
+      totalContractedTonnes: totalContracted.toString(),
+      totalAvailableTonnes: totalAvailable.toString(),
+    })
+    .where(eq(feedstockFutures.id, futuresId));
+}
+
+// ============================================================================
+// FUTURES YIELD PROJECTIONS
+// ============================================================================
+
+export async function getProjectionsByFuturesId(futuresId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select()
+    .from(futuresYieldProjections)
+    .where(eq(futuresYieldProjections.futuresId, futuresId))
+    .orderBy(asc(futuresYieldProjections.projectionYear));
+}
+
+export async function upsertYieldProjection(projection: InsertFuturesYieldProjection) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  // Check if projection exists for this year
+  const existing = await db.select()
+    .from(futuresYieldProjections)
+    .where(and(
+      eq(futuresYieldProjections.futuresId, projection.futuresId),
+      eq(futuresYieldProjections.projectionYear, projection.projectionYear)
+    ))
+    .limit(1);
+
+  if (existing.length > 0) {
+    // Update existing
+    await db.update(futuresYieldProjections)
+      .set({
+        projectedTonnes: projection.projectedTonnes,
+        contractedTonnes: projection.contractedTonnes,
+        confidencePercent: projection.confidencePercent,
+        harvestSeason: projection.harvestSeason,
+        notes: projection.notes,
+      })
+      .where(eq(futuresYieldProjections.id, existing[0].id));
+    return existing[0].id;
+  } else {
+    // Insert new
+    const result = await db.insert(futuresYieldProjections).values(projection);
+    return Number((result as any).insertId);
+  }
+}
+
+export async function bulkUpsertProjections(futuresId: number, projections: Omit<InsertFuturesYieldProjection, 'futuresId'>[]) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  for (const projection of projections) {
+    await upsertYieldProjection({
+      ...projection,
+      futuresId,
+    });
+  }
+
+  // Recalculate totals after all projections are updated
+  await recalculateFuturesTotals(futuresId);
+}
+
+export async function deleteProjection(id: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(futuresYieldProjections).where(eq(futuresYieldProjections.id, id));
+}
+
+// ============================================================================
+// FUTURES EOI (Expression of Interest)
+// ============================================================================
+
+export async function generateEOIReference(): Promise<string> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const year = new Date().getFullYear();
+  const prefix = `EOI-${year}-`;
+
+  // Get the highest existing EOI reference for this year
+  const result = await db.select({ eoiReference: futuresEOI.eoiReference })
+    .from(futuresEOI)
+    .where(like(futuresEOI.eoiReference, `${prefix}%`))
+    .orderBy(desc(futuresEOI.eoiReference))
+    .limit(1);
+
+  let nextNum = 1;
+  if (result.length > 0 && result[0].eoiReference) {
+    const lastNum = parseInt(result[0].eoiReference.replace(prefix, ''), 10);
+    if (!isNaN(lastNum)) {
+      nextNum = lastNum + 1;
+    }
+  }
+
+  return `${prefix}${nextNum.toString().padStart(4, '0')}`;
+}
+
+export async function createEOI(eoi: InsertFuturesEOI) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const result = await db.insert(futuresEOI).values(eoi);
+  return Number((result as any).insertId);
+}
+
+export async function getEOIById(id: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(futuresEOI).where(eq(futuresEOI.id, id)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getEOIsByFuturesId(futuresId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select()
+    .from(futuresEOI)
+    .where(eq(futuresEOI.futuresId, futuresId))
+    .orderBy(desc(futuresEOI.createdAt));
+}
+
+export async function getEOIsByBuyerId(buyerId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return await db.select()
+    .from(futuresEOI)
+    .where(eq(futuresEOI.buyerId, buyerId))
+    .orderBy(desc(futuresEOI.createdAt));
+}
+
+export async function getEOIByFuturesAndBuyer(futuresId: number, buyerId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select()
+    .from(futuresEOI)
+    .where(and(
+      eq(futuresEOI.futuresId, futuresId),
+      eq(futuresEOI.buyerId, buyerId)
+    ))
+    .limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function updateEOI(id: number, updates: Partial<InsertFuturesEOI>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.update(futuresEOI).set(updates).where(eq(futuresEOI.id, id));
+}
+
+export async function updateEOIStatus(id: number, status: string, response?: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const updates: Partial<InsertFuturesEOI> = {
+    status: status as any,
+    respondedAt: new Date(),
+  };
+
+  if (response) {
+    updates.supplierResponse = response;
+  }
+
+  await db.update(futuresEOI).set(updates).where(eq(futuresEOI.id, id));
+}
+
+export async function countEOIsByFuturesId(futuresId: number) {
+  const db = await getDb();
+  if (!db) return { total: 0, pending: 0, accepted: 0 };
+
+  const eois = await db.select()
+    .from(futuresEOI)
+    .where(eq(futuresEOI.futuresId, futuresId));
+
+  return {
+    total: eois.length,
+    pending: eois.filter(e => e.status === 'pending' || e.status === 'under_review').length,
+    accepted: eois.filter(e => e.status === 'accepted').length,
+  };
 }

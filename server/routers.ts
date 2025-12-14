@@ -4,6 +4,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { router, publicProcedure, protectedProcedure } from './_core/trpc.js';
 import { monitoringJobsRouter } from "./monitoringJobsRouter";
 import { demandSignalsRouter } from "./demandSignalsRouter";
+import { futuresRouter } from "./futuresRouter";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import * as db from "./db";
@@ -56,6 +57,7 @@ export const appRouter = router({
   system: systemRouter,
   monitoringJobs: monitoringJobsRouter,
   demandSignals: demandSignalsRouter,
+  futures: futuresRouter,
   
   // ============================================================================
   // AUTH
