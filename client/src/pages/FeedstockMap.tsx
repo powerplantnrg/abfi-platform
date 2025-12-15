@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { GoogleMap, Marker, InfoWindow, Polygon, MarkerClusterer } from "@react-google-maps/api";
-import { useProxyMapLoader } from "@/hooks/useProxyMapLoader";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -16,14 +14,8 @@ import { analyzeRadius, type AnalysisResults } from "@/lib/radiusAnalysis";
 import { exportAsGeoJSON, exportAsCSV } from "@/lib/mapExport";
 import { trpc } from "@/lib/trpc";
 import { Textarea } from "@/components/ui/textarea";
-
-// Google Maps API Key loaded via proxy (useProxyMapLoader hook)
-
-// Map container style
-const containerStyle = {
-  width: "100%",
-  height: "600px",
-};
+import { useProxyMapLoader } from "@/hooks/useProxyMapLoader";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 // Australia center
 const defaultCenter = {
@@ -55,10 +47,16 @@ interface GeoJSONData {
 }
 
 export default function FeedstockMap() {
-  // Load Google Maps via Forge proxy instead of direct API key
+  // Load Google Maps via Forge proxy
   const { isLoaded, loadError } = useProxyMapLoader();
 
+  const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<google.maps.Map | null>(null);
+  const markersRef = useRef<google.maps.Marker[]>([]);
+  const polygonsRef = useRef<google.maps.Polygon[]>([]);
+  const clustererRef = useRef<MarkerClusterer | null>(null);
+  const infoWindowRef = useRef<google.maps.InfoWindow | null>(null);
+
   const [selectedStates, setSelectedStates] = useState<string[]>(["QLD", "NSW", "VIC", "SA", "WA", "TAS"]);
   const [searchQuery, setSearchQuery] = useState("");
   const [radiusCenter, setRadiusCenter] = useState<{ lat: number; lng: number } | null>(null);
@@ -69,8 +67,8 @@ export default function FeedstockMap() {
   const [showSaveDialog, setShowSaveDialog] = useState(false);
   const [savedAnalysisName, setSavedAnalysisName] = useState("");
   const [savedAnalysisDescription, setSavedAnalysisDescription] = useState("");
-  const [selectedMarker, setSelectedMarker] = useState<GeoJSONFeature | null>(null);
   const [radiusCircle, setRadiusCircle] = useState<google.maps.Circle | null>(null);
+  const [mapInitialized, setMapInitialized] = useState(false);
 
   // GeoJSON data storage
   const [layerData, setLayerData] = useState<Record<string, GeoJSONData>>({});
@@ -107,6 +105,23 @@ export default function FeedstockMap() {
   const [biofuelCapacity, setBiofuelCapacity] = useState<[number, number]>([0, 500]);
   const [portThroughput, setPortThroughput] = useState<[number, number]>([0, 200]);
 
+  // Initialize map when script is loaded
+  useEffect(() => {
+    if (!isLoaded || !mapContainerRef.current || mapInitialized) return;
+
+    const map = new google.maps.Map(mapContainerRef.current, {
+      center: defaultCenter,
+      zoom: 4,
+      mapTypeControl: true,
+      streetViewControl: false,
+      fullscreenControl: true,
+    });
+
+    mapRef.current = map;
+    infoWindowRef.current = new google.maps.InfoWindow();
+    setMapInitialized(true);
+  }, [isLoaded, mapInitialized]);
+
   // Load GeoJSON data on mount
   useEffect(() => {
     const loadData = async () => {
@@ -125,77 +140,12 @@ export default function FeedstockMap() {
     loadData();
   }, []);
 
-  // Map load callback
-  const onLoad = useCallback((map: google.maps.Map) => {
-    mapRef.current = map;
-  }, []);
-
-  const onUnmount = useCallback(() => {
-    mapRef.current = null;
-  }, []);
-
-  // Toggle layer visibility
-  const toggleLayer = (layerId: string) => {
-    setLayers(layers.map((l) => (l.id === layerId ? { ...l, visible: !l.visible } : l)));
-  };
-
-  // Update layer opacity
-  const updateOpacity = (layerId: string, opacity: number) => {
-    setLayerOpacity({ ...layerOpacity, [layerId]: opacity });
-  };
-
   // Filter features by state
-  const filterByState = (feature: GeoJSONFeature): boolean => {
+  const filterByState = useCallback((feature: GeoJSONFeature): boolean => {
     const state = feature.properties?.state || feature.properties?.STATE;
     if (!state) return true;
     return selectedStates.includes(state);
-  };
-
-  // Get marker positions from GeoJSON
-  const getMarkerPositions = (layerId: string): { position: google.maps.LatLngLiteral; feature: GeoJSONFeature }[] => {
-    const data = layerData[layerId];
-    if (!data) return [];
-
-    return data.features
-      .filter(filterByState)
-      .filter((feature) => feature.geometry.type === "Point")
-      .map((feature) => ({
-        position: {
-          lat: (feature.geometry.coordinates as number[])[1],
-          lng: (feature.geometry.coordinates as number[])[0],
-        },
-        feature,
-      }));
-  };
-
-  // Get polygon paths from GeoJSON
-  const getPolygonPaths = (layerId: string): { paths: google.maps.LatLngLiteral[][]; feature: GeoJSONFeature }[] => {
-    const data = layerData[layerId];
-    if (!data) return [];
-
-    return data.features
-      .filter(filterByState)
-      .filter((feature) => feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon")
-      .map((feature) => {
-        let paths: google.maps.LatLngLiteral[][] = [];
-
-        if (feature.geometry.type === "Polygon") {
-          const coords = feature.geometry.coordinates as number[][][];
-          paths = coords.map((ring) =>
-            ring.map((coord) => ({ lat: coord[1], lng: coord[0] }))
-          );
-        } else if (feature.geometry.type === "MultiPolygon") {
-          const coords = feature.geometry.coordinates as unknown as number[][][][];
-          coords.forEach((polygon) => {
-            polygon.forEach((ring) => {
-              paths.push(ring.map((coord) => ({ lat: coord[1], lng: coord[0] })));
-            });
-          });
-        }
-
-        return { paths, feature };
-      });
-  };
+  }, [selectedStates]);
 
   // Create popup content
   const createPopupContent = (layerId: string, properties: Record<string, any>): string => {
@@ -251,6 +201,132 @@ export default function FeedstockMap() {
     }
   };
 
+  // Update map layers when data or visibility changes
+  useEffect(() => {
+    if (!mapRef.current || !mapInitialized || Object.keys(layerData).length === 0) return;
+
+    // Clear existing markers and polygons
+    markersRef.current.forEach(marker => marker.setMap(null));
+    markersRef.current = [];
+    polygonsRef.current.forEach(polygon => polygon.setMap(null));
+    polygonsRef.current = [];
+    if (clustererRef.current) {
+      clustererRef.current.clearMarkers();
+      clustererRef.current = null;
+    }
+
+    const newMarkers: google.maps.Marker[] = [];
+    const map = mapRef.current;
+    const infoWindow = infoWindowRef.current;
+
+    // Render marker layers
+    layers
+      .filter((l) => l.visible && l.type === "marker")
+      .forEach((layer) => {
+        const data = layerData[layer.id];
+        if (!data) return;
+
+        data.features
+          .filter(filterByState)
+          .filter((feature) => feature.geometry.type === "Point")
+          .forEach((feature) => {
+            const coords = feature.geometry.coordinates as number[];
+            const marker = new google.maps.Marker({
+              position: { lat: coords[1], lng: coords[0] },
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: layer.color,
+                fillOpacity: (layerOpacity[layer.id] || 100) / 100,
+                strokeColor: "#ffffff",
+                strokeWeight: 2,
+                scale: 8,
+              },
+            });
+
+            marker.addListener("click", () => {
+              if (infoWindow) {
+                infoWindow.setContent(createPopupContent(layer.id, feature.properties));
+                infoWindow.setPosition({ lat: coords[1], lng: coords[0] });
+                infoWindow.open(map);
+              }
+            });
+
+            newMarkers.push(marker);
+          });
+      });
+
+    // Create clusterer for markers
+    if (newMarkers.length > 0) {
+      clustererRef.current = new MarkerClusterer({
+        map,
+        markers: newMarkers,
+      });
+    }
+    markersRef.current = newMarkers;
+
+    // Render polygon layers
+    layers
+      .filter((l) => l.visible && l.type === "polygon")
+      .forEach((layer) => {
+        const data = layerData[layer.id];
+        if (!data) return;
+
+        data.features
+          .filter(filterByState)
+          .filter((feature) => feature.geometry.type === "Polygon" || feature.geometry.type === "MultiPolygon")
+          .forEach((feature) => {
+            let paths: google.maps.LatLngLiteral[][] = [];
+
+            if (feature.geometry.type === "Polygon") {
+              const coords = feature.geometry.coordinates as number[][][];
+              paths = coords.map((ring) =>
+                ring.map((coord) => ({ lat: coord[1], lng: coord[0] }))
+              );
+            } else if (feature.geometry.type === "MultiPolygon") {
+              const coords = feature.geometry.coordinates as unknown as number[][][][];
+              coords.forEach((polygon) => {
+                polygon.forEach((ring) => {
+                  paths.push(ring.map((coord) => ({ lat: coord[1], lng: coord[0] })));
+                });
+              });
+            }
+
+            paths.forEach((path) => {
+              const polygon = new google.maps.Polygon({
+                paths: path,
+                fillColor: layer.color,
+                fillOpacity: (layerOpacity[layer.id] || 100) / 100 * 0.3,
+                strokeColor: layer.color,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                map,
+              });
+
+              polygon.addListener("click", (e: google.maps.MapMouseEvent) => {
+                if (infoWindow && e.latLng) {
+                  infoWindow.setContent(createPopupContent(layer.id, feature.properties));
+                  infoWindow.setPosition(e.latLng);
+                  infoWindow.open(map);
+                }
+              });
+
+              polygonsRef.current.push(polygon);
+            });
+          });
+      });
+
+  }, [mapInitialized, layerData, layers, layerOpacity, selectedStates, filterByState]);
+
+  // Toggle layer visibility
+  const toggleLayer = (layerId: string) => {
+    setLayers(layers.map((l) => (l.id === layerId ? { ...l, visible: !l.visible } : l)));
+  };
+
+  // Update layer opacity
+  const updateOpacity = (layerId: string, opacity: number) => {
+    setLayerOpacity({ ...layerOpacity, [layerId]: opacity });
+  };
+
   // Draw radius and analyze
   const drawRadius = async () => {
     if (!mapRef.current) return;
@@ -276,7 +352,7 @@ export default function FeedstockMap() {
       fillOpacity: 0.1,
       map: mapRef.current,
       center: centerPos,
-      radius: radiusKm * 1000, // Convert km to meters
+      radius: radiusKm * 1000,
     });
 
     setRadiusCircle(circle);
@@ -485,88 +561,10 @@ export default function FeedstockMap() {
         <div className="md:col-span-3">
           <Card>
             <CardContent className="p-0">
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={defaultCenter}
-                zoom={4}
-                onLoad={onLoad}
-                onUnmount={onUnmount}
-                options={{
-                  mapTypeControl: true,
-                  streetViewControl: false,
-                  fullscreenControl: true,
-                }}
-              >
-                {/* Render polygon layers */}
-                {layers
-                  .filter((l) => l.visible && l.type === "polygon")
-                  .map((layer) =>
-                    getPolygonPaths(layer.id).map((item, idx) => (
-                      <Polygon
-                        key={`${layer.id}-${idx}`}
-                        paths={item.paths}
-                        options={{
-                          fillColor: layer.color,
-                          fillOpacity: (layerOpacity[layer.id] || 100) / 100 * 0.3,
-                          strokeColor: layer.color,
-                          strokeOpacity: 0.8,
-                          strokeWeight: 2,
-                        }}
-                        onClick={() => setSelectedMarker(item.feature)}
-                      />
-                    ))
-                  )}
-
-                {/* Render marker layers with clustering */}
-                {layers
-                  .filter((l) => l.visible && l.type === "marker")
-                  .map((layer) => (
-                    <MarkerClusterer key={layer.id}>
-                      {(clusterer) =>
-                        getMarkerPositions(layer.id).map((item, idx) => (
-                          <Marker
-                            key={`${layer.id}-${idx}`}
-                            position={item.position}
-                            clusterer={clusterer}
-                            icon={{
-                              path: google.maps.SymbolPath.CIRCLE,
-                              fillColor: layer.color,
-                              fillOpacity: (layerOpacity[layer.id] || 100) / 100,
-                              strokeColor: "#ffffff",
-                              strokeWeight: 2,
-                              scale: 8,
-                            }}
-                            onClick={() => setSelectedMarker(item.feature)}
-                          />
-                        )) as any
-                      }
-                    </MarkerClusterer>
-                  ))}
-
-                {/* Info Window */}
-                {selectedMarker && (
-                  <InfoWindow
-                    position={
-                      selectedMarker.geometry.type === "Point"
-                        ? {
-                            lat: (selectedMarker.geometry.coordinates as number[])[1],
-                            lng: (selectedMarker.geometry.coordinates as number[])[0],
-                          }
-                        : undefined
-                    }
-                    onCloseClick={() => setSelectedMarker(null)}
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: createPopupContent(
-                          layers.find((l) => l.visible)?.id || "",
-                          selectedMarker.properties
-                        ),
-                      }}
-                    />
-                  </InfoWindow>
-                )}
-              </GoogleMap>
+              <div
+                ref={mapContainerRef}
+                style={{ width: "100%", height: "600px" }}
+              />
             </CardContent>
           </Card>
 
