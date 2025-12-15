@@ -100,7 +100,11 @@ Webhook ID: `DNwWhJF2F7SMJ6Ka3Zr2hJ`
 
 ## Pending Decisions
 
-- Which landing page design option to use (A/B/C or hybrid)?
+- ✅ **Landing page design**: Hybrid approach selected
+  - Corporate's Navy (#1E3A5A) + Gold (#D4AF37) palette for trust
+  - Modern's clean layout with generous whitespace
+  - Geometric sans-serif typography (Space Grotesk / Inter)
+  - Manus task created: `AeTtya5FzTy9RraUhCo4Hn`
 - DATABASE_URL configuration for migration push
 
 ## Handoff Notes
