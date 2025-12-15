@@ -345,12 +345,15 @@ export default function FuturesMarketplace() {
             <div className="grid md:grid-cols-4 gap-4">
               <div className="space-y-2">
                 <Label className="text-sm font-medium">State</Label>
-                <Select value={stateFilter} onValueChange={setStateFilter}>
+                <Select
+                  value={stateFilter || "all"}
+                  onValueChange={v => setStateFilter(v === "all" ? "" : v)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="All states" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All States</SelectItem>
+                    <SelectItem value="all">All States</SelectItem>
                     {AUSTRALIAN_STATES.map(s => (
                       <SelectItem key={s.value} value={s.value}>
                         {s.label}
@@ -363,14 +366,14 @@ export default function FuturesMarketplace() {
               <div className="space-y-2">
                 <Label className="text-sm font-medium">Crop Type</Label>
                 <Select
-                  value={cropTypeFilter}
-                  onValueChange={setCropTypeFilter}
+                  value={cropTypeFilter || "all"}
+                  onValueChange={v => setCropTypeFilter(v === "all" ? "" : v)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="All crop types" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Crop Types</SelectItem>
+                    <SelectItem value="all">All Crop Types</SelectItem>
                     {CROP_TYPE_OPTIONS.map(crop => (
                       <SelectItem key={crop.value} value={crop.value}>
                         <div className="flex items-center gap-2">
