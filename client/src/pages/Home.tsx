@@ -269,13 +269,13 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href="/bankability">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent">
                   <Building2 className="h-4 w-4 mr-2" />
                   I'm a Developer
                 </Button>
               </Link>
               <Link href="/lender-portal">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent">
                   <Banknote className="h-4 w-4 mr-2" />
                   I'm a Lender
                 </Button>
