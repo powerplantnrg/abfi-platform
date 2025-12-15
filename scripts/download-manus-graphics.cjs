@@ -27,6 +27,14 @@ const TASK_MAPPINGS = {
   'aKegzcEFVLS3WpEozu3oeX': {
     name: 'Landing Page Mockups',
     dir: 'client/public/images/landing-mockups'
+  },
+  '7np3yQrbEegciVAzhtUB2h': {
+    name: 'Futures Marketplace',
+    dir: 'client/public/images/explainers/futures-marketplace'
+  },
+  'ZQxcfK6idEyqG2XbeEPV6n': {
+    name: 'RSIE Data Architecture',
+    dir: 'client/public/images/explainers/rsie-architecture'
   }
 };
 
