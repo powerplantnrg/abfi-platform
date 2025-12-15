@@ -35,6 +35,10 @@ const TASK_MAPPINGS = {
   'ZQxcfK6idEyqG2XbeEPV6n': {
     name: 'RSIE Data Architecture',
     dir: 'client/public/images/explainers/rsie-architecture'
+  },
+  'AeTtya5FzTy9RraUhCo4Hn': {
+    name: 'Hybrid Landing Page',
+    dir: 'client/public/images/landing-mockups/hybrid'
   }
 };
 
