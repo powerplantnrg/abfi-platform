@@ -187,7 +187,7 @@ export default function FeedstockMap() {
             ring.map((coord) => ({ lat: coord[1], lng: coord[0] }))
           );
         } else if (feature.geometry.type === "MultiPolygon") {
-          const coords = feature.geometry.coordinates as number[][][][];
+          const coords = feature.geometry.coordinates as unknown as number[][][][];
           coords.forEach((polygon) => {
             polygon.forEach((ring) => {
               paths.push(ring.map((coord) => ({ lat: coord[1], lng: coord[0] })));

@@ -117,27 +117,28 @@ export default function FuturesCreate() {
   // Load existing data when editing
   useEffect(() => {
     if (existingFutures) {
-      setCropType(existingFutures.cropType);
-      setCropVariety(existingFutures.cropVariety || "");
-      setTitle(existingFutures.title);
-      setDescription(existingFutures.description || "");
-      setState(existingFutures.state);
-      setRegion(existingFutures.region || "");
-      setLandAreaHectares(existingFutures.landAreaHectares);
-      setLandStatus(existingFutures.landStatus || "owned");
-      setProjectionStartYear(existingFutures.projectionStartYear.toString());
-      setProjectionEndYear(existingFutures.projectionEndYear.toString());
-      setFirstHarvestYear(existingFutures.firstHarvestYear?.toString() || "");
-      setIndicativePricePerTonne(existingFutures.indicativePricePerTonne || "");
-      setPriceEscalationPercent(existingFutures.priceEscalationPercent || "2.5");
-      setPricingNotes(existingFutures.pricingNotes || "");
-      setExpectedCarbonIntensity(existingFutures.expectedCarbonIntensity || "");
-      setExpectedMoistureContent(existingFutures.expectedMoistureContent || "");
-      setExpectedEnergyContent(existingFutures.expectedEnergyContent || "");
+      const { futures, projections: existingProjections } = existingFutures;
+      setCropType(futures.cropType);
+      setCropVariety(futures.cropVariety || "");
+      setTitle(futures.title);
+      setDescription(futures.description || "");
+      setState(futures.state);
+      setRegion(futures.region || "");
+      setLandAreaHectares(futures.landAreaHectares);
+      setLandStatus(futures.landStatus || "owned");
+      setProjectionStartYear(futures.projectionStartYear.toString());
+      setProjectionEndYear(futures.projectionEndYear.toString());
+      setFirstHarvestYear(futures.firstHarvestYear?.toString() || "");
+      setIndicativePricePerTonne(futures.indicativePricePerTonne || "");
+      setPriceEscalationPercent(futures.priceEscalationPercent || "2.5");
+      setPricingNotes(futures.pricingNotes || "");
+      setExpectedCarbonIntensity(futures.expectedCarbonIntensity || "");
+      setExpectedMoistureContent(futures.expectedMoistureContent || "");
+      setExpectedEnergyContent(futures.expectedEnergyContent || "");
 
-      if (existingFutures.projections) {
+      if (existingProjections) {
         setProjections(
-          existingFutures.projections.map((p: any) => ({
+          existingProjections.map((p: any) => ({
             projectionYear: p.projectionYear,
             projectedTonnes: p.projectedTonnes || "",
             confidencePercent: p.confidencePercent?.toString() || "80",

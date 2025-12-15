@@ -121,7 +121,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
  * StatsCard - Specialized card for dashboard metrics
  * Premium design with gradient accent on hover
  */
-export interface StatsCardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface StatsCardProps {
   title: string;
   value: string | number;
   description?: string;
@@ -132,9 +132,10 @@ export interface StatsCardProps extends React.HTMLAttributes<HTMLDivElement> {
   };
   variant?: "default" | "success" | "warning" | "info" | "premium";
   size?: "default" | "compact" | "large";
+  className?: string;
 }
 
-const StatsCard = React.forwardRef<HTMLDivElement, StatsCardProps>(
+const StatsCard = React.forwardRef<HTMLDivElement, StatsCardProps & React.HTMLAttributes<HTMLDivElement>>(
   ({ title, value, description, icon, trend, variant = "default", size = "default", className, ...props }, ref) => {
     const variantStyles = {
       default: "border-border hover:border-primary/20",
