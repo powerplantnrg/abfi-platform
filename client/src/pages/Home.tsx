@@ -314,16 +314,16 @@ export default function Home() {
             {/* Main Headline */}
             <FadeInUp delay={0.1} className="text-center mb-8">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-[1.1] text-white">
-                Bank-Grade Infrastructure
+                Australia's Bamboo
                 <br />
                 <span className="bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
-                  for Bioenergy Finance
+                  Bioenergy Marketplace
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-                The only platform that transforms biomass supply agreements into
-                auditable, cryptographically-secured assets that lenders can
-                trust.
+                Connect with verified Australian bamboo suppliers. Bank-grade
+                infrastructure transforms biomass supply agreements into
+                auditable, cryptographically-secured assets that lenders trust.
               </p>
             </FadeInUp>
 
@@ -332,14 +332,11 @@ export default function Home() {
               delay={0.2}
               className="flex flex-wrap justify-center gap-4 mb-16"
             >
-              <Link href="/producer-registration">
-                <Button
-                  size="lg"
-                  className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/25"
-                >
-                  <Sprout className="h-4 w-4 mr-2" />
-                  I'm a Grower
-                </Button>
+              <Link href="/browse">
+                <button className="btn-gold px-6 py-3 text-lg">
+                  <Leaf className="h-5 w-5 mr-2" />
+                  Browse Bamboo Feedstocks
+                </button>
               </Link>
               <Link href="/bankability">
                 <Button
@@ -370,38 +367,36 @@ export default function Home() {
                   <div className="text-center">
                     <div className="text-3xl md:text-4xl font-bold text-white font-mono">
                       <AnimatedCounter
-                        value={2.5}
-                        prefix="$"
-                        suffix="B"
-                        decimals={1}
+                        value={45}
+                        suffix="+"
                       />
                     </div>
                     <div className="text-sm text-slate-400 mt-1">
-                      Financed Volume
+                      Bamboo Suppliers
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl md:text-4xl font-bold text-white font-mono">
-                      <AnimatedCounter value={847} suffix="k" />
+                      <AnimatedCounter value={650} suffix="k" />
                     </div>
                     <div className="text-sm text-slate-400 mt-1">
-                      Tonnes Tracked
+                      Tonnes Bamboo/Year
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl md:text-4xl font-bold text-white font-mono">
-                      <AnimatedCounter value={99.9} suffix="%" decimals={1} />
+                      <AnimatedCounter value={12} suffix="k" />
                     </div>
                     <div className="text-sm text-slate-400 mt-1">
-                      Uptime SLA
+                      Hectares Certified
                     </div>
                   </div>
                   <div className="text-center">
                     <div className="text-3xl md:text-4xl font-bold text-emerald-400 font-mono">
-                      AAA
+                      A$145
                     </div>
                     <div className="text-sm text-slate-400 mt-1">
-                      Top Rating
+                      Avg Price/Tonne
                     </div>
                   </div>
                 </div>
@@ -461,7 +456,7 @@ export default function Home() {
               Built for Every Stakeholder
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Whether you grow biomass, develop projects, or finance them — ABFI
+              Whether you grow Australian bamboo, develop bioenergy projects, or finance them — ABFI
               provides the infrastructure to make deals happen with confidence.
             </p>
           </FadeInUp>
@@ -477,20 +472,20 @@ export default function Home() {
                       <TreeDeciduous className="h-7 w-7 text-emerald-600" />
                     </div>
                     <CardTitle className="text-2xl">
-                      Growers & Producers
+                      Bamboo Growers
                     </CardTitle>
                     <CardDescription className="text-base">
-                      Transform your agricultural assets into bankable
-                      commodities with verified credentials.
+                      Transform your bamboo plantation into bankable
+                      commodities with ABFI-verified credentials.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <ul className="space-y-3">
                       {[
                         "Pre-qualify for GQ1-GQ4 grower status",
-                        "List futures up to 25 years forward",
-                        "Receive EOIs from verified buyers",
-                        "Track all contracts in one place",
+                        "List bamboo futures up to 25 years forward",
+                        "Receive EOIs from verified Australian buyers",
+                        "Track all biomass contracts in one place",
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
                           <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />

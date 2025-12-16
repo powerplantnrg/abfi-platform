@@ -3834,7 +3834,7 @@ export const contractRiskExposure = mysqlTable(
     id: int("id").autoincrement().primaryKey(),
     contractId: int("contractId")
       .notNull()
-      .references(() => supplyContracts.id),
+      .references(() => existingContracts.id),
     riskEventId: int("riskEventId")
       .notNull()
       .references(() => riskEvents.id),

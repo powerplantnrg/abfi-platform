@@ -148,11 +148,11 @@ export default function SupplierRegistration() {
             Supplier Registration
           </Badge>
           <h1 className="heading-1 text-foreground mb-2">
-            Register as a Supplier
+            Register as a Bamboo Supplier
           </h1>
           <p className="text-muted-foreground body-lg max-w-xl mx-auto">
-            Join Australia's leading biofuel feedstock marketplace and connect
-            with verified buyers
+            Join Australia's leading bamboo and biomass feedstock marketplace.
+            Connect with verified buyers seeking sustainable Australian feedstocks.
           </p>
         </div>
 
@@ -244,7 +244,7 @@ export default function SupplierRegistration() {
                 <Label htmlFor="companyName">Company Name *</Label>
                 <Input
                   id="companyName"
-                  placeholder="e.g., Green Energy Supplies Pty Ltd"
+                  placeholder="e.g., Queensland Bamboo Biomass Pty Ltd"
                   value={companyName}
                   onChange={e => setCompanyName(e.target.value)}
                 />
@@ -284,13 +284,14 @@ export default function SupplierRegistration() {
               </div>
 
               <div className="flex justify-end gap-2 pt-4 border-t">
-                <Button
+                <button
                   onClick={() => setCurrentStep(2)}
                   disabled={!canProceedStep1}
-                  rightIcon={<ArrowRight className="h-4 w-4" />}
+                  className="btn-gold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next Step
-                </Button>
+                  Continue
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </button>
               </div>
             </CardContent>
           </Card>
@@ -379,15 +380,16 @@ export default function SupplierRegistration() {
                   onClick={() => setCurrentStep(1)}
                   leftIcon={<ArrowLeft className="h-4 w-4" />}
                 >
-                  Previous
+                  Back
                 </Button>
-                <Button
+                <button
                   onClick={() => setCurrentStep(3)}
                   disabled={!canProceedStep2}
-                  rightIcon={<ArrowRight className="h-4 w-4" />}
+                  className="btn-gold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next Step
-                </Button>
+                  Continue
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </button>
               </div>
             </CardContent>
           </Card>
@@ -452,13 +454,13 @@ export default function SupplierRegistration() {
                 <Label htmlFor="description">Company Description</Label>
                 <Textarea
                   id="description"
-                  placeholder="Describe your company, feedstock types, and capabilities..."
+                  placeholder="Describe your bamboo or biomass operations, including plantation size, harvesting practices, processing capabilities, and any sustainability certifications..."
                   value={description}
                   onChange={e => setDescription(e.target.value)}
                   rows={5}
                 />
                 <p className="text-xs text-muted-foreground">
-                  This will be visible to buyers on your profile
+                  This will be visible to buyers on your public supplier profile
                 </p>
               </div>
 
@@ -509,16 +511,16 @@ export default function SupplierRegistration() {
                   onClick={() => setCurrentStep(2)}
                   leftIcon={<ArrowLeft className="h-4 w-4" />}
                 >
-                  Previous
+                  Back
                 </Button>
-                <Button
+                <button
                   onClick={handleSubmit}
                   disabled={registerMutation.isPending}
-                  loading={registerMutation.isPending}
-                  rightIcon={<CheckCircle2 className="h-4 w-4" />}
+                  className="btn-gold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit Registration
-                </Button>
+                  {registerMutation.isPending ? "Submitting..." : "Submit Registration"}
+                  <CheckCircle2 className="h-4 w-4 ml-2" />
+                </button>
               </div>
             </CardContent>
           </Card>

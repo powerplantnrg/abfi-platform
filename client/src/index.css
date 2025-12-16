@@ -228,6 +228,32 @@
     oklch(0.78 0.14 80) 0%,
     oklch(0.6 0.1 80) 100%
   );
+
+  /* ABFI Corporate Design System - Navy + Gold */
+  /* Navy: #1E3A5A - Primary brand, headings, navigation */
+  --color-navy-50: oklch(0.96 0.02 240);
+  --color-navy-100: oklch(0.92 0.03 240);
+  --color-navy-200: oklch(0.82 0.05 240);
+  --color-navy-300: oklch(0.65 0.07 240);
+  --color-navy-400: oklch(0.48 0.08 240);
+  --color-navy-500: oklch(0.35 0.07 240); /* #1E3A5A */
+  --color-navy-600: oklch(0.28 0.06 240);
+  --color-navy-700: oklch(0.22 0.05 240);
+  --color-navy-800: oklch(0.18 0.04 240);
+  --color-navy-900: oklch(0.14 0.03 240);
+
+  /* Gold: #D4AF37 - CTAs, accents, highlights, premium features */
+  --color-gold-50: oklch(0.97 0.03 85);
+  --color-gold-100: oklch(0.94 0.06 85);
+  --color-gold-200: oklch(0.88 0.1 85);
+  --color-gold-300: oklch(0.82 0.13 85);
+  --color-gold-400: oklch(0.78 0.15 85); /* #D4AF37 - primary CTA */
+  --color-gold-500: oklch(0.72 0.14 85);
+  --color-gold-600: oklch(0.62 0.12 85);
+  --color-gold-700: oklch(0.52 0.1 85);
+
+  /* Emerald: #10B981 - Success states, positive indicators */
+  --color-emerald-500: oklch(0.7 0.17 160); /* #10B981 */
   --gradient-teal: linear-gradient(
     135deg,
     var(--color-teal-400) 0%,
@@ -290,15 +316,32 @@
   --chart-4: var(--color-info-500);
   --chart-5: var(--color-warning-500);
 
-  /* Sidebar - Deep Forest Green (matching abfi.io CTA section) */
-  --sidebar: oklch(0.25 0.06 160);
-  --sidebar-foreground: oklch(0.95 0.01 85);
-  --sidebar-primary: var(--color-teal-500);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.3 0.05 160);
-  --sidebar-accent-foreground: oklch(0.95 0.01 85);
-  --sidebar-border: oklch(0.32 0.05 160);
-  --sidebar-ring: var(--color-teal-500);
+  /* Sidebar - Navy (ABFI Corporate Design) */
+  --sidebar: var(--color-navy-500);
+  --sidebar-foreground: oklch(0.98 0.01 85);
+  --sidebar-primary: var(--color-gold-400);
+  --sidebar-primary-foreground: var(--color-navy-900);
+  --sidebar-accent: var(--color-navy-400);
+  --sidebar-accent-foreground: oklch(0.98 0.01 85);
+  --sidebar-border: var(--color-navy-400);
+  --sidebar-ring: var(--color-gold-400);
+
+  /* Gold CTA Button */
+  --cta-gold: var(--color-gold-400);
+  --cta-gold-foreground: var(--color-navy-900);
+  --cta-gold-hover: var(--color-gold-500);
+
+  /* Navy/Gold gradient */
+  --gradient-navy: linear-gradient(
+    135deg,
+    var(--color-navy-500) 0%,
+    var(--color-navy-700) 100%
+  );
+  --gradient-gold-cta: linear-gradient(
+    135deg,
+    var(--color-gold-400) 0%,
+    var(--color-gold-500) 100%
+  );
 }
 
 .dark {
@@ -331,15 +374,15 @@
   --chart-4: oklch(0.65 0.16 250);
   --chart-5: oklch(0.75 0.14 85);
 
-  /* Sidebar - Dark mode */
-  --sidebar: var(--color-slate-900);
+  /* Sidebar - Dark mode (Navy) */
+  --sidebar: var(--color-navy-800);
   --sidebar-foreground: var(--color-slate-200);
-  --sidebar-primary: var(--color-teal-400);
-  --sidebar-primary-foreground: oklch(0.12 0.008 280);
-  --sidebar-accent: var(--color-slate-800);
+  --sidebar-primary: var(--color-gold-400);
+  --sidebar-primary-foreground: var(--color-navy-900);
+  --sidebar-accent: var(--color-navy-700);
   --sidebar-accent-foreground: var(--color-slate-100);
-  --sidebar-border: var(--color-slate-800);
-  --sidebar-ring: var(--color-teal-400);
+  --sidebar-border: var(--color-navy-600);
+  --sidebar-ring: var(--color-gold-400);
 
   /* Success/Warning/Info adjustments for dark mode */
   --success: oklch(0.7 0.18 145);
@@ -612,6 +655,50 @@
   .btn-abfi-white:hover {
     background: oklch(0.98 0.008 85);
     transform: translateY(-1px);
+  }
+
+  /* ABFI Gold CTA Button - Premium Corporate Style */
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    background: var(--color-gold-400);
+    color: var(--color-navy-900);
+    font-weight: 600;
+    padding: var(--spacing-3) var(--spacing-6);
+    border-radius: var(--radius-lg);
+    transition: all var(--duration-fast) var(--ease-out);
+    box-shadow: 0 2px 4px oklch(0.78 0.15 85 / 0.3);
+  }
+
+  .btn-gold:hover {
+    background: var(--color-gold-500);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px oklch(0.78 0.15 85 / 0.35);
+  }
+
+  .btn-gold:active {
+    transform: translateY(0);
+  }
+
+  /* Navy outline button */
+  .btn-navy-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    background: transparent;
+    border: 2px solid var(--color-navy-500);
+    color: var(--color-navy-500);
+    font-weight: 600;
+    padding: calc(var(--spacing-3) - 2px) var(--spacing-6);
+    border-radius: var(--radius-lg);
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .btn-navy-outline:hover {
+    background: var(--color-navy-50);
   }
 
   /* Skeleton Animation */

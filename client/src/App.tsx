@@ -26,6 +26,9 @@ const SupplierFeedstocks = lazy(() => import("./pages/SupplierFeedstocks"));
 const BankabilityDashboard = lazy(() => import("./pages/BankabilityDashboard"));
 const SavedSearches = lazy(() => import("./pages/SavedSearches"));
 const SupplierProfile = lazy(() => import("@/pages/SupplierProfile"));
+const SupplierPublicProfile = lazy(
+  () => import("@/pages/SupplierPublicProfile"),
+);
 const BuyerProfile = lazy(() => import("@/pages/BuyerProfile"));
 const Notifications = lazy(() => import("./pages/Notifications"));
 const QualityTestUpload = lazy(() => import("./pages/QualityTestUpload"));
@@ -158,6 +161,7 @@ function Router() {
         <Route path="/bankability" component={BankabilityDashboard} />
         <Route path="/saved-searches" component={SavedSearches} />
         <Route path="/supplier/profile" component={SupplierProfile} />
+        <Route path="/suppliers/:id" component={SupplierPublicProfile} />
         <Route path="/buyer/profile" component={BuyerProfile} />
         <Route path="/notifications" component={Notifications} />
         <Route path="/quality-test/upload" component={QualityTestUpload} />

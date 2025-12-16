@@ -31,6 +31,8 @@ import {
   PieChart,
   TreeDeciduous,
   FileText,
+  Leaf,
+  Search,
 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -39,8 +41,9 @@ import { Button } from "./ui/button";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
+  { icon: Search, label: "Browse Bamboo", path: "/browse" },
   { icon: Users, label: "Projects", path: "/bankability" },
-  { icon: TreeDeciduous, label: "Futures", path: "/futures" },
+  { icon: Leaf, label: "Futures", path: "/futures" },
 ];
 
 const supplierMenuItems = [
@@ -194,15 +197,20 @@ function DashboardLayoutContent({
             <div className="flex items-center gap-3 px-2 transition-all w-full">
               <button
                 onClick={toggleSidebar}
-                className="h-8 w-8 flex items-center justify-center hover:bg-accent rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
+                className="h-8 w-8 flex items-center justify-center hover:bg-sidebar-accent rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
                 aria-label="Toggle navigation"
               >
-                <PanelLeft className="h-4 w-4 text-muted-foreground" />
+                {isCollapsed ? (
+                  <Leaf className="h-5 w-5 text-sidebar-primary" />
+                ) : (
+                  <PanelLeft className="h-4 w-4 text-sidebar-foreground/70" />
+                )}
               </button>
               {!isCollapsed ? (
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="font-semibold tracking-tight truncate">
-                    Navigation
+                  <Leaf className="h-5 w-5 text-sidebar-primary shrink-0" />
+                  <span className="font-bold tracking-tight truncate text-sidebar-foreground">
+                    ABFI Platform
                   </span>
                 </div>
               ) : null}
