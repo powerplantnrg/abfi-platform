@@ -18,6 +18,7 @@ import {
   BarChart3,
   TrendingUp,
   FileText,
+  BookOpen,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
@@ -89,6 +90,12 @@ const resourcesItems: NavItem[] = [
     href: "/platform-features",
     icon: FileText,
     description: "Full feature overview",
+  },
+  {
+    label: "Visual Explainers",
+    href: "/explainers",
+    icon: BookOpen,
+    description: "How our technology works",
   },
 ];
 

@@ -33,6 +33,7 @@ import {
   FileText,
   Leaf,
   Search,
+  BookOpen,
 } from "lucide-react";
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -44,6 +45,7 @@ const menuItems = [
   { icon: Search, label: "Browse Bamboo", path: "/browse" },
   { icon: Users, label: "Projects", path: "/bankability" },
   { icon: Leaf, label: "Futures", path: "/futures" },
+  { icon: BookOpen, label: "Explainers", path: "/explainers" },
 ];
 
 const supplierMenuItems = [
