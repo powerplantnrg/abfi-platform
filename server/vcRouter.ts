@@ -264,7 +264,7 @@ export const vcRouter = router({
       let credentialUri = `ipfs://pending/${credentialHash}`;
       const ipfsService = getIPFSService();
       if (ipfsService) {
-        const ipfsResult = await ipfsService.uploadJSON(signedCredential);
+        const ipfsResult = await ipfsService.uploadJSON(signedCredential as Record<string, unknown>);
         if (ipfsResult.success && ipfsResult.cid) {
           credentialUri = `ipfs://${ipfsResult.cid}`;
         }

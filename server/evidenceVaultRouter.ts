@@ -450,10 +450,10 @@ export const evidenceVaultRouter = router({
         });
       }
 
-      // Update status to submitting
+      // Update status to submitted
       await db
         .update(chainAnchors)
-        .set({ status: "submitting" })
+        .set({ status: "submitted" })
         .where(eq(chainAnchors.id, input.anchorId));
 
       // Submit to blockchain
