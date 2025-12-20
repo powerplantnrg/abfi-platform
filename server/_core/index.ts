@@ -3,6 +3,7 @@ import express from "express";
 import { createServer } from "http";
 import net from "net";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
@@ -39,6 +40,28 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   // OAuth callback under /api/oauth/callback
   registerOAuthRoutes(app);
+
+  // Intelligence API proxy (forward to abfi-ai backend)
+  const intelligenceApiProxy = createProxyMiddleware({
+    target: "https://abfi-ai.vercel.app",
+    changeOrigin: true,
+    secure: true,
+    logger: console,
+    pathRewrite: undefined, // Keep original path
+  });
+  app.use("/api/v1/sentiment", (req, res, next) => {
+    // Prepend the base path back since express strips it
+    req.url = "/api/v1/sentiment" + req.url;
+    return intelligenceApiProxy(req, res, next);
+  });
+  app.use("/api/v1/prices", (req, res, next) => {
+    req.url = "/api/v1/prices" + req.url;
+    return intelligenceApiProxy(req, res, next);
+  });
+  app.use("/api/v1/policy", (req, res, next) => {
+    req.url = "/api/v1/policy" + req.url;
+    return intelligenceApiProxy(req, res, next);
+  });
 
   // Manus AI webhook endpoint
   app.post("/api/webhooks/manus", async (req, res) => {

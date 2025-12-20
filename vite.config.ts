@@ -93,5 +93,23 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+    proxy: {
+      // Proxy intelligence API requests to bypass CORS in development
+      "/api/v1/sentiment": {
+        target: "https://abfi-ai.vercel.app",
+        changeOrigin: true,
+        secure: true,
+      },
+      "/api/v1/prices": {
+        target: "https://abfi-ai.vercel.app",
+        changeOrigin: true,
+        secure: true,
+      },
+      "/api/v1/policy": {
+        target: "https://abfi-ai.vercel.app",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
   },
 });
