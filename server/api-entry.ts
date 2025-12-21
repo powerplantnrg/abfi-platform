@@ -6,12 +6,12 @@
 import "dotenv/config";
 import express from "express";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "../server/routers";
-import { createContext } from "../server/_core/context";
-import { registerOAuthRoutes } from "../server/_core/oauth";
-import { handleManusWebhook } from "../server/manus";
-import { certificateVerificationRouter } from "../server/certificateVerificationApi";
-import { didResolutionRouter } from "../server/didResolutionApi";
+import { appRouter } from "./routers";
+import { createContext } from "./_core/context";
+import { registerOAuthRoutes } from "./_core/oauth";
+import { handleManusWebhook } from "./manus";
+import { certificateVerificationRouter } from "./certificateVerificationApi";
+import { didResolutionRouter } from "./didResolutionApi";
 
 const app = express();
 
