@@ -525,6 +525,12 @@ export default function LendingSentimentDashboard() {
                     <ChevronRight className="h-4 w-4" />
                   </Button>
                 </Link>
+                <Link href="/stealth-discovery">
+                  <Button variant="outline" className="w-full justify-between">
+                    Stealth Discovery
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
           </div>

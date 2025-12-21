@@ -6,6 +6,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { Analytics } from "@vercel/analytics/react";
+import AppLayout from "./components/AppLayout";
 
 // Lazy load all pages for code splitting
 const Home = lazy(() => import("./pages/Home"));
@@ -121,6 +122,14 @@ const ProcurementScenarios = lazy(() => import("./pages/ProcurementScenarios"));
 const LendingSentimentDashboard = lazy(() => import("./pages/LendingSentimentDashboard"));
 const FeedstockPriceDashboard = lazy(() => import("./pages/FeedstockPriceDashboard"));
 const PolicyCarbonDashboard = lazy(() => import("./pages/PolicyCarbonDashboard"));
+const StealthDiscovery = lazy(() => import("./pages/StealthDiscovery"));
+
+// New navigation architecture
+const Landing = lazy(() => import("./pages/Landing"));
+const Explore = lazy(() => import("./pages/Explore"));
+const GrowerDashboard = lazy(() => import("./pages/GrowerDashboard"));
+const DeveloperDashboard = lazy(() => import("./pages/DeveloperDashboard"));
+const FinanceDashboard = lazy(() => import("./pages/FinanceDashboard"));
 
 // Loading fallback component
 function PageLoader() {
@@ -141,9 +150,18 @@ function PageLoader() {
 
 function Router() {
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Switch>
-        <Route path={"/"} component={Home} />
+    <AppLayout>
+      <Suspense fallback={<PageLoader />}>
+        <Switch>
+        {/* New navigation architecture routes */}
+        <Route path="/" component={Landing} />
+        <Route path="/explore" component={Explore} />
+        <Route path="/grower/dashboard" component={GrowerDashboard} />
+        <Route path="/developer/dashboard" component={DeveloperDashboard} />
+        <Route path="/finance/dashboard" component={FinanceDashboard} />
+
+        {/* Legacy home route */}
+        <Route path="/home" component={Home} />
         <Route path="/financial-onboarding" component={FinancialOnboarding} />
         <Route
           path="/financial-onboarding/success"
@@ -208,6 +226,7 @@ function Router() {
         <Route path="/lending-sentiment" component={LendingSentimentDashboard} />
         <Route path="/feedstock-prices" component={FeedstockPriceDashboard} />
         <Route path="/policy-carbon" component={PolicyCarbonDashboard} />
+        <Route path="/stealth-discovery" component={StealthDiscovery} />
         <Route path="/compliance-dashboard" component={ComplianceDashboard} />
         <Route path="/admin/evidence" component={EvidenceManagement} />
         <Route path="/evidence-vault" component={EvidenceVaultDashboard} />
@@ -282,8 +301,9 @@ function Router() {
         <Route path="/certificate/upload" component={CertificateUpload} />
         <Route path="/404" component={NotFound} />
         <Route component={NotFound} />
-      </Switch>
-    </Suspense>
+        </Switch>
+      </Suspense>
+    </AppLayout>
   );
 }
 

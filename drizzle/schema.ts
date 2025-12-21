@@ -4548,9 +4548,7 @@ export const emissionCalculations = mysqlTable(
     calculatedAt: timestamp("calculatedAt").defaultNow().notNull(),
 
     // Anchoring
-    anchoredManifestId: int("anchoredManifestId").references(
-      () => evidenceManifests.id
-    ),
+    anchorId: int("anchorId").references(() => evidenceManifests.id),
   },
   table => ({
     entityIdx: index("emission_entity_idx").on(table.entityType, table.entityId),
@@ -4728,9 +4726,7 @@ export const verifiableCredentials = mysqlTable(
     revocationReason: text("revocationReason"),
 
     // Anchoring
-    anchoredManifestId: int("anchoredManifestId").references(
-      () => evidenceManifests.id
-    ),
+    anchorId: int("anchorId").references(() => evidenceManifests.id),
 
     createdAt: timestamp("createdAt").defaultNow().notNull(),
   },
@@ -4910,9 +4906,7 @@ export const goCertificates = mysqlTable(
     externalRegistryUrl: varchar("externalRegistryUrl", { length: 512 }),
 
     // Anchoring
-    anchoredManifestId: int("anchoredManifestId").references(
-      () => evidenceManifests.id
-    ),
+    anchorId: int("anchorId").references(() => evidenceManifests.id),
 
     issuedAt: timestamp("issuedAt").notNull(),
     expiresAt: timestamp("expiresAt"),
@@ -4981,9 +4975,7 @@ export const auditPacks = mysqlTable(
     reviewNotes: text("reviewNotes"),
 
     // Anchoring
-    anchoredManifestId: int("anchoredManifestId").references(
-      () => evidenceManifests.id
-    ),
+    anchorId: int("anchorId").references(() => evidenceManifests.id),
 
     generatedBy: int("generatedBy")
       .notNull()
@@ -5001,3 +4993,120 @@ export const auditPacks = mysqlTable(
 
 export type AuditPack = typeof auditPacks.$inferSelect;
 export type InsertAuditPack = typeof auditPacks.$inferInsert;
+
+// ============================================================================
+// STEALTH DISCOVERY - AI Intelligence Tables
+// ============================================================================
+
+/**
+ * Stealth Entities - Organizations discovered through signal intelligence
+ */
+export const stealthEntities = mysqlTable(
+  "stealth_entities",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    entityType: mysqlEnum("entityType", [
+      "company",
+      "project",
+      "facility",
+      "government_agency",
+      "research_institution",
+      "joint_venture",
+      "unknown",
+    ]).notNull(),
+    canonicalName: varchar("canonicalName", { length: 255 }).notNull(),
+    allNames: json("allNames").$type<string[]>().default([]),
+    identifiers: json("identifiers").$type<{
+      abn?: string;
+      acn?: string;
+      website?: string;
+      linkedIn?: string;
+    }>(),
+    metadata: json("metadata").$type<Record<string, unknown>>(),
+    currentScore: decimal("currentScore", { precision: 5, scale: 2 }).default("0"),
+    signalCount: int("signalCount").default(0).notNull(),
+    needsReview: boolean("needsReview").default(false).notNull(),
+    reviewNotes: text("reviewNotes"),
+    lastSignalAt: timestamp("lastSignalAt"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+  },
+  (table) => ({
+    nameIdx: index("stealth_name_idx").on(table.canonicalName),
+    typeIdx: index("stealth_type_idx").on(table.entityType),
+    scoreIdx: index("stealth_score_idx").on(table.currentScore),
+  })
+);
+
+export type StealthEntity = typeof stealthEntities.$inferSelect;
+export type InsertStealthEntity = typeof stealthEntities.$inferInsert;
+
+/**
+ * Stealth Signals - Individual intelligence signals from various sources
+ */
+export const stealthSignals = mysqlTable(
+  "stealth_signals",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    entityId: int("entityId")
+      .notNull()
+      .references(() => stealthEntities.id),
+    signalType: mysqlEnum("signalType", [
+      "planning_application",
+      "grant_announcement",
+      "investment_disclosure",
+      "environmental_approval",
+      "patent_filing",
+      "patent_biofuel_tech",
+      "job_posting",
+      "news_mention",
+      "regulatory_filing",
+      "partnership_announcement",
+    ]).notNull(),
+    signalWeight: decimal("signalWeight", { precision: 5, scale: 2 }).default("1"),
+    confidence: decimal("confidence", { precision: 5, scale: 2 }).default("50"),
+    source: varchar("source", { length: 100 }).notNull(),
+    title: varchar("title", { length: 500 }).notNull(),
+    description: text("description"),
+    rawData: json("rawData").$type<Record<string, unknown>>(),
+    detectedAt: timestamp("detectedAt").notNull(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    entityIdx: index("signal_entity_idx").on(table.entityId),
+    typeIdx: index("signal_type_idx").on(table.signalType),
+    detectedIdx: index("signal_detected_idx").on(table.detectedAt),
+  })
+);
+
+export type StealthSignal = typeof stealthSignals.$inferSelect;
+export type InsertStealthSignal = typeof stealthSignals.$inferInsert;
+
+/**
+ * Stealth Ingestion Jobs - Track data ingestion runs
+ */
+export const stealthIngestionJobs = mysqlTable(
+  "stealth_ingestion_jobs",
+  {
+    id: int("id").autoincrement().primaryKey(),
+    connector: varchar("connector", { length: 100 }).notNull(),
+    jobType: mysqlEnum("jobType", ["manual", "scheduled"]).notNull(),
+    status: mysqlEnum("status", ["pending", "running", "completed", "failed"])
+      .default("pending")
+      .notNull(),
+    signalsDiscovered: int("signalsDiscovered").default(0),
+    entitiesCreated: int("entitiesCreated").default(0),
+    entitiesUpdated: int("entitiesUpdated").default(0),
+    errorMessage: text("errorMessage"),
+    startedAt: timestamp("startedAt"),
+    completedAt: timestamp("completedAt"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    connectorIdx: index("job_connector_idx").on(table.connector),
+    statusIdx: index("job_status_idx").on(table.status),
+  })
+);
+
+export type StealthIngestionJob = typeof stealthIngestionJobs.$inferSelect;
+export type InsertStealthIngestionJob = typeof stealthIngestionJobs.$inferInsert;

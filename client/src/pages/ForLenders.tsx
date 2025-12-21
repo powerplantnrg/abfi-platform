@@ -593,7 +593,30 @@ export default function ForLenders() {
             </p>
           </FadeInUp>
 
-          <StaggerContainer className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <StaggerItem>
+              <Link href="/stealth-discovery">
+                <Card className="h-full bg-white/10 border-white/20 hover:bg-white/15 transition-colors cursor-pointer group">
+                  <CardHeader>
+                    <div className="h-12 w-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Eye className="h-6 w-6 text-purple-400" />
+                    </div>
+                    <CardTitle className="text-white">Stealth Discovery</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-indigo-200 mb-4">
+                      Surface unannounced biofuel projects through patent, permit, and
+                      grant signal analysis. Early market intelligence.
+                    </p>
+                    <div className="flex items-center text-purple-300 text-sm font-medium">
+                      View Dashboard
+                      <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            </StaggerItem>
+
             <StaggerItem>
               <Link href="/lending-sentiment">
                 <Card className="h-full bg-white/10 border-white/20 hover:bg-white/15 transition-colors cursor-pointer group">

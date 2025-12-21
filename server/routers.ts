@@ -12,6 +12,7 @@ import { supplyChainRouter } from "./supplyChainRouter";
 import { emissionsRouter } from "./emissionsRouter";
 import { vcRouter } from "./vcRouter";
 import { goSchemeRouter } from "./goSchemeRouter";
+import { stealthRouter } from "./stealthRouter";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import * as db from "./db";
@@ -75,6 +76,7 @@ export const appRouter = router({
   emissions: emissionsRouter,
   vc: vcRouter,
   goScheme: goSchemeRouter,
+  stealth: stealthRouter,
 
   // ============================================================================
   // AUDIT & COMPLIANCE (Phase 8)

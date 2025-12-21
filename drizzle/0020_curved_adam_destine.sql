@@ -1,0 +1,2 @@
+ALTER TABLE `stealth_entities` MODIFY COLUMN `entityType` enum('company','project','facility','government_agency','research_institution','joint_venture','unknown') NOT NULL;--> statement-breakpoint
+ALTER TABLE `stealth_signals` MODIFY COLUMN `signalType` enum('planning_application','grant_announcement','investment_disclosure','environmental_approval','patent_filing','patent_biofuel_tech','job_posting','news_mention','regulatory_filing','partnership_announcement') NOT NULL;
