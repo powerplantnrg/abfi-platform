@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
@@ -19,21 +18,11 @@ import {
   Leaf,
   Scale,
   Clock,
-  ExternalLink,
   Building,
   TrendingUp,
 } from "lucide-react";
 import { Link } from "wouter";
-import {
-  policyApi,
-  type PolicyKPI,
-  type PolicyTimelineEvent,
-  type PolicyKanbanItem,
-  type MandateScenario,
-  type CarbonCalculatorInput,
-  type CarbonCalculatorResult,
-  type OfftakeAgreement,
-} from "@/lib/intelligenceApi";
+import { trpc } from "@/lib/trpc";
 import {
   BarChart,
   Bar,
@@ -72,75 +61,65 @@ const EVENT_COLORS: Record<string, string> = {
 
 export default function PolicyCarbonDashboard() {
   const [activeTab, setActiveTab] = useState("policy");
-  const [policyKPIs, setPolicyKPIs] = useState<PolicyKPI[]>([]);
-  const [timeline, setTimeline] = useState<PolicyTimelineEvent[]>([]);
-  const [kanban, setKanban] = useState<{
-    proposed: PolicyKanbanItem[];
-    review: PolicyKanbanItem[];
-    enacted: PolicyKanbanItem[];
-  } | null>(null);
-  const [mandateScenarios, setMandateScenarios] = useState<MandateScenario[]>([]);
-  const [offtakeMarket, setOfftakeMarket] = useState<OfftakeAgreement[]>([]);
-  const [accuPrice, setAccuPrice] = useState<{
-    price: number;
-    change: number;
-    change_pct: number;
-  } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   // Carbon calculator state
-  const [calcInput, setCalcInput] = useState<CarbonCalculatorInput>({
+  const [calcInput, setCalcInput] = useState({
     project_type: "bioenergy_plant",
     annual_output_tonnes: 50000,
     emission_factor: 0.85,
     baseline_year: 2025,
     carbon_price: 34.5,
   });
-  const [calcResult, setCalcResult] = useState<CarbonCalculatorResult | null>(null);
-  const [calculating, setCalculating] = useState(false);
 
-  const loadData = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const [kpis, timelineData, kanbanData, scenarios, offtake, accu] =
-        await Promise.all([
-          policyApi.getKPIs(),
-          policyApi.getTimeline(2025),
-          policyApi.getKanban(),
-          policyApi.getMandateScenarios(),
-          policyApi.getOfftakeMarket(),
-          policyApi.getACCUPrice(),
-        ]);
-      setPolicyKPIs(kpis);
-      setTimeline(timelineData);
-      setKanban(kanbanData);
-      setMandateScenarios(scenarios);
-      setOfftakeMarket(offtake);
-      setAccuPrice(accu);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load data");
-    } finally {
-      setLoading(false);
-    }
+  // tRPC queries
+  const kpisQuery = trpc.policy.getKPIs.useQuery();
+  const timelineQuery = trpc.policy.getTimeline.useQuery({ year: 2025 });
+  const kanbanQuery = trpc.policy.getKanban.useQuery();
+  const scenariosQuery = trpc.policy.getMandateScenarios.useQuery();
+  const offtakeQuery = trpc.policy.getOfftakeMarket.useQuery();
+  const accuQuery = trpc.policy.getACCUPrice.useQuery();
+
+  // Carbon calculator mutation
+  const calculateMutation = trpc.policy.calculateCarbon.useMutation();
+
+  const policyKPIs = kpisQuery.data || [];
+  const timeline = timelineQuery.data || [];
+  const kanban = kanbanQuery.data;
+  const mandateScenarios = scenariosQuery.data || [];
+  const offtakeMarket = offtakeQuery.data || [];
+  const accuPrice = accuQuery.data;
+  const calcResult = calculateMutation.data;
+
+  const loading =
+    kpisQuery.isLoading ||
+    timelineQuery.isLoading ||
+    kanbanQuery.isLoading ||
+    scenariosQuery.isLoading ||
+    offtakeQuery.isLoading ||
+    accuQuery.isLoading;
+
+  const error =
+    kpisQuery.error?.message ||
+    timelineQuery.error?.message ||
+    kanbanQuery.error?.message ||
+    scenariosQuery.error?.message ||
+    offtakeQuery.error?.message ||
+    accuQuery.error?.message;
+
+  const loadData = () => {
+    kpisQuery.refetch();
+    timelineQuery.refetch();
+    kanbanQuery.refetch();
+    scenariosQuery.refetch();
+    offtakeQuery.refetch();
+    accuQuery.refetch();
   };
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const calculateCarbon = async () => {
-    setCalculating(true);
-    try {
-      const result = await policyApi.calculateCarbon(calcInput);
-      setCalcResult(result);
-    } catch (err) {
-      console.error("Calculation error:", err);
-    } finally {
-      setCalculating(false);
-    }
+  const calculateCarbon = () => {
+    calculateMutation.mutate(calcInput);
   };
+
+  const calculating = calculateMutation.isPending;
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-AU", {

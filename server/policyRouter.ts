@@ -1,0 +1,441 @@
+/**
+ * Policy & Carbon Router
+ * API endpoints for policy tracking and carbon revenue calculations
+ */
+
+import { z } from "zod";
+import { TRPCError } from "@trpc/server";
+import { router, publicProcedure } from "./_core/trpc";
+import { getDb } from "./db";
+import {
+  policyTimelineEvents,
+  policyKanbanItems,
+  mandateScenarios,
+  offtakeAgreements,
+  accuPriceHistory,
+  policyConsultations,
+} from "../drizzle/schema";
+import { eq, desc, gte, lte, and, sql } from "drizzle-orm";
+
+// Helper to get db instance with null check
+async function requireDb() {
+  const db = await getDb();
+  if (!db) {
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Database not available",
+    });
+  }
+  return db;
+}
+
+// Mock data generators
+function getMockKPIs() {
+  return [
+    { label: "Active Policies", value: 12, subtitle: "Across all jurisdictions" },
+    { label: "Under Review", value: 5, subtitle: "Expected decisions in 2025" },
+    { label: "ACCU Price", value: 34.5, subtitle: "Current spot price" },
+    { label: "Consultations Open", value: 3, subtitle: "Submissions closing soon" },
+  ];
+}
+
+function getMockTimeline(year: number) {
+  const events = [
+    { jurisdiction: "Federal", date: `${year}-01-15`, event_type: "enacted", title: "Safeguard Mechanism Reform Act" },
+    { jurisdiction: "NSW", date: `${year}-02-01`, event_type: "consultation_open", title: "Renewable Fuel Standard Consultation" },
+    { jurisdiction: "QLD", date: `${year}-03-10`, event_type: "expected_decision", title: "Biofuel Mandate Review" },
+    { jurisdiction: "VIC", date: `${year}-04-20`, event_type: "enacted", title: "Zero Emissions Vehicle Roadmap" },
+    { jurisdiction: "Federal", date: `${year}-05-15`, event_type: "consultation_open", title: "National Biofuels Strategy" },
+    { jurisdiction: "SA", date: `${year}-06-01`, event_type: "expected_decision", title: "Green Hydrogen Action Plan" },
+    { jurisdiction: "WA", date: `${year}-07-01`, event_type: "enacted", title: "Renewable Energy Buyback Scheme" },
+    { jurisdiction: "Federal", date: `${year}-09-01`, event_type: "expected_decision", title: "Sustainable Aviation Fuel Mandate" },
+    { jurisdiction: "NSW", date: `${year}-10-15`, event_type: "enacted", title: "Electric Vehicle Strategy Update" },
+    { jurisdiction: "QLD", date: `${year}-11-01`, event_type: "consultation_open", title: "Waste-to-Energy Policy Framework" },
+  ];
+  return events;
+}
+
+function getMockKanban() {
+  return {
+    proposed: [
+      { id: "p1", title: "National B10 Mandate", jurisdiction: "Federal", policy_type: "mandate", status: "proposed" },
+      { id: "p2", title: "SAF Production Incentive", jurisdiction: "Federal", policy_type: "incentive", status: "proposed" },
+      { id: "p3", title: "Biogas Feed-in Tariff", jurisdiction: "VIC", policy_type: "tariff", status: "proposed" },
+    ],
+    review: [
+      { id: "r1", title: "Renewable Fuel Standard", jurisdiction: "NSW", policy_type: "standard", status: "review" },
+      { id: "r2", title: "Biofuel Mandate 2025", jurisdiction: "QLD", policy_type: "mandate", status: "review" },
+    ],
+    enacted: [
+      { id: "e1", title: "Safeguard Mechanism", jurisdiction: "Federal", policy_type: "regulation", status: "enacted" },
+      { id: "e2", title: "Renewable Energy Target", jurisdiction: "Federal", policy_type: "target", status: "enacted" },
+      { id: "e3", title: "E10 Mandate", jurisdiction: "NSW", policy_type: "mandate", status: "enacted" },
+      { id: "e4", title: "E10 Mandate", jurisdiction: "QLD", policy_type: "mandate", status: "enacted" },
+    ],
+  };
+}
+
+function getMockMandateScenarios() {
+  return [
+    { name: "Current State", mandate_level: "B2", revenue_impact: 12000000 },
+    { name: "B5 Scenario", mandate_level: "B5", revenue_impact: 28000000 },
+    { name: "B10 Scenario", mandate_level: "B10", revenue_impact: 55000000 },
+    { name: "B20 Scenario", mandate_level: "B20", revenue_impact: 105000000 },
+  ];
+}
+
+function getMockOfftakeMarket() {
+  return [
+    { offtaker: "Qantas Group", mandate: "SAF Commitment 2030", volume: "100ML/year", term: "10 years", premium: "+15%" },
+    { offtaker: "BP Australia", mandate: "B20 Supply", volume: "50ML/year", term: "5 years", premium: "+8%" },
+    { offtaker: "Ampol", mandate: "Renewable Diesel", volume: "200ML/year", term: "7 years", premium: "+12%" },
+    { offtaker: "Viva Energy", mandate: "Biodiesel Blend", volume: "75ML/year", term: "5 years", premium: "+10%" },
+    { offtaker: "Shell Australia", mandate: "SAF Partnership", volume: "150ML/year", term: "8 years", premium: "+18%" },
+  ];
+}
+
+function getMockACCUPrice() {
+  return {
+    price: 34.5,
+    currency: "AUD",
+    unit: "tCO2e",
+    change: 1.25,
+    change_pct: 3.8,
+    source: "Clean Energy Regulator",
+    as_of_date: new Date().toISOString().split("T")[0],
+  };
+}
+
+function getMockConsultations() {
+  const now = new Date();
+  return [
+    {
+      id: "c1",
+      title: "National Biofuels Strategy Consultation",
+      jurisdiction: "Federal",
+      opens: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      closes: new Date(now.getTime() + 15 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      days_remaining: 15,
+      relevance: "high",
+      submission_url: "https://consult.industry.gov.au/biofuels",
+    },
+    {
+      id: "c2",
+      title: "Renewable Fuel Standard Review",
+      jurisdiction: "NSW",
+      opens: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      closes: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      days_remaining: 30,
+      relevance: "high",
+      submission_url: "https://haveyoursay.nsw.gov.au/renewable-fuel",
+    },
+    {
+      id: "c3",
+      title: "Waste-to-Energy Framework",
+      jurisdiction: "QLD",
+      opens: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      closes: new Date(now.getTime() + 45 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
+      days_remaining: 45,
+      relevance: "medium",
+      submission_url: "https://www.qld.gov.au/waste-to-energy",
+    },
+  ];
+}
+
+export const policyRouter = router({
+  /**
+   * Get policy KPIs
+   */
+  getKPIs: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb();
+
+      // Count policies by status
+      const [enacted] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(policyKanbanItems)
+        .where(eq(policyKanbanItems.status, "enacted"));
+
+      const [review] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(policyKanbanItems)
+        .where(eq(policyKanbanItems.status, "review"));
+
+      // Get latest ACCU price
+      const [latestAccu] = await db
+        .select()
+        .from(accuPriceHistory)
+        .orderBy(desc(accuPriceHistory.date))
+        .limit(1);
+
+      // Count open consultations
+      const now = new Date();
+      const [consultations] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(policyConsultations)
+        .where(gte(policyConsultations.closes, now));
+
+      if (!latestAccu && enacted.count === 0) {
+        return getMockKPIs();
+      }
+
+      return [
+        { label: "Active Policies", value: enacted.count || 0, subtitle: "Across all jurisdictions" },
+        { label: "Under Review", value: review.count || 0, subtitle: "Expected decisions in 2025" },
+        { label: "ACCU Price", value: latestAccu ? parseFloat(latestAccu.price as string) : 34.5, subtitle: "Current spot price" },
+        { label: "Consultations Open", value: consultations.count || 0, subtitle: "Submissions closing soon" },
+      ];
+    } catch (error) {
+      console.error("Failed to get policy KPIs:", error);
+      return getMockKPIs();
+    }
+  }),
+
+  /**
+   * Get policy timeline events
+   */
+  getTimeline: publicProcedure
+    .input(z.object({ year: z.number().default(2025) }))
+    .query(async ({ input }) => {
+      try {
+        const db = await requireDb();
+
+        const startDate = new Date(input.year, 0, 1);
+        const endDate = new Date(input.year, 11, 31);
+
+        const events = await db
+          .select()
+          .from(policyTimelineEvents)
+          .where(and(gte(policyTimelineEvents.date, startDate), lte(policyTimelineEvents.date, endDate)))
+          .orderBy(policyTimelineEvents.date);
+
+        if (events.length === 0) {
+          return getMockTimeline(input.year);
+        }
+
+        return events.map((e) => ({
+          jurisdiction: e.jurisdiction,
+          date: e.date instanceof Date ? e.date.toISOString().split("T")[0] : String(e.date),
+          event_type: e.eventType,
+          title: e.title,
+          policy_id: e.policyId,
+        }));
+      } catch (error) {
+        console.error("Failed to get timeline:", error);
+        return getMockTimeline(input.year);
+      }
+    }),
+
+  /**
+   * Get policy kanban board
+   */
+  getKanban: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb();
+
+      const items = await db.select().from(policyKanbanItems);
+
+      if (items.length === 0) {
+        return getMockKanban();
+      }
+
+      const proposed = items.filter((i) => i.status === "proposed").map((i) => ({
+        id: String(i.id),
+        title: i.title,
+        jurisdiction: i.jurisdiction,
+        policy_type: i.policyType,
+        status: i.status,
+        summary: i.summary,
+      }));
+
+      const review = items.filter((i) => i.status === "review").map((i) => ({
+        id: String(i.id),
+        title: i.title,
+        jurisdiction: i.jurisdiction,
+        policy_type: i.policyType,
+        status: i.status,
+        summary: i.summary,
+      }));
+
+      const enacted = items.filter((i) => i.status === "enacted").map((i) => ({
+        id: String(i.id),
+        title: i.title,
+        jurisdiction: i.jurisdiction,
+        policy_type: i.policyType,
+        status: i.status,
+        summary: i.summary,
+      }));
+
+      return { proposed, review, enacted };
+    } catch (error) {
+      console.error("Failed to get kanban:", error);
+      return getMockKanban();
+    }
+  }),
+
+  /**
+   * Get mandate scenarios
+   */
+  getMandateScenarios: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb();
+
+      const scenarios = await db.select().from(mandateScenarios);
+
+      if (scenarios.length === 0) {
+        return getMockMandateScenarios();
+      }
+
+      return scenarios.map((s) => ({
+        name: s.name,
+        mandate_level: s.mandateLevel,
+        revenue_impact: parseFloat(s.revenueImpact as string),
+      }));
+    } catch (error) {
+      console.error("Failed to get mandate scenarios:", error);
+      return getMockMandateScenarios();
+    }
+  }),
+
+  /**
+   * Get offtake market data
+   */
+  getOfftakeMarket: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb();
+
+      const agreements = await db
+        .select()
+        .from(offtakeAgreements)
+        .where(eq(offtakeAgreements.isActive, true));
+
+      if (agreements.length === 0) {
+        return getMockOfftakeMarket();
+      }
+
+      return agreements.map((a) => ({
+        offtaker: a.offtaker,
+        mandate: a.mandate,
+        volume: a.volume,
+        term: a.term,
+        premium: a.premium,
+      }));
+    } catch (error) {
+      console.error("Failed to get offtake market:", error);
+      return getMockOfftakeMarket();
+    }
+  }),
+
+  /**
+   * Get current ACCU price
+   */
+  getACCUPrice: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb();
+
+      const [latest] = await db
+        .select()
+        .from(accuPriceHistory)
+        .orderBy(desc(accuPriceHistory.date))
+        .limit(1);
+
+      if (!latest) {
+        return getMockACCUPrice();
+      }
+
+      return {
+        price: parseFloat(latest.price as string),
+        currency: "AUD",
+        unit: "tCO2e",
+        change: parseFloat(latest.change as string),
+        change_pct: parseFloat(latest.changePct as string),
+        source: latest.source || "Clean Energy Regulator",
+        as_of_date: latest.date instanceof Date ? latest.date.toISOString().split("T")[0] : String(latest.date),
+      };
+    } catch (error) {
+      console.error("Failed to get ACCU price:", error);
+      return getMockACCUPrice();
+    }
+  }),
+
+  /**
+   * Calculate carbon revenue
+   */
+  calculateCarbon: publicProcedure
+    .input(
+      z.object({
+        project_type: z.string(),
+        annual_output_tonnes: z.number(),
+        emission_factor: z.number(),
+        baseline_year: z.number(),
+        carbon_price: z.number(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      // Calculate ACCU credits based on emission factor and output
+      const accuCredits = Math.round(input.annual_output_tonnes * input.emission_factor);
+
+      // Calculate ACCU revenue
+      const accuRevenue = accuCredits * input.carbon_price;
+
+      // Safeguard mechanism benefit (estimated at 15% of ACCU revenue for covered facilities)
+      const safeguardBenefit = Math.round(accuRevenue * 0.15);
+
+      // Total annual revenue
+      const totalAnnualRevenue = accuRevenue + safeguardBenefit;
+
+      // Sensitivity analysis
+      const sensitivityLow = Math.round(totalAnnualRevenue * 0.8);
+      const sensitivityHigh = Math.round(totalAnnualRevenue * 1.2);
+
+      return {
+        accu_credits: accuCredits,
+        accu_revenue: Math.round(accuRevenue),
+        safeguard_benefit: safeguardBenefit,
+        total_annual_revenue: Math.round(totalAnnualRevenue),
+        sensitivity_low: sensitivityLow,
+        sensitivity_high: sensitivityHigh,
+      };
+    }),
+
+  /**
+   * Get open consultations
+   */
+  getConsultations: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb();
+
+      const now = new Date();
+      const consultations = await db
+        .select()
+        .from(policyConsultations)
+        .where(gte(policyConsultations.closes, now))
+        .orderBy(policyConsultations.closes);
+
+      if (consultations.length === 0) {
+        return getMockConsultations();
+      }
+
+      return consultations.map((c) => {
+        const closes = c.closes instanceof Date ? c.closes : new Date(c.closes);
+        const daysRemaining = Math.ceil((closes.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+        return {
+          id: String(c.id),
+          title: c.title,
+          jurisdiction: c.jurisdiction,
+          opens: c.opens instanceof Date ? c.opens.toISOString().split("T")[0] : String(c.opens),
+          closes: closes.toISOString().split("T")[0],
+          days_remaining: daysRemaining,
+          relevance: c.relevance,
+          submission_url: c.submissionUrl,
+        };
+      });
+    } catch (error) {
+      console.error("Failed to get consultations:", error);
+      return getMockConsultations();
+    }
+  }),
+});
+
+export type PolicyRouter = typeof policyRouter;

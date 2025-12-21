@@ -15,6 +15,7 @@ import { goSchemeRouter } from "./goSchemeRouter";
 import { stealthRouter } from "./stealthRouter";
 import { sentimentRouter } from "./sentimentRouter";
 import { pricesRouter } from "./pricesRouter";
+import { policyRouter } from "./policyRouter";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import * as db from "./db";
@@ -81,6 +82,7 @@ export const appRouter = router({
   stealth: stealthRouter,
   sentiment: sentimentRouter,
   prices: pricesRouter,
+  policy: policyRouter,
 
   // ============================================================================
   // AUDIT & COMPLIANCE (Phase 8)

@@ -137,7 +137,7 @@ import {
   unique,
   uniqueIndex
 } from "drizzle-orm/mysql-core";
-var users, suppliers, properties, productionHistory, carbonPractices, existingContracts, marketplaceListings, buyers, feedstocks, certificates, qualityTests, inquiries, transactions, notifications, savedSearches, savedAnalyses, auditLogs, projects, supplyAgreements, growerQualifications, bankabilityAssessments, lenderAccess, covenantMonitoring, evidence, evidenceLinkages, certificateSnapshots, deliveryEvents, seasonalityProfiles, climateExposure, yieldEstimates, scoreCalculations, scoreSensitivityAnalysis, scoreImprovementSimulations, stressScenarios, stressTestResults, contractEnforceabilityScores, covenantBreachEvents, lenderReports, adminOverrides, certificateLegalMetadata, userConsents, disputeResolutions, dataRetentionPolicies, financialInstitutions, demandSignals, supplierResponses, platformTransactions, feedstockFutures, futuresYieldProjections, futuresEOI, dataSources, ingestionRuns, rsieScoringMethods, riskEvents, supplierSites, supplierRiskExposure, contractRiskExposure, weatherGridDaily, forecastGridHourly, userFeedback, abbaBaselineCells, biomassQualityProfiles, spatialLayers, intelligenceItems, evidenceManifests, chainAnchors, merkleProofs, consignments, freightLegs, consignmentEvidence, emissionCalculations, emissionFactors, didRegistry, verifiableCredentials, mcpConnections, mcpSyncLogs, goCertificates, auditPacks, stealthEntities, stealthSignals, stealthIngestionJobs, sentimentDocuments, sentimentDailyIndex, lenderSentimentScores, feedstockPrices, regionalPriceSummary, forwardCurves, technicalIndicators;
+var users, suppliers, properties, productionHistory, carbonPractices, existingContracts, marketplaceListings, buyers, feedstocks, certificates, qualityTests, inquiries, transactions, notifications, savedSearches, savedAnalyses, auditLogs, projects, supplyAgreements, growerQualifications, bankabilityAssessments, lenderAccess, covenantMonitoring, evidence, evidenceLinkages, certificateSnapshots, deliveryEvents, seasonalityProfiles, climateExposure, yieldEstimates, scoreCalculations, scoreSensitivityAnalysis, scoreImprovementSimulations, stressScenarios, stressTestResults, contractEnforceabilityScores, covenantBreachEvents, lenderReports, adminOverrides, certificateLegalMetadata, userConsents, disputeResolutions, dataRetentionPolicies, financialInstitutions, demandSignals, supplierResponses, platformTransactions, feedstockFutures, futuresYieldProjections, futuresEOI, dataSources, ingestionRuns, rsieScoringMethods, riskEvents, supplierSites, supplierRiskExposure, contractRiskExposure, weatherGridDaily, forecastGridHourly, userFeedback, abbaBaselineCells, biomassQualityProfiles, spatialLayers, intelligenceItems, evidenceManifests, chainAnchors, merkleProofs, consignments, freightLegs, consignmentEvidence, emissionCalculations, emissionFactors, didRegistry, verifiableCredentials, mcpConnections, mcpSyncLogs, goCertificates, auditPacks, stealthEntities, stealthSignals, stealthIngestionJobs, sentimentDocuments, sentimentDailyIndex, lenderSentimentScores, feedstockPrices, regionalPriceSummary, forwardCurves, technicalIndicators, policyTimelineEvents, policyKanbanItems, mandateScenarios, offtakeAgreements, accuPriceHistory, policyConsultations;
 var init_schema = __esm({
   "drizzle/schema.ts"() {
     "use strict";
@@ -3970,6 +3970,105 @@ var init_schema = __esm({
         )
       })
     );
+    policyTimelineEvents = mysqlTable(
+      "policy_timeline_events",
+      {
+        id: int("id").primaryKey().autoincrement(),
+        jurisdiction: varchar("jurisdiction", { length: 50 }).notNull(),
+        // Federal, NSW, VIC, QLD, etc.
+        date: date("date").notNull(),
+        eventType: mysqlEnum("eventType", ["enacted", "consultation_open", "expected_decision", "expired"]).notNull(),
+        title: varchar("title", { length: 500 }).notNull(),
+        description: text("description"),
+        policyId: varchar("policyId", { length: 100 }),
+        url: varchar("url", { length: 1e3 }),
+        createdAt: timestamp("createdAt").defaultNow().notNull()
+      },
+      (table) => ({
+        dateIdx: index("policy_date_idx").on(table.date),
+        jurisdictionIdx: index("policy_jurisdiction_idx").on(table.jurisdiction)
+      })
+    );
+    policyKanbanItems = mysqlTable(
+      "policy_kanban_items",
+      {
+        id: int("id").primaryKey().autoincrement(),
+        title: varchar("title", { length: 500 }).notNull(),
+        jurisdiction: varchar("jurisdiction", { length: 50 }).notNull(),
+        policyType: varchar("policyType", { length: 100 }).notNull(),
+        status: mysqlEnum("status", ["proposed", "review", "enacted", "expired"]).notNull(),
+        summary: text("summary"),
+        expectedDate: date("expectedDate"),
+        url: varchar("url", { length: 1e3 }),
+        createdAt: timestamp("createdAt").defaultNow().notNull(),
+        updatedAt: timestamp("updatedAt").defaultNow().notNull()
+      },
+      (table) => ({
+        statusIdx: index("kanban_status_idx").on(table.status),
+        jurisdictionIdx: index("kanban_jurisdiction_idx").on(table.jurisdiction)
+      })
+    );
+    mandateScenarios = mysqlTable(
+      "mandate_scenarios",
+      {
+        id: int("id").primaryKey().autoincrement(),
+        name: varchar("name", { length: 100 }).notNull(),
+        mandateLevel: varchar("mandateLevel", { length: 20 }).notNull(),
+        // B5, B10, B20
+        revenueImpact: decimal("revenueImpact", { precision: 15, scale: 2 }).notNull(),
+        description: text("description"),
+        assumptions: json("assumptions").$type(),
+        createdAt: timestamp("createdAt").defaultNow().notNull()
+      },
+      (table) => ({
+        mandateLevelIdx: index("mandate_level_idx").on(table.mandateLevel)
+      })
+    );
+    offtakeAgreements = mysqlTable(
+      "offtake_agreements",
+      {
+        id: int("id").primaryKey().autoincrement(),
+        offtaker: varchar("offtaker", { length: 200 }).notNull(),
+        mandate: varchar("mandate", { length: 100 }).notNull(),
+        volume: varchar("volume", { length: 100 }).notNull(),
+        term: varchar("term", { length: 50 }).notNull(),
+        premium: varchar("premium", { length: 50 }).notNull(),
+        isActive: boolean("isActive").default(true),
+        createdAt: timestamp("createdAt").defaultNow().notNull()
+      }
+    );
+    accuPriceHistory = mysqlTable(
+      "accu_price_history",
+      {
+        id: int("id").primaryKey().autoincrement(),
+        date: date("date").notNull(),
+        price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+        change: decimal("change", { precision: 10, scale: 2 }).notNull(),
+        changePct: decimal("changePct", { precision: 6, scale: 2 }).notNull(),
+        source: varchar("source", { length: 100 }).default("CER"),
+        createdAt: timestamp("createdAt").defaultNow().notNull()
+      },
+      (table) => ({
+        dateIdx: uniqueIndex("accu_date_idx").on(table.date)
+      })
+    );
+    policyConsultations = mysqlTable(
+      "policy_consultations",
+      {
+        id: int("id").primaryKey().autoincrement(),
+        title: varchar("title", { length: 500 }).notNull(),
+        jurisdiction: varchar("jurisdiction", { length: 50 }).notNull(),
+        opens: date("opens").notNull(),
+        closes: date("closes").notNull(),
+        relevance: varchar("relevance", { length: 50 }).notNull(),
+        // high, medium, low
+        submissionUrl: varchar("submissionUrl", { length: 1e3 }),
+        createdAt: timestamp("createdAt").defaultNow().notNull()
+      },
+      (table) => ({
+        closesIdx: index("consultation_closes_idx").on(table.closes)
+      })
+    );
   }
 });
 
@@ -7249,17 +7348,17 @@ __export(temporal_exports, {
   isExpiringSoon: () => isExpiringSoon,
   wasEntityValidAt: () => wasEntityValidAt
 });
-import { eq as eq14, and as and12, lte as lte6, gte as gte9, isNull as isNull2, or as or4 } from "drizzle-orm";
+import { eq as eq15, and as and13, lte as lte7, gte as gte10, isNull as isNull2, or as or4 } from "drizzle-orm";
 async function getEntityAsOfDate(entityType, entityId, asOfDate) {
   const db = await getDb();
   if (!db) return null;
   const table = getTableForEntityType(entityType);
   if (!table) return null;
   const results = await db.select().from(table).where(
-    and12(
-      eq14(table.id, entityId),
-      lte6(table.validFrom, asOfDate),
-      or4(gte9(table.validTo, asOfDate), isNull2(table.validTo))
+    and13(
+      eq15(table.id, entityId),
+      lte7(table.validFrom, asOfDate),
+      or4(gte10(table.validTo, asOfDate), isNull2(table.validTo))
     )
   ).limit(1);
   return results[0] || null;
@@ -7269,7 +7368,7 @@ async function getCurrentVersion(entityType, entityId) {
   if (!db) return null;
   const table = getTableForEntityType(entityType);
   if (!table) return null;
-  const results = await db.select().from(table).where(and12(eq14(table.id, entityId), eq14(table.isCurrent, true))).limit(1);
+  const results = await db.select().from(table).where(and13(eq15(table.id, entityId), eq15(table.isCurrent, true))).limit(1);
   return results[0] || null;
 }
 async function getEntityHistory(entityType, entityId) {
@@ -7277,7 +7376,7 @@ async function getEntityHistory(entityType, entityId) {
   if (!db) return [];
   const table = getTableForEntityType(entityType);
   if (!table) return [];
-  return await db.select().from(table).where(eq14(table.id, entityId)).orderBy(table.versionNumber);
+  return await db.select().from(table).where(eq15(table.id, entityId)).orderBy(table.versionNumber);
 }
 async function createNewVersion(entityType, oldEntityId, newEntityData, versionReason) {
   const db = await getDb();
@@ -7292,7 +7391,7 @@ async function createNewVersion(entityType, oldEntityId, newEntityData, versionR
   await db.update(table).set({
     isCurrent: false,
     validTo: now
-  }).where(eq14(table.id, oldEntityId));
+  }).where(eq15(table.id, oldEntityId));
   const newVersion = {
     ...newEntityData,
     versionNumber: currentVersion.versionNumber + 1,
@@ -7304,7 +7403,7 @@ async function createNewVersion(entityType, oldEntityId, newEntityData, versionR
   };
   const result = await db.insert(table).values(newVersion);
   const newVersionId = Number(result[0].insertId);
-  await db.update(table).set({ supersededById: newVersionId }).where(eq14(table.id, oldEntityId));
+  await db.update(table).set({ supersededById: newVersionId }).where(eq15(table.id, oldEntityId));
   return newVersionId;
 }
 async function getVersionTimeline(entityType, entityId) {
@@ -7418,7 +7517,7 @@ __export(stressTesting_exports, {
   runSupplyShortfallScenario: () => runSupplyShortfallScenario,
   scoreToRating: () => scoreToRating
 });
-import { eq as eq15, desc as desc12 } from "drizzle-orm";
+import { eq as eq16, desc as desc13 } from "drizzle-orm";
 function calculateHHI(supplierVolumes) {
   const totalVolume = supplierVolumes.reduce((sum, v) => sum + v, 0);
   if (totalVolume === 0) return 0;
@@ -7616,12 +7715,12 @@ async function runStressTest(params) {
 async function getStressTestResults(projectId) {
   const db = await getDb();
   if (!db) return [];
-  return await db.select().from(stressTestResults).where(eq15(stressTestResults.projectId, projectId)).orderBy(desc12(stressTestResults.testDate));
+  return await db.select().from(stressTestResults).where(eq16(stressTestResults.projectId, projectId)).orderBy(desc13(stressTestResults.testDate));
 }
 async function getStressTestResult(resultId) {
   const db = await getDb();
   if (!db) return null;
-  const results = await db.select().from(stressTestResults).where(eq15(stressTestResults.id, resultId)).limit(1);
+  const results = await db.select().from(stressTestResults).where(eq16(stressTestResults.id, resultId)).limit(1);
   return results[0] || null;
 }
 async function assessContractEnforceability(params) {
@@ -7664,7 +7763,7 @@ async function assessContractEnforceability(params) {
 async function getContractEnforceabilityScore(agreementId) {
   const db = await getDb();
   if (!db) return null;
-  const results = await db.select().from(contractEnforceabilityScores).where(eq15(contractEnforceabilityScores.agreementId, agreementId)).orderBy(desc12(contractEnforceabilityScores.assessedDate)).limit(1);
+  const results = await db.select().from(contractEnforceabilityScores).where(eq16(contractEnforceabilityScores.agreementId, agreementId)).orderBy(desc13(contractEnforceabilityScores.assessedDate)).limit(1);
   return results[0] || null;
 }
 async function runRegionalEventScenario(projectId, region, reductionPercent, agreements) {
@@ -7921,7 +8020,7 @@ __export(lenderPortal_exports, {
   recordCovenantBreach: () => recordCovenantBreach,
   resolveCovenantBreach: () => resolveCovenantBreach
 });
-import { eq as eq16, and as and14, desc as desc13, gte as gte10 } from "drizzle-orm";
+import { eq as eq17, and as and15, desc as desc14, gte as gte11 } from "drizzle-orm";
 async function checkCovenantCompliance(params) {
   const results = [];
   for (const covenant of params.covenants) {
@@ -7994,14 +8093,14 @@ async function recordCovenantBreach(params) {
 async function getCovenantBreachHistory(projectId, options) {
   const db = await getDb();
   if (!db) return [];
-  const conditions = [eq16(covenantBreachEvents.projectId, projectId)];
+  const conditions = [eq17(covenantBreachEvents.projectId, projectId)];
   if (options?.unresolved) {
-    conditions.push(eq16(covenantBreachEvents.resolved, false));
+    conditions.push(eq17(covenantBreachEvents.resolved, false));
   }
   if (options?.since) {
-    conditions.push(gte10(covenantBreachEvents.breachDate, options.since));
+    conditions.push(gte11(covenantBreachEvents.breachDate, options.since));
   }
-  return await db.select().from(covenantBreachEvents).where(and14(...conditions)).orderBy(desc13(covenantBreachEvents.breachDate));
+  return await db.select().from(covenantBreachEvents).where(and15(...conditions)).orderBy(desc14(covenantBreachEvents.breachDate));
 }
 async function resolveCovenantBreach(params) {
   const db = await getDb();
@@ -8011,19 +8110,19 @@ async function resolveCovenantBreach(params) {
     resolvedDate: /* @__PURE__ */ new Date(),
     resolutionNotes: params.resolutionNotes,
     resolvedBy: params.resolvedBy
-  }).where(eq16(covenantBreachEvents.id, params.breachId));
+  }).where(eq17(covenantBreachEvents.id, params.breachId));
 }
 async function getActiveAlerts(projectId) {
   const db = await getDb();
   if (!db) return [];
   const breaches = await db.select().from(covenantBreachEvents).where(
-    and14(
-      eq16(covenantBreachEvents.projectId, projectId),
-      eq16(covenantBreachEvents.resolved, false)
+    and15(
+      eq17(covenantBreachEvents.projectId, projectId),
+      eq17(covenantBreachEvents.resolved, false)
     )
   ).orderBy(
-    desc13(covenantBreachEvents.severity),
-    desc13(covenantBreachEvents.breachDate)
+    desc14(covenantBreachEvents.severity),
+    desc14(covenantBreachEvents.breachDate)
   );
   return breaches.map((breach) => ({
     id: breach.id,
@@ -8079,13 +8178,13 @@ async function generateMonthlyReport(params) {
 async function getLatestReport(projectId) {
   const db = await getDb();
   if (!db) return null;
-  const reports = await db.select().from(lenderReports).where(eq16(lenderReports.projectId, projectId)).orderBy(desc13(lenderReports.reportMonth)).limit(1);
+  const reports = await db.select().from(lenderReports).where(eq17(lenderReports.projectId, projectId)).orderBy(desc14(lenderReports.reportMonth)).limit(1);
   return reports[0] || null;
 }
 async function getProjectReports(projectId) {
   const db = await getDb();
   if (!db) return [];
-  return await db.select().from(lenderReports).where(eq16(lenderReports.projectId, projectId)).orderBy(desc13(lenderReports.reportMonth));
+  return await db.select().from(lenderReports).where(eq17(lenderReports.projectId, projectId)).orderBy(desc14(lenderReports.reportMonth));
 }
 async function finalizeReport(params) {
   const db = await getDb();
@@ -8095,7 +8194,7 @@ async function finalizeReport(params) {
     finalizedDate: /* @__PURE__ */ new Date(),
     reportPdfUrl: params.reportPdfUrl || null,
     evidencePackUrl: params.evidencePackUrl || null
-  }).where(eq16(lenderReports.id, params.reportId));
+  }).where(eq17(lenderReports.id, params.reportId));
 }
 async function markReportSent(reportId) {
   const db = await getDb();
@@ -8103,7 +8202,7 @@ async function markReportSent(reportId) {
   await db.update(lenderReports).set({
     status: "sent",
     sentDate: /* @__PURE__ */ new Date()
-  }).where(eq16(lenderReports.id, reportId));
+  }).where(eq17(lenderReports.id, reportId));
 }
 async function getLenderDashboardData(projectId) {
   const db = await getDb();
@@ -8154,7 +8253,7 @@ __export(compliance_exports, {
   updateDisputeStatus: () => updateDisputeStatus,
   withdrawConsent: () => withdrawConsent
 });
-import { eq as eq17, and as and15, desc as desc14, gte as gte11, lte as lte8 } from "drizzle-orm";
+import { eq as eq18, and as and16, desc as desc15, gte as gte12, lte as lte9 } from "drizzle-orm";
 async function createAuditLog2(params) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
@@ -8174,28 +8273,28 @@ async function queryAuditLogs(params) {
   if (!db) return [];
   const conditions = [];
   if (params.userId) {
-    conditions.push(eq17(auditLogs.userId, params.userId));
+    conditions.push(eq18(auditLogs.userId, params.userId));
   }
   if (params.entityType) {
-    conditions.push(eq17(auditLogs.entityType, params.entityType));
+    conditions.push(eq18(auditLogs.entityType, params.entityType));
   }
   if (params.entityId) {
-    conditions.push(eq17(auditLogs.entityId, params.entityId));
+    conditions.push(eq18(auditLogs.entityId, params.entityId));
   }
   if (params.action) {
-    conditions.push(eq17(auditLogs.action, params.action));
+    conditions.push(eq18(auditLogs.action, params.action));
   }
   if (params.startDate) {
-    conditions.push(gte11(auditLogs.createdAt, params.startDate));
+    conditions.push(gte12(auditLogs.createdAt, params.startDate));
   }
   if (params.endDate) {
-    conditions.push(lte8(auditLogs.createdAt, params.endDate));
+    conditions.push(lte9(auditLogs.createdAt, params.endDate));
   }
   let baseQuery = db.select().from(auditLogs);
   if (conditions.length > 0) {
-    baseQuery = baseQuery.where(and15(...conditions));
+    baseQuery = baseQuery.where(and16(...conditions));
   }
-  baseQuery = baseQuery.orderBy(desc14(auditLogs.createdAt));
+  baseQuery = baseQuery.orderBy(desc15(auditLogs.createdAt));
   if (params.limit) {
     baseQuery = baseQuery.limit(params.limit);
   }
@@ -8237,12 +8336,12 @@ async function getActiveOverrides(entityType, entityId) {
   const db = await getDb();
   if (!db) return [];
   return await db.select().from(adminOverrides).where(
-    and15(
-      eq17(adminOverrides.entityType, entityType),
-      eq17(adminOverrides.entityId, entityId),
-      eq17(adminOverrides.revoked, false)
+    and16(
+      eq18(adminOverrides.entityType, entityType),
+      eq18(adminOverrides.entityId, entityId),
+      eq18(adminOverrides.revoked, false)
     )
-  ).orderBy(desc14(adminOverrides.overrideDate));
+  ).orderBy(desc15(adminOverrides.overrideDate));
 }
 async function revokeOverride(params) {
   const db = await getDb();
@@ -8252,7 +8351,7 @@ async function revokeOverride(params) {
     revokedDate: /* @__PURE__ */ new Date(),
     revokedBy: params.revokedBy,
     revocationReason: params.revocationReason
-  }).where(eq17(adminOverrides.id, params.overrideId));
+  }).where(eq18(adminOverrides.id, params.overrideId));
   await createAuditLog2({
     userId: params.revokedBy,
     action: "revoke_override",
@@ -8279,11 +8378,11 @@ async function recordUserConsent(params) {
 async function getUserConsents(userId, consentType) {
   const db = await getDb();
   if (!db) return [];
-  const conditions = [eq17(userConsents.userId, userId)];
+  const conditions = [eq18(userConsents.userId, userId)];
   if (consentType) {
-    conditions.push(eq17(userConsents.consentType, consentType));
+    conditions.push(eq18(userConsents.consentType, consentType));
   }
-  return await db.select().from(userConsents).where(and15(...conditions)).orderBy(desc14(userConsents.createdAt));
+  return await db.select().from(userConsents).where(and16(...conditions)).orderBy(desc15(userConsents.createdAt));
 }
 async function withdrawConsent(consentId) {
   const db = await getDb();
@@ -8291,7 +8390,7 @@ async function withdrawConsent(consentId) {
   await db.update(userConsents).set({
     withdrawn: true,
     withdrawnDate: /* @__PURE__ */ new Date()
-  }).where(eq17(userConsents.id, consentId));
+  }).where(eq18(userConsents.id, consentId));
 }
 async function createCertificateLegalMetadata(params) {
   const db = await getDb();
@@ -8351,21 +8450,21 @@ async function updateDisputeStatus(params) {
   if (params.status === "under_review" || params.status === "investigation") {
     updates.reviewStartDate = /* @__PURE__ */ new Date();
   }
-  await db.update(disputeResolutions).set(updates).where(eq17(disputeResolutions.id, params.disputeId));
+  await db.update(disputeResolutions).set(updates).where(eq18(disputeResolutions.id, params.disputeId));
 }
 async function getUserDisputes(userId, status) {
   const db = await getDb();
   if (!db) return [];
-  const conditions = [eq17(disputeResolutions.raisedBy, userId)];
+  const conditions = [eq18(disputeResolutions.raisedBy, userId)];
   if (status) {
-    conditions.push(eq17(disputeResolutions.status, status));
+    conditions.push(eq18(disputeResolutions.status, status));
   }
-  return await db.select().from(disputeResolutions).where(and15(...conditions)).orderBy(desc14(disputeResolutions.submittedDate));
+  return await db.select().from(disputeResolutions).where(and16(...conditions)).orderBy(desc15(disputeResolutions.submittedDate));
 }
 async function getRetentionPolicy(entityType) {
   const db = await getDb();
   if (!db) return null;
-  const policies = await db.select().from(dataRetentionPolicies).where(eq17(dataRetentionPolicies.entityType, entityType)).limit(1);
+  const policies = await db.select().from(dataRetentionPolicies).where(eq18(dataRetentionPolicies.entityType, entityType)).limit(1);
   return policies[0] || null;
 }
 async function initializeRetentionPolicies() {
@@ -8458,7 +8557,7 @@ __export(complianceReporting_exports, {
   getPlatformMetrics: () => getPlatformMetrics,
   getPreviousQuarter: () => getPreviousQuarter
 });
-import { eq as eq18, and as and16, gte as gte12, lte as lte9, count, desc as desc15 } from "drizzle-orm";
+import { eq as eq19, and as and17, gte as gte13, lte as lte10, count, desc as desc16 } from "drizzle-orm";
 function getCurrentQuarter() {
   const now = /* @__PURE__ */ new Date();
   const year = now.getFullYear();
@@ -8485,38 +8584,38 @@ async function getAuditMetrics(period) {
   const db = await getDb();
   if (!db) return null;
   const totalEvents = await db.select({ count: count() }).from(auditLogs).where(
-    and16(
-      gte12(auditLogs.createdAt, period.startDate),
-      lte9(auditLogs.createdAt, period.endDate)
+    and17(
+      gte13(auditLogs.createdAt, period.startDate),
+      lte10(auditLogs.createdAt, period.endDate)
     )
   );
   const eventsByAction = await db.select({
     action: auditLogs.action,
     count: count()
   }).from(auditLogs).where(
-    and16(
-      gte12(auditLogs.createdAt, period.startDate),
-      lte9(auditLogs.createdAt, period.endDate)
+    and17(
+      gte13(auditLogs.createdAt, period.startDate),
+      lte10(auditLogs.createdAt, period.endDate)
     )
-  ).groupBy(auditLogs.action).orderBy(desc15(count()));
+  ).groupBy(auditLogs.action).orderBy(desc16(count()));
   const eventsByEntity = await db.select({
     entityType: auditLogs.entityType,
     count: count()
   }).from(auditLogs).where(
-    and16(
-      gte12(auditLogs.createdAt, period.startDate),
-      lte9(auditLogs.createdAt, period.endDate)
+    and17(
+      gte13(auditLogs.createdAt, period.startDate),
+      lte10(auditLogs.createdAt, period.endDate)
     )
-  ).groupBy(auditLogs.entityType).orderBy(desc15(count()));
+  ).groupBy(auditLogs.entityType).orderBy(desc16(count()));
   const activeUsers = await db.select({
     userId: auditLogs.userId,
     count: count()
   }).from(auditLogs).where(
-    and16(
-      gte12(auditLogs.createdAt, period.startDate),
-      lte9(auditLogs.createdAt, period.endDate)
+    and17(
+      gte13(auditLogs.createdAt, period.startDate),
+      lte10(auditLogs.createdAt, period.endDate)
     )
-  ).groupBy(auditLogs.userId).orderBy(desc15(count())).limit(10);
+  ).groupBy(auditLogs.userId).orderBy(desc16(count())).limit(10);
   return {
     totalEvents: totalEvents[0]?.count || 0,
     eventsByAction,
@@ -8528,52 +8627,52 @@ async function getOverrideMetrics(period) {
   const db = await getDb();
   if (!db) return null;
   const totalOverrides = await db.select({ count: count() }).from(adminOverrides).where(
-    and16(
-      gte12(adminOverrides.overrideDate, period.startDate),
-      lte9(adminOverrides.overrideDate, period.endDate)
+    and17(
+      gte13(adminOverrides.overrideDate, period.startDate),
+      lte10(adminOverrides.overrideDate, period.endDate)
     )
   );
   const overridesByType = await db.select({
     overrideType: adminOverrides.overrideType,
     count: count()
   }).from(adminOverrides).where(
-    and16(
-      gte12(adminOverrides.overrideDate, period.startDate),
-      lte9(adminOverrides.overrideDate, period.endDate)
+    and17(
+      gte13(adminOverrides.overrideDate, period.startDate),
+      lte10(adminOverrides.overrideDate, period.endDate)
     )
-  ).groupBy(adminOverrides.overrideType).orderBy(desc15(count()));
+  ).groupBy(adminOverrides.overrideType).orderBy(desc16(count()));
   const activeOverrides = await db.select({ count: count() }).from(adminOverrides).where(
-    and16(
-      gte12(adminOverrides.overrideDate, period.startDate),
-      lte9(adminOverrides.overrideDate, period.endDate),
-      eq18(adminOverrides.revoked, false)
+    and17(
+      gte13(adminOverrides.overrideDate, period.startDate),
+      lte10(adminOverrides.overrideDate, period.endDate),
+      eq19(adminOverrides.revoked, false)
     )
   );
   const revokedOverrides = await db.select({ count: count() }).from(adminOverrides).where(
-    and16(
-      gte12(adminOverrides.overrideDate, period.startDate),
-      lte9(adminOverrides.overrideDate, period.endDate),
-      eq18(adminOverrides.revoked, true)
+    and17(
+      gte13(adminOverrides.overrideDate, period.startDate),
+      lte10(adminOverrides.overrideDate, period.endDate),
+      eq19(adminOverrides.revoked, true)
     )
   );
   const overridesByEntity = await db.select({
     entityType: adminOverrides.entityType,
     count: count()
   }).from(adminOverrides).where(
-    and16(
-      gte12(adminOverrides.overrideDate, period.startDate),
-      lte9(adminOverrides.overrideDate, period.endDate)
+    and17(
+      gte13(adminOverrides.overrideDate, period.startDate),
+      lte10(adminOverrides.overrideDate, period.endDate)
     )
-  ).groupBy(adminOverrides.entityType).orderBy(desc15(count()));
+  ).groupBy(adminOverrides.entityType).orderBy(desc16(count()));
   const topRequesters = await db.select({
     requestedBy: adminOverrides.requestedBy,
     count: count()
   }).from(adminOverrides).where(
-    and16(
-      gte12(adminOverrides.overrideDate, period.startDate),
-      lte9(adminOverrides.overrideDate, period.endDate)
+    and17(
+      gte13(adminOverrides.overrideDate, period.startDate),
+      lte10(adminOverrides.overrideDate, period.endDate)
     )
-  ).groupBy(adminOverrides.requestedBy).orderBy(desc15(count())).limit(10);
+  ).groupBy(adminOverrides.requestedBy).orderBy(desc16(count())).limit(10);
   return {
     totalOverrides: totalOverrides[0]?.count || 0,
     activeOverrides: activeOverrides[0]?.count || 0,
@@ -8587,9 +8686,9 @@ async function getConsentMetrics(period) {
   const db = await getDb();
   if (!db) return null;
   const totalConsents = await db.select({ count: count() }).from(userConsents).where(
-    and16(
-      gte12(userConsents.createdAt, period.startDate),
-      lte9(userConsents.createdAt, period.endDate)
+    and17(
+      gte13(userConsents.createdAt, period.startDate),
+      lte10(userConsents.createdAt, period.endDate)
     )
   );
   const consentsByType = await db.select({
@@ -8597,28 +8696,28 @@ async function getConsentMetrics(period) {
     granted: userConsents.granted,
     count: count()
   }).from(userConsents).where(
-    and16(
-      gte12(userConsents.createdAt, period.startDate),
-      lte9(userConsents.createdAt, period.endDate)
+    and17(
+      gte13(userConsents.createdAt, period.startDate),
+      lte10(userConsents.createdAt, period.endDate)
     )
   ).groupBy(userConsents.consentType, userConsents.granted);
   const withdrawals = await db.select({ count: count() }).from(userConsents).where(
-    and16(
-      gte12(userConsents.withdrawnDate, period.startDate),
-      lte9(userConsents.withdrawnDate, period.endDate),
-      eq18(userConsents.withdrawn, true)
+    and17(
+      gte13(userConsents.withdrawnDate, period.startDate),
+      lte10(userConsents.withdrawnDate, period.endDate),
+      eq19(userConsents.withdrawn, true)
     )
   );
   const withdrawalsByType = await db.select({
     consentType: userConsents.consentType,
     count: count()
   }).from(userConsents).where(
-    and16(
-      gte12(userConsents.withdrawnDate, period.startDate),
-      lte9(userConsents.withdrawnDate, period.endDate),
-      eq18(userConsents.withdrawn, true)
+    and17(
+      gte13(userConsents.withdrawnDate, period.startDate),
+      lte10(userConsents.withdrawnDate, period.endDate),
+      eq19(userConsents.withdrawn, true)
     )
-  ).groupBy(userConsents.consentType).orderBy(desc15(count()));
+  ).groupBy(userConsents.consentType).orderBy(desc16(count()));
   return {
     totalConsents: totalConsents[0]?.count || 0,
     consentsByType,
@@ -8630,54 +8729,54 @@ async function getDisputeMetrics(period) {
   const db = await getDb();
   if (!db) return null;
   const totalDisputes = await db.select({ count: count() }).from(disputeResolutions).where(
-    and16(
-      gte12(disputeResolutions.submittedDate, period.startDate),
-      lte9(disputeResolutions.submittedDate, period.endDate)
+    and17(
+      gte13(disputeResolutions.submittedDate, period.startDate),
+      lte10(disputeResolutions.submittedDate, period.endDate)
     )
   );
   const disputesByType = await db.select({
     disputeType: disputeResolutions.disputeType,
     count: count()
   }).from(disputeResolutions).where(
-    and16(
-      gte12(disputeResolutions.submittedDate, period.startDate),
-      lte9(disputeResolutions.submittedDate, period.endDate)
+    and17(
+      gte13(disputeResolutions.submittedDate, period.startDate),
+      lte10(disputeResolutions.submittedDate, period.endDate)
     )
-  ).groupBy(disputeResolutions.disputeType).orderBy(desc15(count()));
+  ).groupBy(disputeResolutions.disputeType).orderBy(desc16(count()));
   const disputesByStatus = await db.select({
     status: disputeResolutions.status,
     count: count()
   }).from(disputeResolutions).where(
-    and16(
-      gte12(disputeResolutions.submittedDate, period.startDate),
-      lte9(disputeResolutions.submittedDate, period.endDate)
+    and17(
+      gte13(disputeResolutions.submittedDate, period.startDate),
+      lte10(disputeResolutions.submittedDate, period.endDate)
     )
-  ).groupBy(disputeResolutions.status).orderBy(desc15(count()));
+  ).groupBy(disputeResolutions.status).orderBy(desc16(count()));
   const resolvedDisputes = await db.select({ count: count() }).from(disputeResolutions).where(
-    and16(
-      gte12(disputeResolutions.resolutionDate, period.startDate),
-      lte9(disputeResolutions.resolutionDate, period.endDate),
-      eq18(disputeResolutions.status, "resolved")
+    and17(
+      gte13(disputeResolutions.resolutionDate, period.startDate),
+      lte10(disputeResolutions.resolutionDate, period.endDate),
+      eq19(disputeResolutions.status, "resolved")
     )
   );
   const resolutionOutcomes = await db.select({
     outcome: disputeResolutions.resolutionOutcome,
     count: count()
   }).from(disputeResolutions).where(
-    and16(
-      gte12(disputeResolutions.resolutionDate, period.startDate),
-      lte9(disputeResolutions.resolutionDate, period.endDate),
-      eq18(disputeResolutions.status, "resolved")
+    and17(
+      gte13(disputeResolutions.resolutionDate, period.startDate),
+      lte10(disputeResolutions.resolutionDate, period.endDate),
+      eq19(disputeResolutions.status, "resolved")
     )
-  ).groupBy(disputeResolutions.resolutionOutcome).orderBy(desc15(count()));
+  ).groupBy(disputeResolutions.resolutionOutcome).orderBy(desc16(count()));
   const resolvedWithTimes = await db.select({
     submittedDate: disputeResolutions.submittedDate,
     resolutionDate: disputeResolutions.resolutionDate
   }).from(disputeResolutions).where(
-    and16(
-      gte12(disputeResolutions.resolutionDate, period.startDate),
-      lte9(disputeResolutions.resolutionDate, period.endDate),
-      eq18(disputeResolutions.status, "resolved")
+    and17(
+      gte13(disputeResolutions.resolutionDate, period.startDate),
+      lte10(disputeResolutions.resolutionDate, period.endDate),
+      eq19(disputeResolutions.status, "resolved")
     )
   );
   let avgResolutionDays = 0;
@@ -8701,37 +8800,37 @@ async function getCertificateMetrics(period) {
   const db = await getDb();
   if (!db) return null;
   const totalCertificates = await db.select({ count: count() }).from(certificates).where(
-    and16(
-      gte12(certificates.issuedDate, period.startDate),
-      lte9(certificates.issuedDate, period.endDate)
+    and17(
+      gte13(certificates.issuedDate, period.startDate),
+      lte10(certificates.issuedDate, period.endDate)
     )
   );
   const certificatesByType = await db.select({
     type: certificates.type,
     count: count()
   }).from(certificates).where(
-    and16(
-      gte12(certificates.issuedDate, period.startDate),
-      lte9(certificates.issuedDate, period.endDate)
+    and17(
+      gte13(certificates.issuedDate, period.startDate),
+      lte10(certificates.issuedDate, period.endDate)
     )
-  ).groupBy(certificates.type).orderBy(desc15(count()));
+  ).groupBy(certificates.type).orderBy(desc16(count()));
   const certificatesByStatus = await db.select({
     status: certificates.status,
     count: count()
   }).from(certificates).where(
-    and16(
-      gte12(certificates.issuedDate, period.startDate),
-      lte9(certificates.issuedDate, period.endDate)
+    and17(
+      gte13(certificates.issuedDate, period.startDate),
+      lte10(certificates.issuedDate, period.endDate)
     )
-  ).groupBy(certificates.status).orderBy(desc15(count()));
+  ).groupBy(certificates.status).orderBy(desc16(count()));
   const expiringSoon = await db.select({ count: count() }).from(certificates).where(
-    and16(
-      gte12(certificates.expiryDate, period.endDate),
-      lte9(
+    and17(
+      gte13(certificates.expiryDate, period.endDate),
+      lte10(
         certificates.expiryDate,
         new Date(period.endDate.getTime() + 30 * 24 * 60 * 60 * 1e3)
       ),
-      eq18(certificates.status, "active")
+      eq19(certificates.status, "active")
     )
   );
   return {
@@ -8745,18 +8844,18 @@ async function getPlatformMetrics(period) {
   const db = await getDb();
   if (!db) return null;
   const newUsers = await db.select({ count: count() }).from(users).where(
-    and16(
-      gte12(users.createdAt, period.startDate),
-      lte9(users.createdAt, period.endDate)
+    and17(
+      gte13(users.createdAt, period.startDate),
+      lte10(users.createdAt, period.endDate)
     )
   );
   const newFeedstocks = await db.select({ count: count() }).from(feedstocks).where(
-    and16(
-      gte12(feedstocks.createdAt, period.startDate),
-      lte9(feedstocks.createdAt, period.endDate)
+    and17(
+      gte13(feedstocks.createdAt, period.startDate),
+      lte10(feedstocks.createdAt, period.endDate)
     )
   );
-  const activeFeedstocks = await db.select({ count: count() }).from(feedstocks).where(eq18(feedstocks.status, "active"));
+  const activeFeedstocks = await db.select({ count: count() }).from(feedstocks).where(eq19(feedstocks.status, "active"));
   return {
     newUsers: newUsers[0]?.count || 0,
     newFeedstocks: newFeedstocks[0]?.count || 0,
@@ -16795,10 +16894,346 @@ var pricesRouter = router({
   })
 });
 
-// server/routers.ts
-init_db();
+// server/policyRouter.ts
 import { z as z13 } from "zod";
 import { TRPCError as TRPCError15 } from "@trpc/server";
+init_db();
+init_schema();
+import { eq as eq14, desc as desc12, gte as gte9, lte as lte6, and as and12, sql as sql13 } from "drizzle-orm";
+async function requireDb6() {
+  const db = await getDb();
+  if (!db) {
+    throw new TRPCError15({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Database not available"
+    });
+  }
+  return db;
+}
+function getMockKPIs2() {
+  return [
+    { label: "Active Policies", value: 12, subtitle: "Across all jurisdictions" },
+    { label: "Under Review", value: 5, subtitle: "Expected decisions in 2025" },
+    { label: "ACCU Price", value: 34.5, subtitle: "Current spot price" },
+    { label: "Consultations Open", value: 3, subtitle: "Submissions closing soon" }
+  ];
+}
+function getMockTimeline(year) {
+  const events = [
+    { jurisdiction: "Federal", date: `${year}-01-15`, event_type: "enacted", title: "Safeguard Mechanism Reform Act" },
+    { jurisdiction: "NSW", date: `${year}-02-01`, event_type: "consultation_open", title: "Renewable Fuel Standard Consultation" },
+    { jurisdiction: "QLD", date: `${year}-03-10`, event_type: "expected_decision", title: "Biofuel Mandate Review" },
+    { jurisdiction: "VIC", date: `${year}-04-20`, event_type: "enacted", title: "Zero Emissions Vehicle Roadmap" },
+    { jurisdiction: "Federal", date: `${year}-05-15`, event_type: "consultation_open", title: "National Biofuels Strategy" },
+    { jurisdiction: "SA", date: `${year}-06-01`, event_type: "expected_decision", title: "Green Hydrogen Action Plan" },
+    { jurisdiction: "WA", date: `${year}-07-01`, event_type: "enacted", title: "Renewable Energy Buyback Scheme" },
+    { jurisdiction: "Federal", date: `${year}-09-01`, event_type: "expected_decision", title: "Sustainable Aviation Fuel Mandate" },
+    { jurisdiction: "NSW", date: `${year}-10-15`, event_type: "enacted", title: "Electric Vehicle Strategy Update" },
+    { jurisdiction: "QLD", date: `${year}-11-01`, event_type: "consultation_open", title: "Waste-to-Energy Policy Framework" }
+  ];
+  return events;
+}
+function getMockKanban() {
+  return {
+    proposed: [
+      { id: "p1", title: "National B10 Mandate", jurisdiction: "Federal", policy_type: "mandate", status: "proposed" },
+      { id: "p2", title: "SAF Production Incentive", jurisdiction: "Federal", policy_type: "incentive", status: "proposed" },
+      { id: "p3", title: "Biogas Feed-in Tariff", jurisdiction: "VIC", policy_type: "tariff", status: "proposed" }
+    ],
+    review: [
+      { id: "r1", title: "Renewable Fuel Standard", jurisdiction: "NSW", policy_type: "standard", status: "review" },
+      { id: "r2", title: "Biofuel Mandate 2025", jurisdiction: "QLD", policy_type: "mandate", status: "review" }
+    ],
+    enacted: [
+      { id: "e1", title: "Safeguard Mechanism", jurisdiction: "Federal", policy_type: "regulation", status: "enacted" },
+      { id: "e2", title: "Renewable Energy Target", jurisdiction: "Federal", policy_type: "target", status: "enacted" },
+      { id: "e3", title: "E10 Mandate", jurisdiction: "NSW", policy_type: "mandate", status: "enacted" },
+      { id: "e4", title: "E10 Mandate", jurisdiction: "QLD", policy_type: "mandate", status: "enacted" }
+    ]
+  };
+}
+function getMockMandateScenarios() {
+  return [
+    { name: "Current State", mandate_level: "B2", revenue_impact: 12e6 },
+    { name: "B5 Scenario", mandate_level: "B5", revenue_impact: 28e6 },
+    { name: "B10 Scenario", mandate_level: "B10", revenue_impact: 55e6 },
+    { name: "B20 Scenario", mandate_level: "B20", revenue_impact: 105e6 }
+  ];
+}
+function getMockOfftakeMarket() {
+  return [
+    { offtaker: "Qantas Group", mandate: "SAF Commitment 2030", volume: "100ML/year", term: "10 years", premium: "+15%" },
+    { offtaker: "BP Australia", mandate: "B20 Supply", volume: "50ML/year", term: "5 years", premium: "+8%" },
+    { offtaker: "Ampol", mandate: "Renewable Diesel", volume: "200ML/year", term: "7 years", premium: "+12%" },
+    { offtaker: "Viva Energy", mandate: "Biodiesel Blend", volume: "75ML/year", term: "5 years", premium: "+10%" },
+    { offtaker: "Shell Australia", mandate: "SAF Partnership", volume: "150ML/year", term: "8 years", premium: "+18%" }
+  ];
+}
+function getMockACCUPrice() {
+  return {
+    price: 34.5,
+    currency: "AUD",
+    unit: "tCO2e",
+    change: 1.25,
+    change_pct: 3.8,
+    source: "Clean Energy Regulator",
+    as_of_date: (/* @__PURE__ */ new Date()).toISOString().split("T")[0]
+  };
+}
+function getMockConsultations() {
+  const now = /* @__PURE__ */ new Date();
+  return [
+    {
+      id: "c1",
+      title: "National Biofuels Strategy Consultation",
+      jurisdiction: "Federal",
+      opens: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1e3).toISOString().split("T")[0],
+      closes: new Date(now.getTime() + 15 * 24 * 60 * 60 * 1e3).toISOString().split("T")[0],
+      days_remaining: 15,
+      relevance: "high",
+      submission_url: "https://consult.industry.gov.au/biofuels"
+    },
+    {
+      id: "c2",
+      title: "Renewable Fuel Standard Review",
+      jurisdiction: "NSW",
+      opens: new Date(now.getTime() - 14 * 24 * 60 * 60 * 1e3).toISOString().split("T")[0],
+      closes: new Date(now.getTime() + 30 * 24 * 60 * 60 * 1e3).toISOString().split("T")[0],
+      days_remaining: 30,
+      relevance: "high",
+      submission_url: "https://haveyoursay.nsw.gov.au/renewable-fuel"
+    },
+    {
+      id: "c3",
+      title: "Waste-to-Energy Framework",
+      jurisdiction: "QLD",
+      opens: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1e3).toISOString().split("T")[0],
+      closes: new Date(now.getTime() + 45 * 24 * 60 * 60 * 1e3).toISOString().split("T")[0],
+      days_remaining: 45,
+      relevance: "medium",
+      submission_url: "https://www.qld.gov.au/waste-to-energy"
+    }
+  ];
+}
+var policyRouter = router({
+  /**
+   * Get policy KPIs
+   */
+  getKPIs: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb6();
+      const [enacted] = await db.select({ count: sql13`count(*)` }).from(policyKanbanItems).where(eq14(policyKanbanItems.status, "enacted"));
+      const [review] = await db.select({ count: sql13`count(*)` }).from(policyKanbanItems).where(eq14(policyKanbanItems.status, "review"));
+      const [latestAccu] = await db.select().from(accuPriceHistory).orderBy(desc12(accuPriceHistory.date)).limit(1);
+      const now = /* @__PURE__ */ new Date();
+      const [consultations] = await db.select({ count: sql13`count(*)` }).from(policyConsultations).where(gte9(policyConsultations.closes, now));
+      if (!latestAccu && enacted.count === 0) {
+        return getMockKPIs2();
+      }
+      return [
+        { label: "Active Policies", value: enacted.count || 0, subtitle: "Across all jurisdictions" },
+        { label: "Under Review", value: review.count || 0, subtitle: "Expected decisions in 2025" },
+        { label: "ACCU Price", value: latestAccu ? parseFloat(latestAccu.price) : 34.5, subtitle: "Current spot price" },
+        { label: "Consultations Open", value: consultations.count || 0, subtitle: "Submissions closing soon" }
+      ];
+    } catch (error) {
+      console.error("Failed to get policy KPIs:", error);
+      return getMockKPIs2();
+    }
+  }),
+  /**
+   * Get policy timeline events
+   */
+  getTimeline: publicProcedure.input(z13.object({ year: z13.number().default(2025) })).query(async ({ input }) => {
+    try {
+      const db = await requireDb6();
+      const startDate = new Date(input.year, 0, 1);
+      const endDate = new Date(input.year, 11, 31);
+      const events = await db.select().from(policyTimelineEvents).where(and12(gte9(policyTimelineEvents.date, startDate), lte6(policyTimelineEvents.date, endDate))).orderBy(policyTimelineEvents.date);
+      if (events.length === 0) {
+        return getMockTimeline(input.year);
+      }
+      return events.map((e) => ({
+        jurisdiction: e.jurisdiction,
+        date: e.date instanceof Date ? e.date.toISOString().split("T")[0] : String(e.date),
+        event_type: e.eventType,
+        title: e.title,
+        policy_id: e.policyId
+      }));
+    } catch (error) {
+      console.error("Failed to get timeline:", error);
+      return getMockTimeline(input.year);
+    }
+  }),
+  /**
+   * Get policy kanban board
+   */
+  getKanban: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb6();
+      const items = await db.select().from(policyKanbanItems);
+      if (items.length === 0) {
+        return getMockKanban();
+      }
+      const proposed = items.filter((i) => i.status === "proposed").map((i) => ({
+        id: String(i.id),
+        title: i.title,
+        jurisdiction: i.jurisdiction,
+        policy_type: i.policyType,
+        status: i.status,
+        summary: i.summary
+      }));
+      const review = items.filter((i) => i.status === "review").map((i) => ({
+        id: String(i.id),
+        title: i.title,
+        jurisdiction: i.jurisdiction,
+        policy_type: i.policyType,
+        status: i.status,
+        summary: i.summary
+      }));
+      const enacted = items.filter((i) => i.status === "enacted").map((i) => ({
+        id: String(i.id),
+        title: i.title,
+        jurisdiction: i.jurisdiction,
+        policy_type: i.policyType,
+        status: i.status,
+        summary: i.summary
+      }));
+      return { proposed, review, enacted };
+    } catch (error) {
+      console.error("Failed to get kanban:", error);
+      return getMockKanban();
+    }
+  }),
+  /**
+   * Get mandate scenarios
+   */
+  getMandateScenarios: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb6();
+      const scenarios = await db.select().from(mandateScenarios);
+      if (scenarios.length === 0) {
+        return getMockMandateScenarios();
+      }
+      return scenarios.map((s) => ({
+        name: s.name,
+        mandate_level: s.mandateLevel,
+        revenue_impact: parseFloat(s.revenueImpact)
+      }));
+    } catch (error) {
+      console.error("Failed to get mandate scenarios:", error);
+      return getMockMandateScenarios();
+    }
+  }),
+  /**
+   * Get offtake market data
+   */
+  getOfftakeMarket: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb6();
+      const agreements = await db.select().from(offtakeAgreements).where(eq14(offtakeAgreements.isActive, true));
+      if (agreements.length === 0) {
+        return getMockOfftakeMarket();
+      }
+      return agreements.map((a) => ({
+        offtaker: a.offtaker,
+        mandate: a.mandate,
+        volume: a.volume,
+        term: a.term,
+        premium: a.premium
+      }));
+    } catch (error) {
+      console.error("Failed to get offtake market:", error);
+      return getMockOfftakeMarket();
+    }
+  }),
+  /**
+   * Get current ACCU price
+   */
+  getACCUPrice: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb6();
+      const [latest] = await db.select().from(accuPriceHistory).orderBy(desc12(accuPriceHistory.date)).limit(1);
+      if (!latest) {
+        return getMockACCUPrice();
+      }
+      return {
+        price: parseFloat(latest.price),
+        currency: "AUD",
+        unit: "tCO2e",
+        change: parseFloat(latest.change),
+        change_pct: parseFloat(latest.changePct),
+        source: latest.source || "Clean Energy Regulator",
+        as_of_date: latest.date instanceof Date ? latest.date.toISOString().split("T")[0] : String(latest.date)
+      };
+    } catch (error) {
+      console.error("Failed to get ACCU price:", error);
+      return getMockACCUPrice();
+    }
+  }),
+  /**
+   * Calculate carbon revenue
+   */
+  calculateCarbon: publicProcedure.input(
+    z13.object({
+      project_type: z13.string(),
+      annual_output_tonnes: z13.number(),
+      emission_factor: z13.number(),
+      baseline_year: z13.number(),
+      carbon_price: z13.number()
+    })
+  ).mutation(async ({ input }) => {
+    const accuCredits = Math.round(input.annual_output_tonnes * input.emission_factor);
+    const accuRevenue = accuCredits * input.carbon_price;
+    const safeguardBenefit = Math.round(accuRevenue * 0.15);
+    const totalAnnualRevenue = accuRevenue + safeguardBenefit;
+    const sensitivityLow = Math.round(totalAnnualRevenue * 0.8);
+    const sensitivityHigh = Math.round(totalAnnualRevenue * 1.2);
+    return {
+      accu_credits: accuCredits,
+      accu_revenue: Math.round(accuRevenue),
+      safeguard_benefit: safeguardBenefit,
+      total_annual_revenue: Math.round(totalAnnualRevenue),
+      sensitivity_low: sensitivityLow,
+      sensitivity_high: sensitivityHigh
+    };
+  }),
+  /**
+   * Get open consultations
+   */
+  getConsultations: publicProcedure.query(async () => {
+    try {
+      const db = await requireDb6();
+      const now = /* @__PURE__ */ new Date();
+      const consultations = await db.select().from(policyConsultations).where(gte9(policyConsultations.closes, now)).orderBy(policyConsultations.closes);
+      if (consultations.length === 0) {
+        return getMockConsultations();
+      }
+      return consultations.map((c) => {
+        const closes = c.closes instanceof Date ? c.closes : new Date(c.closes);
+        const daysRemaining = Math.ceil((closes.getTime() - now.getTime()) / (1e3 * 60 * 60 * 24));
+        return {
+          id: String(c.id),
+          title: c.title,
+          jurisdiction: c.jurisdiction,
+          opens: c.opens instanceof Date ? c.opens.toISOString().split("T")[0] : String(c.opens),
+          closes: closes.toISOString().split("T")[0],
+          days_remaining: daysRemaining,
+          relevance: c.relevance,
+          submission_url: c.submissionUrl
+        };
+      });
+    } catch (error) {
+      console.error("Failed to get consultations:", error);
+      return getMockConsultations();
+    }
+  })
+});
+
+// server/routers.ts
+init_db();
+import { z as z14 } from "zod";
+import { TRPCError as TRPCError16 } from "@trpc/server";
 
 // server/rating.ts
 function calculateAbfiScore(feedstock, certificates2, qualityTests2, transactions2) {
@@ -17304,7 +17739,7 @@ async function lookupABN(abn) {
 var supplierProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   const supplier = await getSupplierByUserId(ctx.user.id);
   if (!supplier) {
-    throw new TRPCError15({
+    throw new TRPCError16({
       code: "FORBIDDEN",
       message: "Supplier profile required"
     });
@@ -17314,7 +17749,7 @@ var supplierProcedure = protectedProcedure.use(async ({ ctx, next }) => {
 var buyerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   const buyer = await getBuyerByUserId(ctx.user.id);
   if (!buyer) {
-    throw new TRPCError15({
+    throw new TRPCError16({
       code: "FORBIDDEN",
       message: "Buyer profile required"
     });
@@ -17323,7 +17758,7 @@ var buyerProcedure = protectedProcedure.use(async ({ ctx, next }) => {
 });
 var adminProcedure5 = protectedProcedure.use(async ({ ctx, next }) => {
   if (ctx.user.role !== "admin") {
-    throw new TRPCError15({
+    throw new TRPCError16({
       code: "FORBIDDEN",
       message: "Admin access required"
     });
@@ -17347,21 +17782,22 @@ var appRouter = router({
   stealth: stealthRouter,
   sentiment: sentimentRouter,
   prices: pricesRouter,
+  policy: policyRouter,
   // ============================================================================
   // AUDIT & COMPLIANCE (Phase 8)
   // ============================================================================
   audit: router({
     // Get audit logs with filtering
     getLogs: adminProcedure5.input(
-      z13.object({
-        userId: z13.number().optional(),
-        entityType: z13.string().optional(),
-        entityId: z13.number().optional(),
-        action: z13.string().optional(),
-        startDate: z13.string().optional(),
-        endDate: z13.string().optional(),
-        limit: z13.number().min(1).max(500).default(100),
-        offset: z13.number().min(0).default(0)
+      z14.object({
+        userId: z14.number().optional(),
+        entityType: z14.string().optional(),
+        entityId: z14.number().optional(),
+        action: z14.string().optional(),
+        startDate: z14.string().optional(),
+        endDate: z14.string().optional(),
+        limit: z14.number().min(1).max(500).default(100),
+        offset: z14.number().min(0).default(0)
       })
     ).query(async ({ input }) => {
       const logs = await getAuditLogs({
@@ -17396,11 +17832,11 @@ var appRouter = router({
     }),
     // Create manual audit log entry (for admin actions)
     create: adminProcedure5.input(
-      z13.object({
-        action: z13.string(),
-        entityType: z13.string(),
-        entityId: z13.number(),
-        changes: z13.record(z13.string(), z13.any()).optional()
+      z14.object({
+        action: z14.string(),
+        entityType: z14.string(),
+        entityId: z14.number(),
+        changes: z14.record(z14.string(), z14.any()).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       await createAuditLog({
@@ -17414,9 +17850,9 @@ var appRouter = router({
     }),
     // Get entity history (all changes to a specific entity)
     getEntityHistory: protectedProcedure.input(
-      z13.object({
-        entityType: z13.string(),
-        entityId: z13.number()
+      z14.object({
+        entityType: z14.string(),
+        entityId: z14.number()
       })
     ).query(async ({ input }) => {
       return await getAuditLogs({
@@ -17426,7 +17862,7 @@ var appRouter = router({
       });
     }),
     // Get user activity
-    getUserActivity: adminProcedure5.input(z13.object({ userId: z13.number(), limit: z13.number().default(50) })).query(async ({ input }) => {
+    getUserActivity: adminProcedure5.input(z14.object({ userId: z14.number(), limit: z14.number().default(50) })).query(async ({ input }) => {
       return await getAuditLogs({
         userId: input.userId,
         limit: input.limit
@@ -17440,7 +17876,7 @@ var appRouter = router({
   // UTILITIES
   // ============================================================================
   utils: router({
-    validateABN: publicProcedure.input(z13.object({ abn: z13.string().length(11) })).query(async ({ input }) => {
+    validateABN: publicProcedure.input(z14.object({ abn: z14.string().length(11) })).query(async ({ input }) => {
       const result = await lookupABN(input.abn);
       return result;
     })
@@ -17469,49 +17905,49 @@ var appRouter = router({
     get: protectedProcedure.query(async ({ ctx }) => {
       const supplier = await getSupplierByUserId(ctx.user.id);
       if (!supplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Supplier profile not found"
         });
       }
       return supplier;
     }),
-    getById: protectedProcedure.input(z13.object({ id: z13.number() })).query(async ({ input }) => {
+    getById: protectedProcedure.input(z14.object({ id: z14.number() })).query(async ({ input }) => {
       return await getSupplierById(input.id);
     }),
     create: protectedProcedure.input(
-      z13.object({
-        abn: z13.string().length(11),
-        companyName: z13.string().min(1),
-        contactEmail: z13.string().email(),
-        contactPhone: z13.string().optional(),
-        addressLine1: z13.string().optional(),
-        addressLine2: z13.string().optional(),
-        city: z13.string().optional(),
-        state: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
-        postcode: z13.string().optional(),
-        latitude: z13.string().optional(),
-        longitude: z13.string().optional(),
-        description: z13.string().optional(),
-        website: z13.string().optional()
+      z14.object({
+        abn: z14.string().length(11),
+        companyName: z14.string().min(1),
+        contactEmail: z14.string().email(),
+        contactPhone: z14.string().optional(),
+        addressLine1: z14.string().optional(),
+        addressLine2: z14.string().optional(),
+        city: z14.string().optional(),
+        state: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+        postcode: z14.string().optional(),
+        latitude: z14.string().optional(),
+        longitude: z14.string().optional(),
+        description: z14.string().optional(),
+        website: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       if (!validateABN(input.abn)) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "Invalid ABN"
         });
       }
       const existing = await getSupplierByABN(input.abn);
       if (existing) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "ABN already registered"
         });
       }
       const existingSupplier = await getSupplierByUserId(ctx.user.id);
       if (existingSupplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "Supplier profile already exists"
         });
@@ -17530,19 +17966,19 @@ var appRouter = router({
       return { supplierId };
     }),
     update: supplierProcedure.input(
-      z13.object({
-        companyName: z13.string().min(1).optional(),
-        contactEmail: z13.string().email().optional(),
-        contactPhone: z13.string().optional(),
-        addressLine1: z13.string().optional(),
-        addressLine2: z13.string().optional(),
-        city: z13.string().optional(),
-        state: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
-        postcode: z13.string().optional(),
-        latitude: z13.string().optional(),
-        longitude: z13.string().optional(),
-        description: z13.string().optional(),
-        website: z13.string().optional()
+      z14.object({
+        companyName: z14.string().min(1).optional(),
+        contactEmail: z14.string().email().optional(),
+        contactPhone: z14.string().optional(),
+        addressLine1: z14.string().optional(),
+        addressLine2: z14.string().optional(),
+        city: z14.string().optional(),
+        state: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+        postcode: z14.string().optional(),
+        latitude: z14.string().optional(),
+        longitude: z14.string().optional(),
+        description: z14.string().optional(),
+        website: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       await updateSupplier(ctx.supplier.id, input);
@@ -17559,54 +17995,54 @@ var appRouter = router({
     }),
     // Comprehensive producer registration (7-step flow)
     registerProducer: protectedProcedure.input(
-      z13.object({
+      z14.object({
         // Account Setup
-        abn: z13.string().length(11),
-        companyName: z13.string().min(1),
-        tradingName: z13.string().optional(),
-        contactEmail: z13.string().email(),
-        contactPhone: z13.string().optional(),
-        website: z13.string().optional(),
+        abn: z14.string().length(11),
+        companyName: z14.string().min(1),
+        tradingName: z14.string().optional(),
+        contactEmail: z14.string().email(),
+        contactPhone: z14.string().optional(),
+        website: z14.string().optional(),
         // Property Details
-        properties: z13.array(
-          z13.object({
-            propertyName: z13.string(),
-            primaryAddress: z13.string().optional(),
-            latitude: z13.string().optional(),
-            longitude: z13.string().optional(),
-            state: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
-            postcode: z13.string().optional(),
-            region: z13.string().optional(),
-            totalLandArea: z13.number().optional(),
-            cultivatedArea: z13.number().optional()
+        properties: z14.array(
+          z14.object({
+            propertyName: z14.string(),
+            primaryAddress: z14.string().optional(),
+            latitude: z14.string().optional(),
+            longitude: z14.string().optional(),
+            state: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+            postcode: z14.string().optional(),
+            region: z14.string().optional(),
+            totalLandArea: z14.number().optional(),
+            cultivatedArea: z14.number().optional()
           })
         ).optional(),
         // Production Profile
-        feedstockTypes: z13.array(z13.string()).optional(),
-        annualProduction: z13.number().optional(),
+        feedstockTypes: z14.array(z14.string()).optional(),
+        annualProduction: z14.number().optional(),
         // Visibility preferences
-        profilePublic: z13.boolean().default(true),
-        showContactDetails: z13.boolean().default(false),
-        showExactLocation: z13.boolean().default(false),
-        allowDirectInquiries: z13.boolean().default(true)
+        profilePublic: z14.boolean().default(true),
+        showContactDetails: z14.boolean().default(false),
+        showExactLocation: z14.boolean().default(false),
+        allowDirectInquiries: z14.boolean().default(true)
       })
     ).mutation(async ({ ctx, input }) => {
       if (!validateABN(input.abn)) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "Invalid ABN"
         });
       }
       const existing = await getSupplierByABN(input.abn);
       if (existing) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "ABN already registered"
         });
       }
       const existingSupplier = await getSupplierByUserId(ctx.user.id);
       if (existingSupplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "Supplier profile already exists"
         });
@@ -17642,29 +18078,29 @@ var appRouter = router({
   // ============================================================================
   buyers: router({
     create: protectedProcedure.input(
-      z13.object({
-        abn: z13.string().length(11),
-        companyName: z13.string().min(1),
-        contactEmail: z13.string().email(),
-        contactPhone: z13.string().optional(),
-        facilityName: z13.string().optional(),
-        facilityAddress: z13.string().optional(),
-        facilityLatitude: z13.string().optional(),
-        facilityLongitude: z13.string().optional(),
-        facilityState: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
-        description: z13.string().optional(),
-        website: z13.string().optional()
+      z14.object({
+        abn: z14.string().length(11),
+        companyName: z14.string().min(1),
+        contactEmail: z14.string().email(),
+        contactPhone: z14.string().optional(),
+        facilityName: z14.string().optional(),
+        facilityAddress: z14.string().optional(),
+        facilityLatitude: z14.string().optional(),
+        facilityLongitude: z14.string().optional(),
+        facilityState: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+        description: z14.string().optional(),
+        website: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       if (!validateABN(input.abn)) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "Invalid ABN"
         });
       }
       const existingBuyer = await getBuyerByUserId(ctx.user.id);
       if (existingBuyer) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "Buyer profile already exists"
         });
@@ -17686,17 +18122,17 @@ var appRouter = router({
       return await getBuyerById(ctx.buyer.id);
     }),
     update: buyerProcedure.input(
-      z13.object({
-        companyName: z13.string().min(1).optional(),
-        contactEmail: z13.string().email().optional(),
-        contactPhone: z13.string().optional(),
-        facilityName: z13.string().optional(),
-        facilityAddress: z13.string().optional(),
-        facilityLatitude: z13.string().optional(),
-        facilityLongitude: z13.string().optional(),
-        facilityState: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
-        description: z13.string().optional(),
-        website: z13.string().optional()
+      z14.object({
+        companyName: z14.string().min(1).optional(),
+        contactEmail: z14.string().email().optional(),
+        contactPhone: z14.string().optional(),
+        facilityName: z14.string().optional(),
+        facilityAddress: z14.string().optional(),
+        facilityLatitude: z14.string().optional(),
+        facilityLongitude: z14.string().optional(),
+        facilityState: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+        description: z14.string().optional(),
+        website: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       await updateBuyer(ctx.buyer.id, input);
@@ -17714,11 +18150,11 @@ var appRouter = router({
   // ============================================================================
   financialInstitutions: router({
     register: protectedProcedure.input(
-      z13.object({
+      z14.object({
         // Institution Details
-        institutionName: z13.string().min(1),
-        abn: z13.string().length(11),
-        institutionType: z13.enum([
+        institutionName: z14.string().min(1),
+        abn: z14.string().length(11),
+        institutionType: z14.enum([
           "commercial_bank",
           "investment_bank",
           "private_equity",
@@ -17729,40 +18165,40 @@ var appRouter = router({
           "development_finance",
           "other"
         ]),
-        regulatoryBody: z13.string().optional(),
-        licenseNumber: z13.string().optional(),
+        regulatoryBody: z14.string().optional(),
+        licenseNumber: z14.string().optional(),
         // Authorized Representative
-        contactName: z13.string().min(1),
-        contactTitle: z13.string().optional(),
-        contactEmail: z13.string().email(),
-        contactPhone: z13.string().optional(),
+        contactName: z14.string().min(1),
+        contactTitle: z14.string().optional(),
+        contactEmail: z14.string().email(),
+        contactPhone: z14.string().optional(),
         // Verification
-        verificationMethod: z13.enum(["mygov_id", "document_upload", "manual_review"]).optional(),
+        verificationMethod: z14.enum(["mygov_id", "document_upload", "manual_review"]).optional(),
         // Access Tier
-        accessTier: z13.enum(["basic", "professional", "enterprise"]).default("basic"),
-        dataCategories: z13.array(z13.string()).optional(),
+        accessTier: z14.enum(["basic", "professional", "enterprise"]).default("basic"),
+        dataCategories: z14.array(z14.string()).optional(),
         // Compliance Declarations
-        authorizedRepresentative: z13.boolean(),
-        dataProtection: z13.boolean(),
-        regulatoryCompliance: z13.boolean(),
-        termsAccepted: z13.boolean()
+        authorizedRepresentative: z14.boolean(),
+        dataProtection: z14.boolean(),
+        regulatoryCompliance: z14.boolean(),
+        termsAccepted: z14.boolean()
       })
     ).mutation(async ({ ctx, input }) => {
       if (!validateABN(input.abn)) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "Invalid ABN"
         });
       }
       if (!input.authorizedRepresentative || !input.dataProtection || !input.regulatoryCompliance || !input.termsAccepted) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "All compliance declarations must be accepted"
         });
       }
       const existing = await getFinancialInstitutionByABN(input.abn);
       if (existing) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "ABN already registered"
         });
@@ -17771,7 +18207,7 @@ var appRouter = router({
         ctx.user.id
       );
       if (existingInstitution) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "CONFLICT",
           message: "Financial institution profile already exists"
         });
@@ -17794,8 +18230,8 @@ var appRouter = router({
   // ============================================================================
   feedstocks: router({
     create: supplierProcedure.input(
-      z13.object({
-        category: z13.enum([
+      z14.object({
+        category: z14.enum([
           "oilseed",
           "UCO",
           "tallow",
@@ -17804,23 +18240,23 @@ var appRouter = router({
           "algae",
           "other"
         ]),
-        type: z13.string().min(1),
-        sourceName: z13.string().optional(),
-        sourceAddress: z13.string().optional(),
-        latitude: z13.string(),
-        longitude: z13.string(),
-        state: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]),
-        region: z13.string().optional(),
-        productionMethod: z13.enum([
+        type: z14.string().min(1),
+        sourceName: z14.string().optional(),
+        sourceAddress: z14.string().optional(),
+        latitude: z14.string(),
+        longitude: z14.string(),
+        state: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]),
+        region: z14.string().optional(),
+        productionMethod: z14.enum([
           "crop",
           "waste",
           "residue",
           "processing_byproduct"
         ]),
-        annualCapacityTonnes: z13.number().int().positive(),
-        availableVolumeCurrent: z13.number().int().nonnegative(),
-        carbonIntensityValue: z13.number().int().optional(),
-        description: z13.string().optional()
+        annualCapacityTonnes: z14.number().int().positive(),
+        availableVolumeCurrent: z14.number().int().nonnegative(),
+        carbonIntensityValue: z14.number().int().optional(),
+        description: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const abfiId = generateAbfiId(input.category, input.state);
@@ -17839,26 +18275,26 @@ var appRouter = router({
       return { feedstockId, abfiId };
     }),
     update: supplierProcedure.input(
-      z13.object({
-        id: z13.number(),
-        type: z13.string().min(1).optional(),
-        sourceName: z13.string().optional(),
-        sourceAddress: z13.string().optional(),
-        latitude: z13.string().optional(),
-        longitude: z13.string().optional(),
-        region: z13.string().optional(),
-        annualCapacityTonnes: z13.number().int().positive().optional(),
-        availableVolumeCurrent: z13.number().int().nonnegative().optional(),
-        carbonIntensityValue: z13.number().int().optional(),
-        description: z13.string().optional(),
-        pricePerTonne: z13.number().int().optional(),
-        priceVisibility: z13.enum(["public", "private", "on_request"]).optional()
+      z14.object({
+        id: z14.number(),
+        type: z14.string().min(1).optional(),
+        sourceName: z14.string().optional(),
+        sourceAddress: z14.string().optional(),
+        latitude: z14.string().optional(),
+        longitude: z14.string().optional(),
+        region: z14.string().optional(),
+        annualCapacityTonnes: z14.number().int().positive().optional(),
+        availableVolumeCurrent: z14.number().int().nonnegative().optional(),
+        carbonIntensityValue: z14.number().int().optional(),
+        description: z14.string().optional(),
+        pricePerTonne: z14.number().int().optional(),
+        priceVisibility: z14.enum(["public", "private", "on_request"]).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
       const feedstock = await getFeedstockById(id);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -17875,10 +18311,10 @@ var appRouter = router({
     list: supplierProcedure.query(async ({ ctx }) => {
       return await getFeedstocksBySupplierId(ctx.supplier.id);
     }),
-    getById: publicProcedure.input(z13.object({ id: z13.number() })).query(async ({ input }) => {
+    getById: publicProcedure.input(z14.object({ id: z14.number() })).query(async ({ input }) => {
       const feedstock = await getFeedstockById(input.id);
       if (!feedstock || feedstock.status !== "active") {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Feedstock not found"
         });
@@ -17886,13 +18322,13 @@ var appRouter = router({
       return feedstock;
     }),
     search: publicProcedure.input(
-      z13.object({
-        category: z13.array(z13.string()).optional(),
-        state: z13.array(z13.string()).optional(),
-        minAbfiScore: z13.number().optional(),
-        maxCarbonIntensity: z13.number().optional(),
-        limit: z13.number().optional(),
-        offset: z13.number().optional()
+      z14.object({
+        category: z14.array(z14.string()).optional(),
+        state: z14.array(z14.string()).optional(),
+        minAbfiScore: z14.number().optional(),
+        maxCarbonIntensity: z14.number().optional(),
+        limit: z14.number().optional(),
+        offset: z14.number().optional()
       })
     ).query(async ({ input }) => {
       return await searchFeedstocks({
@@ -17900,10 +18336,10 @@ var appRouter = router({
         status: "active"
       });
     }),
-    calculateRating: supplierProcedure.input(z13.object({ feedstockId: z13.number() })).mutation(async ({ ctx, input }) => {
+    calculateRating: supplierProcedure.input(z14.object({ feedstockId: z14.number() })).mutation(async ({ ctx, input }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -17931,16 +18367,16 @@ var appRouter = router({
       );
       return { scores, improvements };
     }),
-    submitForReview: supplierProcedure.input(z13.object({ feedstockId: z13.number() })).mutation(async ({ ctx, input }) => {
+    submitForReview: supplierProcedure.input(z14.object({ feedstockId: z14.number() })).mutation(async ({ ctx, input }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
       }
       if (feedstock.status !== "draft") {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "Only draft feedstocks can be submitted for review"
         });
@@ -17962,9 +18398,9 @@ var appRouter = router({
   // ============================================================================
   certificates: router({
     create: supplierProcedure.input(
-      z13.object({
-        feedstockId: z13.number(),
-        type: z13.enum([
+      z14.object({
+        feedstockId: z14.number(),
+        type: z14.enum([
           "ISCC_EU",
           "ISCC_PLUS",
           "RSB",
@@ -17973,17 +18409,17 @@ var appRouter = router({
           "ABFI",
           "OTHER"
         ]),
-        certificateNumber: z13.string().optional(),
-        issuedDate: z13.date().optional(),
-        expiryDate: z13.date().optional(),
-        documentUrl: z13.string().optional(),
-        documentKey: z13.string().optional(),
-        notes: z13.string().optional()
+        certificateNumber: z14.string().optional(),
+        issuedDate: z14.date().optional(),
+        expiryDate: z14.date().optional(),
+        documentUrl: z14.string().optional(),
+        documentKey: z14.string().optional(),
+        notes: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -17997,10 +18433,10 @@ var appRouter = router({
       });
       return { certificateId: certId };
     }),
-    list: supplierProcedure.input(z13.object({ feedstockId: z13.number() })).query(async ({ ctx, input }) => {
+    list: supplierProcedure.input(z14.object({ feedstockId: z14.number() })).query(async ({ ctx, input }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -18008,25 +18444,25 @@ var appRouter = router({
       return await getCertificatesByFeedstockId(input.feedstockId);
     }),
     // Generate ABFI Rating Certificate PDF
-    generateABFICertificate: supplierProcedure.input(z13.object({ feedstockId: z13.number() })).mutation(async ({ ctx, input }) => {
+    generateABFICertificate: supplierProcedure.input(z14.object({ feedstockId: z14.number() })).mutation(async ({ ctx, input }) => {
       const { generateABFICertificate: generateABFICertificate2, calculateRatingGrade: calculateRatingGrade2 } = await Promise.resolve().then(() => (init_certificateGenerator(), certificateGenerator_exports));
       const { storagePut: storagePut2 } = await Promise.resolve().then(() => (init_storage(), storage_exports));
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
       }
       if (!feedstock.abfiScore) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "Feedstock must have ABFI rating before generating certificate"
         });
       }
       const supplier = await getSupplierById(feedstock.supplierId);
       if (!supplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Supplier not found"
         });
@@ -18104,9 +18540,9 @@ var appRouter = router({
     }),
     // Generate Biological Asset Data Pack (BADP)
     generateBADP: supplierProcedure.input(
-      z13.object({
-        feedstockId: z13.number(),
-        preparedFor: z13.string()
+      z14.object({
+        feedstockId: z14.number(),
+        preparedFor: z14.string()
         // Client/investor name
       })
     ).mutation(async ({ ctx, input }) => {
@@ -18115,14 +18551,14 @@ var appRouter = router({
       const { storagePut: storagePut2 } = await Promise.resolve().then(() => (init_storage(), storage_exports));
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
       }
       const supplier = await getSupplierById(feedstock.supplierId);
       if (!supplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Supplier not found"
         });
@@ -18237,20 +18673,20 @@ var appRouter = router({
   // ============================================================================
   qualityTests: router({
     create: supplierProcedure.input(
-      z13.object({
-        feedstockId: z13.number(),
-        testDate: z13.date(),
-        laboratory: z13.string().optional(),
-        parameters: z13.any(),
-        overallPass: z13.boolean().optional(),
-        reportUrl: z13.string().optional(),
-        reportKey: z13.string().optional(),
-        notes: z13.string().optional()
+      z14.object({
+        feedstockId: z14.number(),
+        testDate: z14.date(),
+        laboratory: z14.string().optional(),
+        parameters: z14.any(),
+        overallPass: z14.boolean().optional(),
+        reportUrl: z14.string().optional(),
+        reportKey: z14.string().optional(),
+        notes: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -18264,10 +18700,10 @@ var appRouter = router({
       });
       return { testId };
     }),
-    list: supplierProcedure.input(z13.object({ feedstockId: z13.number() })).query(async ({ ctx, input }) => {
+    list: supplierProcedure.input(z14.object({ feedstockId: z14.number() })).query(async ({ ctx, input }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock || feedstock.supplierId !== ctx.supplier.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -18280,15 +18716,15 @@ var appRouter = router({
   // ============================================================================
   inquiries: router({
     create: buyerProcedure.input(
-      z13.object({
-        supplierId: z13.number(),
-        feedstockId: z13.number().optional(),
-        subject: z13.string().min(1),
-        message: z13.string().min(1),
-        volumeRequired: z13.number().int().optional(),
-        deliveryLocation: z13.string().optional(),
-        deliveryTimeframeStart: z13.date().optional(),
-        deliveryTimeframeEnd: z13.date().optional()
+      z14.object({
+        supplierId: z14.number(),
+        feedstockId: z14.number().optional(),
+        subject: z14.string().min(1),
+        message: z14.string().min(1),
+        volumeRequired: z14.number().int().optional(),
+        deliveryLocation: z14.string().optional(),
+        deliveryTimeframeStart: z14.date().optional(),
+        deliveryTimeframeEnd: z14.date().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const inquiryId = await createInquiry({
@@ -18309,21 +18745,21 @@ var appRouter = router({
       return { inquiryId };
     }),
     respond: supplierProcedure.input(
-      z13.object({
-        inquiryId: z13.number(),
-        response: z13.string().min(1),
-        pricePerTonne: z13.number().optional(),
-        availableVolume: z13.number().optional(),
-        deliveryTimeframe: z13.string().optional(),
-        deliveryTerms: z13.string().optional(),
-        minimumOrder: z13.number().optional(),
-        status: z13.enum(["responded", "closed"]).optional()
+      z14.object({
+        inquiryId: z14.number(),
+        response: z14.string().min(1),
+        pricePerTonne: z14.number().optional(),
+        availableVolume: z14.number().optional(),
+        deliveryTimeframe: z14.string().optional(),
+        deliveryTerms: z14.string().optional(),
+        minimumOrder: z14.number().optional(),
+        status: z14.enum(["responded", "closed"]).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const inquiry = await getInquiriesBySupplierId(ctx.supplier.id);
       const targetInquiry = inquiry.find((i) => i.id === input.inquiryId);
       if (!targetInquiry) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Not authorized"
         });
@@ -18358,7 +18794,7 @@ var appRouter = router({
       }
       return { success: true };
     }),
-    getById: protectedProcedure.input(z13.object({ id: z13.number() })).query(async ({ input }) => {
+    getById: protectedProcedure.input(z14.object({ id: z14.number() })).query(async ({ input }) => {
       return await getInquiryById(input.id);
     }),
     listForBuyer: buyerProcedure.query(async ({ ctx }) => {
@@ -18372,10 +18808,10 @@ var appRouter = router({
   // NOTIFICATIONS
   // ============================================================================
   notifications: router({
-    list: protectedProcedure.input(z13.object({ unreadOnly: z13.boolean().optional() })).query(async ({ ctx, input }) => {
+    list: protectedProcedure.input(z14.object({ unreadOnly: z14.boolean().optional() })).query(async ({ ctx, input }) => {
       return await getNotificationsByUserId(ctx.user.id, input.unreadOnly);
     }),
-    markAsRead: protectedProcedure.input(z13.object({ notificationId: z13.number() })).mutation(async ({ input }) => {
+    markAsRead: protectedProcedure.input(z14.object({ notificationId: z14.number() })).mutation(async ({ input }) => {
       await markNotificationAsRead(input.notificationId);
       return { success: true };
     }),
@@ -18389,10 +18825,10 @@ var appRouter = router({
   // ============================================================================
   savedSearches: router({
     create: buyerProcedure.input(
-      z13.object({
-        name: z13.string().min(1),
-        criteria: z13.any(),
-        notifyOnNewMatches: z13.boolean().optional()
+      z14.object({
+        name: z14.string().min(1),
+        criteria: z14.any(),
+        notifyOnNewMatches: z14.boolean().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const searchId = await createSavedSearch({
@@ -18404,7 +18840,7 @@ var appRouter = router({
     list: buyerProcedure.query(async ({ ctx }) => {
       return await getSavedSearchesByBuyerId(ctx.buyer.id);
     }),
-    delete: buyerProcedure.input(z13.object({ searchId: z13.number() })).mutation(async ({ input }) => {
+    delete: buyerProcedure.input(z14.object({ searchId: z14.number() })).mutation(async ({ input }) => {
       await deleteSavedSearch(input.searchId);
       return { success: true };
     })
@@ -18420,9 +18856,9 @@ var appRouter = router({
       return await getAllSuppliers({ verificationStatus: "pending" });
     }),
     verifySupplier: adminProcedure5.input(
-      z13.object({
-        supplierId: z13.number(),
-        approved: z13.boolean()
+      z14.object({
+        supplierId: z14.number(),
+        approved: z14.boolean()
       })
     ).mutation(async ({ ctx, input }) => {
       await updateSupplier(input.supplierId, {
@@ -18450,10 +18886,10 @@ var appRouter = router({
       return await searchFeedstocks({ status: "pending_review" });
     }),
     verifyFeedstock: adminProcedure5.input(
-      z13.object({
-        feedstockId: z13.number(),
-        approved: z13.boolean(),
-        verificationLevel: z13.enum([
+      z14.object({
+        feedstockId: z14.number(),
+        approved: z14.boolean(),
+        verificationLevel: z14.enum([
           "self_declared",
           "document_verified",
           "third_party_audited",
@@ -18489,10 +18925,10 @@ var appRouter = router({
       return { success: true };
     }),
     getAuditLogs: adminProcedure5.input(
-      z13.object({
-        entityType: z13.string().optional(),
-        entityId: z13.number().optional(),
-        limit: z13.number().optional()
+      z14.object({
+        entityType: z14.string().optional(),
+        entityId: z14.number().optional(),
+        limit: z14.number().optional()
       })
     ).query(async ({ input }) => {
       return await getAuditLogs(input);
@@ -18502,13 +18938,13 @@ var appRouter = router({
       return await getAllUsers();
     }),
     updateUserRole: adminProcedure5.input(
-      z13.object({
-        userId: z13.number(),
-        role: z13.enum(["admin", "supplier", "buyer"])
+      z14.object({
+        userId: z14.number(),
+        role: z14.enum(["admin", "supplier", "buyer"])
       })
     ).mutation(async ({ ctx, input }) => {
       if (input.userId === ctx.user.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Cannot change your own role"
         });
@@ -18530,18 +18966,18 @@ var appRouter = router({
   bankability: router({
     // Projects
     createProject: protectedProcedure.input(
-      z13.object({
-        name: z13.string(),
-        description: z13.string().optional(),
-        facilityLocation: z13.string().optional(),
-        state: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
-        latitude: z13.string().optional(),
-        longitude: z13.string().optional(),
-        nameplateCapacity: z13.number(),
-        feedstockType: z13.string().optional(),
-        targetCOD: z13.date().optional(),
-        financialCloseTarget: z13.date().optional(),
-        debtTenor: z13.number().optional()
+      z14.object({
+        name: z14.string(),
+        description: z14.string().optional(),
+        facilityLocation: z14.string().optional(),
+        state: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]).optional(),
+        latitude: z14.string().optional(),
+        longitude: z14.string().optional(),
+        nameplateCapacity: z14.number(),
+        feedstockType: z14.string().optional(),
+        targetCOD: z14.date().optional(),
+        financialCloseTarget: z14.date().optional(),
+        debtTenor: z14.number().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const projectId = await createProject({
@@ -18558,15 +18994,15 @@ var appRouter = router({
     }),
     // Project Registration Flow (7 steps)
     registerProject: protectedProcedure.input(
-      z13.object({
+      z14.object({
         // Step 1: Project Overview
-        projectName: z13.string(),
-        developerName: z13.string().optional(),
-        abn: z13.string().optional(),
-        website: z13.string().optional(),
-        region: z13.string().optional(),
-        siteAddress: z13.string().optional(),
-        developmentStage: z13.enum([
+        projectName: z14.string(),
+        developerName: z14.string().optional(),
+        abn: z14.string().optional(),
+        website: z14.string().optional(),
+        region: z14.string().optional(),
+        siteAddress: z14.string().optional(),
+        developmentStage: z14.enum([
           "concept",
           "prefeasibility",
           "feasibility",
@@ -18575,25 +19011,25 @@ var appRouter = router({
           "operational"
         ]).optional(),
         // Step 2: Technology Details
-        conversionTechnology: z13.string().optional(),
-        technologyProvider: z13.string().optional(),
-        primaryOutput: z13.string().optional(),
-        secondaryOutputs: z13.string().optional(),
-        nameplateCapacity: z13.string().optional(),
-        outputCapacity: z13.string().optional(),
-        outputUnit: z13.string().optional(),
+        conversionTechnology: z14.string().optional(),
+        technologyProvider: z14.string().optional(),
+        primaryOutput: z14.string().optional(),
+        secondaryOutputs: z14.string().optional(),
+        nameplateCapacity: z14.string().optional(),
+        outputCapacity: z14.string().optional(),
+        outputUnit: z14.string().optional(),
         // Step 3: Feedstock Requirements
-        feedstockType: z13.string().optional(),
-        secondaryFeedstocks: z13.string().optional(),
-        annualFeedstockVolume: z13.string().optional(),
-        feedstockQualitySpecs: z13.string().optional(),
-        supplyRadius: z13.string().optional(),
-        logisticsRequirements: z13.string().optional(),
+        feedstockType: z14.string().optional(),
+        secondaryFeedstocks: z14.string().optional(),
+        annualFeedstockVolume: z14.string().optional(),
+        feedstockQualitySpecs: z14.string().optional(),
+        supplyRadius: z14.string().optional(),
+        logisticsRequirements: z14.string().optional(),
         // Step 4: Funding Status
-        totalCapex: z13.string().optional(),
-        fundingSecured: z13.string().optional(),
-        fundingSources: z13.string().optional(),
-        investmentStage: z13.enum([
+        totalCapex: z14.string().optional(),
+        fundingSecured: z14.string().optional(),
+        fundingSources: z14.string().optional(),
+        investmentStage: z14.enum([
           "seed",
           "series_a",
           "series_b",
@@ -18601,22 +19037,22 @@ var appRouter = router({
           "post_fid",
           "operational"
         ]).optional(),
-        seekingInvestment: z13.boolean().optional(),
-        investmentAmount: z13.string().optional(),
+        seekingInvestment: z14.boolean().optional(),
+        investmentAmount: z14.string().optional(),
         // Step 5: Approvals & Permits
-        environmentalApproval: z13.boolean().optional(),
-        planningPermit: z13.boolean().optional(),
-        epaLicense: z13.boolean().optional(),
-        otherApprovals: z13.string().optional(),
-        approvalsNotes: z13.string().optional(),
+        environmentalApproval: z14.boolean().optional(),
+        planningPermit: z14.boolean().optional(),
+        epaLicense: z14.boolean().optional(),
+        otherApprovals: z14.string().optional(),
+        approvalsNotes: z14.string().optional(),
         // Step 6: Verification
-        verificationDocuments: z13.array(z13.string()).optional(),
-        verificationNotes: z13.string().optional(),
+        verificationDocuments: z14.array(z14.string()).optional(),
+        verificationNotes: z14.string().optional(),
         // Step 7: Opportunities
-        feedstockMatchingEnabled: z13.boolean().optional(),
-        financingInterest: z13.boolean().optional(),
-        partnershipInterest: z13.boolean().optional(),
-        publicVisibility: z13.enum(["private", "investors_only", "suppliers_only", "public"]).optional()
+        feedstockMatchingEnabled: z14.boolean().optional(),
+        financingInterest: z14.boolean().optional(),
+        partnershipInterest: z14.boolean().optional(),
+        publicVisibility: z14.enum(["private", "investors_only", "suppliers_only", "public"]).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const projectData = {
@@ -18676,19 +19112,19 @@ var appRouter = router({
     listProjects: protectedProcedure.query(async ({ ctx }) => {
       return await getProjectsByUserId(ctx.user.id);
     }),
-    getProjectById: protectedProcedure.input(z13.object({ id: z13.number() })).query(async ({ ctx, input }) => {
+    getProjectById: protectedProcedure.input(z14.object({ id: z14.number() })).query(async ({ ctx, input }) => {
       const project = await getProjectById(input.id);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "NOT_FOUND" });
+        throw new TRPCError16({ code: "NOT_FOUND" });
       }
       return project;
     }),
     updateProject: protectedProcedure.input(
-      z13.object({
-        id: z13.number(),
-        name: z13.string().optional(),
-        description: z13.string().optional(),
-        status: z13.enum([
+      z14.object({
+        id: z14.number(),
+        name: z14.string().optional(),
+        description: z14.string().optional(),
+        status: z14.enum([
           "planning",
           "development",
           "financing",
@@ -18701,7 +19137,7 @@ var appRouter = router({
       const { id, ...updates } = input;
       const project = await getProjectById(id);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "NOT_FOUND" });
+        throw new TRPCError16({ code: "NOT_FOUND" });
       }
       await updateProject(id, updates);
       await createAuditLog({
@@ -18714,27 +19150,27 @@ var appRouter = router({
     }),
     // Supply Agreements
     createAgreement: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        supplierId: z13.number(),
-        tier: z13.enum(["tier1", "tier2", "option", "rofr"]),
-        annualVolume: z13.number(),
-        termYears: z13.number(),
-        startDate: z13.date(),
-        endDate: z13.date(),
-        pricingMechanism: z13.enum([
+      z14.object({
+        projectId: z14.number(),
+        supplierId: z14.number(),
+        tier: z14.enum(["tier1", "tier2", "option", "rofr"]),
+        annualVolume: z14.number(),
+        termYears: z14.number(),
+        startDate: z14.date(),
+        endDate: z14.date(),
+        pricingMechanism: z14.enum([
           "fixed",
           "fixed_with_escalation",
           "index_linked",
           "index_with_floor_ceiling",
           "spot_reference"
         ]),
-        takeOrPayPercentage: z13.number().optional()
+        takeOrPayPercentage: z14.number().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       const agreementId = await createSupplyAgreement(input);
       await createAuditLog({
@@ -18745,31 +19181,31 @@ var appRouter = router({
       });
       return { agreementId };
     }),
-    getProjectAgreements: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ ctx, input }) => {
+    getProjectAgreements: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       return await getSupplyAgreementsByProjectId(input.projectId);
     }),
     // Grower Qualifications
     createQualification: protectedProcedure.input(
-      z13.object({
-        supplierId: z13.number(),
-        level: z13.enum(["GQ1", "GQ2", "GQ3", "GQ4"]),
-        levelName: z13.string().optional(),
-        compositeScore: z13.number(),
-        assessmentDate: z13.date().optional(),
-        validFrom: z13.date(),
-        validUntil: z13.date(),
-        operatingHistoryScore: z13.number().optional(),
-        financialStrengthScore: z13.number().optional(),
-        landTenureScore: z13.number().optional(),
-        productionCapacityScore: z13.number().optional(),
-        creditScore: z13.number().optional(),
-        insuranceScore: z13.number().optional(),
-        assessmentNotes: z13.string().optional(),
-        status: z13.enum(["pending", "approved", "expired", "revoked"]).optional()
+      z14.object({
+        supplierId: z14.number(),
+        level: z14.enum(["GQ1", "GQ2", "GQ3", "GQ4"]),
+        levelName: z14.string().optional(),
+        compositeScore: z14.number(),
+        assessmentDate: z14.date().optional(),
+        validFrom: z14.date(),
+        validUntil: z14.date(),
+        operatingHistoryScore: z14.number().optional(),
+        financialStrengthScore: z14.number().optional(),
+        landTenureScore: z14.number().optional(),
+        productionCapacityScore: z14.number().optional(),
+        creditScore: z14.number().optional(),
+        insuranceScore: z14.number().optional(),
+        assessmentNotes: z14.string().optional(),
+        status: z14.enum(["pending", "approved", "expired", "revoked"]).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const qualificationData = {
@@ -18787,22 +19223,22 @@ var appRouter = router({
       return { qualificationId };
     }),
     createGrowerQualification: protectedProcedure.input(
-      z13.object({
-        supplierId: z13.number(),
-        level: z13.enum(["GQ1", "GQ2", "GQ3", "GQ4"]),
-        levelName: z13.string().optional(),
-        compositeScore: z13.number(),
-        assessmentDate: z13.date().optional(),
-        validFrom: z13.date(),
-        validUntil: z13.date(),
-        operatingHistoryScore: z13.number().optional(),
-        financialStrengthScore: z13.number().optional(),
-        landTenureScore: z13.number().optional(),
-        productionCapacityScore: z13.number().optional(),
-        creditScore: z13.number().optional(),
-        insuranceScore: z13.number().optional(),
-        assessmentNotes: z13.string().optional(),
-        status: z13.enum(["pending", "approved", "expired", "revoked"]).optional()
+      z14.object({
+        supplierId: z14.number(),
+        level: z14.enum(["GQ1", "GQ2", "GQ3", "GQ4"]),
+        levelName: z14.string().optional(),
+        compositeScore: z14.number(),
+        assessmentDate: z14.date().optional(),
+        validFrom: z14.date(),
+        validUntil: z14.date(),
+        operatingHistoryScore: z14.number().optional(),
+        financialStrengthScore: z14.number().optional(),
+        landTenureScore: z14.number().optional(),
+        productionCapacityScore: z14.number().optional(),
+        creditScore: z14.number().optional(),
+        insuranceScore: z14.number().optional(),
+        assessmentNotes: z14.string().optional(),
+        status: z14.enum(["pending", "approved", "expired", "revoked"]).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const qualificationData = {
@@ -18819,35 +19255,35 @@ var appRouter = router({
       });
       return { qualificationId };
     }),
-    getSupplierQualifications: protectedProcedure.input(z13.object({ supplierId: z13.number() })).query(async ({ input }) => {
+    getSupplierQualifications: protectedProcedure.input(z14.object({ supplierId: z14.number() })).query(async ({ input }) => {
       return await getGrowerQualificationsBySupplierId(input.supplierId);
     }),
     // Bankability Assessments
     createAssessment: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        assessmentNumber: z13.string(),
-        assessmentDate: z13.date(),
-        volumeSecurityScore: z13.number(),
-        counterpartyQualityScore: z13.number(),
-        contractStructureScore: z13.number(),
-        concentrationRiskScore: z13.number(),
-        operationalReadinessScore: z13.number(),
-        compositeScore: z13.number(),
-        rating: z13.enum(["AAA", "AA", "A", "BBB", "BB", "B", "CCC"]),
-        ratingDescription: z13.string().optional(),
-        tier1Volume: z13.number().optional(),
-        tier1Percent: z13.number().optional(),
-        tier2Volume: z13.number().optional(),
-        tier2Percent: z13.number().optional(),
-        optionsVolume: z13.number().optional(),
-        optionsPercent: z13.number().optional(),
-        rofrVolume: z13.number().optional(),
-        rofrPercent: z13.number().optional(),
-        totalAgreements: z13.number().optional(),
-        strengths: z13.array(z13.string()).optional(),
-        monitoringItems: z13.array(z13.string()).optional(),
-        status: z13.enum([
+      z14.object({
+        projectId: z14.number(),
+        assessmentNumber: z14.string(),
+        assessmentDate: z14.date(),
+        volumeSecurityScore: z14.number(),
+        counterpartyQualityScore: z14.number(),
+        contractStructureScore: z14.number(),
+        concentrationRiskScore: z14.number(),
+        operationalReadinessScore: z14.number(),
+        compositeScore: z14.number(),
+        rating: z14.enum(["AAA", "AA", "A", "BBB", "BB", "B", "CCC"]),
+        ratingDescription: z14.string().optional(),
+        tier1Volume: z14.number().optional(),
+        tier1Percent: z14.number().optional(),
+        tier2Volume: z14.number().optional(),
+        tier2Percent: z14.number().optional(),
+        optionsVolume: z14.number().optional(),
+        optionsPercent: z14.number().optional(),
+        rofrVolume: z14.number().optional(),
+        rofrPercent: z14.number().optional(),
+        totalAgreements: z14.number().optional(),
+        strengths: z14.array(z14.string()).optional(),
+        monitoringItems: z14.array(z14.string()).optional(),
+        status: z14.enum([
           "draft",
           "submitted",
           "under_review",
@@ -18858,7 +19294,7 @@ var appRouter = router({
     ).mutation(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       const assessmentData = {
         ...input,
@@ -18873,35 +19309,35 @@ var appRouter = router({
       });
       return { assessmentId };
     }),
-    getProjectAssessments: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ ctx, input }) => {
+    getProjectAssessments: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       return await getBankabilityAssessmentsByProjectId(input.projectId);
     }),
-    getLatestAssessment: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ ctx, input }) => {
+    getLatestAssessment: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       return await getLatestBankabilityAssessment(input.projectId);
     }),
     // Admin Assessor Workflow
     listAssessments: protectedProcedure.query(async ({ ctx }) => {
       if (ctx.user.role !== "admin") {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       return await getAllBankabilityAssessments();
     }),
     approveAssessment: protectedProcedure.input(
-      z13.object({
-        assessmentId: z13.number(),
-        approverNotes: z13.string().optional()
+      z14.object({
+        assessmentId: z14.number(),
+        approverNotes: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       if (ctx.user.role !== "admin") {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       await updateBankabilityAssessment(input.assessmentId, {
         status: "approved"
@@ -18918,13 +19354,13 @@ var appRouter = router({
       return { success: true };
     }),
     rejectAssessment: protectedProcedure.input(
-      z13.object({
-        assessmentId: z13.number(),
-        rejectionReason: z13.string()
+      z14.object({
+        assessmentId: z14.number(),
+        rejectionReason: z14.string()
       })
     ).mutation(async ({ ctx, input }) => {
       if (ctx.user.role !== "admin") {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       await updateBankabilityAssessment(input.assessmentId, {
         status: "rejected",
@@ -18940,20 +19376,20 @@ var appRouter = router({
       return { success: true };
     }),
     adjustAssessmentScore: protectedProcedure.input(
-      z13.object({
-        assessmentId: z13.number(),
-        adjustedScores: z13.record(z13.string(), z13.number()),
-        reason: z13.string()
+      z14.object({
+        assessmentId: z14.number(),
+        adjustedScores: z14.record(z14.string(), z14.number()),
+        reason: z14.string()
       })
     ).mutation(async ({ ctx, input }) => {
       if (ctx.user.role !== "admin") {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       const assessment = await getBankabilityAssessmentById(
         input.assessmentId
       );
       if (!assessment) {
-        throw new TRPCError15({ code: "NOT_FOUND" });
+        throw new TRPCError16({ code: "NOT_FOUND" });
       }
       const updates = {};
       if (input.adjustedScores.volumeSecurity !== void 0) {
@@ -19005,18 +19441,18 @@ var appRouter = router({
     }),
     // Lender Access
     grantLenderAccess: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        lenderName: z13.string(),
-        lenderEmail: z13.string(),
-        lenderContact: z13.string().optional(),
-        validFrom: z13.date(),
-        validUntil: z13.date()
+      z14.object({
+        projectId: z14.number(),
+        lenderName: z14.string(),
+        lenderEmail: z14.string(),
+        lenderContact: z14.string().optional(),
+        validFrom: z14.date(),
+        validUntil: z14.date()
       })
     ).mutation(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       const accessToken = Math.random().toString(36).substring(2, 15);
       const accessId = await createLenderAccess({
@@ -19026,17 +19462,17 @@ var appRouter = router({
       });
       return { accessId, accessToken };
     }),
-    getProjectLenderAccess: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ ctx, input }) => {
+    getProjectLenderAccess: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ ctx, input }) => {
       const project = await getProjectById(input.projectId);
       if (!project || project.userId !== ctx.user.id) {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       return await getLenderAccessByProjectId(input.projectId);
     }),
     // Get projects that the current user has lender access to (by email)
     getMyLenderProjects: protectedProcedure.query(async ({ ctx }) => {
       if (!ctx.user.email) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "User email is required"
         });
@@ -19047,7 +19483,7 @@ var appRouter = router({
     // Get lender access records for the current user
     getMyLenderAccess: protectedProcedure.query(async ({ ctx }) => {
       if (!ctx.user.email) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "BAD_REQUEST",
           message: "User email is required"
         });
@@ -19055,31 +19491,31 @@ var appRouter = router({
       return await getLenderAccessByEmail(ctx.user.email);
     }),
     // Download Certificate
-    downloadCertificate: protectedProcedure.input(z13.object({ assessmentId: z13.number() })).mutation(async ({ ctx, input }) => {
+    downloadCertificate: protectedProcedure.input(z14.object({ assessmentId: z14.number() })).mutation(async ({ ctx, input }) => {
       const assessment = await getBankabilityAssessmentById(
         input.assessmentId
       );
       if (!assessment) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Assessment not found"
         });
       }
       if (assessment.status !== "approved") {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "Certificate can only be downloaded for approved assessments"
         });
       }
       const project = await getProjectById(assessment.projectId);
       if (!project) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Project not found"
         });
       }
       if (project.userId !== ctx.user.id && ctx.user.role !== "admin") {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       const { generateBankabilityCertificate: generateBankabilityCertificate2, getBankabilityRating: getBankabilityRating2 } = await Promise.resolve().then(() => (init_bankabilityCertificate(), bankabilityCertificate_exports));
       const certificateData = {
@@ -19112,8 +19548,8 @@ var appRouter = router({
   evidence: router({
     // Upload evidence with automatic hashing
     upload: protectedProcedure.input(
-      z13.object({
-        type: z13.enum([
+      z14.object({
+        type: z14.enum([
           "lab_test",
           "audit_report",
           "registry_cert",
@@ -19126,12 +19562,12 @@ var appRouter = router({
           "delivery_record",
           "other"
         ]),
-        fileUrl: z13.string(),
-        fileHash: z13.string(),
-        fileSize: z13.number(),
-        mimeType: z13.string(),
-        originalFilename: z13.string(),
-        issuerType: z13.enum([
+        fileUrl: z14.string(),
+        fileHash: z14.string(),
+        fileSize: z14.number(),
+        mimeType: z14.string(),
+        originalFilename: z14.string(),
+        issuerType: z14.enum([
           "lab",
           "auditor",
           "registry",
@@ -19141,11 +19577,11 @@ var appRouter = router({
           "certification_body",
           "self_declared"
         ]),
-        issuerName: z13.string(),
-        issuerCredentials: z13.string().optional(),
-        issuedDate: z13.date(),
-        expiryDate: z13.date().optional(),
-        metadata: z13.record(z13.string(), z13.any()).optional()
+        issuerName: z14.string(),
+        issuerCredentials: z14.string().optional(),
+        issuedDate: z14.date(),
+        expiryDate: z14.date().optional(),
+        metadata: z14.record(z14.string(), z14.any()).optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const evidenceId = await createEvidence({
@@ -19163,13 +19599,13 @@ var appRouter = router({
       return { evidenceId };
     }),
     // Get evidence by ID
-    getById: protectedProcedure.input(z13.object({ id: z13.number() })).query(async ({ input }) => {
+    getById: protectedProcedure.input(z14.object({ id: z14.number() })).query(async ({ input }) => {
       return await getEvidenceById(input.id);
     }),
     // Get evidence by entity
     getByEntity: protectedProcedure.input(
-      z13.object({
-        entityType: z13.enum([
+      z14.object({
+        entityType: z14.enum([
           "feedstock",
           "supplier",
           "certificate",
@@ -19179,7 +19615,7 @@ var appRouter = router({
           "supply_agreement",
           "project"
         ]),
-        entityId: z13.number()
+        entityId: z14.number()
       })
     ).query(async ({ input }) => {
       return await getEvidenceLinkagesByEntity(
@@ -19188,14 +19624,14 @@ var appRouter = router({
       );
     }),
     // Get expiring evidence
-    getExpiring: protectedProcedure.input(z13.object({ daysAhead: z13.number().default(30) })).query(async ({ input }) => {
+    getExpiring: protectedProcedure.input(z14.object({ daysAhead: z14.number().default(30) })).query(async ({ input }) => {
       return await getExpiringEvidence(input.daysAhead);
     }),
     // Link evidence to entity
     linkToEntity: protectedProcedure.input(
-      z13.object({
-        evidenceId: z13.number(),
-        linkedEntityType: z13.enum([
+      z14.object({
+        evidenceId: z14.number(),
+        linkedEntityType: z14.enum([
           "feedstock",
           "supplier",
           "certificate",
@@ -19205,16 +19641,16 @@ var appRouter = router({
           "supply_agreement",
           "project"
         ]),
-        linkedEntityId: z13.number(),
-        linkageType: z13.enum([
+        linkedEntityId: z14.number(),
+        linkageType: z14.enum([
           "supports",
           "validates",
           "contradicts",
           "supersedes",
           "references"
         ]).default("supports"),
-        weightInCalculation: z13.number().optional(),
-        linkageNotes: z13.string().optional()
+        weightInCalculation: z14.number().optional(),
+        linkageNotes: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const linkageId = await createEvidenceLinkage({
@@ -19232,10 +19668,10 @@ var appRouter = router({
     }),
     // Supersede evidence
     supersede: protectedProcedure.input(
-      z13.object({
-        oldEvidenceId: z13.number(),
-        newEvidenceId: z13.number(),
-        reason: z13.string()
+      z14.object({
+        oldEvidenceId: z14.number(),
+        newEvidenceId: z14.number(),
+        reason: z14.string()
       })
     ).mutation(async ({ ctx, input }) => {
       await supersedeEvidence(
@@ -19259,9 +19695,9 @@ var appRouter = router({
       return { success: true };
     }),
     // Verify evidence
-    verify: protectedProcedure.input(z13.object({ evidenceId: z13.number() })).mutation(async ({ ctx, input }) => {
+    verify: protectedProcedure.input(z14.object({ evidenceId: z14.number() })).mutation(async ({ ctx, input }) => {
       if (ctx.user.role !== "admin" && ctx.user.role !== "auditor") {
-        throw new TRPCError15({ code: "FORBIDDEN" });
+        throw new TRPCError16({ code: "FORBIDDEN" });
       }
       await updateEvidence(input.evidenceId, {
         verifiedBy: ctx.user.id,
@@ -19278,16 +19714,16 @@ var appRouter = router({
     }),
     // Create certificate snapshot
     createSnapshot: protectedProcedure.input(
-      z13.object({
-        certificateId: z13.number(),
-        frozenScoreData: z13.record(z13.string(), z13.any()),
-        frozenEvidenceSet: z13.array(
-          z13.object({
-            evidenceId: z13.number(),
-            fileHash: z13.string(),
-            type: z13.string(),
-            issuedDate: z13.string(),
-            issuerName: z13.string()
+      z14.object({
+        certificateId: z14.number(),
+        frozenScoreData: z14.record(z14.string(), z14.any()),
+        frozenEvidenceSet: z14.array(
+          z14.object({
+            evidenceId: z14.number(),
+            fileHash: z14.string(),
+            type: z14.string(),
+            issuedDate: z14.string(),
+            issuerName: z14.string()
           })
         )
       })
@@ -19316,7 +19752,7 @@ var appRouter = router({
       return { snapshotId, snapshotHash };
     }),
     // Get certificate snapshots
-    getSnapshotsByCertificate: protectedProcedure.input(z13.object({ certificateId: z13.number() })).query(async ({ input }) => {
+    getSnapshotsByCertificate: protectedProcedure.input(z14.object({ certificateId: z14.number() })).query(async ({ input }) => {
       return await getCertificateSnapshotsByCertificate(
         input.certificateId
       );
@@ -19326,15 +19762,15 @@ var appRouter = router({
   temporal: router({
     // Get entity as of specific date
     getAsOfDate: protectedProcedure.input(
-      z13.object({
-        entityType: z13.enum([
+      z14.object({
+        entityType: z14.enum([
           "feedstock",
           "certificate",
           "supply_agreement",
           "bankability_assessment"
         ]),
-        entityId: z13.number(),
-        asOfDate: z13.date()
+        entityId: z14.number(),
+        asOfDate: z14.date()
       })
     ).query(async ({ input }) => {
       const { getEntityAsOfDate: getEntityAsOfDate2 } = await Promise.resolve().then(() => (init_temporal(), temporal_exports));
@@ -19346,14 +19782,14 @@ var appRouter = router({
     }),
     // Get current version
     getCurrent: protectedProcedure.input(
-      z13.object({
-        entityType: z13.enum([
+      z14.object({
+        entityType: z14.enum([
           "feedstock",
           "certificate",
           "supply_agreement",
           "bankability_assessment"
         ]),
-        entityId: z13.number()
+        entityId: z14.number()
       })
     ).query(async ({ input }) => {
       const { getCurrentVersion: getCurrentVersion2 } = await Promise.resolve().then(() => (init_temporal(), temporal_exports));
@@ -19361,14 +19797,14 @@ var appRouter = router({
     }),
     // Get version history
     getHistory: protectedProcedure.input(
-      z13.object({
-        entityType: z13.enum([
+      z14.object({
+        entityType: z14.enum([
           "feedstock",
           "certificate",
           "supply_agreement",
           "bankability_assessment"
         ]),
-        entityId: z13.number()
+        entityId: z14.number()
       })
     ).query(async ({ input }) => {
       const { getEntityHistory: getEntityHistory2 } = await Promise.resolve().then(() => (init_temporal(), temporal_exports));
@@ -19376,14 +19812,14 @@ var appRouter = router({
     }),
     // Get version timeline
     getTimeline: protectedProcedure.input(
-      z13.object({
-        entityType: z13.enum([
+      z14.object({
+        entityType: z14.enum([
           "feedstock",
           "certificate",
           "supply_agreement",
           "bankability_assessment"
         ]),
-        entityId: z13.number()
+        entityId: z14.number()
       })
     ).query(async ({ input }) => {
       const { getVersionTimeline: getVersionTimeline2 } = await Promise.resolve().then(() => (init_temporal(), temporal_exports));
@@ -19391,15 +19827,15 @@ var appRouter = router({
     }),
     // Compare two versions
     compareVersions: protectedProcedure.input(
-      z13.object({
-        entityType: z13.enum([
+      z14.object({
+        entityType: z14.enum([
           "feedstock",
           "certificate",
           "supply_agreement",
           "bankability_assessment"
         ]),
-        oldVersionId: z13.number(),
-        newVersionId: z13.number()
+        oldVersionId: z14.number(),
+        newVersionId: z14.number()
       })
     ).query(async ({ input }) => {
       const { getCurrentVersion: getCurrentVersion2, compareVersions: compareVersions2 } = await Promise.resolve().then(() => (init_temporal(), temporal_exports));
@@ -19412,7 +19848,7 @@ var appRouter = router({
         input.newVersionId
       );
       if (!oldVersion || !newVersion) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Version not found"
         });
@@ -19424,15 +19860,15 @@ var appRouter = router({
   physicalReality: router({
     // Delivery Events
     recordDelivery: protectedProcedure.input(
-      z13.object({
-        agreementId: z13.number(),
-        scheduledDate: z13.date(),
-        actualDate: z13.date().optional(),
-        committedVolume: z13.number(),
-        actualVolume: z13.number().optional(),
-        onTime: z13.boolean().optional(),
-        qualityMet: z13.boolean().optional(),
-        status: z13.enum([
+      z14.object({
+        agreementId: z14.number(),
+        scheduledDate: z14.date(),
+        actualDate: z14.date().optional(),
+        committedVolume: z14.number(),
+        actualVolume: z14.number().optional(),
+        onTime: z14.boolean().optional(),
+        qualityMet: z14.boolean().optional(),
+        status: z14.enum([
           "scheduled",
           "in_transit",
           "delivered",
@@ -19440,7 +19876,7 @@ var appRouter = router({
           "cancelled",
           "failed"
         ]),
-        notes: z13.string().optional()
+        notes: z14.string().optional()
       })
     ).mutation(async ({ input, ctx }) => {
       const variancePercent = input.actualVolume && input.committedVolume ? Math.round(
@@ -19453,20 +19889,20 @@ var appRouter = router({
         qualityTestId: null
       });
     }),
-    getDeliveryHistory: protectedProcedure.input(z13.object({ agreementId: z13.number() })).query(async ({ input }) => {
+    getDeliveryHistory: protectedProcedure.input(z14.object({ agreementId: z14.number() })).query(async ({ input }) => {
       return await getDeliveryEventsByAgreement(input.agreementId);
     }),
-    getDeliveryPerformance: protectedProcedure.input(z13.object({ agreementId: z13.number() })).query(async ({ input }) => {
+    getDeliveryPerformance: protectedProcedure.input(z14.object({ agreementId: z14.number() })).query(async ({ input }) => {
       return await getDeliveryPerformanceMetrics(input.agreementId);
     }),
     // Seasonality
     addSeasonality: protectedProcedure.input(
-      z13.object({
-        feedstockId: z13.number(),
-        month: z13.number().min(1).max(12),
-        availabilityPercent: z13.number().min(0).max(100),
-        isPeakSeason: z13.boolean().optional(),
-        notes: z13.string().optional()
+      z14.object({
+        feedstockId: z14.number(),
+        month: z14.number().min(1).max(12),
+        availabilityPercent: z14.number().min(0).max(100),
+        isPeakSeason: z14.boolean().optional(),
+        notes: z14.string().optional()
       })
     ).mutation(async ({ input }) => {
       return await createSeasonalityProfile({
@@ -19476,15 +19912,15 @@ var appRouter = router({
         historicalYield: null
       });
     }),
-    getSeasonality: protectedProcedure.input(z13.object({ feedstockId: z13.number() })).query(async ({ input }) => {
+    getSeasonality: protectedProcedure.input(z14.object({ feedstockId: z14.number() })).query(async ({ input }) => {
       return await getSeasonalityByFeedstock(input.feedstockId);
     }),
     // Climate Exposure
     addClimateRisk: protectedProcedure.input(
-      z13.object({
-        supplierId: z13.number(),
-        feedstockId: z13.number().optional(),
-        exposureType: z13.enum([
+      z14.object({
+        supplierId: z14.number(),
+        feedstockId: z14.number().optional(),
+        exposureType: z14.enum([
           "drought",
           "flood",
           "bushfire",
@@ -19493,12 +19929,12 @@ var appRouter = router({
           "cyclone",
           "pest_outbreak"
         ]),
-        riskLevel: z13.enum(["low", "medium", "high", "extreme"]),
-        probabilityPercent: z13.number().min(0).max(100).optional(),
-        impactSeverity: z13.enum(["minor", "moderate", "major", "catastrophic"]).optional(),
-        mitigationMeasures: z13.string().optional(),
-        insuranceCoverage: z13.boolean().optional(),
-        notes: z13.string().optional()
+        riskLevel: z14.enum(["low", "medium", "high", "extreme"]),
+        probabilityPercent: z14.number().min(0).max(100).optional(),
+        impactSeverity: z14.enum(["minor", "moderate", "major", "catastrophic"]).optional(),
+        mitigationMeasures: z14.string().optional(),
+        insuranceCoverage: z14.boolean().optional(),
+        notes: z14.string().optional()
       })
     ).mutation(async ({ input, ctx }) => {
       return await createClimateExposure({
@@ -19511,25 +19947,25 @@ var appRouter = router({
         insuranceValue: null
       });
     }),
-    getSupplierClimateRisks: protectedProcedure.input(z13.object({ supplierId: z13.number() })).query(async ({ input }) => {
+    getSupplierClimateRisks: protectedProcedure.input(z14.object({ supplierId: z14.number() })).query(async ({ input }) => {
       return await getClimateExposureBySupplier(input.supplierId);
     }),
-    getFeedstockClimateRisks: protectedProcedure.input(z13.object({ feedstockId: z13.number() })).query(async ({ input }) => {
+    getFeedstockClimateRisks: protectedProcedure.input(z14.object({ feedstockId: z14.number() })).query(async ({ input }) => {
       return await getClimateExposureByFeedstock(input.feedstockId);
     }),
     // Yield Estimates
     addYieldEstimate: protectedProcedure.input(
-      z13.object({
-        feedstockId: z13.number(),
-        year: z13.number(),
-        season: z13.enum(["summer", "autumn", "winter", "spring", "annual"]).optional(),
-        p50Yield: z13.number(),
-        p75Yield: z13.number().optional(),
-        p90Yield: z13.number().optional(),
-        confidenceLevel: z13.enum(["low", "medium", "high"]),
-        methodology: z13.string().optional(),
-        weatherDependencyScore: z13.number().min(1).max(10).optional(),
-        notes: z13.string().optional()
+      z14.object({
+        feedstockId: z14.number(),
+        year: z14.number(),
+        season: z14.enum(["summer", "autumn", "winter", "spring", "annual"]).optional(),
+        p50Yield: z14.number(),
+        p75Yield: z14.number().optional(),
+        p90Yield: z14.number().optional(),
+        confidenceLevel: z14.enum(["low", "medium", "high"]),
+        methodology: z14.string().optional(),
+        weatherDependencyScore: z14.number().min(1).max(10).optional(),
+        notes: z14.string().optional()
       })
     ).mutation(async ({ input, ctx }) => {
       return await createYieldEstimate({
@@ -19538,10 +19974,10 @@ var appRouter = router({
         estimatedDate: /* @__PURE__ */ new Date()
       });
     }),
-    getYieldEstimates: protectedProcedure.input(z13.object({ feedstockId: z13.number() })).query(async ({ input }) => {
+    getYieldEstimates: protectedProcedure.input(z14.object({ feedstockId: z14.number() })).query(async ({ input }) => {
       return await getYieldEstimatesByFeedstock(input.feedstockId);
     }),
-    getLatestYield: protectedProcedure.input(z13.object({ feedstockId: z13.number() })).query(async ({ input }) => {
+    getLatestYield: protectedProcedure.input(z14.object({ feedstockId: z14.number() })).query(async ({ input }) => {
       return await getLatestYieldEstimate(input.feedstockId);
     })
   }),
@@ -19549,24 +19985,24 @@ var appRouter = router({
   stressTesting: router({
     // Run stress test (legacy - supports original 3 scenarios)
     runStressTest: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        scenarioType: z13.enum([
+      z14.object({
+        projectId: z14.number(),
+        scenarioType: z14.enum([
           "supplier_loss",
           "supply_shortfall",
           "regional_shock"
         ]),
-        scenarioParams: z13.object({
-          supplierId: z13.number().optional(),
-          shortfallPercent: z13.number().optional(),
-          region: z13.string().optional()
+        scenarioParams: z14.object({
+          supplierId: z14.number().optional(),
+          shortfallPercent: z14.number().optional(),
+          region: z14.string().optional()
         }),
-        baseScore: z13.number(),
-        baseRating: z13.string(),
-        covenants: z13.array(
-          z13.object({
-            type: z13.string(),
-            threshold: z13.number()
+        baseScore: z14.number(),
+        baseRating: z14.string(),
+        covenants: z14.array(
+          z14.object({
+            type: z14.string(),
+            threshold: z14.number()
           })
         ).optional()
       })
@@ -19588,32 +20024,32 @@ var appRouter = router({
     }),
     // Run comprehensive stress test (supports all 4 scenarios including price_shock)
     runComprehensiveTest: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        scenarioType: z13.enum([
+      z14.object({
+        projectId: z14.number(),
+        scenarioType: z14.enum([
           "supplier_loss",
           "supply_shortfall",
           "regional_shock",
           "price_spike"
         ]),
-        scenarioParams: z13.object({
-          supplierId: z13.number().optional(),
-          shortfallPercent: z13.number().optional(),
-          region: z13.string().optional(),
-          reductionPercent: z13.number().optional(),
-          priceIncreasePercent: z13.number().optional()
+        scenarioParams: z14.object({
+          supplierId: z14.number().optional(),
+          shortfallPercent: z14.number().optional(),
+          region: z14.string().optional(),
+          reductionPercent: z14.number().optional(),
+          priceIncreasePercent: z14.number().optional()
         }),
-        baseScore: z13.number(),
-        baseRating: z13.string(),
-        projectEconomics: z13.object({
-          baseRevenue: z13.number(),
-          baseCost: z13.number(),
-          targetMargin: z13.number()
+        baseScore: z14.number(),
+        baseRating: z14.string(),
+        projectEconomics: z14.object({
+          baseRevenue: z14.number(),
+          baseCost: z14.number(),
+          targetMargin: z14.number()
         }).optional(),
-        covenants: z13.array(
-          z13.object({
-            type: z13.string(),
-            threshold: z13.number()
+        covenants: z14.array(
+          z14.object({
+            type: z14.string(),
+            threshold: z14.number()
           })
         ).optional()
       })
@@ -19637,13 +20073,13 @@ var appRouter = router({
     }),
     // Run price shock scenario analysis
     runPriceShockAnalysis: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        priceIncreases: z13.array(z13.number()).default([20, 40, 60]),
-        projectEconomics: z13.object({
-          baseRevenue: z13.number(),
-          baseCost: z13.number(),
-          targetMargin: z13.number()
+      z14.object({
+        projectId: z14.number(),
+        priceIncreases: z14.array(z14.number()).default([20, 40, 60]),
+        projectEconomics: z14.object({
+          baseRevenue: z14.number(),
+          baseCost: z14.number(),
+          targetMargin: z14.number()
         })
       })
     ).query(async ({ input }) => {
@@ -19672,10 +20108,10 @@ var appRouter = router({
     }),
     // Run regional shock scenario analysis
     runRegionalAnalysis: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        region: z13.string(),
-        reductionPercent: z13.number().default(50)
+      z14.object({
+        projectId: z14.number(),
+        region: z14.string(),
+        reductionPercent: z14.number().default(50)
       })
     ).query(async ({ input }) => {
       const agreements = await getSupplyAgreementsByProjectId(
@@ -19696,31 +20132,31 @@ var appRouter = router({
       );
     }),
     // Get stress test results for a project
-    getProjectResults: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ input }) => {
+    getProjectResults: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ input }) => {
       const { getStressTestResults: getStressTestResults2 } = await Promise.resolve().then(() => (init_stressTesting(), stressTesting_exports));
       return await getStressTestResults2(input.projectId);
     }),
     // Get specific stress test result
-    getResult: protectedProcedure.input(z13.object({ resultId: z13.number() })).query(async ({ input }) => {
+    getResult: protectedProcedure.input(z14.object({ resultId: z14.number() })).query(async ({ input }) => {
       const { getStressTestResult: getStressTestResult2 } = await Promise.resolve().then(() => (init_stressTesting(), stressTesting_exports));
       return await getStressTestResult2(input.resultId);
     }),
     // Assess contract enforceability
     assessEnforceability: protectedProcedure.input(
-      z13.object({
-        agreementId: z13.number(),
-        governingLaw: z13.string(),
-        jurisdiction: z13.string(),
-        disputeResolution: z13.enum([
+      z14.object({
+        agreementId: z14.number(),
+        governingLaw: z14.string(),
+        jurisdiction: z14.string(),
+        disputeResolution: z14.enum([
           "litigation",
           "arbitration",
           "mediation",
           "expert_determination"
         ]),
-        hasTerminationProtections: z13.boolean(),
-        hasStepInRights: z13.boolean(),
-        hasSecurityPackage: z13.boolean(),
-        hasRemedies: z13.boolean()
+        hasTerminationProtections: z14.boolean(),
+        hasStepInRights: z14.boolean(),
+        hasSecurityPackage: z14.boolean(),
+        hasRemedies: z14.boolean()
       })
     ).mutation(async ({ input, ctx }) => {
       const { assessContractEnforceability: assessContractEnforceability2 } = await Promise.resolve().then(() => (init_stressTesting(), stressTesting_exports));
@@ -19730,7 +20166,7 @@ var appRouter = router({
       });
     }),
     // Get contract enforceability score
-    getEnforceabilityScore: protectedProcedure.input(z13.object({ agreementId: z13.number() })).query(async ({ input }) => {
+    getEnforceabilityScore: protectedProcedure.input(z14.object({ agreementId: z14.number() })).query(async ({ input }) => {
       const { getContractEnforceabilityScore: getContractEnforceabilityScore2 } = await Promise.resolve().then(() => (init_stressTesting(), stressTesting_exports));
       return await getContractEnforceabilityScore2(input.agreementId);
     })
@@ -19738,21 +20174,21 @@ var appRouter = router({
   // Lender Portal Enhancement (Phase 7)
   lender: router({
     // Get dashboard data
-    getDashboard: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ input }) => {
+    getDashboard: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ input }) => {
       const { getLenderDashboardData: getLenderDashboardData2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
       return await getLenderDashboardData2(input.projectId);
     }),
     // Get active alerts
-    getAlerts: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ input }) => {
+    getAlerts: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ input }) => {
       const { getActiveAlerts: getActiveAlerts2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
       return await getActiveAlerts2(input.projectId);
     }),
     // Get covenant breach history
     getBreachHistory: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        unresolved: z13.boolean().optional(),
-        since: z13.date().optional()
+      z14.object({
+        projectId: z14.number(),
+        unresolved: z14.boolean().optional(),
+        since: z14.date().optional()
       })
     ).query(async ({ input }) => {
       const { getCovenantBreachHistory: getCovenantBreachHistory2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
@@ -19763,9 +20199,9 @@ var appRouter = router({
     }),
     // Resolve covenant breach
     resolveBreach: protectedProcedure.input(
-      z13.object({
-        breachId: z13.number(),
-        resolutionNotes: z13.string()
+      z14.object({
+        breachId: z14.number(),
+        resolutionNotes: z14.string()
       })
     ).mutation(async ({ input, ctx }) => {
       const { resolveCovenantBreach: resolveCovenantBreach2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
@@ -19777,11 +20213,11 @@ var appRouter = router({
     }),
     // Generate monthly report
     generateReport: protectedProcedure.input(
-      z13.object({
-        projectId: z13.number(),
-        reportMonth: z13.string(),
-        executiveSummary: z13.string().optional(),
-        scoreChangesNarrative: z13.string().optional()
+      z14.object({
+        projectId: z14.number(),
+        reportMonth: z14.string(),
+        executiveSummary: z14.string().optional(),
+        scoreChangesNarrative: z14.string().optional()
       })
     ).mutation(async ({ input, ctx }) => {
       const { generateMonthlyReport: generateMonthlyReport2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
@@ -19791,21 +20227,21 @@ var appRouter = router({
       });
     }),
     // Get latest report
-    getLatestReport: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ input }) => {
+    getLatestReport: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ input }) => {
       const { getLatestReport: getLatestReport2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
       return await getLatestReport2(input.projectId);
     }),
     // Get all reports
-    getReports: protectedProcedure.input(z13.object({ projectId: z13.number() })).query(async ({ input }) => {
+    getReports: protectedProcedure.input(z14.object({ projectId: z14.number() })).query(async ({ input }) => {
       const { getProjectReports: getProjectReports2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
       return await getProjectReports2(input.projectId);
     }),
     // Finalize report
     finalizeReport: protectedProcedure.input(
-      z13.object({
-        reportId: z13.number(),
-        reportPdfUrl: z13.string().optional(),
-        evidencePackUrl: z13.string().optional()
+      z14.object({
+        reportId: z14.number(),
+        reportPdfUrl: z14.string().optional(),
+        evidencePackUrl: z14.string().optional()
       })
     ).mutation(async ({ input }) => {
       const { finalizeReport: finalizeReport2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
@@ -19813,7 +20249,7 @@ var appRouter = router({
       return { success: true };
     }),
     // Mark report as sent
-    markReportSent: protectedProcedure.input(z13.object({ reportId: z13.number() })).mutation(async ({ input }) => {
+    markReportSent: protectedProcedure.input(z14.object({ reportId: z14.number() })).mutation(async ({ input }) => {
       const { markReportSent: markReportSent2 } = await Promise.resolve().then(() => (init_lenderPortal(), lenderPortal_exports));
       await markReportSent2(input.reportId);
       return { success: true };
@@ -19823,14 +20259,14 @@ var appRouter = router({
   compliance: router({
     // Audit logs
     queryAuditLogs: protectedProcedure.input(
-      z13.object({
-        userId: z13.number().optional(),
-        entityType: z13.string().optional(),
-        entityId: z13.number().optional(),
-        action: z13.string().optional(),
-        startDate: z13.date().optional(),
-        endDate: z13.date().optional(),
-        limit: z13.number().optional()
+      z14.object({
+        userId: z14.number().optional(),
+        entityType: z14.string().optional(),
+        entityId: z14.number().optional(),
+        action: z14.string().optional(),
+        startDate: z14.date().optional(),
+        endDate: z14.date().optional(),
+        limit: z14.number().optional()
       })
     ).query(async ({ input }) => {
       const { queryAuditLogs: queryAuditLogs2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -19838,8 +20274,8 @@ var appRouter = router({
     }),
     // Admin overrides
     recordOverride: protectedProcedure.input(
-      z13.object({
-        overrideType: z13.enum([
+      z14.object({
+        overrideType: z14.enum([
           "score",
           "rating",
           "status",
@@ -19847,13 +20283,13 @@ var appRouter = router({
           "certification",
           "evidence_validity"
         ]),
-        entityType: z13.string(),
-        entityId: z13.number(),
-        originalValue: z13.any(),
-        overrideValue: z13.any(),
-        justification: z13.string(),
-        riskAssessment: z13.string().optional(),
-        expiryDate: z13.date().optional()
+        entityType: z14.string(),
+        entityId: z14.number(),
+        originalValue: z14.any(),
+        overrideValue: z14.any(),
+        justification: z14.string(),
+        riskAssessment: z14.string().optional(),
+        expiryDate: z14.date().optional()
       })
     ).mutation(async ({ input, ctx }) => {
       const { recordAdminOverride: recordAdminOverride2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -19864,18 +20300,18 @@ var appRouter = router({
       });
     }),
     getActiveOverrides: protectedProcedure.input(
-      z13.object({
-        entityType: z13.string(),
-        entityId: z13.number()
+      z14.object({
+        entityType: z14.string(),
+        entityId: z14.number()
       })
     ).query(async ({ input }) => {
       const { getActiveOverrides: getActiveOverrides2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
       return await getActiveOverrides2(input.entityType, input.entityId);
     }),
     revokeOverride: protectedProcedure.input(
-      z13.object({
-        overrideId: z13.number(),
-        revocationReason: z13.string()
+      z14.object({
+        overrideId: z14.number(),
+        revocationReason: z14.string()
       })
     ).mutation(async ({ input, ctx }) => {
       const { revokeOverride: revokeOverride2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -19887,8 +20323,8 @@ var appRouter = router({
     }),
     // User consents
     recordConsent: protectedProcedure.input(
-      z13.object({
-        consentType: z13.enum([
+      z14.object({
+        consentType: z14.enum([
           "terms_of_service",
           "privacy_policy",
           "data_processing",
@@ -19896,11 +20332,11 @@ var appRouter = router({
           "third_party_sharing",
           "certification_reliance"
         ]),
-        consentVersion: z13.string(),
-        consentText: z13.string(),
-        granted: z13.boolean(),
-        ipAddress: z13.string().optional(),
-        userAgent: z13.string().optional()
+        consentVersion: z14.string(),
+        consentText: z14.string(),
+        granted: z14.boolean(),
+        ipAddress: z14.string().optional(),
+        userAgent: z14.string().optional()
       })
     ).mutation(async ({ input, ctx }) => {
       const { recordUserConsent: recordUserConsent2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -19910,25 +20346,25 @@ var appRouter = router({
       });
     }),
     getUserConsents: protectedProcedure.input(
-      z13.object({
-        consentType: z13.string().optional()
+      z14.object({
+        consentType: z14.string().optional()
       })
     ).query(async ({ input, ctx }) => {
       const { getUserConsents: getUserConsents2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
       return await getUserConsents2(ctx.user.id, input.consentType);
     }),
-    withdrawConsent: protectedProcedure.input(z13.object({ consentId: z13.number() })).mutation(async ({ input }) => {
+    withdrawConsent: protectedProcedure.input(z14.object({ consentId: z14.number() })).mutation(async ({ input }) => {
       const { withdrawConsent: withdrawConsent2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
       await withdrawConsent2(input.consentId);
       return { success: true };
     }),
     // Certificate legal metadata
     createCertificateLegalMetadata: protectedProcedure.input(
-      z13.object({
-        certificateId: z13.number(),
-        issuerName: z13.string(),
-        issuerRole: z13.string(),
-        certificationScope: z13.string()
+      z14.object({
+        certificateId: z14.number(),
+        issuerName: z14.string(),
+        issuerRole: z14.string(),
+        certificationScope: z14.string()
       })
     ).mutation(async ({ input, ctx }) => {
       const { createCertificateLegalMetadata: createCertificateLegalMetadata2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -19939,8 +20375,8 @@ var appRouter = router({
     }),
     // Disputes
     submitDispute: protectedProcedure.input(
-      z13.object({
-        disputeType: z13.enum([
+      z14.object({
+        disputeType: z14.enum([
           "score_accuracy",
           "certificate_validity",
           "evidence_authenticity",
@@ -19948,20 +20384,20 @@ var appRouter = router({
           "service_quality",
           "billing"
         ]),
-        respondent: z13.number().optional(),
-        relatedEntityType: z13.string().optional(),
-        relatedEntityId: z13.number().optional(),
-        title: z13.string(),
-        description: z13.string(),
-        desiredOutcome: z13.string().optional(),
-        supportingEvidence: z13.array(
-          z13.object({
-            type: z13.string(),
-            url: z13.string(),
-            description: z13.string()
+        respondent: z14.number().optional(),
+        relatedEntityType: z14.string().optional(),
+        relatedEntityId: z14.number().optional(),
+        title: z14.string(),
+        description: z14.string(),
+        desiredOutcome: z14.string().optional(),
+        supportingEvidence: z14.array(
+          z14.object({
+            type: z14.string(),
+            url: z14.string(),
+            description: z14.string()
           })
         ).optional(),
-        priority: z13.enum(["low", "medium", "high", "urgent"]).optional()
+        priority: z14.enum(["low", "medium", "high", "urgent"]).optional()
       })
     ).mutation(async ({ input, ctx }) => {
       const { submitDispute: submitDispute2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -19971,9 +20407,9 @@ var appRouter = router({
       });
     }),
     updateDisputeStatus: protectedProcedure.input(
-      z13.object({
-        disputeId: z13.number(),
-        status: z13.enum([
+      z14.object({
+        disputeId: z14.number(),
+        status: z14.enum([
           "submitted",
           "under_review",
           "investigation",
@@ -19982,21 +20418,21 @@ var appRouter = router({
           "resolved",
           "closed"
         ]),
-        assignedTo: z13.number().optional(),
-        resolutionSummary: z13.string().optional(),
-        resolutionOutcome: z13.enum([
+        assignedTo: z14.number().optional(),
+        resolutionSummary: z14.string().optional(),
+        resolutionOutcome: z14.enum([
           "upheld",
           "partially_upheld",
           "rejected",
           "withdrawn",
           "settled"
         ]).optional(),
-        remediationActions: z13.array(
-          z13.object({
-            action: z13.string(),
-            responsible: z13.string(),
-            deadline: z13.string(),
-            completed: z13.boolean()
+        remediationActions: z14.array(
+          z14.object({
+            action: z14.string(),
+            responsible: z14.string(),
+            deadline: z14.string(),
+            completed: z14.boolean()
           })
         ).optional()
       })
@@ -20006,8 +20442,8 @@ var appRouter = router({
       return { success: true };
     }),
     getUserDisputes: protectedProcedure.input(
-      z13.object({
-        status: z13.string().optional()
+      z14.object({
+        status: z14.string().optional()
       })
     ).query(async ({ input, ctx }) => {
       const { getUserDisputes: getUserDisputes2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
@@ -20019,7 +20455,7 @@ var appRouter = router({
       return LEGAL_TEMPLATES2;
     }),
     // Retention policies
-    getRetentionPolicy: protectedProcedure.input(z13.object({ entityType: z13.string() })).query(async ({ input }) => {
+    getRetentionPolicy: protectedProcedure.input(z14.object({ entityType: z14.string() })).query(async ({ input }) => {
       const { getRetentionPolicy: getRetentionPolicy2 } = await Promise.resolve().then(() => (init_compliance(), compliance_exports));
       return await getRetentionPolicy2(input.entityType);
     })
@@ -20033,9 +20469,9 @@ var appRouter = router({
     }),
     // Generate report for specific period
     generateReport: protectedProcedure.input(
-      z13.object({
-        quarter: z13.number().min(1).max(4),
-        year: z13.number()
+      z14.object({
+        quarter: z14.number().min(1).max(4),
+        year: z14.number()
       })
     ).query(async ({ input }) => {
       const { generateComplianceReport: generateComplianceReport2 } = await Promise.resolve().then(() => (init_complianceReporting(), complianceReporting_exports));
@@ -20066,9 +20502,9 @@ var appRouter = router({
     }),
     // Get report summary as text
     getReportSummary: protectedProcedure.input(
-      z13.object({
-        quarter: z13.number().min(1).max(4),
-        year: z13.number()
+      z14.object({
+        quarter: z14.number().min(1).max(4),
+        year: z14.number()
       })
     ).query(async ({ input }) => {
       const { generateComplianceReport: generateComplianceReport2, formatReportSummary: formatReportSummary2 } = await Promise.resolve().then(() => (init_complianceReporting(), complianceReporting_exports));
@@ -20094,9 +20530,9 @@ var appRouter = router({
     }),
     // Get audit metrics only
     getAuditMetrics: protectedProcedure.input(
-      z13.object({
-        quarter: z13.number().min(1).max(4),
-        year: z13.number()
+      z14.object({
+        quarter: z14.number().min(1).max(4),
+        year: z14.number()
       })
     ).query(async ({ input }) => {
       const { getAuditMetrics: getAuditMetrics2 } = await Promise.resolve().then(() => (init_complianceReporting(), complianceReporting_exports));
@@ -20121,9 +20557,9 @@ var appRouter = router({
     }),
     // Get override metrics only
     getOverrideMetrics: protectedProcedure.input(
-      z13.object({
-        quarter: z13.number().min(1).max(4),
-        year: z13.number()
+      z14.object({
+        quarter: z14.number().min(1).max(4),
+        year: z14.number()
       })
     ).query(async ({ input }) => {
       const { getOverrideMetrics: getOverrideMetrics2 } = await Promise.resolve().then(() => (init_complianceReporting(), complianceReporting_exports));
@@ -20148,9 +20584,9 @@ var appRouter = router({
     }),
     // Get dispute metrics only
     getDisputeMetrics: protectedProcedure.input(
-      z13.object({
-        quarter: z13.number().min(1).max(4),
-        year: z13.number()
+      z14.object({
+        quarter: z14.number().min(1).max(4),
+        year: z14.number()
       })
     ).query(async ({ input }) => {
       const { getDisputeMetrics: getDisputeMetrics2 } = await Promise.resolve().then(() => (init_complianceReporting(), complianceReporting_exports));
@@ -20180,42 +20616,42 @@ var appRouter = router({
   savedAnalyses: router({
     // Save a new radius analysis
     save: protectedProcedure.input(
-      z13.object({
-        name: z13.string().min(1).max(255),
-        description: z13.string().optional(),
-        radiusKm: z13.number().int().min(10).max(200),
-        centerLat: z13.string(),
-        centerLng: z13.string(),
-        results: z13.object({
-          feasibilityScore: z13.number(),
-          facilities: z13.object({
-            sugarMills: z13.number(),
-            biogasFacilities: z13.number(),
-            biofuelPlants: z13.number(),
-            ports: z13.number(),
-            grainHubs: z13.number()
+      z14.object({
+        name: z14.string().min(1).max(255),
+        description: z14.string().optional(),
+        radiusKm: z14.number().int().min(10).max(200),
+        centerLat: z14.string(),
+        centerLng: z14.string(),
+        results: z14.object({
+          feasibilityScore: z14.number(),
+          facilities: z14.object({
+            sugarMills: z14.number(),
+            biogasFacilities: z14.number(),
+            biofuelPlants: z14.number(),
+            ports: z14.number(),
+            grainHubs: z14.number()
           }),
-          feedstockTonnes: z13.object({
-            bagasse: z13.number(),
-            grainStubble: z13.number(),
-            forestryResidue: z13.number(),
-            biogas: z13.number(),
-            total: z13.number()
+          feedstockTonnes: z14.object({
+            bagasse: z14.number(),
+            grainStubble: z14.number(),
+            forestryResidue: z14.number(),
+            biogas: z14.number(),
+            total: z14.number()
           }),
-          infrastructure: z13.object({
-            ports: z13.array(z13.string()),
-            railLines: z13.array(z13.string())
+          infrastructure: z14.object({
+            ports: z14.array(z14.string()),
+            railLines: z14.array(z14.string())
           }),
-          recommendations: z13.array(z13.string())
+          recommendations: z14.array(z14.string())
         }),
-        filterState: z13.object({
-          selectedStates: z13.array(z13.string()),
-          visibleLayers: z13.array(z13.string()),
-          capacityRanges: z13.record(
-            z13.string(),
-            z13.object({
-              min: z13.number(),
-              max: z13.number()
+        filterState: z14.object({
+          selectedStates: z14.array(z14.string()),
+          visibleLayers: z14.array(z14.string()),
+          capacityRanges: z14.record(
+            z14.string(),
+            z14.object({
+              min: z14.number(),
+              max: z14.number()
             })
           )
         }).optional()
@@ -20232,16 +20668,16 @@ var appRouter = router({
       return await getSavedAnalysesByUserId(ctx.user.id);
     }),
     // Get a specific saved analysis by ID
-    get: protectedProcedure.input(z13.object({ id: z13.number() })).query(async ({ ctx, input }) => {
+    get: protectedProcedure.input(z14.object({ id: z14.number() })).query(async ({ ctx, input }) => {
       const analysis = await getSavedAnalysisById(input.id);
       if (!analysis) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Analysis not found"
         });
       }
       if (analysis.userId !== ctx.user.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "You do not have access to this analysis"
         });
@@ -20250,16 +20686,16 @@ var appRouter = router({
     }),
     // Update a saved analysis
     update: protectedProcedure.input(
-      z13.object({
-        id: z13.number(),
-        name: z13.string().min(1).max(255).optional(),
-        description: z13.string().optional()
+      z14.object({
+        id: z14.number(),
+        name: z14.string().min(1).max(255).optional(),
+        description: z14.string().optional()
       })
     ).mutation(async ({ ctx, input }) => {
       const { id, ...updates } = input;
       const analysis = await getSavedAnalysisById(id);
       if (!analysis || analysis.userId !== ctx.user.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "You do not have access to this analysis"
         });
@@ -20268,10 +20704,10 @@ var appRouter = router({
       return { success: true };
     }),
     // Delete a saved analysis
-    delete: protectedProcedure.input(z13.object({ id: z13.number() })).mutation(async ({ ctx, input }) => {
+    delete: protectedProcedure.input(z14.object({ id: z14.number() })).mutation(async ({ ctx, input }) => {
       const analysis = await getSavedAnalysisById(input.id);
       if (!analysis || analysis.userId !== ctx.user.id) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "FORBIDDEN",
           message: "You do not have access to this analysis"
         });
@@ -20286,50 +20722,50 @@ var appRouter = router({
   producer: router({
     // Submit complete producer registration
     register: protectedProcedure.input(
-      z13.object({
+      z14.object({
         // Account info
-        abn: z13.string(),
-        companyName: z13.string(),
-        contactName: z13.string(),
-        email: z13.string().email(),
-        phone: z13.string(),
+        abn: z14.string(),
+        companyName: z14.string(),
+        contactName: z14.string(),
+        email: z14.string().email(),
+        phone: z14.string(),
         // Property info
-        propertyName: z13.string(),
-        primaryAddress: z13.string(),
-        state: z13.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]),
-        postcode: z13.string(),
-        latitude: z13.string(),
-        longitude: z13.string(),
-        totalLandArea: z13.number(),
-        waterAccessType: z13.enum([
+        propertyName: z14.string(),
+        primaryAddress: z14.string(),
+        state: z14.enum(["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"]),
+        postcode: z14.string(),
+        latitude: z14.string(),
+        longitude: z14.string(),
+        totalLandArea: z14.number(),
+        waterAccessType: z14.enum([
           "irrigated_surface",
           "irrigated_groundwater",
           "irrigated_recycled",
           "dryland",
           "mixed_irrigation"
         ]).optional(),
-        boundaries: z13.string().optional(),
+        boundaries: z14.string().optional(),
         // Production profile
-        feedstockType: z13.string(),
-        currentSeasonYield: z13.number(),
-        historicalYields: z13.array(
-          z13.object({
-            seasonYear: z13.number(),
-            cropType: z13.string().optional(),
-            totalHarvest: z13.number(),
-            plantedArea: z13.number().optional(),
-            notes: z13.string().optional()
+        feedstockType: z14.string(),
+        currentSeasonYield: z14.number(),
+        historicalYields: z14.array(
+          z14.object({
+            seasonYear: z14.number(),
+            cropType: z14.string().optional(),
+            totalHarvest: z14.number(),
+            plantedArea: z14.number().optional(),
+            notes: z14.string().optional()
           })
         ),
         // Carbon practices (simplified for MVP - can expand later)
-        tillagePractice: z13.enum([
+        tillagePractice: z14.enum([
           "no_till",
           "minimum_till",
           "conventional",
           "multiple_passes"
         ]).optional(),
-        nitrogenKgPerHa: z13.number().optional(),
-        fertiliserType: z13.enum([
+        nitrogenKgPerHa: z14.number().optional(),
+        fertiliserType: z14.enum([
           "urea",
           "anhydrous_ammonia",
           "dap_map",
@@ -20337,29 +20773,29 @@ var appRouter = router({
           "controlled_release",
           "mixed_blend"
         ]).optional(),
-        carbonScore: z13.number().optional(),
+        carbonScore: z14.number().optional(),
         // Existing contracts
-        existingContracts: z13.array(
-          z13.object({
-            buyerName: z13.string(),
-            contractedVolumeTonnes: z13.number(),
-            contractEndDate: z13.string(),
+        existingContracts: z14.array(
+          z14.object({
+            buyerName: z14.string(),
+            contractedVolumeTonnes: z14.number(),
+            contractEndDate: z14.string(),
             // Will be converted to Date
-            isConfidential: z13.boolean().optional()
+            isConfidential: z14.boolean().optional()
           })
         ),
         // Marketplace listing
-        tonnesAvailableThisSeason: z13.number(),
-        tonnesAvailableAnnually: z13.number(),
-        minimumAcceptablePricePerTonne: z13.number(),
-        deliveryTermsPreferred: z13.enum([
+        tonnesAvailableThisSeason: z14.number(),
+        tonnesAvailableAnnually: z14.number(),
+        minimumAcceptablePricePerTonne: z14.number(),
+        deliveryTermsPreferred: z14.enum([
           "ex_farm",
           "delivered_to_buyer",
           "fob_port",
           "flexible"
         ]),
-        qualitySpecs: z13.string(),
-        visibility: z13.enum([
+        qualitySpecs: z14.string(),
+        visibility: z14.enum([
           "public_marketplace",
           "verified_buyers_only",
           "private_network",
@@ -20379,7 +20815,7 @@ var appRouter = router({
         supplier = await getSupplierByUserId(ctx.user.id);
       }
       if (!supplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "INTERNAL_SERVER_ERROR",
           message: "Failed to create supplier profile"
         });
@@ -20442,20 +20878,20 @@ var appRouter = router({
   // ============================================================================
   certificateVerification: router({
     generateCertificate: protectedProcedure.input(
-      z13.object({
-        feedstockId: z13.number()
+      z14.object({
+        feedstockId: z14.number()
       })
     ).mutation(async ({ input, ctx }) => {
       const feedstock = await getFeedstockById(input.feedstockId);
       if (!feedstock) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Feedstock not found"
         });
       }
       const supplier = await getSupplierById(feedstock.supplierId);
       if (!supplier) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Supplier not found"
         });
@@ -20518,8 +20954,8 @@ var appRouter = router({
       };
     }),
     verifyHash: publicProcedure.input(
-      z13.object({
-        hash: z13.string().length(64)
+      z14.object({
+        hash: z14.string().length(64)
         // SHA-256 hash is 64 hex characters
       })
     ).query(async ({ input }) => {
@@ -20558,13 +20994,13 @@ var appRouter = router({
       };
     }),
     generateHash: protectedProcedure.input(
-      z13.object({
-        certificateId: z13.number()
+      z14.object({
+        certificateId: z14.number()
       })
     ).mutation(async ({ input, ctx }) => {
       const certificate = await getCertificateById(input.certificateId);
       if (!certificate) {
-        throw new TRPCError15({
+        throw new TRPCError16({
           code: "NOT_FOUND",
           message: "Certificate not found"
         });
@@ -20888,22 +21324,22 @@ function registerOAuthRoutes(app2) {
 }
 
 // server/manus.ts
-import { z as z14 } from "zod";
+import { z as z15 } from "zod";
 var MANUS_API_URL = process.env.MANUS_API_URL || "https://api.manus.ai/v1";
 var MANUS_API_KEY = process.env.MANUS_API_KEY || "";
-var webhookEventSchema = z14.object({
-  event_id: z14.string(),
-  event_type: z14.enum(["task_created", "task_progress", "task_stopped"]),
-  task_id: z14.string(),
-  task_title: z14.string().optional(),
-  task_url: z14.string().optional(),
-  message: z14.string().optional(),
-  progress_type: z14.string().optional(),
-  stop_reason: z14.enum(["finish", "ask"]).optional(),
-  attachments: z14.array(z14.object({
-    file_name: z14.string(),
-    url: z14.string(),
-    size_bytes: z14.number()
+var webhookEventSchema = z15.object({
+  event_id: z15.string(),
+  event_type: z15.enum(["task_created", "task_progress", "task_stopped"]),
+  task_id: z15.string(),
+  task_title: z15.string().optional(),
+  task_url: z15.string().optional(),
+  message: z15.string().optional(),
+  progress_type: z15.string().optional(),
+  stop_reason: z15.enum(["finish", "ask"]).optional(),
+  attachments: z15.array(z15.object({
+    file_name: z15.string(),
+    url: z15.string(),
+    size_bytes: z15.number()
   })).optional()
 });
 var ManusClient = class {
@@ -21215,7 +21651,7 @@ var certificateVerificationRouter = router2;
 init_schema();
 import { Router as Router2 } from "express";
 import { drizzle as drizzle7 } from "drizzle-orm/mysql2";
-import { eq as eq19, and as and17 } from "drizzle-orm";
+import { eq as eq20, and as and18 } from "drizzle-orm";
 var router3 = Router2();
 async function getDb7() {
   if (!process.env.DATABASE_URL) return null;
@@ -21251,10 +21687,10 @@ router3.get(
         });
       }
       const [record] = await db.select().from(didRegistry).where(
-        and17(
-          eq19(didRegistry.controllerType, controllerType),
-          eq19(didRegistry.controllerId, controllerIdNum),
-          eq19(didRegistry.status, "active")
+        and18(
+          eq20(didRegistry.controllerType, controllerType),
+          eq20(didRegistry.controllerId, controllerIdNum),
+          eq20(didRegistry.status, "active")
         )
       ).limit(1);
       if (!record) {
@@ -21310,7 +21746,7 @@ router3.get("/1.0/identifiers/:did", async (req, res) => {
     if (!db) {
       return res.status(503).json(createErrorResponse("serviceUnavailable", "Database not available"));
     }
-    const [record] = await db.select().from(didRegistry).where(eq19(didRegistry.did, did)).limit(1);
+    const [record] = await db.select().from(didRegistry).where(eq20(didRegistry.did, did)).limit(1);
     if (!record) {
       return res.status(404).json(createErrorResponse("notFound", "DID not found"));
     }
@@ -21394,7 +21830,7 @@ router3.get("/dids", async (_req, res) => {
       controllerId: didRegistry.controllerId,
       status: didRegistry.status,
       createdAt: didRegistry.createdAt
-    }).from(didRegistry).where(eq19(didRegistry.status, "active")).limit(100);
+    }).from(didRegistry).where(eq20(didRegistry.status, "active")).limit(100);
     res.json({
       count: records.length,
       dids: records

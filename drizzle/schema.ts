@@ -5318,3 +5318,133 @@ export const technicalIndicators = mysqlTable(
     ),
   })
 );
+
+// ============================================================================
+// POLICY & CARBON - Policy Tracker and Carbon Revenue
+// ============================================================================
+
+/**
+ * Policy Timeline Events
+ * Key policy events by jurisdiction
+ */
+export const policyTimelineEvents = mysqlTable(
+  "policy_timeline_events",
+  {
+    id: int("id").primaryKey().autoincrement(),
+    jurisdiction: varchar("jurisdiction", { length: 50 }).notNull(), // Federal, NSW, VIC, QLD, etc.
+    date: date("date").notNull(),
+    eventType: mysqlEnum("eventType", ["enacted", "consultation_open", "expected_decision", "expired"]).notNull(),
+    title: varchar("title", { length: 500 }).notNull(),
+    description: text("description"),
+    policyId: varchar("policyId", { length: 100 }),
+    url: varchar("url", { length: 1000 }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    dateIdx: index("policy_date_idx").on(table.date),
+    jurisdictionIdx: index("policy_jurisdiction_idx").on(table.jurisdiction),
+  })
+);
+
+/**
+ * Policy Kanban Items
+ * Policies organized by status (proposed, review, enacted)
+ */
+export const policyKanbanItems = mysqlTable(
+  "policy_kanban_items",
+  {
+    id: int("id").primaryKey().autoincrement(),
+    title: varchar("title", { length: 500 }).notNull(),
+    jurisdiction: varchar("jurisdiction", { length: 50 }).notNull(),
+    policyType: varchar("policyType", { length: 100 }).notNull(),
+    status: mysqlEnum("status", ["proposed", "review", "enacted", "expired"]).notNull(),
+    summary: text("summary"),
+    expectedDate: date("expectedDate"),
+    url: varchar("url", { length: 1000 }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    statusIdx: index("kanban_status_idx").on(table.status),
+    jurisdictionIdx: index("kanban_jurisdiction_idx").on(table.jurisdiction),
+  })
+);
+
+/**
+ * Mandate Scenarios
+ * Revenue impact under different mandate levels
+ */
+export const mandateScenarios = mysqlTable(
+  "mandate_scenarios",
+  {
+    id: int("id").primaryKey().autoincrement(),
+    name: varchar("name", { length: 100 }).notNull(),
+    mandateLevel: varchar("mandateLevel", { length: 20 }).notNull(), // B5, B10, B20
+    revenueImpact: decimal("revenueImpact", { precision: 15, scale: 2 }).notNull(),
+    description: text("description"),
+    assumptions: json("assumptions").$type<Record<string, any>>(),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    mandateLevelIdx: index("mandate_level_idx").on(table.mandateLevel),
+  })
+);
+
+/**
+ * Offtake Agreements
+ * Current offtake agreements and premiums
+ */
+export const offtakeAgreements = mysqlTable(
+  "offtake_agreements",
+  {
+    id: int("id").primaryKey().autoincrement(),
+    offtaker: varchar("offtaker", { length: 200 }).notNull(),
+    mandate: varchar("mandate", { length: 100 }).notNull(),
+    volume: varchar("volume", { length: 100 }).notNull(),
+    term: varchar("term", { length: 50 }).notNull(),
+    premium: varchar("premium", { length: 50 }).notNull(),
+    isActive: boolean("isActive").default(true),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  }
+);
+
+/**
+ * ACCU Price History
+ * Australian Carbon Credit Unit price tracking
+ */
+export const accuPriceHistory = mysqlTable(
+  "accu_price_history",
+  {
+    id: int("id").primaryKey().autoincrement(),
+    date: date("date").notNull(),
+    price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+    change: decimal("change", { precision: 10, scale: 2 }).notNull(),
+    changePct: decimal("changePct", { precision: 6, scale: 2 }).notNull(),
+    source: varchar("source", { length: 100 }).default("CER"),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    dateIdx: uniqueIndex("accu_date_idx").on(table.date),
+  })
+);
+
+/**
+ * Policy Consultations
+ * Open consultations for policy input
+ */
+export const policyConsultations = mysqlTable(
+  "policy_consultations",
+  {
+    id: int("id").primaryKey().autoincrement(),
+    title: varchar("title", { length: 500 }).notNull(),
+    jurisdiction: varchar("jurisdiction", { length: 50 }).notNull(),
+    opens: date("opens").notNull(),
+    closes: date("closes").notNull(),
+    relevance: varchar("relevance", { length: 50 }).notNull(), // high, medium, low
+    submissionUrl: varchar("submissionUrl", { length: 1000 }),
+    createdAt: timestamp("createdAt").defaultNow().notNull(),
+  },
+  (table) => ({
+    closesIdx: index("consultation_closes_idx").on(table.closes),
+  })
+);
