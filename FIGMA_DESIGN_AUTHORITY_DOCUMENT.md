@@ -6,8 +6,10 @@
 |----------|-------|
 | **Status** | Active |
 | **Applies to** | All ABFI digital products, exports, and interfaces |
-| **Effective date** | Upon approval |
+| **Effective date** | 2025-05-23 |
 | **Supersedes** | Ad hoc design decisions |
+| **Baseline commit** | `04f91fc` |
+| **Git tag** | `v1.0-design-authority` |
 
 ---
 
