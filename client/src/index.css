@@ -285,13 +285,13 @@
   --rating-d: oklch(0.62 0.18 50);
   --rating-f: oklch(0.55 0.22 30);
 
-  /* Core UI tokens - Light Mode - Matching abfi.io */
-  --primary: var(--color-teal-500);
+  /* Core UI tokens - Light Mode - ABFI Corporate Navy + Gold */
+  --primary: var(--color-navy-500);
   --primary-foreground: oklch(0.99 0 0);
   --secondary: var(--color-slate-100);
   --secondary-foreground: var(--color-slate-700);
-  --accent: var(--color-teal-500);
-  --accent-foreground: oklch(0.99 0 0);
+  --accent: var(--color-gold-400);
+  --accent-foreground: var(--color-navy-900);
   --muted: var(--color-slate-100);
   --muted-foreground: var(--color-slate-500);
   --destructive: var(--color-error-500);
@@ -307,11 +307,11 @@
   --popover-foreground: var(--color-slate-900);
   --border: oklch(0.9 0.008 85);
   --input: oklch(0.9 0.008 85);
-  --ring: var(--color-teal-500);
+  --ring: var(--color-navy-500);
 
-  /* Chart colors - Premium palette */
-  --chart-1: var(--color-teal-500);
-  --chart-2: var(--color-orange-500);
+  /* Chart colors - Navy + Gold palette */
+  --chart-1: var(--color-navy-500);
+  --chart-2: var(--color-gold-400);
   --chart-3: var(--color-success-500);
   --chart-4: var(--color-info-500);
   --chart-5: var(--color-warning-500);
@@ -345,13 +345,13 @@
 }
 
 .dark {
-  /* Dark Mode - Premium Financial Theme */
-  --primary: var(--color-teal-400);
-  --primary-foreground: oklch(0.12 0.008 280);
+  /* Dark Mode - ABFI Corporate Navy + Gold */
+  --primary: var(--color-navy-400);
+  --primary-foreground: oklch(0.99 0 0);
   --secondary: var(--color-slate-800);
   --secondary-foreground: var(--color-slate-200);
-  --accent: var(--color-orange-400);
-  --accent-foreground: oklch(0.12 0.008 280);
+  --accent: var(--color-gold-400);
+  --accent-foreground: var(--color-navy-900);
   --muted: var(--color-slate-800);
   --muted-foreground: var(--color-slate-400);
   --destructive: var(--color-error-500);
@@ -365,11 +365,11 @@
   --popover-foreground: var(--color-slate-100);
   --border: var(--color-slate-800);
   --input: var(--color-slate-800);
-  --ring: var(--color-teal-400);
+  --ring: var(--color-navy-400);
 
   /* Chart colors - Dark mode */
-  --chart-1: var(--color-teal-400);
-  --chart-2: var(--color-orange-400);
+  --chart-1: var(--color-navy-400);
+  --chart-2: var(--color-gold-400);
   --chart-3: oklch(0.7 0.18 145);
   --chart-4: oklch(0.65 0.16 250);
   --chart-5: oklch(0.75 0.14 85);

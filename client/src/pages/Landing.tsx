@@ -122,8 +122,8 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+      {/* Hero Section - Navy Corporate Design */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[oklch(0.18_0.04_240)] via-[oklch(0.22_0.05_240)] to-[oklch(0.18_0.04_240)] text-white">
         {/* Animated background pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
@@ -131,9 +131,9 @@ export default function Landing() {
           }} />
         </div>
 
-        {/* Animated gradient orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        {/* Animated gradient orbs - Gold accent */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-[oklch(0.78_0.15_85)]/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[oklch(0.72_0.14_85)]/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
 
         <div className="container mx-auto px-4 py-20 lg:py-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
@@ -150,7 +150,7 @@ export default function Landing() {
             <FadeInUp delay={0.1}>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
                 Transform Biofuel
-                <span className="block bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+                <span className="block bg-gradient-to-r from-[oklch(0.78_0.15_85)] to-[oklch(0.88_0.1_85)] bg-clip-text text-transparent">
                   Supply Chain Risk
                 </span>
                 Into Strategic Advantage
@@ -303,8 +303,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Trust Bar */}
-      <section className="py-16 bg-slate-900 text-white">
+      {/* Trust Bar - Navy */}
+      <section className="py-16 bg-[oklch(0.18_0.04_240)] text-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {TRUST_STATS.map((stat, index) => (
@@ -375,8 +375,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-br from-emerald-600 to-blue-600 text-white">
+      {/* Final CTA - Navy + Gold */}
+      <section className="py-20 bg-gradient-to-br from-[oklch(0.28_0.06_240)] to-[oklch(0.35_0.07_240)] text-white">
         <div className="container mx-auto px-4 text-center">
           <FadeInUp>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
@@ -388,7 +388,7 @@ export default function Landing() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link href="/explore">
-                <Button size="lg" className="bg-white text-emerald-700 hover:bg-white/90">
+                <Button size="lg" className="bg-[oklch(0.78_0.15_85)] text-[oklch(0.14_0.03_240)] hover:bg-[oklch(0.82_0.13_85)] font-semibold">
                   <Compass className="h-5 w-5 mr-2" />
                   Find Your Path
                   <ArrowRight className="h-5 w-5 ml-2" />
