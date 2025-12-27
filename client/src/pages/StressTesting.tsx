@@ -104,14 +104,14 @@ const REGIONS = [
 ];
 
 const RATING_COLORS: Record<string, string> = {
-  AAA: "bg-emerald-500 text-white",
-  AA: "bg-green-500 text-white",
-  A: "bg-lime-500 text-white",
-  BBB: "bg-yellow-500 text-white",
-  BB: "bg-amber-500 text-white",
-  B: "bg-orange-500 text-white",
-  CCC: "bg-red-500 text-white",
-  CC: "bg-red-700 text-white",
+  AAA: "bg-[#D4AF37] text-black",
+  AA: "bg-green-500 text-black",
+  A: "bg-lime-500 text-black",
+  BBB: "bg-yellow-500 text-black",
+  BB: "bg-[#D4AF37] text-black",
+  B: "bg-orange-500 text-black",
+  CCC: "bg-red-500 text-black",
+  CC: "bg-red-700 text-black",
 };
 
 export default function StressTesting() {
@@ -209,7 +209,7 @@ export default function StressTesting() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-900 via-red-900/20 to-slate-900 text-white py-12 lg:py-16 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-slate-900 via-red-900/20 to-slate-900 text-black py-12 lg:py-16 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-red-500/10 blur-[100px]" />
           <div className="absolute -bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-orange-500/10 blur-[80px]" />
@@ -238,7 +238,7 @@ export default function StressTesting() {
               <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
                 Bankability Stress Testing
               </h1>
-              <p className="text-xl text-slate-300 leading-relaxed">
+              <p className="text-xl text-gray-600 leading-relaxed">
                 Simulate adverse scenarios to test project resilience. Demonstrate
                 to lenders how your supply chain performs under stress conditions.
               </p>
@@ -262,7 +262,7 @@ export default function StressTesting() {
                 {projectsLoading ? (
                   <Skeleton className="h-20" />
                 ) : projects?.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600">
                     No projects found
                   </p>
                 ) : (
@@ -273,12 +273,12 @@ export default function StressTesting() {
                       className={cn(
                         "w-full text-left p-3 rounded-lg border transition-colors",
                         selectedProject === project.id
-                          ? "bg-primary/10 border-primary"
+                          ? "bg-[#D4AF37]/10 border-primary"
                           : "hover:bg-muted/50"
                       )}
                     >
                       <div className="font-medium text-sm">{project.name}</div>
-                      <div className="text-xs text-muted-foreground mt-1">
+                      <div className="text-xs text-gray-600 mt-1">
                         {project.nameplateCapacity} MW • {project.state}
                       </div>
                       {project.bankabilityRating && (
@@ -303,11 +303,11 @@ export default function StressTesting() {
             {!selectedProject ? (
               <Card>
                 <CardContent className="py-16 text-center">
-                  <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <AlertTriangle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">
                     Select a Project
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Choose a project from the sidebar to run stress tests
                   </p>
                 </CardContent>
@@ -353,7 +353,7 @@ export default function StressTesting() {
                                 <Icon className={cn("h-5 w-5", scenario.color)} />
                               </div>
                               <div className="font-semibold">{scenario.label}</div>
-                              <div className="text-sm text-muted-foreground mt-1">
+                              <div className="text-sm text-gray-600 mt-1">
                                 {scenario.description}
                               </div>
                             </button>
@@ -388,7 +388,7 @@ export default function StressTesting() {
                               <SelectItem value="3">Third Supplier (20% of volume)</SelectItem>
                             </SelectContent>
                           </Select>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             Simulates complete loss of selected supplier. Tests concentration risk and backup supply adequacy.
                           </p>
                         </div>
@@ -409,12 +409,12 @@ export default function StressTesting() {
                             max={50}
                             step={5}
                           />
-                          <div className="flex justify-between text-xs text-muted-foreground">
+                          <div className="flex justify-between text-xs text-gray-600">
                             <span>5% (Minor)</span>
                             <span>25% (Moderate)</span>
                             <span>50% (Severe)</span>
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             Applies proportional reduction to all supplier volumes. Tests overall supply resilience.
                           </p>
                         </div>
@@ -452,7 +452,7 @@ export default function StressTesting() {
                               step={10}
                             />
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             Simulates regional climate event (drought, flood, bushfire). Tests geographic diversification.
                           </p>
                         </div>
@@ -473,12 +473,12 @@ export default function StressTesting() {
                             max={100}
                             step={10}
                           />
-                          <div className="flex justify-between text-xs text-muted-foreground">
+                          <div className="flex justify-between text-xs text-gray-600">
                             <span>+10%</span>
                             <span>+50%</span>
                             <span>+100%</span>
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             Simulates feedstock commodity price shock. Tests project margin resilience and break-even thresholds.
                           </p>
                         </div>
@@ -509,11 +509,11 @@ export default function StressTesting() {
                   ) : !stressResults || stressResults.length === 0 ? (
                     <Card>
                       <CardContent className="py-12 text-center">
-                        <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <BarChart3 className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                         <h3 className="text-lg font-semibold mb-2">
                           No Stress Tests Yet
                         </h3>
-                        <p className="text-muted-foreground mb-4">
+                        <p className="text-gray-600 mb-4">
                           Run your first stress test to see results here
                         </p>
                         <Button onClick={() => setActiveTab("run")}>
@@ -550,7 +550,7 @@ export default function StressTesting() {
                           {/* Rating Impact */}
                           <div className="flex items-center justify-center gap-8">
                             <div className="text-center">
-                              <div className="text-sm text-muted-foreground mb-2">
+                              <div className="text-sm text-gray-600 mb-2">
                                 Base Rating
                               </div>
                               <Badge
@@ -561,12 +561,12 @@ export default function StressTesting() {
                               >
                                 {result.baseRating}
                               </Badge>
-                              <div className="text-sm text-muted-foreground mt-1">
+                              <div className="text-sm text-gray-600 mt-1">
                                 Score: {result.baseScore}
                               </div>
                             </div>
                             <div className="flex flex-col items-center">
-                              <ArrowRight className="h-6 w-6 text-muted-foreground" />
+                              <ArrowRight className="h-6 w-6 text-gray-600" />
                               <div className={cn(
                                 "text-sm font-medium mt-1",
                                 result.ratingDelta < 0 ? "text-red-600" : "text-green-600"
@@ -575,7 +575,7 @@ export default function StressTesting() {
                               </div>
                             </div>
                             <div className="text-center">
-                              <div className="text-sm text-muted-foreground mb-2">
+                              <div className="text-sm text-gray-600 mb-2">
                                 Stress Rating
                               </div>
                               <Badge
@@ -586,7 +586,7 @@ export default function StressTesting() {
                               >
                                 {result.stressRating}
                               </Badge>
-                              <div className="text-sm text-muted-foreground mt-1">
+                              <div className="text-sm text-gray-600 mt-1">
                                 Score: {result.stressScore}
                               </div>
                             </div>
@@ -595,7 +595,7 @@ export default function StressTesting() {
                           {/* Key Metrics */}
                           <div className="grid md:grid-cols-4 gap-4">
                             <div className="p-3 rounded-lg bg-muted/50 text-center">
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-gray-600">
                                 Supply Shortfall
                               </div>
                               <div className="text-xl font-bold font-mono text-red-600">
@@ -603,7 +603,7 @@ export default function StressTesting() {
                               </div>
                             </div>
                             <div className="p-3 rounded-lg bg-muted/50 text-center">
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-gray-600">
                                 HHI Delta
                               </div>
                               <div className={cn(
@@ -614,7 +614,7 @@ export default function StressTesting() {
                               </div>
                             </div>
                             <div className="p-3 rounded-lg bg-muted/50 text-center">
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-gray-600">
                                 Remaining Suppliers
                               </div>
                               <div className="text-xl font-bold font-mono">
@@ -622,7 +622,7 @@ export default function StressTesting() {
                               </div>
                             </div>
                             <div className="p-3 rounded-lg bg-muted/50 text-center">
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-gray-600">
                                 Investment Grade
                               </div>
                               <div className="text-xl font-bold">
@@ -653,12 +653,12 @@ export default function StressTesting() {
                           )}
 
                           {/* Narrative Summary */}
-                          <div className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900/50">
+                          <div className="p-4 rounded-lg bg-slate-50 dark:bg-white/50">
                             <h4 className="font-semibold flex items-center gap-2 mb-2">
                               <BarChart3 className="h-4 w-4" />
                               Analysis Summary
                             </h4>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-gray-600">
                               {result.narrativeSummary}
                             </p>
                           </div>

@@ -60,9 +60,9 @@ function GQTierCard({
     { bg: string; border: string; text: string }
   > = {
     emerald: {
-      bg: "bg-emerald-500/10",
-      border: "border-emerald-500/30",
-      text: "text-emerald-600",
+      bg: "bg-[#D4AF37]/10",
+      border: "border-[#D4AF37]/30",
+      text: "text-[#D4AF37]",
     },
     green: {
       bg: "bg-green-500/10",
@@ -99,7 +99,7 @@ function GQTierCard({
           {requirements.map((req, i) => (
             <li
               key={i}
-              className="flex items-start gap-2 text-sm text-muted-foreground"
+              className="flex items-start gap-2 text-sm text-gray-600"
             >
               <CheckCircle2
                 className={cn("h-4 w-4 shrink-0 mt-0.5", classes.text)}
@@ -121,8 +121,8 @@ export default function ForGrowers() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6 text-primary" />
+              <div className="p-2 rounded-xl bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <span className="text-xl font-bold text-foreground font-display">
                 ABFI
@@ -136,7 +136,7 @@ export default function ForGrowers() {
               </Button>
             </Link>
             <Link href="/producer-registration">
-              <Button size="sm" className="bg-emerald-500 hover:bg-emerald-600">
+              <Button size="sm" className="bg-[#D4AF37] hover:bg-[#D4AF37]">
                 Register Now
               </Button>
             </Link>
@@ -145,7 +145,7 @@ export default function ForGrowers() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-green-800 to-emerald-900 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-green-800 to-emerald-900 text-black">
         <div className="absolute inset-0 opacity-10">
           <svg
             className="w-full h-full"
@@ -174,7 +174,7 @@ export default function ForGrowers() {
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 mb-6"
+                className="border-white/20 text-black/90 bg-white/5 mb-6"
               >
                 <TreeDeciduous className="h-3 w-3 mr-1.5" />
                 For Growers & Producers
@@ -211,7 +211,7 @@ export default function ForGrowers() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/30 text-black hover:bg-white/10 bg-transparent"
                 >
                   List Your Futures
                 </Button>
@@ -238,7 +238,7 @@ export default function ForGrowers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Why Growers Choose ABFI
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Move beyond spot markets. Build long-term value with verified
               credentials and institutional buyers.
             </p>
@@ -274,13 +274,13 @@ export default function ForGrowers() {
               <StaggerItem key={i}>
                 <Card className="h-full text-center hover:shadow-md transition-shadow">
                   <CardHeader>
-                    <div className="h-12 w-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
-                      <item.icon className="h-6 w-6 text-emerald-600" />
+                    <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mx-auto mb-4">
+                      <item.icon className="h-6 w-6 text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-lg">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       {item.description}
                     </p>
                   </CardContent>
@@ -301,7 +301,7 @@ export default function ForGrowers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Your Path to GQ1 Status
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Progress through standardized tiers as you demonstrate operational
               maturity. Higher tiers unlock better pricing and buyer access.
             </p>
@@ -375,7 +375,7 @@ export default function ForGrowers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               How It Works
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From registration to receiving EOIs — your path to long-term
               contracts.
             </p>
@@ -416,18 +416,18 @@ export default function ForGrowers() {
                 <StaggerItem key={i}>
                   <div className="flex gap-6 items-start">
                     <div className="shrink-0">
-                      <div className="h-16 w-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-emerald-600 font-mono">
+                      <div className="h-16 w-16 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-[#D4AF37] font-mono">
                           {item.step}
                         </span>
                       </div>
                     </div>
                     <div className="flex-1 pt-2">
                       <div className="flex items-center gap-3 mb-2">
-                        <item.icon className="h-5 w-5 text-emerald-600" />
+                        <item.icon className="h-5 w-5 text-[#D4AF37]" />
                         <h3 className="text-xl font-semibold">{item.title}</h3>
                       </div>
-                      <p className="text-muted-foreground">
+                      <p className="text-gray-600">
                         {item.description}
                       </p>
                     </div>
@@ -440,13 +440,13 @@ export default function ForGrowers() {
       </section>
 
       {/* Crop Types */}
-      <section className="py-20 bg-slate-900 text-white">
+      <section className="py-20 bg-white text-black">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Supported Perennial Crops
             </h2>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Long-rotation biomass crops that qualify for futures listing on
               ABFI.
             </p>
@@ -467,7 +467,7 @@ export default function ForGrowers() {
             ].map((crop, i) => (
               <StaggerItem key={i}>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:bg-white/10 transition-colors">
-                  <crop.icon className="h-8 w-8 mx-auto mb-2 text-emerald-400" />
+                  <crop.icon className="h-8 w-8 mx-auto mb-2 text-[#D4AF37]" />
                   <span className="text-sm font-medium">{crop.name}</span>
                 </div>
               </StaggerItem>
@@ -477,7 +477,7 @@ export default function ForGrowers() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-emerald-500 text-white">
+      <section className="py-16 bg-[#D4AF37] text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
@@ -515,7 +515,7 @@ export default function ForGrowers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
               Ready to List Your Biomass Futures?
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-gray-600 mb-8">
               Join hundreds of growers who are building long-term value through
               verified supply agreements.
             </p>
@@ -523,7 +523,7 @@ export default function ForGrowers() {
               <Link href="/producer-registration">
                 <Button
                   size="xl"
-                  className="bg-emerald-500 hover:bg-emerald-600"
+                  className="bg-[#D4AF37] hover:bg-[#D4AF37]"
                 >
                   <Sprout className="h-5 w-5 mr-2" />
                   Start Registration
@@ -546,11 +546,11 @@ export default function ForGrowers() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <Link href="/">
               <div className="flex items-center gap-2">
-                <Leaf className="h-5 w-5 text-primary" />
+                <Leaf className="h-5 w-5 text-[#D4AF37]" />
                 <span className="font-bold font-display">ABFI</span>
               </div>
             </Link>
-            <div className="flex gap-6 text-sm text-muted-foreground">
+            <div className="flex gap-6 text-sm text-gray-600">
               <Link
                 href="/for-developers"
                 className="hover:text-foreground transition-colors"

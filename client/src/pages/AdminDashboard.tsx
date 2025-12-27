@@ -94,12 +94,12 @@ export default function AdminDashboard() {
       <div className="space-y-8">
         {/* Page Header */}
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary/10">
-            <Shield className="h-6 w-6 text-primary" />
+          <div className="p-2 rounded-lg bg-[#D4AF37]/10">
+            <Shield className="h-6 w-6 text-[#D4AF37]" />
           </div>
           <div>
             <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Manage verifications and platform operations
             </p>
           </div>
@@ -137,7 +137,7 @@ export default function AdminDashboard() {
             <CardContent className="p-5">
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <p className="text-sm font-medium text-gray-600">
                     Platform Status
                   </p>
                   <div className="flex items-center gap-2 mt-2">
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                       All Systems Active
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-gray-600 mt-1">
                     Last checked: Just now
                   </p>
                 </div>
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                             <Building2 className="h-5 w-5 text-warning" />
                           </div>
                           <div>
-                            <CardTitle className="group-hover:text-primary transition-colors">
+                            <CardTitle className="group-hover:text-[#D4AF37] transition-colors">
                               {supplier.companyName}
                             </CardTitle>
                             <CardDescription className="mt-1">
@@ -205,14 +205,14 @@ export default function AdminDashboard() {
                     <CardContent>
                       <div className="grid md:grid-cols-2 gap-4 mb-4">
                         <div className="space-y-1">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                             Contact Email
                           </p>
                           <p className="font-medium">{supplier.contactEmail}</p>
                         </div>
                         {supplier.contactPhone && (
                           <div className="space-y-1">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                            <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                               Contact Phone
                             </p>
                             <p className="font-medium">
@@ -222,7 +222,7 @@ export default function AdminDashboard() {
                         )}
                         {supplier.addressLine1 && (
                           <div className="space-y-1">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                            <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                               Address
                             </p>
                             <p className="font-medium">
@@ -234,14 +234,14 @@ export default function AdminDashboard() {
                         )}
                         {supplier.website && (
                           <div className="space-y-1">
-                            <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                            <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                               Website
                             </p>
                             <a
                               href={supplier.website}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="font-medium text-primary hover:underline"
+                              className="font-medium text-[#D4AF37] hover:underline"
                             >
                               {supplier.website}
                             </a>
@@ -251,7 +251,7 @@ export default function AdminDashboard() {
 
                       {supplier.description && (
                         <div className="mb-4 p-3 rounded-lg bg-muted/50">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
                             Description
                           </p>
                           <p className="text-sm">{supplier.description}</p>
@@ -300,7 +300,7 @@ export default function AdminDashboard() {
                     <CheckCircle2 className="h-8 w-8 text-success" />
                   </div>
                   <h3 className="heading-3 mb-2">All Caught Up!</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     No pending supplier verifications
                   </p>
                 </CardContent>
@@ -327,7 +327,7 @@ export default function AdminDashboard() {
                             <Package className="h-5 w-5 text-warning" />
                           </div>
                           <div>
-                            <CardTitle className="group-hover:text-primary transition-colors">
+                            <CardTitle className="group-hover:text-[#D4AF37] transition-colors">
                               {feedstock.type}
                             </CardTitle>
                             <CardDescription className="mt-1">
@@ -347,29 +347,29 @@ export default function AdminDashboard() {
                     <CardContent>
                       <div className="grid md:grid-cols-3 gap-4 mb-4">
                         <div className="space-y-1">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                             Location
                           </p>
                           <p className="font-medium">{feedstock.state}</p>
                         </div>
                         <div className="space-y-1">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                             Annual Capacity
                           </p>
                           <p className="font-medium font-mono">
                             {feedstock.annualCapacityTonnes.toLocaleString()}{" "}
-                            <span className="text-muted-foreground text-xs">
+                            <span className="text-gray-600 text-xs">
                               tonnes
                             </span>
                           </p>
                         </div>
                         <div className="space-y-1">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                             Available Now
                           </p>
                           <p className="font-medium font-mono">
                             {feedstock.availableVolumeCurrent.toLocaleString()}{" "}
-                            <span className="text-muted-foreground text-xs">
+                            <span className="text-gray-600 text-xs">
                               tonnes
                             </span>
                           </p>
@@ -378,7 +378,7 @@ export default function AdminDashboard() {
 
                       {feedstock.description && (
                         <div className="mb-4 p-3 rounded-lg bg-muted/50">
-                          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                          <p className="text-xs font-medium text-gray-600 uppercase tracking-wide mb-1">
                             Description
                           </p>
                           <p className="text-sm">{feedstock.description}</p>
@@ -420,7 +420,7 @@ export default function AdminDashboard() {
                     <CheckCircle2 className="h-8 w-8 text-success" />
                   </div>
                   <h3 className="heading-3 mb-2">All Caught Up!</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     No pending feedstock verifications
                   </p>
                 </CardContent>

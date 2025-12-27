@@ -35,9 +35,9 @@ const INTENT_PATHWAYS = [
     description: "Register your feedstock, get certified, and connect with verified buyers",
     icon: Leaf,
     color: "navy",
-    bgColor: "bg-primary/10",
+    bgColor: "bg-[#D4AF37]/10",
     borderColor: "border-primary/30",
-    iconColor: "text-primary",
+    iconColor: "text-[#D4AF37]",
     hoverBg: "hover:bg-primary/15",
     href: "/grower/dashboard",
     features: ["Feedstock registration", "Certification tracking", "Contract management"],
@@ -48,9 +48,9 @@ const INTENT_PATHWAYS = [
     description: "Find verified feedstock suppliers and secure long-term supply agreements",
     icon: Factory,
     color: "navy",
-    bgColor: "bg-primary/10",
+    bgColor: "bg-[#D4AF37]/10",
     borderColor: "border-primary/30",
-    iconColor: "text-primary",
+    iconColor: "text-[#D4AF37]",
     hoverBg: "hover:bg-primary/15",
     href: "/developer/dashboard",
     features: ["Registry explorer", "Supply confidence", "Price signals"],
@@ -61,9 +61,9 @@ const INTENT_PATHWAYS = [
     description: "Access market intelligence, risk scoring, and stealth discovery tools",
     icon: TrendingUp,
     color: "navy",
-    bgColor: "bg-primary/10",
+    bgColor: "bg-[#D4AF37]/10",
     borderColor: "border-primary/30",
-    iconColor: "text-primary",
+    iconColor: "text-[#D4AF37]",
     hoverBg: "hover:bg-primary/15",
     href: "/finance/dashboard",
     features: ["Stealth Discovery", "Lending Sentiment", "Price Intelligence"],
@@ -123,7 +123,7 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section - Navy Corporate Design */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[oklch(0.18_0.04_240)] via-[oklch(0.22_0.05_240)] to-[oklch(0.18_0.04_240)] text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[oklch(0.18_0.04_240)] via-[oklch(0.22_0.05_240)] to-[oklch(0.18_0.04_240)] text-black">
         {/* Animated background pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0" style={{
@@ -140,7 +140,7 @@ export default function Landing() {
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 mb-6"
+                className="border-white/20 text-black/90 bg-white/5 mb-6"
               >
                 <Zap className="h-3 w-3 mr-1.5" />
                 Australia's Biofuels Intelligence Platform
@@ -158,7 +158,7 @@ export default function Landing() {
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
-              <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
                 Verified feedstock registry, real-time market intelligence, and
                 cryptographic audit trails. The infrastructure powering Australia's
                 bioenergy transition.
@@ -167,10 +167,10 @@ export default function Landing() {
 
             <FadeInUp delay={0.3}>
               <div className="flex flex-col items-center gap-4">
-                <p className="text-lg font-medium text-white">
+                <p className="text-lg font-medium text-black">
                   What do you want to do?
                 </p>
-                <div className="flex items-center gap-2 text-sm text-slate-400">
+                <div className="flex items-center gap-2 text-sm text-gray-500">
                   <Lock className="h-4 w-4" />
                   <span>Free access to all intelligence features</span>
                 </div>
@@ -220,7 +220,7 @@ export default function Landing() {
                     <CardContent>
                       <ul className="space-y-2">
                         {pathway.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <li key={i} className="flex items-center gap-2 text-sm text-gray-600">
                             <CheckCircle2 className={cn("h-4 w-4", pathway.iconColor)} />
                             {feature}
                           </li>
@@ -253,7 +253,7 @@ export default function Landing() {
             <h2 className="text-3xl font-display font-bold mb-4">
               Real-Time Market Signals
             </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-gray-600 max-w-xl mx-auto">
               Sample of our intelligence feeds. Sign up for full access including
               absolute pricing and confidence bands.
             </p>
@@ -271,7 +271,7 @@ export default function Landing() {
                     <div className="flex items-center justify-center gap-2">
                       <span className={cn(
                         "text-3xl font-bold",
-                        teaser.direction === "up" && "text-emerald-600",
+                        teaser.direction === "up" && "text-[#D4AF37]",
                         teaser.direction === "down" && "text-red-600",
                         teaser.direction === "neutral" && "text-blue-600"
                       )}>
@@ -281,7 +281,7 @@ export default function Landing() {
                         {teaser.period}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground mt-2">
+                    <p className="text-xs text-gray-600 mt-2">
                       <Lock className="h-3 w-3 inline mr-1" />
                       Register for absolute values
                     </p>
@@ -304,7 +304,7 @@ export default function Landing() {
       </section>
 
       {/* Trust Bar - Navy */}
-      <section className="py-16 bg-[oklch(0.18_0.04_240)] text-white">
+      <section className="py-16 bg-[oklch(0.18_0.04_240)] text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {TRUST_STATS.map((stat, index) => (
@@ -318,7 +318,7 @@ export default function Landing() {
                       suffix={stat.suffix}
                     />
                   </div>
-                  <div className="text-slate-400">{stat.label}</div>
+                  <div className="text-gray-500">{stat.label}</div>
                 </div>
               </FadeInUp>
             ))}
@@ -333,7 +333,7 @@ export default function Landing() {
             <h2 className="text-3xl font-display font-bold mb-4">
               Built for the Bioenergy Ecosystem
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto">
               Every feature designed with regulatory compliance, financial due diligence,
               and supply chain integrity in mind.
             </p>
@@ -360,13 +360,13 @@ export default function Landing() {
               <StaggerItem key={index}>
                 <Card className="h-full">
                   <CardHeader>
-                    <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                      <item.icon className="h-6 w-6 text-primary" />
+                    <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mb-4">
+                      <item.icon className="h-6 w-6 text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-lg">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <p className="text-sm text-gray-600">{item.description}</p>
                   </CardContent>
                 </Card>
               </StaggerItem>
@@ -376,13 +376,13 @@ export default function Landing() {
       </section>
 
       {/* Final CTA - Navy + Gold */}
-      <section className="py-20 bg-gradient-to-br from-[oklch(0.28_0.06_240)] to-[oklch(0.35_0.07_240)] text-white">
+      <section className="py-20 bg-gradient-to-br from-[oklch(0.28_0.06_240)] to-[oklch(0.35_0.07_240)] text-black">
         <div className="container mx-auto px-4 text-center">
           <FadeInUp>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
               Ready to Transform Your Supply Chain?
             </h2>
-            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-black/80 mb-8 max-w-2xl mx-auto">
               Join Australia's leading biofuels platform. Free access to all
               intelligence features during early access.
             </p>
@@ -395,7 +395,7 @@ export default function Landing() {
                 </Button>
               </Link>
               <Link href="/finance/dashboard">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 bg-transparent">
+                <Button size="lg" variant="outline" className="border-white/30 text-black hover:bg-white/10 bg-transparent">
                   View Intelligence Suite
                 </Button>
               </Link>

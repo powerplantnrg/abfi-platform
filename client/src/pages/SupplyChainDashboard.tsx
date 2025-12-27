@@ -95,8 +95,8 @@ function StatsCard({
 
   const iconStyles = {
     default: "text-slate-600",
-    success: "text-emerald-600",
-    warning: "text-amber-600",
+    success: "text-[#D4AF37]",
+    warning: "text-[#D4AF37]",
     info: "text-blue-600",
     pending: "text-orange-600",
   };
@@ -106,10 +106,10 @@ function StatsCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-muted-foreground font-medium">{title}</p>
+            <p className="text-sm text-gray-600 font-medium">{title}</p>
             <p className="text-3xl font-bold mt-1 font-mono">{value}</p>
             {description && (
-              <p className="text-xs text-muted-foreground mt-1">{description}</p>
+              <p className="text-xs text-gray-600 mt-1">{description}</p>
             )}
           </div>
           <div
@@ -353,21 +353,21 @@ function ConsignmentDetailDialog({ id }: { id: number }) {
             {/* Header Info */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <Label className="text-xs text-muted-foreground">Consignment ID</Label>
+                <Label className="text-xs text-gray-600">Consignment ID</Label>
                 <p className="font-mono font-medium">{consignment.consignmentId}</p>
               </div>
               <div>
-                <Label className="text-xs text-muted-foreground">Status</Label>
+                <Label className="text-xs text-gray-600">Status</Label>
                 <div className="mt-1">
                   <ConsignmentStatusBadge status={consignment.status} />
                 </div>
               </div>
               <div>
-                <Label className="text-xs text-muted-foreground">Feedstock</Label>
+                <Label className="text-xs text-gray-600">Feedstock</Label>
                 <p className="font-medium capitalize">{consignment.feedstockType}</p>
               </div>
               <div>
-                <Label className="text-xs text-muted-foreground">Volume</Label>
+                <Label className="text-xs text-gray-600">Volume</Label>
                 <p className="font-medium">{consignment.declaredVolumeTonnes} tonnes</p>
               </div>
             </div>
@@ -381,7 +381,7 @@ function ConsignmentDetailDialog({ id }: { id: number }) {
                 <CardContent>
                   <p className="font-medium">{consignment.supplier.companyName}</p>
                   {consignment.originLat && consignment.originLng && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       <MapPin className="h-3 w-3 inline mr-1" />
                       {consignment.originLat}, {consignment.originLng}
                     </p>
@@ -410,7 +410,7 @@ function ConsignmentDetailDialog({ id }: { id: number }) {
                           <TransportIcon mode={leg.transportMode} />
                           <span className="text-sm capitalize">{leg.transportMode.replace(/_/g, ' ')}</span>
                         </div>
-                        <div className="flex-1 text-sm text-muted-foreground">
+                        <div className="flex-1 text-sm text-gray-600">
                           {leg.distanceKm} km
                         </div>
                         {leg.emissionsKgCo2e && (
@@ -439,12 +439,12 @@ function ConsignmentDetailDialog({ id }: { id: number }) {
                     {consignment.evidence.map((ev: any) => (
                       <div key={ev.id} className="p-3 bg-slate-50 rounded-lg">
                         <div className="flex items-center gap-2 mb-2">
-                          <FileText className="h-4 w-4 text-muted-foreground" />
+                          <FileText className="h-4 w-4 text-gray-600" />
                           <span className="text-sm font-medium capitalize">
                             {ev.evidenceType.replace(/_/g, ' ')}
                           </span>
                         </div>
-                        <p className="text-xs text-muted-foreground truncate">
+                        <p className="text-xs text-gray-600 truncate">
                           {ev.mimeType}
                         </p>
                         {ev.verified && (
@@ -461,7 +461,7 @@ function ConsignmentDetailDialog({ id }: { id: number }) {
             )}
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-gray-600">
             <AlertCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p>Consignment not found</p>
           </div>
@@ -520,7 +520,7 @@ export default function SupplyChainDashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               Sign in to access real-time tracking, consignment management, and compliance documentation.
             </p>
             <Button asChild className="w-full">
@@ -543,7 +543,7 @@ export default function SupplyChainDashboard() {
                 <Truck className="h-8 w-8 text-blue-600" />
                 Supply Chain
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Track consignments, freight legs, and chain of custody evidence
               </p>
             </div>
@@ -677,23 +677,23 @@ export default function SupplyChainDashboard() {
                             </TableCell>
                             <TableCell>
                               {consignment.originLat && consignment.originLng ? (
-                                <span className="text-xs text-muted-foreground">
+                                <span className="text-xs text-gray-600">
                                   <MapPin className="h-3 w-3 inline mr-1" />
                                   {parseFloat(consignment.originLat).toFixed(2)}, {parseFloat(consignment.originLng).toFixed(2)}
                                 </span>
                               ) : (
-                                <span className="text-muted-foreground">-</span>
+                                <span className="text-gray-600">-</span>
                               )}
                             </TableCell>
                             <TableCell>
                               {consignment.destinationName || (
-                                <span className="text-muted-foreground">-</span>
+                                <span className="text-gray-600">-</span>
                               )}
                             </TableCell>
                             <TableCell>
                               <ConsignmentStatusBadge status={consignment.status} />
                             </TableCell>
-                            <TableCell className="text-sm text-muted-foreground">
+                            <TableCell className="text-sm text-gray-600">
                               {consignment.createdAt ? new Date(consignment.createdAt).toLocaleDateString() : '-'}
                             </TableCell>
                             <TableCell className="text-right">
@@ -705,7 +705,7 @@ export default function SupplyChainDashboard() {
                     </Table>
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <Package className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>No consignments found</p>
                     <p className="text-sm">Create a new consignment to get started</p>
@@ -713,7 +713,7 @@ export default function SupplyChainDashboard() {
                 )}
 
                 {consignmentsData && consignmentsData.total > 0 && (
-                  <div className="mt-4 text-sm text-muted-foreground text-center">
+                  <div className="mt-4 text-sm text-gray-600 text-center">
                     Showing {consignmentsData.consignments.length} of {consignmentsData.total} consignments
                   </div>
                 )}
@@ -745,15 +745,15 @@ export default function SupplyChainDashboard() {
                       <div className="flex flex-col items-center">
                         <div className={cn(
                           "w-3 h-3 rounded-full",
-                          item.type === "verified" && "bg-emerald-500",
+                          item.type === "verified" && "bg-[#D4AF37]",
                           item.type === "dispatched" && "bg-blue-500",
-                          item.type === "transit" && "bg-amber-500",
+                          item.type === "transit" && "bg-[#D4AF37]",
                           item.type === "evidence" && "bg-purple-500"
                         )} />
                         {idx < 3 && <div className="w-px h-8 bg-slate-200" />}
                       </div>
                       <div className="flex-1 pb-4">
-                        <p className="text-sm text-muted-foreground">{item.time}</p>
+                        <p className="text-sm text-gray-600">{item.time}</p>
                         <p className="text-sm">{item.event}</p>
                       </div>
                     </div>
@@ -776,7 +776,7 @@ export default function SupplyChainDashboard() {
               </CardHeader>
               <CardContent>
                 <div className="h-96 bg-slate-100 rounded-lg flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
+                  <div className="text-center text-gray-600">
                     <MapPin className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>Map visualization coming soon</p>
                     <p className="text-sm">Will display consignment origins, destinations, and freight routes</p>

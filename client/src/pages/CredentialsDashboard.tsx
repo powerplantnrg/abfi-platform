@@ -92,8 +92,8 @@ function StatsCard({
 
   const iconStyles = {
     default: "text-slate-600",
-    success: "text-emerald-600",
-    warning: "text-amber-600",
+    success: "text-[#D4AF37]",
+    warning: "text-[#D4AF37]",
     info: "text-blue-600",
   };
 
@@ -102,10 +102,10 @@ function StatsCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-muted-foreground font-medium">{title}</p>
+            <p className="text-sm text-gray-600 font-medium">{title}</p>
             <p className="text-3xl font-bold mt-1 font-mono">{value}</p>
             {description && (
-              <p className="text-xs text-muted-foreground mt-1">{description}</p>
+              <p className="text-xs text-gray-600 mt-1">{description}</p>
             )}
           </div>
           <div
@@ -457,7 +457,7 @@ function VerifyCredentialDialog() {
             )}>
               <div className="flex items-center gap-2 mb-2">
                 {verificationResult.valid ? (
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                  <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
                 ) : (
                   <XCircle className="h-5 w-5 text-red-600" />
                 )}
@@ -533,7 +533,7 @@ export default function CredentialsDashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               Sign in to manage your verifiable credentials, issue certifications, and verify supply chain claims.
             </p>
             <Button asChild className="w-full">
@@ -556,7 +556,7 @@ export default function CredentialsDashboard() {
                 <BadgeCheck className="h-8 w-8 text-purple-600" />
                 Verifiable Credentials
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 W3C Verifiable Credentials and Decentralized Identifiers
               </p>
             </div>
@@ -672,7 +672,7 @@ export default function CredentialsDashboard() {
                             <TableCell>
                               <CredentialStatusBadge status={cred.status} />
                             </TableCell>
-                            <TableCell className="text-sm text-muted-foreground">
+                            <TableCell className="text-sm text-gray-600">
                               {cred.issuanceDate ? new Date(cred.issuanceDate).toLocaleDateString() : '-'}
                             </TableCell>
                           </TableRow>
@@ -681,7 +681,7 @@ export default function CredentialsDashboard() {
                     </Table>
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <FileCheck className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>No credentials issued yet</p>
                     <p className="text-sm">Issue a new credential to get started</p>
@@ -703,7 +703,7 @@ export default function CredentialsDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-12 text-muted-foreground">
+                <div className="text-center py-12 text-gray-600">
                   <Key className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>DID listing coming soon</p>
                   <p className="text-sm">Use the "Create DID" button to register new identifiers</p>
@@ -750,7 +750,7 @@ export default function CredentialsDashboard() {
               ].map(({ type, desc }) => (
                 <div key={type} className="p-4 bg-slate-50 rounded-lg border">
                   <h4 className="font-medium text-sm mb-1">{type}</h4>
-                  <p className="text-xs text-muted-foreground">{desc}</p>
+                  <p className="text-xs text-gray-600">{desc}</p>
                 </div>
               ))}
             </div>

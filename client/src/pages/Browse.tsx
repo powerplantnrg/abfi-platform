@@ -314,7 +314,7 @@ export default function Browse() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-green-900 text-white py-16 lg:py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-green-900 text-black py-16 lg:py-20 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-green-500/10 blur-[100px]" />
           <div className="absolute -bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-lime-500/10 blur-[80px]" />
@@ -333,7 +333,7 @@ export default function Browse() {
               {isUsingMockData && (
                 <Badge
                   variant="outline"
-                  className="border-amber-400/50 text-amber-300 bg-amber-500/10"
+                  className="border-amber-400/50 text-amber-300 bg-[#D4AF37]/10"
                 >
                   Demo Data
                 </Badge>
@@ -343,22 +343,22 @@ export default function Browse() {
             <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
               Browse Feedstocks
             </h1>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
               Discover verified biofuel feedstock sources across Australia.
               Compare ABFI scores, carbon intensity, and availability from
               qualified suppliers.
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <Badge className="bg-white/10 text-white border-white/20 py-2 px-4">
+              <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
                 <Leaf className="h-4 w-4 mr-2" />
                 Multiple Categories
               </Badge>
-              <Badge className="bg-white/10 text-white border-white/20 py-2 px-4">
+              <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
                 <Award className="h-4 w-4 mr-2" />
                 ABFI Scored
               </Badge>
-              <Badge className="bg-white/10 text-white border-white/20 py-2 px-4">
+              <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
                 <ShieldCheck className="h-4 w-4 mr-2" />
                 Verified Supply
               </Badge>
@@ -368,28 +368,28 @@ export default function Browse() {
           {/* Stats Row */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {feedstocks.length}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Listings</div>
+              <div className="text-sm text-gray-500 mt-1">Listings</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
               <div className="text-3xl font-bold font-mono text-green-400">
                 {(totalVolume / 1000).toFixed(0)}k
               </div>
-              <div className="text-sm text-slate-400 mt-1">
+              <div className="text-sm text-gray-500 mt-1">
                 Tonnes Available
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {avgScore.toFixed(0)}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Avg ABFI Score</div>
+              <div className="text-sm text-gray-500 mt-1">Avg ABFI Score</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">6</div>
-              <div className="text-sm text-slate-400 mt-1">States</div>
+              <div className="text-3xl font-bold font-mono text-black">6</div>
+              <div className="text-sm text-gray-500 mt-1">States</div>
             </div>
           </div>
         </PageContainer>
@@ -403,7 +403,7 @@ export default function Browse() {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2 text-lg">
-                    <Filter className="h-5 w-5 text-primary" />
+                    <Filter className="h-5 w-5 text-[#D4AF37]" />
                     Filters
                   </CardTitle>
                   {hasFilters && (
@@ -520,13 +520,13 @@ export default function Browse() {
           {/* Results Grid */}
           <div className="lg:col-span-3">
             <div className="mb-6 flex justify-between items-center">
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 <strong className="text-foreground">
                   {feedstocks?.length || 0}
                 </strong>{" "}
                 feedstocks found
                 {isUsingMockData && (
-                  <span className="ml-2 text-amber-600">(Demo data)</span>
+                  <span className="ml-2 text-[#D4AF37]">(Demo data)</span>
                 )}
               </p>
               <Button variant="outline" size="sm" asChild>
@@ -570,7 +570,7 @@ export default function Browse() {
                         <div className="flex justify-between items-start gap-3">
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                              <CardTitle className="text-lg group-hover:text-[#D4AF37] transition-colors">
                                 {feedstock.type}
                               </CardTitle>
                             </div>
@@ -580,7 +580,7 @@ export default function Browse() {
                                 {feedstock.state}
                                 {feedstock.region && `, ${feedstock.region}`}
                               </span>
-                              <span className="text-muted-foreground">•</span>
+                              <span className="text-gray-600">•</span>
                               <span className="font-mono text-xs">
                                 {feedstock.abfiId}
                               </span>
@@ -588,7 +588,7 @@ export default function Browse() {
                           </div>
                           <div className="text-right shrink-0">
                             <div className="flex items-center gap-1.5 justify-end">
-                              <Award className="h-5 w-5 text-primary" />
+                              <Award className="h-5 w-5 text-[#D4AF37]" />
                               <span className="text-2xl font-bold font-mono">
                                 {feedstock.abfiScore || "N/A"}
                               </span>
@@ -634,7 +634,7 @@ export default function Browse() {
                         {/* Volume Stats */}
                         <div className="bg-muted/50 rounded-lg p-3 space-y-2">
                           <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">
+                            <span className="text-gray-600">
                               Annual Capacity
                             </span>
                             <span className="font-medium font-mono">
@@ -643,7 +643,7 @@ export default function Browse() {
                             </span>
                           </div>
                           <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">
+                            <span className="text-gray-600">
                               Available Now
                             </span>
                             <span className="font-semibold text-green-600 font-mono">
@@ -654,7 +654,7 @@ export default function Browse() {
                           {feedstock.pricePerTonne &&
                             feedstock.priceVisibility === "public" && (
                               <div className="flex justify-between text-sm pt-2 border-t border-border/50">
-                                <span className="text-muted-foreground">
+                                <span className="text-gray-600">
                                   Price
                                 </span>
                                 <span className="font-semibold font-mono">
@@ -666,7 +666,7 @@ export default function Browse() {
 
                         {/* Supplier */}
                         {feedstock.supplierName && (
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-sm text-gray-600">
                             <span className="font-medium text-foreground">
                               {feedstock.supplierName}
                             </span>
@@ -674,7 +674,7 @@ export default function Browse() {
                         )}
 
                         {feedstock.description && (
-                          <p className="text-sm text-muted-foreground line-clamp-2">
+                          <p className="text-sm text-gray-600 line-clamp-2">
                             {feedstock.description}
                           </p>
                         )}
@@ -706,11 +706,11 @@ export default function Browse() {
             ) : (
               <Card>
                 <CardContent className="py-16 text-center">
-                  <TrendingUp className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <TrendingUp className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">
                     No feedstocks found
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-gray-600 mb-4">
                     Try adjusting your filters or check back later for new
                     listings
                   </p>
@@ -776,7 +776,7 @@ export default function Browse() {
                       <h3 className="text-xl font-semibold mb-2">
                         Want to list your feedstock?
                       </h3>
-                      <p className="text-muted-foreground">
+                      <p className="text-gray-600">
                         Register as a supplier and list your biomass feedstock
                         to reach verified buyers.
                       </p>

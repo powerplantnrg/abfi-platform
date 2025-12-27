@@ -189,8 +189,8 @@ const CATEGORY_COLORS: Record<
 
 const URGENCY_CONFIG: Record<string, { color: string; label: string }> = {
   high: { color: "bg-red-500", label: "Urgent" },
-  medium: { color: "bg-amber-500", label: "Active" },
-  low: { color: "bg-emerald-500", label: "Open" },
+  medium: { color: "bg-[#D4AF37]", label: "Active" },
+  low: { color: "bg-[#D4AF37]", label: "Open" },
 };
 
 export default function BrowseDemandSignals() {
@@ -284,19 +284,19 @@ export default function BrowseDemandSignals() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-white">
+      <section className="relative bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-black">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
         <PageContainer size="xl" padding="lg" className="relative">
           <div className="max-w-3xl">
             {showingMockData && (
-              <Badge className="mb-4 bg-white/20 text-white border-white/30">
+              <Badge className="mb-4 bg-white/20 text-black border-white/30">
                 Demo Data
               </Badge>
             )}
             <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Demand Signals
             </h1>
-            <p className="text-lg md:text-xl text-white/80 mb-8">
+            <p className="text-lg md:text-xl text-black/80 mb-8">
               Connect with verified buyers seeking feedstock supply. Browse
               active requirements and submit your proposals.
             </p>
@@ -307,25 +307,25 @@ export default function BrowseDemandSignals() {
                 <div className="text-2xl md:text-3xl font-bold font-mono">
                   {filteredSignals.length}
                 </div>
-                <div className="text-sm text-white/70">Active Signals</div>
+                <div className="text-sm text-black/70">Active Signals</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="text-2xl md:text-3xl font-bold font-mono">
                   {(totalVolume / 1000).toFixed(0)}k
                 </div>
-                <div className="text-sm text-white/70">Tonnes Demanded</div>
+                <div className="text-sm text-black/70">Tonnes Demanded</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="text-2xl md:text-3xl font-bold font-mono">
                   ${avgPrice}
                 </div>
-                <div className="text-sm text-white/70">Avg Price/t</div>
+                <div className="text-sm text-black/70">Avg Price/t</div>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="text-2xl md:text-3xl font-bold font-mono">
                   {uniqueStates}
                 </div>
-                <div className="text-sm text-white/70">States</div>
+                <div className="text-sm text-black/70">States</div>
               </div>
             </div>
           </div>
@@ -348,7 +348,7 @@ export default function BrowseDemandSignals() {
                 {/* Search */}
                 <div>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-600" />
                     <Input
                       placeholder="Search signals..."
                       value={searchQuery}
@@ -425,7 +425,7 @@ export default function BrowseDemandSignals() {
           <div className="flex-1 min-w-0">
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Showing{" "}
                 <span className="font-medium text-foreground">
                   {filteredSignals.length}
@@ -443,9 +443,9 @@ export default function BrowseDemandSignals() {
             ) : filteredSignals.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground/50" />
+                  <Package className="h-12 w-12 mx-auto mb-4 text-gray-600/50" />
                   <h3 className="font-medium mb-2">No demand signals found</h3>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-gray-600 text-sm">
                     Try adjusting your filters or search query
                   </p>
                 </CardContent>
@@ -474,22 +474,22 @@ export default function BrowseDemandSignals() {
                               <div
                                 className={`w-2 h-2 rounded-full ${urgency.color}`}
                               />
-                              <span className="text-xs text-muted-foreground">
+                              <span className="text-xs text-gray-600">
                                 {signal.signalNumber}
                               </span>
                               {signal.buyerName && (
                                 <>
-                                  <span className="text-muted-foreground">
+                                  <span className="text-gray-600">
                                     •
                                   </span>
-                                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                  <span className="text-xs text-gray-600 flex items-center gap-1">
                                     <Building2 className="h-3 w-3" />
                                     {signal.buyerName}
                                   </span>
                                 </>
                               )}
                             </div>
-                            <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                            <CardTitle className="text-lg group-hover:text-[#D4AF37] transition-colors">
                               {signal.title}
                             </CardTitle>
                             <div className="flex flex-wrap gap-2 mt-2">
@@ -504,10 +504,10 @@ export default function BrowseDemandSignals() {
                             </div>
                           </div>
                           <div className="text-right shrink-0">
-                            <div className="text-2xl font-bold text-primary font-mono">
+                            <div className="text-2xl font-bold text-[#D4AF37] font-mono">
                               {signal.annualVolume?.toLocaleString()}
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-xs text-gray-600">
                               tonnes/year
                             </div>
                           </div>
@@ -521,7 +521,7 @@ export default function BrowseDemandSignals() {
                       <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                           <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <MapPin className="h-4 w-4 text-gray-600 shrink-0" />
                             <span className="truncate">
                               {signal.deliveryLocation}
                               {signal.deliveryState &&
@@ -529,13 +529,13 @@ export default function BrowseDemandSignals() {
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <Calendar className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <Calendar className="h-4 w-4 text-gray-600 shrink-0" />
                             <span>
                               Start: {formatDate(signal.supplyStartDate)}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <TrendingUp className="h-4 w-4 text-muted-foreground shrink-0" />
+                            <TrendingUp className="h-4 w-4 text-gray-600 shrink-0" />
                             <span>
                               {signal.indicativePriceMin &&
                               signal.indicativePriceMax
@@ -548,7 +548,7 @@ export default function BrowseDemandSignals() {
                         </div>
 
                         <div className="flex items-center justify-between pt-4 border-t">
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-4 text-sm text-gray-600">
                             <div className="flex items-center gap-1">
                               <Clock className="h-4 w-4" />
                               <span>
@@ -563,7 +563,7 @@ export default function BrowseDemandSignals() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="group-hover:bg-primary group-hover:text-white"
+                            className="group-hover:bg-primary group-hover:text-black"
                           >
                             View Details
                             <ArrowRight className="h-4 w-4 ml-1" />
@@ -589,7 +589,7 @@ export default function BrowseDemandSignals() {
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
               Post Your Feedstock Requirements
             </h2>
-            <p className="text-muted-foreground mb-8">
+            <p className="text-gray-600 mb-8">
               Are you a buyer looking for sustainable feedstock? Post a demand
               signal and connect with verified suppliers across Australia.
             </p>

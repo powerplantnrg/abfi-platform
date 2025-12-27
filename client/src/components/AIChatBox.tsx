@@ -201,7 +201,7 @@ export function AIChatBox({
       <div ref={scrollAreaRef} className="flex-1 overflow-hidden">
         {displayMessages.length === 0 ? (
           <div className="flex h-full flex-col p-4">
-            <div className="flex flex-1 flex-col items-center justify-center gap-6 text-muted-foreground">
+            <div className="flex flex-1 flex-col items-center justify-center gap-6 text-gray-600">
               <div className="flex flex-col items-center gap-3">
                 <Sparkles className="size-12 opacity-20" />
                 <p className="text-sm">{emptyStateMessage}</p>
@@ -248,8 +248,8 @@ export function AIChatBox({
                     }
                   >
                     {message.role === "assistant" && (
-                      <div className="size-8 shrink-0 mt-1 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Sparkles className="size-4 text-primary" />
+                      <div className="size-8 shrink-0 mt-1 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
+                        <Sparkles className="size-4 text-[#D4AF37]" />
                       </div>
                     )}
 
@@ -257,7 +257,7 @@ export function AIChatBox({
                       className={cn(
                         "max-w-[80%] rounded-lg px-4 py-2.5",
                         message.role === "user"
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-primary text-[#D4AF37]-foreground"
                           : "bg-muted text-foreground"
                       )}
                     >
@@ -290,11 +290,11 @@ export function AIChatBox({
                       : undefined
                   }
                 >
-                  <div className="size-8 shrink-0 mt-1 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Sparkles className="size-4 text-primary" />
+                  <div className="size-8 shrink-0 mt-1 rounded-full bg-[#D4AF37]/10 flex items-center justify-center">
+                    <Sparkles className="size-4 text-[#D4AF37]" />
                   </div>
                   <div className="rounded-lg bg-muted px-4 py-2.5">
-                    <Loader2 className="size-4 animate-spin text-muted-foreground" />
+                    <Loader2 className="size-4 animate-spin text-gray-600" />
                   </div>
                 </div>
               )}

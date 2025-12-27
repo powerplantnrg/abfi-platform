@@ -78,14 +78,14 @@ function FeatureCard({
     { bg: string; text: string; border: string }
   > = {
     emerald: {
-      bg: "bg-emerald-500/10",
-      text: "text-emerald-600",
-      border: "hover:border-emerald-500/30",
+      bg: "bg-[#D4AF37]/10",
+      text: "text-[#D4AF37]",
+      border: "hover:border-[#D4AF37]/30",
     },
     amber: {
-      bg: "bg-amber-500/10",
-      text: "text-amber-600",
-      border: "hover:border-amber-500/30",
+      bg: "bg-[#D4AF37]/10",
+      text: "text-[#D4AF37]",
+      border: "hover:border-[#D4AF37]/30",
     },
     blue: {
       bg: "bg-blue-500/10",
@@ -135,7 +135,7 @@ function FeatureCard({
           {features.map((feature, i) => (
             <li
               key={i}
-              className="flex items-start gap-2 text-sm text-muted-foreground"
+              className="flex items-start gap-2 text-sm text-gray-600"
             >
               <CheckCircle2
                 className={cn("h-4 w-4 shrink-0 mt-0.5", classes.text)}
@@ -157,8 +157,8 @@ export default function PlatformFeatures() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6 text-primary" />
+              <div className="p-2 rounded-xl bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <span className="text-xl font-bold text-foreground font-display">
                 ABFI
@@ -179,7 +179,7 @@ export default function PlatformFeatures() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-20 lg:py-28">
+      <section className="relative overflow-hidden bg-white text-black py-20 lg:py-28">
         <div className="absolute inset-0 opacity-5">
           <svg
             className="w-full h-full"
@@ -208,7 +208,7 @@ export default function PlatformFeatures() {
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 mb-6"
+                className="border-white/20 text-black/90 bg-white/5 mb-6"
               >
                 <Layers className="h-3 w-3 mr-1.5" />
                 Complete Platform Overview
@@ -218,14 +218,14 @@ export default function PlatformFeatures() {
             <FadeInUp delay={0.1}>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
                 Bank-Grade Infrastructure
-                <span className="block text-primary">
+                <span className="block text-[#D4AF37]">
                   for Bioenergy Finance
                 </span>
               </h1>
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
-              <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
                 A complete ecosystem connecting growers, developers, and lenders
                 through verified data, standardized ratings, and cryptographic
                 security.
@@ -239,14 +239,14 @@ export default function PlatformFeatures() {
               <Link href="/producer-registration">
                 <Button
                   size="lg"
-                  className="bg-emerald-500 hover:bg-emerald-600"
+                  className="bg-[#D4AF37] hover:bg-[#D4AF37]"
                 >
                   <Sprout className="h-4 w-4 mr-2" />
                   For Growers
                 </Button>
               </Link>
               <Link href="/bankability">
-                <Button size="lg" className="bg-amber-500 hover:bg-amber-600">
+                <Button size="lg" className="bg-[#D4AF37] hover:bg-[#D4AF37]">
                   <Building2 className="h-4 w-4 mr-2" />
                   For Developers
                 </Button>
@@ -272,7 +272,7 @@ export default function PlatformFeatures() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Everything You Need, Built In
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From supply discovery to covenant monitoring — a complete
               infrastructure stack.
             </p>
@@ -373,19 +373,19 @@ export default function PlatformFeatures() {
       </section>
 
       {/* Security & Compliance */}
-      <section className="py-20 bg-slate-900 text-white">
+      <section className="py-20 bg-white text-black">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-16">
             <Badge
               variant="outline"
-              className="border-white/20 text-white/90 mb-4"
+              className="border-white/20 text-black/90 mb-4"
             >
               Security & Compliance
             </Badge>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Bank-Grade Security Built In
             </h2>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Every feature designed with financial compliance requirements from
               day one.
             </p>
@@ -437,11 +437,11 @@ export default function PlatformFeatures() {
             ].map((item, i) => (
               <StaggerItem key={i}>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
-                  <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center mb-4">
-                    <item.icon className="h-5 w-5 text-primary" />
+                  <div className="h-10 w-10 rounded-lg bg-[#D4AF37]/20 flex items-center justify-center mb-4">
+                    <item.icon className="h-5 w-5 text-[#D4AF37]" />
                   </div>
                   <h3 className="font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-400">{item.description}</p>
+                  <p className="text-sm text-gray-500">{item.description}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -456,7 +456,7 @@ export default function PlatformFeatures() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Features by User Type
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Explore capabilities tailored to your role in the bioenergy supply
               chain.
             </p>
@@ -518,8 +518,8 @@ export default function PlatformFeatures() {
                   >
                     <CardHeader className="pb-2">
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                          <item.icon className="h-5 w-5 text-emerald-600" />
+                        <div className="h-10 w-10 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center">
+                          <item.icon className="h-5 w-5 text-[#D4AF37]" />
                         </div>
                         <CardTitle className="text-base">
                           {item.title}
@@ -527,7 +527,7 @@ export default function PlatformFeatures() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {item.desc}
                       </p>
                     </CardContent>
@@ -536,7 +536,7 @@ export default function PlatformFeatures() {
               </div>
               <div className="mt-8 text-center">
                 <Link href="/for-growers">
-                  <Button className="bg-emerald-500 hover:bg-emerald-600">
+                  <Button className="bg-[#D4AF37] hover:bg-[#D4AF37]">
                     Learn More for Growers
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -584,8 +584,8 @@ export default function PlatformFeatures() {
                   >
                     <CardHeader className="pb-2">
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                          <item.icon className="h-5 w-5 text-amber-600" />
+                        <div className="h-10 w-10 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center">
+                          <item.icon className="h-5 w-5 text-[#D4AF37]" />
                         </div>
                         <CardTitle className="text-base">
                           {item.title}
@@ -593,7 +593,7 @@ export default function PlatformFeatures() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {item.desc}
                       </p>
                     </CardContent>
@@ -602,7 +602,7 @@ export default function PlatformFeatures() {
               </div>
               <div className="mt-8 text-center">
                 <Link href="/for-developers">
-                  <Button className="bg-amber-500 hover:bg-amber-600 text-white">
+                  <Button className="bg-[#D4AF37] hover:bg-[#D4AF37] text-black">
                     Learn More for Developers
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -659,7 +659,7 @@ export default function PlatformFeatures() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {item.desc}
                       </p>
                     </CardContent>
@@ -690,7 +690,7 @@ export default function PlatformFeatures() {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 Build on ABFI Infrastructure
               </h2>
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-gray-600 mb-6">
                 Comprehensive APIs for integration with your existing systems.
                 Webhooks for real-time event notifications.
               </p>
@@ -704,17 +704,17 @@ export default function PlatformFeatures() {
                   "Sandbox environment for testing",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
-                    <span className="text-muted-foreground">{item}</span>
+                    <CheckCircle2 className="h-5 w-5 text-[#D4AF37] shrink-0" />
+                    <span className="text-gray-600">{item}</span>
                   </li>
                 ))}
               </ul>
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
-              <Card className="bg-slate-900 text-white border-0">
+              <Card className="bg-white text-black border-0">
                 <CardHeader>
-                  <CardTitle className="text-sm font-mono text-slate-400">
+                  <CardTitle className="text-sm font-mono text-gray-500">
                     API Example
                   </CardTitle>
                 </CardHeader>
@@ -747,7 +747,7 @@ export default function PlatformFeatures() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground">
+      <section className="py-20 bg-gradient-to-br from-primary via-primary to-primary/90 text-[#D4AF37]-foreground">
         <div className="container mx-auto px-4">
           <FadeInUp className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
@@ -767,7 +767,7 @@ export default function PlatformFeatures() {
                 <Button
                   size="xl"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10"
+                  className="border-white/30 text-black hover:bg-white/10"
                 >
                   <Building2 className="h-5 w-5 mr-2" />
                   I'm a Developer
@@ -777,7 +777,7 @@ export default function PlatformFeatures() {
                 <Button
                   size="xl"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10"
+                  className="border-white/30 text-black hover:bg-white/10"
                 >
                   <Banknote className="h-5 w-5 mr-2" />
                   I'm a Lender
@@ -789,14 +789,14 @@ export default function PlatformFeatures() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t bg-slate-900 text-slate-300 py-16">
+      <footer className="border-t bg-white text-gray-600 py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-10">
             <div>
               <Link href="/">
                 <div className="flex items-center gap-2 mb-4">
-                  <Leaf className="h-5 w-5 text-primary" />
-                  <span className="font-bold font-display text-white">
+                  <Leaf className="h-5 w-5 text-[#D4AF37]" />
+                  <span className="font-bold font-display text-black">
                     ABFI
                   </span>
                 </div>
@@ -806,12 +806,12 @@ export default function PlatformFeatures() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-white">Platform</h3>
+              <h3 className="font-semibold mb-4 text-black">Platform</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
                     href="/futures"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Marketplace
                   </Link>
@@ -819,7 +819,7 @@ export default function PlatformFeatures() {
                 <li>
                   <Link
                     href="/bankability"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Bankability
                   </Link>
@@ -827,7 +827,7 @@ export default function PlatformFeatures() {
                 <li>
                   <Link
                     href="/feedstock-map"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Supply Map
                   </Link>
@@ -835,12 +835,12 @@ export default function PlatformFeatures() {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-white">Resources</h3>
+              <h3 className="font-semibold mb-4 text-black">Resources</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
                     href="/for-growers"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     For Growers
                   </Link>
@@ -848,7 +848,7 @@ export default function PlatformFeatures() {
                 <li>
                   <Link
                     href="/for-developers"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     For Developers
                   </Link>
@@ -856,7 +856,7 @@ export default function PlatformFeatures() {
                 <li>
                   <Link
                     href="/for-lenders"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     For Lenders
                   </Link>
@@ -864,12 +864,12 @@ export default function PlatformFeatures() {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-white">Legal</h3>
+              <h3 className="font-semibold mb-4 text-black">Legal</h3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
                     href="/privacy"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Privacy Policy
                   </Link>
@@ -877,7 +877,7 @@ export default function PlatformFeatures() {
                 <li>
                   <Link
                     href="/terms"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Terms of Service
                   </Link>
@@ -885,7 +885,7 @@ export default function PlatformFeatures() {
                 <li>
                   <Link
                     href="/security"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Security
                   </Link>
@@ -893,7 +893,7 @@ export default function PlatformFeatures() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-slate-800 mt-12 pt-8 text-center text-sm text-slate-500">
+          <div className="border-t border-gray-200 mt-12 pt-8 text-center text-sm text-black0">
             © {new Date().getFullYear()} Australian Bioenergy Feedstock
             Institute. All rights reserved.
           </div>

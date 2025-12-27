@@ -132,13 +132,13 @@ function ProductionChart({ data }: { data: typeof PRODUCTION_DATA }) {
               {item.volume}
             </span>
             <div
-              className="w-full bg-gradient-to-t from-emerald-500 to-emerald-400 rounded-t-sm"
+              className="w-full bg-gradient-to-t from-[#D4AF37] to-emerald-400 rounded-t-sm"
               style={{
                 height: `${(item.volume / maxValue) * chartHeight}px`,
               }}
             />
           </div>
-          <span className="text-xs text-slate-500 mt-2">{item.month}</span>
+          <span className="text-xs text-black0 mt-2">{item.month}</span>
         </div>
       ))}
     </div>
@@ -180,9 +180,9 @@ function ABFIScoreRing({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-xs text-slate-500">ABFI Score</span>
+        <span className="text-xs text-black0">ABFI Score</span>
         <span className="text-2xl font-bold text-slate-900">{score}</span>
-        <span className="text-xs text-emerald-600 font-semibold">{rating}</span>
+        <span className="text-xs text-[#D4AF37] font-semibold">{rating}</span>
       </div>
     </div>
   );
@@ -197,13 +197,13 @@ function FeedstockCard({
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       <div className="h-32 bg-gradient-to-br from-emerald-100 to-emerald-50 flex items-center justify-center">
-        <Leaf className="h-16 w-16 text-emerald-400" />
+        <Leaf className="h-16 w-16 text-[#D4AF37]" />
       </div>
       <CardContent className="p-4">
         <h4 className="font-semibold text-slate-900 mb-1">{feedstock.name}</h4>
         <p className="text-sm text-slate-600 mb-2">{feedstock.volume}</p>
         <div className="flex items-center justify-between mb-3">
-          <span className="text-lg font-bold text-emerald-600">
+          <span className="text-lg font-bold text-[#D4AF37]">
             {feedstock.price}
           </span>
           <Badge
@@ -217,17 +217,17 @@ function FeedstockCard({
             {feedstock.status === "available" ? "Available Now" : "Limited Stock"}
           </Badge>
         </div>
-        <div className="grid grid-cols-3 gap-2 text-xs text-slate-500 mb-3">
+        <div className="grid grid-cols-3 gap-2 text-xs text-black0 mb-3">
           <div>
-            <span className="block text-slate-400">Moisture</span>
+            <span className="block text-gray-500">Moisture</span>
             {feedstock.specs.moisture}
           </div>
           <div>
-            <span className="block text-slate-400">Energy</span>
+            <span className="block text-gray-500">Energy</span>
             {feedstock.specs.energy}
           </div>
           <div>
-            <span className="block text-slate-400">Ash</span>
+            <span className="block text-gray-500">Ash</span>
             {feedstock.specs.ash}
           </div>
         </div>
@@ -253,7 +253,7 @@ export default function SupplierPublicProfile() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#D4AF37]" />
       </div>
     );
   }
@@ -284,7 +284,7 @@ export default function SupplierPublicProfile() {
               <div className="flex items-start gap-6">
                 {/* Logo */}
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1E3A5A] to-[#2D4A6A] flex items-center justify-center shrink-0">
-                  <Leaf className="h-10 w-10 text-white" />
+                  <Leaf className="h-10 w-10 text-black" />
                 </div>
 
                 <div className="flex-1">
@@ -325,7 +325,7 @@ export default function SupplierPublicProfile() {
                 <p className="text-3xl font-bold text-slate-900">
                   {supplier.abfiScore}/100
                 </p>
-                <p className="text-sm text-emerald-600 font-medium">
+                <p className="text-sm text-[#D4AF37] font-medium">
                   Excellent Rating
                 </p>
               </div>
@@ -359,7 +359,7 @@ export default function SupplierPublicProfile() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-slate-600">Response Time:</span>
-                    <span className="font-semibold text-emerald-600">
+                    <span className="font-semibold text-[#D4AF37]">
                       {supplier.responseTime}
                     </span>
                   </div>
@@ -418,14 +418,14 @@ export default function SupplierPublicProfile() {
                         className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg"
                       >
                         <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                          <cert.icon className="h-5 w-5 text-emerald-600" />
+                          <cert.icon className="h-5 w-5 text-[#D4AF37]" />
                         </div>
                         <div>
                           <p className="text-sm font-medium text-slate-900">
                             {cert.name}
                           </p>
                           {cert.verified && (
-                            <p className="text-xs text-emerald-600">Verified</p>
+                            <p className="text-xs text-[#D4AF37]">Verified</p>
                           )}
                         </div>
                       </div>
@@ -457,26 +457,26 @@ export default function SupplierPublicProfile() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Phone className="h-5 w-5 text-slate-400" />
+                  <Phone className="h-5 w-5 text-gray-500" />
                   <span className="text-slate-700">{supplier.contactPhone}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Mail className="h-5 w-5 text-slate-400" />
+                  <Mail className="h-5 w-5 text-gray-500" />
                   <a
                     href={`mailto:${supplier.contactEmail}`}
-                    className="text-primary hover:underline"
+                    className="text-[#D4AF37] hover:underline"
                   >
                     {supplier.contactEmail}
                   </a>
                 </div>
                 {supplier.website && (
                   <div className="flex items-center gap-3">
-                    <Globe className="h-5 w-5 text-slate-400" />
+                    <Globe className="h-5 w-5 text-gray-500" />
                     <a
                       href={supplier.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary hover:underline flex items-center gap-1"
+                      className="text-[#D4AF37] hover:underline flex items-center gap-1"
                     >
                       {supplier.website.replace(/^https?:\/\//, "")}
                       <ExternalLink className="h-3 w-3" />
@@ -500,8 +500,8 @@ export default function SupplierPublicProfile() {
               <CardContent>
                 <div className="bg-slate-100 rounded-lg h-40 flex items-center justify-center mb-3">
                   <div className="text-center">
-                    <MapPin className="h-8 w-8 text-slate-400 mx-auto mb-2" />
-                    <p className="text-sm text-slate-500">
+                    <MapPin className="h-8 w-8 text-gray-500 mx-auto mb-2" />
+                    <p className="text-sm text-black0">
                       {supplier.city}, {supplier.state} {supplier.postcode}
                     </p>
                   </div>
@@ -550,7 +550,7 @@ export default function SupplierPublicProfile() {
             <Card className="bg-gradient-to-br from-emerald-50 to-white border-emerald-200">
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-2">
-                  <Leaf className="h-5 w-5 text-emerald-600" />
+                  <Leaf className="h-5 w-5 text-[#D4AF37]" />
                   <CardTitle className="text-lg text-emerald-800">
                     Why Bamboo?
                   </CardTitle>

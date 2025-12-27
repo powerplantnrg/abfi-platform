@@ -133,8 +133,8 @@ export default function FeedstockCreate() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer">
-              <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">ABFI</span>
+              <Leaf className="h-8 w-8 text-[#D4AF37]" />
+              <span className="text-2xl font-bold text-[#D4AF37]">ABFI</span>
             </div>
           </Link>
           <Link href="/dashboard">
@@ -149,8 +149,8 @@ export default function FeedstockCreate() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <Package className="h-8 w-8 text-primary" />
-            <h1 className="text-4xl font-bold text-primary">
+            <Package className="h-8 w-8 text-[#D4AF37]" />
+            <h1 className="text-4xl font-bold text-[#D4AF37]">
               List New Feedstock
             </h1>
           </div>

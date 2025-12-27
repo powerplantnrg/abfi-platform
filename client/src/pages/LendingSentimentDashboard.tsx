@@ -138,7 +138,7 @@ export default function LendingSentimentDashboard() {
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
-              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Retry
@@ -165,7 +165,7 @@ export default function LendingSentimentDashboard() {
               </Link>
             </div>
             <h1 className="text-3xl font-bold">Lending Sentiment Dashboard</h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-gray-600 mt-1">
               AI-powered analysis of bioenergy lending sentiment from 47+ data sources
             </p>
           </div>
@@ -197,7 +197,7 @@ export default function LendingSentimentDashboard() {
             </CardHeader>
             <CardContent>
               <div className="flex items-end gap-2">
-                <span className="text-4xl font-bold text-primary">
+                <span className="text-4xl font-bold text-[#D4AF37]">
                   {sentimentIndex?.overall_index || 0}
                 </span>
                 {sentimentIndex?.daily_change !== undefined && (
@@ -216,7 +216,7 @@ export default function LendingSentimentDashboard() {
                   </Badge>
                 )}
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Scale: -100 (bearish) to +100 (bullish)
               </p>
             </CardContent>
@@ -233,7 +233,7 @@ export default function LendingSentimentDashboard() {
                   {sentimentIndex?.bullish_count || 0}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 {sentimentIndex?.weekly_change !== undefined && (
                   <>+{sentimentIndex.weekly_change.toFixed(1)}% vs last week</>
                 )}
@@ -252,7 +252,7 @@ export default function LendingSentimentDashboard() {
                   {sentimentIndex?.bearish_count || 0}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Risk factors tracked
               </p>
             </CardContent>
@@ -269,7 +269,7 @@ export default function LendingSentimentDashboard() {
                   {(sentimentIndex?.documents_analyzed || 0).toLocaleString()}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Last 30 days
               </p>
             </CardContent>
@@ -371,7 +371,7 @@ export default function LendingSentimentDashboard() {
                     >
                       <div className="flex-1">
                         <div className="font-medium">{lender.lender}</div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           {lender.documents} documents
                         </div>
                       </div>
@@ -451,10 +451,10 @@ export default function LendingSentimentDashboard() {
                             {doc.title}
                           </h4>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-gray-600">
                               {doc.source}
                             </span>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-gray-600">
                               {new Date(doc.published_date).toLocaleDateString(
                                 "en-AU",
                                 { day: "numeric", month: "short" }
@@ -473,7 +473,7 @@ export default function LendingSentimentDashboard() {
                             href={doc.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-muted-foreground hover:text-primary"
+                            className="text-gray-600 hover:text-[#D4AF37]"
                           >
                             <ExternalLink className="h-4 w-4" />
                           </a>

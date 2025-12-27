@@ -47,7 +47,7 @@ import {
 // Rating Scale Component
 function RatingScale() {
   const ratings = [
-    { rating: "AAA", label: "Prime", color: "bg-emerald-500", risk: "Lowest" },
+    { rating: "AAA", label: "Prime", color: "bg-[#D4AF37]", risk: "Lowest" },
     { rating: "AA", label: "High", color: "bg-green-500", risk: "Very Low" },
     { rating: "A", label: "Upper Medium", color: "bg-lime-500", risk: "Low" },
     {
@@ -59,7 +59,7 @@ function RatingScale() {
     {
       rating: "BB",
       label: "Speculative",
-      color: "bg-amber-500",
+      color: "bg-[#D4AF37]",
       risk: "Substantial",
     },
     {
@@ -77,8 +77,8 @@ function RatingScale() {
   ];
 
   return (
-    <div className="bg-slate-800 rounded-xl p-6 text-white">
-      <h4 className="text-sm font-medium text-slate-400 mb-4">
+    <div className="bg-white rounded-xl p-6 text-black">
+      <h4 className="text-sm font-medium text-gray-500 mb-4">
         ABFI Rating Scale
       </h4>
       <div className="space-y-2">
@@ -86,8 +86,8 @@ function RatingScale() {
           <div key={r.rating} className="flex items-center gap-3">
             <div className={cn("w-3 h-3 rounded-full", r.color)} />
             <span className="font-mono font-bold w-12">{r.rating}</span>
-            <span className="text-slate-400 text-sm flex-1">{r.label}</span>
-            <span className="text-xs text-slate-500">{r.risk} Risk</span>
+            <span className="text-gray-500 text-sm flex-1">{r.label}</span>
+            <span className="text-xs text-black0">{r.risk} Risk</span>
           </div>
         ))}
       </div>
@@ -103,8 +103,8 @@ export default function ForDevelopers() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6 text-primary" />
+              <div className="p-2 rounded-xl bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <span className="text-xl font-bold text-foreground font-display">
                 ABFI
@@ -120,7 +120,7 @@ export default function ForDevelopers() {
             <Link href="/bankability">
               <Button
                 size="sm"
-                className="bg-amber-500 hover:bg-amber-600 text-white"
+                className="bg-[#D4AF37] hover:bg-[#D4AF37] text-black"
               >
                 Start Assessment
               </Button>
@@ -130,7 +130,7 @@ export default function ForDevelopers() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-amber-900 via-yellow-800 to-amber-900 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-amber-900 via-yellow-800 to-amber-900 text-black">
         <div className="absolute inset-0 opacity-10">
           <svg
             className="w-full h-full"
@@ -159,7 +159,7 @@ export default function ForDevelopers() {
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 mb-6"
+                className="border-white/20 text-black/90 bg-white/5 mb-6"
               >
                 <Building2 className="h-3 w-3 mr-1.5" />
                 For Project Developers
@@ -198,7 +198,7 @@ export default function ForDevelopers() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/30 text-black hover:bg-white/10 bg-transparent"
                 >
                   Browse Futures
                 </Button>
@@ -233,7 +233,7 @@ export default function ForDevelopers() {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 Feedstock Risk Kills Bioenergy Deals
               </h2>
-              <div className="space-y-4 text-muted-foreground">
+              <div className="space-y-4 text-gray-600">
                 <p>
                   Lenders see biomass supply as the #1 risk factor in bioenergy
                   project finance. Without standardized assessment, every due
@@ -258,7 +258,7 @@ export default function ForDevelopers() {
             <FadeInUp delay={0.2}>
               <Card className="border-2 border-amber-200 bg-amber-50/50">
                 <CardHeader>
-                  <Badge className="w-fit bg-amber-500 mb-2">
+                  <Badge className="w-fit bg-[#D4AF37] mb-2">
                     The ABFI Solution
                   </Badge>
                   <CardTitle>Standardized Bankability Framework</CardTitle>
@@ -273,7 +273,7 @@ export default function ForDevelopers() {
                       "Cryptographically secured evidence",
                     ].map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-[#D4AF37] shrink-0 mt-0.5" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -295,7 +295,7 @@ export default function ForDevelopers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Comprehensive Supply Chain Assessment
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Each pillar is scored independently and weighted to produce your
               overall bankability rating.
             </p>
@@ -347,21 +347,21 @@ export default function ForDevelopers() {
               <StaggerItem key={i}>
                 <Card className="h-full text-center">
                   <CardHeader className="pb-2">
-                    <div className="h-12 w-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-3">
-                      <item.icon className="h-6 w-6 text-amber-600" />
+                    <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mx-auto mb-3">
+                      <item.icon className="h-6 w-6 text-[#D4AF37]" />
                     </div>
                     <Badge variant="outline" className="mx-auto mb-2">
                       {item.weight}
                     </Badge>
                     <CardTitle className="text-base">
-                      <span className="text-amber-600 font-mono mr-1">
+                      <span className="text-[#D4AF37] font-mono mr-1">
                         {item.pillar}.
                       </span>
                       {item.title}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-600">
                       {item.description}
                     </p>
                   </CardContent>
@@ -373,20 +373,20 @@ export default function ForDevelopers() {
       </section>
 
       {/* Rating System */}
-      <section className="py-20 bg-slate-900 text-white">
+      <section className="py-20 bg-white text-black">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 mb-4"
+                className="border-white/20 text-black/90 mb-4"
               >
                 Institutional-Grade Ratings
               </Badge>
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 Ratings Lenders Understand
               </h2>
-              <p className="text-lg text-slate-300 mb-6">
+              <p className="text-lg text-gray-600 mb-6">
                 Our AAA-CCC scale mirrors credit ratings that financial
                 institutions already use. No learning curve for your lending
                 team.
@@ -400,12 +400,12 @@ export default function ForDevelopers() {
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0" />
-                    <span className="text-slate-300">{item}</span>
+                    <span className="text-gray-600">{item}</span>
                   </li>
                 ))}
               </ul>
               <Link href="/bankability">
-                <Button size="lg" className="bg-amber-500 hover:bg-amber-600">
+                <Button size="lg" className="bg-[#D4AF37] hover:bg-[#D4AF37]">
                   Start Your Assessment
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -426,7 +426,7 @@ export default function ForDevelopers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Your Path to Bankability
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From supply discovery to lender-ready compliance packages.
             </p>
           </FadeInUp>
@@ -473,18 +473,18 @@ export default function ForDevelopers() {
                 <StaggerItem key={i}>
                   <div className="flex gap-6 items-start">
                     <div className="shrink-0">
-                      <div className="h-16 w-16 rounded-2xl bg-amber-500/10 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-amber-600 font-mono">
+                      <div className="h-16 w-16 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center">
+                        <span className="text-2xl font-bold text-[#D4AF37] font-mono">
                           {item.step}
                         </span>
                       </div>
                     </div>
                     <div className="flex-1 pt-2">
                       <div className="flex items-center gap-3 mb-2">
-                        <item.icon className="h-5 w-5 text-amber-600" />
+                        <item.icon className="h-5 w-5 text-[#D4AF37]" />
                         <h3 className="text-xl font-semibold">{item.title}</h3>
                       </div>
-                      <p className="text-muted-foreground">
+                      <p className="text-gray-600">
                         {item.description}
                       </p>
                     </div>
@@ -506,7 +506,7 @@ export default function ForDevelopers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Continuous Covenant Monitoring
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Your bankability rating isn't just a point-in-time snapshot. We
               monitor continuously and alert you to changes before they become
               problems.
@@ -537,13 +537,13 @@ export default function ForDevelopers() {
               <StaggerItem key={i}>
                 <Card className="h-full">
                   <CardHeader>
-                    <div className="h-12 w-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4">
-                      <item.icon className="h-6 w-6 text-amber-600" />
+                    <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center mb-4">
+                      <item.icon className="h-6 w-6 text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-lg">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       {item.description}
                     </p>
                   </CardContent>
@@ -555,7 +555,7 @@ export default function ForDevelopers() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-amber-500 text-white">
+      <section className="py-16 bg-[#D4AF37] text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
@@ -593,7 +593,7 @@ export default function ForDevelopers() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
               Ready to Rate Your Supply Chain?
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-gray-600 mb-8">
               Start your bankability assessment today. Give your lenders the
               confidence they need.
             </p>
@@ -601,7 +601,7 @@ export default function ForDevelopers() {
               <Link href="/bankability">
                 <Button
                   size="xl"
-                  className="bg-amber-500 hover:bg-amber-600 text-white"
+                  className="bg-[#D4AF37] hover:bg-[#D4AF37] text-black"
                 >
                   <Award className="h-5 w-5 mr-2" />
                   Start Assessment
@@ -624,11 +624,11 @@ export default function ForDevelopers() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <Link href="/">
               <div className="flex items-center gap-2">
-                <Leaf className="h-5 w-5 text-primary" />
+                <Leaf className="h-5 w-5 text-[#D4AF37]" />
                 <span className="font-bold font-display">ABFI</span>
               </div>
             </Link>
-            <div className="flex gap-6 text-sm text-muted-foreground">
+            <div className="flex gap-6 text-sm text-gray-600">
               <Link
                 href="/for-growers"
                 className="hover:text-foreground transition-colors"

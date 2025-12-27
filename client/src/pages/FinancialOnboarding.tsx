@@ -134,7 +134,7 @@ export default function FinancialOnboarding() {
               className="text-3xl"
               style={{
                 fontFamily: "'DM Serif Display', serif",
-                color: "var(--text-primary)",
+                color: "var(--text-[#D4AF37])",
               }}
             >
               BioFeed <span style={{ color: "var(--accent-gold)" }}>AU</span>
@@ -145,7 +145,7 @@ export default function FinancialOnboarding() {
               className="text-2xl mb-2"
               style={{
                 fontFamily: "'DM Serif Display', serif",
-                color: "var(--text-primary)",
+                color: "var(--text-[#D4AF37])",
               }}
             >
               Financial Institution Onboarding
@@ -326,7 +326,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -353,7 +353,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                         fontFamily: "'IBM Plex Mono', monospace",
                       }}
                     />
@@ -471,7 +471,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                         fontFamily: "'IBM Plex Mono', monospace",
                       }}
                     />
@@ -522,7 +522,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -547,7 +547,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -573,7 +573,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -599,7 +599,7 @@ export default function FinancialOnboarding() {
                       style={{
                         background: "var(--bg-tertiary)",
                         border: "1px solid var(--border-subtle)",
-                        color: "var(--text-primary)",
+                        color: "var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -799,7 +799,7 @@ export default function FinancialOnboarding() {
                 >
                   <h4
                     className="text-sm font-semibold mb-4"
-                    style={{ color: "var(--text-primary)" }}
+                    style={{ color: "var(--text-[#D4AF37])" }}
                   >
                     Required Declarations
                   </h4>

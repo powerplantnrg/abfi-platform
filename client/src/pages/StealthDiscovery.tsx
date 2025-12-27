@@ -71,9 +71,9 @@ const SIGNAL_ICONS: Record<string, React.ElementType> = {
 
 // Score color helper
 function getScoreColor(score: number): string {
-  if (score >= 80) return "text-emerald-600";
+  if (score >= 80) return "text-[#D4AF37]";
   if (score >= 60) return "text-blue-600";
-  if (score >= 40) return "text-amber-600";
+  if (score >= 40) return "text-[#D4AF37]";
   return "text-gray-500";
 }
 
@@ -265,7 +265,7 @@ export default function StealthDiscovery() {
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
-              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Retry
@@ -290,7 +290,7 @@ export default function StealthDiscovery() {
               </Badge>
             </div>
             <h1 className="text-3xl font-bold">Stealth Discovery</h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-gray-600 mt-1">
               Surface unannounced biofuel projects through signal analysis
             </p>
           </div>
@@ -326,7 +326,7 @@ export default function StealthDiscovery() {
                   {stats?.total_entities || 0}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Companies & projects
               </p>
             </CardContent>
@@ -338,12 +338,12 @@ export default function StealthDiscovery() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <TrendingUp className="h-8 w-8 text-emerald-600" />
-                <span className="text-4xl font-bold text-emerald-600">
+                <TrendingUp className="h-8 w-8 text-[#D4AF37]" />
+                <span className="text-4xl font-bold text-[#D4AF37]">
                   {stats?.high_score_entities || 0}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Score &gt; 70
               </p>
             </CardContent>
@@ -355,12 +355,12 @@ export default function StealthDiscovery() {
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
-                <Zap className="h-8 w-8 text-amber-500" />
-                <span className="text-4xl font-bold text-amber-600">
+                <Zap className="h-8 w-8 text-[#D4AF37]" />
+                <span className="text-4xl font-bold text-[#D4AF37]">
                   {stats?.new_signals_today || 0}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Fresh intelligence
               </p>
             </CardContent>
@@ -377,7 +377,7 @@ export default function StealthDiscovery() {
                   {stats?.new_signals_week || 0}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Signals this week
               </p>
             </CardContent>
@@ -416,7 +416,7 @@ export default function StealthDiscovery() {
                 {/* Search Bar */}
                 <div className="flex gap-2 mb-4">
                   <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-600" />
                     <Input
                       placeholder="Search entities..."
                       value={searchQuery}
@@ -456,10 +456,10 @@ export default function StealthDiscovery() {
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <Building2 className="h-4 w-4 text-muted-foreground" />
+                            <Building2 className="h-4 w-4 text-gray-600" />
                             <h4 className="font-medium">{entity.canonical_name}</h4>
                           </div>
-                          <div className="flex items-center gap-3 mt-2 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-3 mt-2 text-sm text-gray-600">
                             <span className="flex items-center gap-1">
                               <Zap className="h-3 w-3" />
                               {entity.signal_count} signals
@@ -527,7 +527,7 @@ export default function StealthDiscovery() {
                             className="w-3 h-3 rounded-full"
                             style={{ backgroundColor: item.color }}
                           />
-                          <Icon className="h-4 w-4 text-muted-foreground" />
+                          <Icon className="h-4 w-4 text-gray-600" />
                           <span className="flex-1 text-sm">{item.name}</span>
                           <span className="text-sm font-medium">{item.value}</span>
                         </div>
@@ -560,24 +560,24 @@ export default function StealthDiscovery() {
 
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="text-muted-foreground">Score</div>
+                      <div className="text-gray-600">Score</div>
                       <div className={`text-2xl font-bold ${getScoreColor(selectedEntity.current_score)}`}>
                         {selectedEntity.current_score.toFixed(1)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-muted-foreground">Signals</div>
+                      <div className="text-gray-600">Signals</div>
                       <div className="text-2xl font-bold">{selectedEntity.signal_count}</div>
                     </div>
                   </div>
 
                   {selectedEntity.identifiers && Object.keys(selectedEntity.identifiers).length > 0 && (
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">Identifiers</div>
+                      <div className="text-sm text-gray-600 mb-1">Identifiers</div>
                       <div className="space-y-1">
                         {Object.entries(selectedEntity.identifiers).map(([key, values]) => (
                           <div key={key} className="text-sm">
-                            <span className="uppercase text-muted-foreground">{key}:</span>{" "}
+                            <span className="uppercase text-gray-600">{key}:</span>{" "}
                             {(values as string[]).join(", ")}
                           </div>
                         ))}
@@ -587,19 +587,19 @@ export default function StealthDiscovery() {
 
                   {entitySignals.length > 0 && (
                     <div>
-                      <div className="text-sm text-muted-foreground mb-2">Recent Signals</div>
+                      <div className="text-sm text-gray-600 mb-2">Recent Signals</div>
                       <div className="space-y-2">
                         {entitySignals.slice(0, 3).map((signal) => {
                           const Icon = SIGNAL_ICONS[signal.signal_type] || FileText;
                           return (
                             <div key={signal.id} className="p-2 rounded bg-muted/50 text-sm">
                               <div className="flex items-center gap-2">
-                                <Icon className="h-4 w-4 text-muted-foreground" />
+                                <Icon className="h-4 w-4 text-gray-600" />
                                 <span className="font-medium line-clamp-1">
                                   {signal.title || SIGNAL_TYPE_INFO[signal.signal_type]?.label || signal.signal_type}
                                 </span>
                               </div>
-                              <div className="text-xs text-muted-foreground mt-1">
+                              <div className="text-xs text-gray-600 mt-1">
                                 {formatRelativeTime(signal.detected_at)}
                               </div>
                             </div>
@@ -632,13 +632,13 @@ export default function StealthDiscovery() {
                       onClick={() => loadEntityDetails(signal.entity_id)}
                     >
                       <div className="flex items-start gap-2">
-                        <Icon className="h-4 w-4 mt-0.5 text-muted-foreground" />
+                        <Icon className="h-4 w-4 mt-0.5 text-gray-600" />
                         <div className="flex-1 min-w-0">
                           <h4 className="text-sm font-medium line-clamp-2">
                             {signal.title || info?.label || signal.signal_type}
                           </h4>
                           {signal.description && (
-                            <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
+                            <p className="text-xs text-gray-600 line-clamp-2 mt-1">
                               {signal.description}
                             </p>
                           )}
@@ -646,7 +646,7 @@ export default function StealthDiscovery() {
                             <Badge variant="outline" className="text-xs">
                               {info?.label || signal.signal_type}
                             </Badge>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="text-xs text-gray-600">
                               {formatRelativeTime(signal.detected_at)}
                             </span>
                           </div>

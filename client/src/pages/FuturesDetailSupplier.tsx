@@ -639,7 +639,7 @@ export default function FuturesDetailSupplier() {
             <CardContent className="py-8 text-center">
               <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-gray-600 mb-4">
                 You don't have permission to view this futures listing.
               </p>
               <Link href="/supplier/futures">
@@ -687,7 +687,7 @@ export default function FuturesDetailSupplier() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-emerald-600 to-green-700 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#D4AF37] via-emerald-600 to-green-700 text-black overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
@@ -697,7 +697,7 @@ export default function FuturesDetailSupplier() {
           <Link href="/supplier/futures">
             <Button
               variant="ghost"
-              className="mb-6 text-white/80 hover:text-white hover:bg-white/10"
+              className="mb-6 text-black/80 hover:text-black hover:bg-white/10"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to My Futures
@@ -720,7 +720,7 @@ export default function FuturesDetailSupplier() {
                     {formatStatusLabel(futures.status)}
                   </Badge>
                   {isUsingMockData && (
-                    <Badge className="bg-amber-500/90 text-white border-amber-400">
+                    <Badge className="bg-[#D4AF37]/90 text-black border-amber-400">
                       <Sparkles className="h-3.5 w-3.5 mr-1.5" />
                       Demo Data
                     </Badge>
@@ -752,7 +752,7 @@ export default function FuturesDetailSupplier() {
                   <Link href={`/supplier/futures/create?edit=${futures.id}`}>
                     <Button
                       variant="outline"
-                      className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                      className="bg-white/10 border-white/30 text-black hover:bg-white/20"
                     >
                       <Edit className="h-4 w-4 mr-2" />
                       Edit
@@ -770,7 +770,7 @@ export default function FuturesDetailSupplier() {
                     <AlertDialogTrigger asChild>
                       <Button
                         variant="outline"
-                        className="bg-red-500/20 border-red-300/50 text-white hover:bg-red-500/30"
+                        className="bg-red-500/20 border-red-300/50 text-black hover:bg-red-500/30"
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
                         Delete
@@ -805,7 +805,7 @@ export default function FuturesDetailSupplier() {
                 <Button
                   variant="outline"
                   onClick={() => unpublishMutation.mutate({ id: futures.id })}
-                  className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                  className="bg-white/10 border-white/30 text-black hover:bg-white/20"
                 >
                   <EyeOff className="h-4 w-4 mr-2" />
                   Unpublish
@@ -874,14 +874,14 @@ export default function FuturesDetailSupplier() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-teal-600" />
+                    <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
                     Volume Summary
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid md:grid-cols-3 gap-4">
                     <div className="bg-muted/50 rounded-xl p-5 text-center">
-                      <p className="text-sm text-muted-foreground mb-1">
+                      <p className="text-sm text-gray-600 mb-1">
                         Total Projected
                       </p>
                       <p className="text-3xl font-bold font-mono">
@@ -898,18 +898,18 @@ export default function FuturesDetailSupplier() {
                       </p>
                     </div>
                     <div className="bg-emerald-50 rounded-xl p-5 text-center border border-emerald-100">
-                      <p className="text-sm text-emerald-600 mb-1">Available</p>
+                      <p className="text-sm text-[#D4AF37] mb-1">Available</p>
                       <p className="text-3xl font-bold font-mono text-emerald-700">
                         {totalAvailable.toLocaleString()}t
                       </p>
-                      <p className="text-xs text-emerald-500 mt-1">
+                      <p className="text-xs text-[#D4AF37] mt-1">
                         {availablePercent.toFixed(1)}% of total
                       </p>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Availability Progress
                       </span>
                       <span className="font-medium">
@@ -922,7 +922,7 @@ export default function FuturesDetailSupplier() {
                         style={{ width: `${contractedPercent}%` }}
                       />
                       <div
-                        className="absolute top-0 h-full bg-emerald-500 transition-all"
+                        className="absolute top-0 h-full bg-[#D4AF37] transition-all"
                         style={{
                           left: `${contractedPercent}%`,
                           width: `${availablePercent}%`,
@@ -937,7 +937,7 @@ export default function FuturesDetailSupplier() {
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <div className="w-3 h-3 bg-emerald-500 rounded" />
+                        <div className="w-3 h-3 bg-[#D4AF37] rounded" />
                         <span>Available ({availablePercent.toFixed(1)}%)</span>
                       </div>
                     </div>
@@ -956,7 +956,7 @@ export default function FuturesDetailSupplier() {
                     <div className="flex items-center gap-3">
                       <div className="p-3 bg-emerald-100 rounded-xl">
                         {CROP_TYPE_ICONS[futures.cropType] || (
-                          <Sprout className="h-6 w-6 text-emerald-600" />
+                          <Sprout className="h-6 w-6 text-[#D4AF37]" />
                         )}
                       </div>
                       <div>
@@ -964,7 +964,7 @@ export default function FuturesDetailSupplier() {
                           {CROP_TYPE_LABELS[futures.cropType]}
                         </p>
                         {futures.cropVariety && (
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             {futures.cropVariety}
                           </p>
                         )}
@@ -972,7 +972,7 @@ export default function FuturesDetailSupplier() {
                     </div>
 
                     <div className="flex items-center gap-2 text-sm p-3 bg-muted/30 rounded-lg">
-                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <MapPin className="h-4 w-4 text-gray-600" />
                       <span className="font-medium">
                         {futures.state}
                         {futures.region && `, ${futures.region}`}
@@ -981,7 +981,7 @@ export default function FuturesDetailSupplier() {
 
                     <div className="grid grid-cols-2 gap-4 pt-3 border-t">
                       <div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           Land Area
                         </p>
                         <p className="font-semibold font-mono">
@@ -992,7 +992,7 @@ export default function FuturesDetailSupplier() {
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           Land Status
                         </p>
                         <p className="font-semibold">
@@ -1003,7 +1003,7 @@ export default function FuturesDetailSupplier() {
 
                     {futures.description && (
                       <div className="pt-3 border-t">
-                        <p className="text-sm text-muted-foreground mb-2">
+                        <p className="text-sm text-gray-600 mb-2">
                           Description
                         </p>
                         <p className="text-sm leading-relaxed">
@@ -1021,7 +1021,7 @@ export default function FuturesDetailSupplier() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center gap-2 text-sm p-3 bg-muted/30 rounded-lg">
-                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <Calendar className="h-4 w-4 text-gray-600" />
                       <span className="font-medium">
                         {futures.projectionStartYear} -{" "}
                         {futures.projectionEndYear} (
@@ -1045,12 +1045,12 @@ export default function FuturesDetailSupplier() {
 
                     <div className="pt-3 border-t">
                       <div className="flex items-center gap-2 mb-3">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <DollarSign className="h-4 w-4 text-gray-600" />
                         <span className="font-semibold">Pricing</span>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div className="p-3 bg-teal-50 rounded-lg border border-teal-100">
-                          <p className="text-xs text-teal-600 mb-1">
+                          <p className="text-xs text-[#D4AF37] mb-1">
                             Indicative Price
                           </p>
                           <p className="font-bold text-lg text-teal-800 font-mono">
@@ -1060,7 +1060,7 @@ export default function FuturesDetailSupplier() {
                           </p>
                         </div>
                         <div className="p-3 bg-muted/50 rounded-lg">
-                          <p className="text-xs text-muted-foreground mb-1">
+                          <p className="text-xs text-gray-600 mb-1">
                             Annual Escalation
                           </p>
                           <p className="font-bold text-lg font-mono">
@@ -1069,7 +1069,7 @@ export default function FuturesDetailSupplier() {
                         </div>
                       </div>
                       {futures.pricingNotes && (
-                        <p className="text-sm text-muted-foreground mt-3 italic">
+                        <p className="text-sm text-gray-600 mt-3 italic">
                           {futures.pricingNotes}
                         </p>
                       )}
@@ -1086,20 +1086,20 @@ export default function FuturesDetailSupplier() {
                         <div className="grid grid-cols-3 gap-3">
                           {futures.expectedCarbonIntensity && (
                             <div className="text-center p-2 bg-muted/30 rounded-lg">
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-600">
                                 Carbon
                               </p>
                               <p className="font-semibold font-mono text-sm">
                                 {futures.expectedCarbonIntensity}
                               </p>
-                              <p className="text-[10px] text-muted-foreground">
+                              <p className="text-[10px] text-gray-600">
                                 kg CO₂e/t
                               </p>
                             </div>
                           )}
                           {futures.expectedMoistureContent && (
                             <div className="text-center p-2 bg-muted/30 rounded-lg">
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-600">
                                 Moisture
                               </p>
                               <p className="font-semibold font-mono text-sm">
@@ -1109,13 +1109,13 @@ export default function FuturesDetailSupplier() {
                           )}
                           {futures.expectedEnergyContent && (
                             <div className="text-center p-2 bg-muted/30 rounded-lg">
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-600">
                                 Energy
                               </p>
                               <p className="font-semibold font-mono text-sm">
                                 {futures.expectedEnergyContent}
                               </p>
-                              <p className="text-[10px] text-muted-foreground">
+                              <p className="text-[10px] text-gray-600">
                                 GJ/t
                               </p>
                             </div>
@@ -1128,7 +1128,7 @@ export default function FuturesDetailSupplier() {
               </div>
 
               {/* Timestamps */}
-              <div className="text-sm text-muted-foreground flex flex-wrap gap-4">
+              <div className="text-sm text-gray-600 flex flex-wrap gap-4">
                 <span>Created {formatDate(futures.createdAt)}</span>
                 {futures.publishedAt && (
                   <span>• Published {formatDate(futures.publishedAt)}</span>
@@ -1146,7 +1146,7 @@ export default function FuturesDetailSupplier() {
                   <div className="flex justify-between items-center">
                     <div>
                       <CardTitle className="flex items-center gap-2">
-                        <BarChart3 className="h-5 w-5 text-teal-600" />
+                        <BarChart3 className="h-5 w-5 text-[#D4AF37]" />
                         Yield Projections
                       </CardTitle>
                       <CardDescription>
@@ -1217,7 +1217,7 @@ export default function FuturesDetailSupplier() {
                                 <td className="py-3 px-4 text-right font-mono text-blue-600">
                                   {contracted.toLocaleString()}
                                 </td>
-                                <td className="py-3 px-4 text-right font-mono text-emerald-600">
+                                <td className="py-3 px-4 text-right font-mono text-[#D4AF37]">
                                   {available.toLocaleString()}
                                 </td>
                                 <td className="py-3 px-4 text-center">
@@ -1237,7 +1237,7 @@ export default function FuturesDetailSupplier() {
                                 <td className="py-3 px-4 capitalize text-sm">
                                   {p.harvestSeason || "-"}
                                 </td>
-                                <td className="py-3 px-4 text-sm text-muted-foreground max-w-[200px] truncate">
+                                <td className="py-3 px-4 text-sm text-gray-600 max-w-[200px] truncate">
                                   {p.notes || "-"}
                                 </td>
                               </tr>
@@ -1253,7 +1253,7 @@ export default function FuturesDetailSupplier() {
                             <td className="py-3 px-4 text-right font-mono text-blue-600">
                               {totalContracted.toLocaleString()}
                             </td>
-                            <td className="py-3 px-4 text-right font-mono text-emerald-600">
+                            <td className="py-3 px-4 text-right font-mono text-[#D4AF37]">
                               {totalAvailable.toLocaleString()}
                             </td>
                             <td colSpan={3}></td>
@@ -1262,7 +1262,7 @@ export default function FuturesDetailSupplier() {
                       </table>
                     </div>
                   ) : (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p className="font-medium mb-2">
                         No yield projections added yet
@@ -1287,7 +1287,7 @@ export default function FuturesDetailSupplier() {
                   <div className="flex justify-between items-start">
                     <div>
                       <CardTitle className="flex items-center gap-2">
-                        <Users className="h-5 w-5 text-teal-600" />
+                        <Users className="h-5 w-5 text-[#D4AF37]" />
                         Expressions of Interest
                       </CardTitle>
                       <CardDescription>
@@ -1339,7 +1339,7 @@ export default function FuturesDetailSupplier() {
                                   {EOI_STATUS_LABELS[eoi.status]}
                                 </Badge>
                               </div>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-gray-600">
                                 Submitted {formatDate(eoi.createdAt)}
                               </p>
                             </div>
@@ -1364,7 +1364,7 @@ export default function FuturesDetailSupplier() {
                                     onClick={() =>
                                       openRespondDialog(eoi, "accepted")
                                     }
-                                    className="border-emerald-200 text-emerald-600 hover:bg-emerald-50"
+                                    className="border-emerald-200 text-[#D4AF37] hover:bg-emerald-50"
                                   >
                                     <CheckCircle2 className="h-4 w-4 mr-1" />
                                     Accept
@@ -1388,16 +1388,16 @@ export default function FuturesDetailSupplier() {
                           {eoi.buyer && (
                             <div className="bg-muted/30 rounded-lg p-4 mb-4">
                               <div className="flex items-center gap-2 mb-2">
-                                <Building2 className="h-4 w-4 text-teal-600" />
+                                <Building2 className="h-4 w-4 text-[#D4AF37]" />
                                 <span className="font-semibold">
                                   {eoi.buyer.companyName}
                                 </span>
                               </div>
-                              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                              <div className="flex flex-wrap gap-4 text-sm text-gray-600">
                                 {eoi.buyer.contactEmail && (
                                   <a
                                     href={`mailto:${eoi.buyer.contactEmail}`}
-                                    className="flex items-center gap-1.5 hover:text-teal-600 transition-colors"
+                                    className="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors"
                                   >
                                     <Mail className="h-3.5 w-3.5" />
                                     {eoi.buyer.contactEmail}
@@ -1406,7 +1406,7 @@ export default function FuturesDetailSupplier() {
                                 {eoi.buyer.contactPhone && (
                                   <a
                                     href={`tel:${eoi.buyer.contactPhone}`}
-                                    className="flex items-center gap-1.5 hover:text-teal-600 transition-colors"
+                                    className="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors"
                                   >
                                     <Phone className="h-3.5 w-3.5" />
                                     {eoi.buyer.contactPhone}
@@ -1419,7 +1419,7 @@ export default function FuturesDetailSupplier() {
                           {/* EOI Details */}
                           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm p-4 bg-muted/20 rounded-lg">
                             <div>
-                              <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                              <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                                 Period
                               </p>
                               <p className="font-semibold">
@@ -1427,7 +1427,7 @@ export default function FuturesDetailSupplier() {
                               </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                              <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                                 Annual Volume
                               </p>
                               <p className="font-semibold font-mono">
@@ -1438,7 +1438,7 @@ export default function FuturesDetailSupplier() {
                               </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                              <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                                 Total Volume
                               </p>
                               <p className="font-semibold font-mono">
@@ -1449,7 +1449,7 @@ export default function FuturesDetailSupplier() {
                               </p>
                             </div>
                             <div>
-                              <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                              <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                                 Offered Price
                               </p>
                               <p className="font-semibold font-mono">
@@ -1464,14 +1464,14 @@ export default function FuturesDetailSupplier() {
                             <div className="mt-4 pt-4 border-t text-sm">
                               {eoi.deliveryLocation && (
                                 <p className="mb-1">
-                                  <span className="text-muted-foreground">
+                                  <span className="text-gray-600">
                                     Delivery:{" "}
                                   </span>
                                   <span className="font-medium">
                                     {eoi.deliveryLocation}
                                   </span>
                                   {eoi.deliveryFrequency && (
-                                    <span className="text-muted-foreground">
+                                    <span className="text-gray-600">
                                       {" "}
                                       ({eoi.deliveryFrequency})
                                     </span>
@@ -1479,7 +1479,7 @@ export default function FuturesDetailSupplier() {
                                 </p>
                               )}
                               {eoi.additionalTerms && (
-                                <p className="text-muted-foreground mt-2 italic">
+                                <p className="text-gray-600 mt-2 italic">
                                   "{eoi.additionalTerms}"
                                 </p>
                               )}
@@ -1495,7 +1495,7 @@ export default function FuturesDetailSupplier() {
                                 {eoi.supplierResponse}
                               </p>
                               {eoi.respondedAt && (
-                                <p className="text-xs text-teal-600 mt-2">
+                                <p className="text-xs text-[#D4AF37] mt-2">
                                   Responded {formatDate(eoi.respondedAt)}
                                 </p>
                               )}
@@ -1505,7 +1505,7 @@ export default function FuturesDetailSupplier() {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center py-12 text-muted-foreground">
+                    <div className="text-center py-12 text-gray-600">
                       <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p className="font-medium mb-2">
                         No expressions of interest yet
@@ -1581,7 +1581,7 @@ export default function FuturesDetailSupplier() {
               disabled={respondMutation.isPending || isUsingMockData}
               className={
                 respondAction === "accepted"
-                  ? "bg-emerald-600 hover:bg-emerald-700"
+                  ? "bg-[#D4AF37] hover:bg-emerald-700"
                   : respondAction === "declined"
                     ? "bg-red-600 hover:bg-red-700"
                     : ""

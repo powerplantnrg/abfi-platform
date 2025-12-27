@@ -76,7 +76,7 @@ export default function ComplianceDashboard() {
     <div className="container py-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Compliance Dashboard</h1>
-        <p className="text-muted-foreground">
+        <p className="text-gray-600">
           Quarterly compliance reports with governance metrics
         </p>
       </div>
@@ -136,7 +136,7 @@ export default function ComplianceDashboard() {
 
       {report.isLoading && (
         <div className="text-center py-12">
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Generating compliance report...
           </p>
         </div>
@@ -165,14 +165,14 @@ export default function ComplianceDashboard() {
                     Key Findings
                   </h3>
                   {report.data.summary.keyFindings.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       No significant findings
                     </p>
                   ) : (
                     <ul className="space-y-2">
                       {report.data.summary.keyFindings.map((finding, i) => (
                         <li key={i} className="text-sm flex gap-2">
-                          <span className="text-muted-foreground">•</span>
+                          <span className="text-gray-600">•</span>
                           <span>{finding}</span>
                         </li>
                       ))}
@@ -185,14 +185,14 @@ export default function ComplianceDashboard() {
                     Recommendations
                   </h3>
                   {report.data.summary.recommendations.length === 0 ? (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       No recommendations
                     </p>
                   ) : (
                     <ul className="space-y-2">
                       {report.data.summary.recommendations.map((rec, i) => (
                         <li key={i} className="text-sm flex gap-2">
-                          <span className="text-muted-foreground">•</span>
+                          <span className="text-gray-600">•</span>
                           <span>{rec}</span>
                         </li>
                       ))}
@@ -560,7 +560,7 @@ export default function ComplianceDashboard() {
                       <div className="text-3xl font-bold">
                         {report.data.certificateMetrics?.totalCertificates || 0}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-sm text-gray-600 mt-1">
                         {report.data.certificateMetrics?.expiringSoon || 0}{" "}
                         expiring soon
                       </p>
@@ -608,7 +608,7 @@ function MetricCard({
     <div className="flex items-start gap-3">
       <div className="p-2 bg-muted rounded-lg">{icon}</div>
       <div>
-        <p className="text-sm text-muted-foreground">{title}</p>
+        <p className="text-sm text-gray-600">{title}</p>
         <p className="text-2xl font-bold">{value}</p>
       </div>
     </div>

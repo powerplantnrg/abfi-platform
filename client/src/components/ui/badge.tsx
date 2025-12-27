@@ -10,7 +10,7 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
+          "border-transparent bg-primary text-[#D4AF37]-foreground [a&]:hover:bg-primary/90",
         secondary:
           "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
         destructive:
@@ -38,7 +38,7 @@ const badgeVariants = cva(
         "rating-f":
           "border-rating-f/30 bg-rating-f/10 text-rating-f font-semibold",
         // Status variants
-        draft: "border-muted bg-muted/50 text-muted-foreground",
+        draft: "border-muted bg-muted/50 text-gray-600",
         pending: "border-warning/30 bg-warning/10 text-warning",
         verified: "border-success/30 bg-success/10 text-success",
         rejected: "border-destructive/30 bg-destructive/10 text-destructive",

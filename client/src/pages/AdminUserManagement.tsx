@@ -54,9 +54,9 @@ export default function AdminUserManagement() {
         <div className="flex items-center justify-center min-h-[60vh]">
           <Card className="max-w-md">
             <CardContent className="py-12 text-center">
-              <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 You don't have permission to access user management.
               </p>
             </CardContent>
@@ -120,7 +120,7 @@ export default function AdminUserManagement() {
             <Users className="h-7 w-7" />
             User Management
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Manage user accounts, roles, and permissions
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function AdminUserManagement() {
           <CardContent className="pt-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-600" />
                 <Input
                   placeholder="Search by name or email..."
                   value={searchQuery}
@@ -158,7 +158,7 @@ export default function AdminUserManagement() {
           <Card>
             <CardContent className="pt-6">
               <div className="text-2xl font-bold">{users?.length || 0}</div>
-              <p className="text-xs text-muted-foreground">Total Users</p>
+              <p className="text-xs text-gray-600">Total Users</p>
             </CardContent>
           </Card>
           <Card>
@@ -166,7 +166,7 @@ export default function AdminUserManagement() {
               <div className="text-2xl font-bold">
                 {users?.filter((u: any) => u.role === "admin").length || 0}
               </div>
-              <p className="text-xs text-muted-foreground">Administrators</p>
+              <p className="text-xs text-gray-600">Administrators</p>
             </CardContent>
           </Card>
           <Card>
@@ -174,7 +174,7 @@ export default function AdminUserManagement() {
               <div className="text-2xl font-bold">
                 {users?.filter((u: any) => u.role === "supplier").length || 0}
               </div>
-              <p className="text-xs text-muted-foreground">Suppliers</p>
+              <p className="text-xs text-gray-600">Suppliers</p>
             </CardContent>
           </Card>
           <Card>
@@ -182,7 +182,7 @@ export default function AdminUserManagement() {
               <div className="text-2xl font-bold">
                 {users?.filter((u: any) => u.role === "buyer").length || 0}
               </div>
-              <p className="text-xs text-muted-foreground">Buyers</p>
+              <p className="text-xs text-gray-600">Buyers</p>
             </CardContent>
           </Card>
         </div>
@@ -197,7 +197,7 @@ export default function AdminUserManagement() {
           </CardHeader>
           <CardContent>
             {filteredUsers.length === 0 ? (
-              <div className="py-12 text-center text-muted-foreground">
+              <div className="py-12 text-center text-gray-600">
                 No users found matching your filters.
               </div>
             ) : (
@@ -213,13 +213,13 @@ export default function AdminUserManagement() {
                           <h4 className="font-semibold">
                             {u.name || "Unnamed User"}
                           </h4>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-2 text-sm text-gray-600">
                             <Mail className="h-3 w-3" />
                             {u.email}
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-4 text-xs text-gray-600">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           Joined {formatDate(u.createdAt)}

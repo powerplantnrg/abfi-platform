@@ -109,7 +109,7 @@ export default function SavedSearches() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold mb-2">Saved Searches</h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Save your search criteria and get alerts for new matches
             </p>
           </div>
@@ -145,7 +145,7 @@ export default function SavedSearches() {
                     value={searchCriteria}
                     onChange={e => setSearchCriteria(e.target.value)}
                   />
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-gray-600 mt-1">
                     Optional: Add JSON criteria from your current search
                   </p>
                 </div>
@@ -216,7 +216,7 @@ export default function SavedSearches() {
                 <CardContent className="space-y-3">
                   {search.criteria && search.criteria !== "{}" && (
                     <div className="bg-muted rounded-lg p-3">
-                      <div className="text-xs font-mono text-muted-foreground overflow-x-auto">
+                      <div className="text-xs font-mono text-gray-600 overflow-x-auto">
                         {search.criteria}
                       </div>
                     </div>
@@ -248,11 +248,11 @@ export default function SavedSearches() {
         ) : (
           <Card>
             <CardContent className="py-12 text-center">
-              <Bookmark className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Bookmark className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">
                 No saved searches yet
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-gray-600 mb-4">
                 Save your search criteria to quickly find feedstocks that match
                 your requirements
               </p>

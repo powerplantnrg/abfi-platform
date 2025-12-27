@@ -118,9 +118,9 @@ export default function AdminAssessorWorkflow() {
         <div className="flex items-center justify-center min-h-[60vh]">
           <Card className="max-w-md">
             <CardContent className="py-12 text-center">
-              <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 You don't have permission to access the assessor workflow.
               </p>
             </CardContent>
@@ -230,10 +230,10 @@ export default function AdminAssessorWorkflow() {
     <DashboardLayout>
       <div className="space-y-8">
         <div className="flex items-center gap-3">
-          <Shield className="h-7 w-7 text-primary" />
+          <Shield className="h-7 w-7 text-[#D4AF37]" />
           <div>
             <h1 className="text-2xl font-bold">Assessor Workflow</h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Review and approve bankability assessments for bioenergy projects
             </p>
           </div>
@@ -256,9 +256,9 @@ export default function AdminAssessorWorkflow() {
             {pendingAssessments.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <CheckCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <CheckCircle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">All Caught Up!</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600">
                     No pending assessments to review at this time.
                   </p>
                 </CardContent>
@@ -294,7 +294,7 @@ export default function AdminAssessorWorkflow() {
                         {/* Current Rating */}
                         <div className="flex items-center gap-4">
                           <div>
-                            <p className="text-sm text-muted-foreground mb-1">
+                            <p className="text-sm text-gray-600 mb-1">
                               Current Rating
                             </p>
                             <RatingBadge
@@ -303,7 +303,7 @@ export default function AdminAssessorWorkflow() {
                             />{" "}
                           </div>
                           <div>
-                            <p className="text-sm text-muted-foreground mb-1">
+                            <p className="text-sm text-gray-600 mb-1">
                               Composite Score
                             </p>
                             <p className="text-2xl font-bold">
@@ -315,57 +315,57 @@ export default function AdminAssessorWorkflow() {
                         {/* Score Breakdown */}
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                           <div>
-                            <p className="text-xs text-muted-foreground mb-1">
+                            <p className="text-xs text-gray-600 mb-1">
                               Volume Security
                             </p>
                             <p className="text-lg font-semibold">
                               {assessment.volumeSecurityScore}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               30% weight
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground mb-1">
+                            <p className="text-xs text-gray-600 mb-1">
                               Counterparty Quality
                             </p>
                             <p className="text-lg font-semibold">
                               {assessment.counterpartyQualityScore}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               25% weight
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground mb-1">
+                            <p className="text-xs text-gray-600 mb-1">
                               Contract Structure
                             </p>
                             <p className="text-lg font-semibold">
                               {assessment.contractStructureScore}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               20% weight
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground mb-1">
+                            <p className="text-xs text-gray-600 mb-1">
                               Concentration Risk
                             </p>
                             <p className="text-lg font-semibold">
                               {assessment.concentrationRiskScore}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               15% weight
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs text-muted-foreground mb-1">
+                            <p className="text-xs text-gray-600 mb-1">
                               Operational Readiness
                             </p>
                             <p className="text-lg font-semibold">
                               {assessment.operationalReadinessScore}
                             </p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               10% weight
                             </p>
                           </div>
@@ -445,7 +445,7 @@ export default function AdminAssessorWorkflow() {
                                         }
                                         className="w-24"
                                       />
-                                      <span className="text-sm text-muted-foreground">
+                                      <span className="text-sm text-gray-600">
                                         (Original: {score.current})
                                       </span>
                                     </div>
@@ -548,8 +548,8 @@ export default function AdminAssessorWorkflow() {
             {approvedAssessments.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <CheckCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-sm text-muted-foreground">
+                  <CheckCircle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
+                  <p className="text-sm text-gray-600">
                     No approved assessments yet.
                   </p>
                 </CardContent>
@@ -598,8 +598,8 @@ export default function AdminAssessorWorkflow() {
             {rejectedAssessments.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <XCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-sm text-muted-foreground">
+                  <XCircle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
+                  <p className="text-sm text-gray-600">
                     No rejected assessments.
                   </p>
                 </CardContent>
@@ -623,7 +623,7 @@ export default function AdminAssessorWorkflow() {
                     </CardHeader>
                     {assessment.reassessmentReason && (
                       <CardContent>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           <strong>Reason:</strong>{" "}
                           {assessment.reassessmentReason}
                         </p>

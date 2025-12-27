@@ -116,7 +116,7 @@ export default function DashboardLayout({
             <h1 className="text-2xl font-semibold tracking-tight text-center">
               Sign in to continue
             </h1>
-            <p className="text-sm text-muted-foreground text-center max-w-sm">
+            <p className="text-sm text-gray-600 text-center max-w-sm">
               Access to this dashboard requires authentication. Continue to
               launch the login flow.
             </p>
@@ -250,7 +250,7 @@ function DashboardLayoutContent({
                       className={`h-10 transition-all font-normal`}
                     >
                       <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        className={`h-4 w-4 ${isActive ? "text-[#D4AF37]" : ""}`}
                       />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
@@ -261,7 +261,7 @@ function DashboardLayoutContent({
 
             {/* Platform Menu (V3.1) */}
             <div className="px-4 py-2 mt-4">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 {!isCollapsed ? "Platform" : ""}
               </p>
             </div>
@@ -279,7 +279,7 @@ function DashboardLayoutContent({
                       className={`h-10 transition-all font-normal`}
                     >
                       <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        className={`h-4 w-4 ${isActive ? "text-[#D4AF37]" : ""}`}
                       />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
@@ -290,7 +290,7 @@ function DashboardLayoutContent({
 
             {/* Supplier Menu */}
             <div className="px-4 py-2 mt-4">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 {!isCollapsed ? "Supplier" : ""}
               </p>
             </div>
@@ -308,7 +308,7 @@ function DashboardLayoutContent({
                       className={`h-10 transition-all font-normal`}
                     >
                       <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        className={`h-4 w-4 ${isActive ? "text-[#D4AF37]" : ""}`}
                       />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
@@ -319,7 +319,7 @@ function DashboardLayoutContent({
 
             {/* Buyer Menu */}
             <div className="px-4 py-2 mt-4">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 {!isCollapsed ? "Buyer" : ""}
               </p>
             </div>
@@ -337,7 +337,7 @@ function DashboardLayoutContent({
                       className={`h-10 transition-all font-normal`}
                     >
                       <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        className={`h-4 w-4 ${isActive ? "text-[#D4AF37]" : ""}`}
                       />
                       <span>{item.label}</span>
                     </SidebarMenuButton>
@@ -350,7 +350,7 @@ function DashboardLayoutContent({
             {user?.role === "admin" && (
               <>
                 <div className="px-4 py-2 mt-4">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     {!isCollapsed ? "Admin" : ""}
                   </p>
                 </div>
@@ -366,7 +366,7 @@ function DashboardLayoutContent({
                           className={`h-10 transition-all font-normal`}
                         >
                           <item.icon
-                            className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                            className={`h-4 w-4 ${isActive ? "text-[#D4AF37]" : ""}`}
                           />
                           <span>{item.label}</span>
                         </SidebarMenuButton>
@@ -391,7 +391,7 @@ function DashboardLayoutContent({
                     <p className="text-sm font-medium truncate leading-none">
                       {user?.name || "-"}
                     </p>
-                    <p className="text-xs text-muted-foreground truncate mt-1.5">
+                    <p className="text-xs text-gray-600 truncate mt-1.5">
                       {user?.email || "-"}
                     </p>
                   </div>
@@ -410,7 +410,7 @@ function DashboardLayoutContent({
           </SidebarFooter>
         </Sidebar>
         <div
-          className={`absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-primary/20 transition-colors ${isCollapsed ? "hidden" : ""}`}
+          className={`absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-[#D4AF37]/20 transition-colors ${isCollapsed ? "hidden" : ""}`}
           onMouseDown={() => {
             if (isCollapsed) return;
             setIsResizing(true);
@@ -432,7 +432,7 @@ function DashboardLayoutContent({
                 <Menu className="h-5 w-5 text-slate-700" />
               </button>
               <div className="flex items-center gap-2">
-                <Leaf className="h-5 w-5 text-teal-600" />
+                <Leaf className="h-5 w-5 text-[#D4AF37]" />
                 <span className="font-semibold tracking-tight text-foreground">
                   {activeMenuItem?.label ?? "ABFI"}
                 </span>

@@ -118,9 +118,9 @@ export default function MonitoringJobsScheduler() {
         <div className="flex items-center justify-center min-h-[60vh]">
           <Card className="max-w-md">
             <CardContent className="py-12 text-center">
-              <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 You don't have permission to access the monitoring jobs scheduler.
               </p>
             </CardContent>
@@ -182,10 +182,10 @@ export default function MonitoringJobsScheduler() {
       <div className="space-y-8">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <Shield className="h-8 w-8 text-primary" />
+            <Shield className="h-8 w-8 text-[#D4AF37]" />
             <h1 className="text-2xl font-bold">Monitoring Jobs Scheduler</h1>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Manage and trigger automated monitoring jobs for covenant compliance
             and supply tracking
           </p>
@@ -283,7 +283,7 @@ export default function MonitoringJobsScheduler() {
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">
+                    <p className="text-sm text-gray-600 mb-1">
                       Last Run
                     </p>
                     <p className="text-sm font-medium">
@@ -293,7 +293,7 @@ export default function MonitoringJobsScheduler() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">
+                    <p className="text-sm text-gray-600 mb-1">
                       Next Run
                     </p>
                     <p className="text-sm font-medium">
@@ -316,7 +316,7 @@ export default function MonitoringJobsScheduler() {
           <CardContent className="space-y-4">
             <div>
               <h4 className="font-semibold mb-2">Daily Covenant Check</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 Checks all active projects for covenant breaches. Monitors Tier
                 1 supply coverage against thresholds and records breaches with
                 severity levels (info/warning/breach/critical). Generates lender
@@ -327,7 +327,7 @@ export default function MonitoringJobsScheduler() {
               <h4 className="font-semibold mb-2">
                 Weekly Supply Recalculation
               </h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 Recalculates supply positions for all projects. Updates Tier
                 1/2/Options/ROFR totals, calculates coverage percentages, and
                 triggers bankability reassessment if significant changes are
@@ -336,7 +336,7 @@ export default function MonitoringJobsScheduler() {
             </div>
             <div>
               <h4 className="font-semibold mb-2">Contract Renewal Alerts</h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 Checks for contracts expiring within 90 days. Generates alerts
                 with impact assessment, prioritizes Tier 1 agreements as high
                 impact, and prevents duplicate alerts. Severity increases as

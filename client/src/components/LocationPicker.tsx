@@ -188,7 +188,7 @@ export function LocationPicker({
           </div>
         </div>
 
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-xs text-gray-600 mt-2">
           GPS coordinates help buyers find your location on the map
         </p>
       </div>
@@ -227,11 +227,11 @@ export function LocationDisplay({
 
   return (
     <div className={`flex items-start gap-2 ${className}`}>
-      <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+      <MapPin className="h-4 w-4 text-gray-600 mt-0.5" />
       <div className="flex-1">
         <div className="text-sm">{address || "No location specified"}</div>
         {showCoordinates && location.latitude && location.longitude && (
-          <div className="text-xs text-muted-foreground mt-1">
+          <div className="text-xs text-gray-600 mt-1">
             {location.latitude}, {location.longitude}
           </div>
         )}

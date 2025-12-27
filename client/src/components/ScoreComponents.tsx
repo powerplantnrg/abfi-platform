@@ -59,7 +59,7 @@ export function ScoreBadge({
         {score}/100
       </Badge>
       {showLabel && (
-        <span className="text-sm text-muted-foreground">{colors.label}</span>
+        <span className="text-sm text-gray-600">{colors.label}</span>
       )}
     </div>
   );
@@ -156,7 +156,7 @@ export function ScoreCard({
               <CardDescription className="mt-1">{description}</CardDescription>
             )}
           </div>
-          <Award className="h-5 w-5 text-muted-foreground" />
+          <Award className="h-5 w-5 text-gray-600" />
         </div>
       </CardHeader>
       <CardContent>
@@ -165,12 +165,12 @@ export function ScoreCard({
           <div className="text-4xl font-bold" style={{ color: colors.primary }}>
             {score}
           </div>
-          <div className="text-lg text-muted-foreground mb-1">/ {maxScore}</div>
+          <div className="text-lg text-gray-600 mb-1">/ {maxScore}</div>
           {trend && trendValue !== undefined && (
             <div
               className={`flex items-center gap-1 mb-1 text-sm ${
                 trend === "up"
-                  ? "text-emerald-600"
+                  ? "text-[#D4AF37]"
                   : trend === "down"
                     ? "text-red-600"
                     : "text-gray-600"
@@ -203,7 +203,7 @@ export function ScoreCard({
           <div className="space-y-2 pt-2 border-t">
             {breakdown.map((item, index) => (
               <div key={index} className="flex justify-between text-sm">
-                <span className="text-muted-foreground">{item.label}</span>
+                <span className="text-gray-600">{item.label}</span>
                 <span className="font-medium">
                   {item.value}
                   {item.maxValue ? `/${item.maxValue}` : ""}
@@ -243,7 +243,7 @@ export function CompactScore({
 
   return (
     <div className="flex items-center justify-between py-2">
-      <span className="text-sm text-muted-foreground">{label}</span>
+      <span className="text-sm text-gray-600">{label}</span>
       <div className="flex items-center gap-3">
         <div className="w-24 h-2 rounded-full bg-gray-200">
           <div

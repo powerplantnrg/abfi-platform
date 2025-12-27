@@ -41,52 +41,52 @@ import {
 // Rating color schemes
 const getRatingColor = (rating: string) => {
   const colors: Record<string, string> = {
-    "AAA": "bg-emerald-500 text-white",
-    "AA": "bg-emerald-400 text-white",
-    "A": "bg-green-500 text-white",
-    "BBB": "bg-yellow-500 text-white",
-    "BB": "bg-amber-500 text-white",
-    "B": "bg-orange-500 text-white",
-    "CCC": "bg-red-500 text-white",
-    "D": "bg-gray-700 text-white",
-    "N/R": "bg-gray-400 text-white",
-    "GC1": "bg-emerald-500 text-white",
-    "GC2": "bg-green-500 text-white",
-    "GC3": "bg-amber-500 text-white",
-    "GC4": "bg-red-500 text-white",
-    "TR1": "bg-emerald-500 text-white",
-    "TR2": "bg-green-500 text-white",
-    "TR3": "bg-amber-500 text-white",
-    "TR4": "bg-red-500 text-white",
-    "CI-A": "bg-emerald-500 text-white",
-    "CI-B": "bg-green-500 text-white",
-    "CI-C": "bg-amber-500 text-white",
-    "CI-D": "bg-red-500 text-white",
-    "OQ1": "bg-emerald-500 text-white",
-    "OQ2": "bg-green-500 text-white",
-    "OQ3": "bg-amber-500 text-white",
-    "OQ4": "bg-red-500 text-white",
-    "GS1": "bg-emerald-500 text-white",
-    "GS2": "bg-green-500 text-white",
-    "GS3": "bg-amber-500 text-white",
-    "GS4": "bg-red-500 text-white",
+    "AAA": "bg-[#D4AF37] text-black",
+    "AA": "bg-emerald-400 text-black",
+    "A": "bg-green-500 text-black",
+    "BBB": "bg-yellow-500 text-black",
+    "BB": "bg-[#D4AF37] text-black",
+    "B": "bg-orange-500 text-black",
+    "CCC": "bg-red-500 text-black",
+    "D": "bg-gray-700 text-black",
+    "N/R": "bg-gray-400 text-black",
+    "GC1": "bg-[#D4AF37] text-black",
+    "GC2": "bg-green-500 text-black",
+    "GC3": "bg-[#D4AF37] text-black",
+    "GC4": "bg-red-500 text-black",
+    "TR1": "bg-[#D4AF37] text-black",
+    "TR2": "bg-green-500 text-black",
+    "TR3": "bg-[#D4AF37] text-black",
+    "TR4": "bg-red-500 text-black",
+    "CI-A": "bg-[#D4AF37] text-black",
+    "CI-B": "bg-green-500 text-black",
+    "CI-C": "bg-[#D4AF37] text-black",
+    "CI-D": "bg-red-500 text-black",
+    "OQ1": "bg-[#D4AF37] text-black",
+    "OQ2": "bg-green-500 text-black",
+    "OQ3": "bg-[#D4AF37] text-black",
+    "OQ4": "bg-red-500 text-black",
+    "GS1": "bg-[#D4AF37] text-black",
+    "GS2": "bg-green-500 text-black",
+    "GS3": "bg-[#D4AF37] text-black",
+    "GS4": "bg-red-500 text-black",
     "N/A": "bg-gray-300 text-gray-600",
   };
-  return colors[rating] || "bg-gray-400 text-white";
+  return colors[rating] || "bg-gray-400 text-black";
 };
 
 const getSignalColor = (signal: string) => {
-  if (signal.includes("BULLISH")) return "text-emerald-600 bg-emerald-50 border-emerald-200";
-  if (signal.includes("NEUTRAL")) return "text-amber-600 bg-amber-50 border-amber-200";
+  if (signal.includes("BULLISH")) return "text-[#D4AF37] bg-emerald-50 border-emerald-200";
+  if (signal.includes("NEUTRAL")) return "text-[#D4AF37] bg-amber-50 border-amber-200";
   if (signal.includes("BEARISH")) return "text-red-600 bg-red-50 border-red-200";
   return "text-gray-600 bg-gray-50 border-gray-200";
 };
 
 const getRiskColor = (risk: string) => {
   const level = risk.toLowerCase();
-  if (level.includes("very low") || level === "minimal") return "text-emerald-600";
+  if (level.includes("very low") || level === "minimal") return "text-[#D4AF37]";
   if (level.includes("low")) return "text-green-600";
-  if (level.includes("medium")) return "text-amber-600";
+  if (level.includes("medium")) return "text-[#D4AF37]";
   if (level.includes("high") || level.includes("critical")) return "text-red-600";
   return "text-gray-600";
 };
@@ -774,9 +774,9 @@ export default function ProjectRatingDetail() {
       <div className="p-6 max-w-4xl mx-auto">
         <Card>
           <CardContent className="p-12 text-center">
-            <XCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <XCircle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
             <h2 className="text-xl font-semibold mb-2">Project Not Found</h2>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-gray-600 mb-4">
               The project you're looking for doesn't exist or hasn't been assessed yet.
             </p>
             <Button onClick={() => setLocation("/ratings/projects")}>
@@ -804,8 +804,8 @@ export default function ProjectRatingDetail() {
                 {project.bankability}
               </Badge>
             </div>
-            <p className="text-muted-foreground">{project.company}</p>
-            <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
+            <p className="text-gray-600">{project.company}</p>
+            <div className="flex items-center gap-4 mt-2 text-sm text-gray-600">
               <span className="flex items-center gap-1">
                 <MapPin className="h-3 w-3" />
                 {project.location}
@@ -825,7 +825,7 @@ export default function ProjectRatingDetail() {
             {project.signal.includes("NEUTRAL") && !project.signal.includes("BULLISH") && !project.signal.includes("BEARISH") && <Minus className="h-4 w-4 mr-2" />}
             ABFI Signal: {project.signal}
           </Badge>
-          <div className="text-sm text-muted-foreground">
+          <div className="text-sm text-gray-600">
             Intensity: {project.intensity}/5 | Temporal: {project.temporal}
           </div>
         </div>
@@ -837,42 +837,42 @@ export default function ProjectRatingDetail() {
           <CardContent className="p-3 text-center">
             <Shield className="h-4 w-4 mx-auto mb-1 text-blue-600" />
             <Badge className={`${getRatingColor(project.bankability)} text-xs`}>{project.bankability}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Bankability</p>
+            <p className="text-xs text-gray-600 mt-1">Bankability</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-3 text-center">
-            <Leaf className="h-4 w-4 mx-auto mb-1 text-emerald-600" />
+            <Leaf className="h-4 w-4 mx-auto mb-1 text-[#D4AF37]" />
             <Badge className={`${getRatingColor(project.growerContract)} text-xs`}>{project.growerContract}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Grower Contract</p>
+            <p className="text-xs text-gray-600 mt-1">Grower Contract</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-3 text-center">
             <Cpu className="h-4 w-4 mx-auto mb-1 text-purple-600" />
             <Badge className={`${getRatingColor(project.technology)} text-xs`}>{project.technology}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Technology</p>
+            <p className="text-xs text-gray-600 mt-1">Technology</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-3 text-center">
-            <Factory className="h-4 w-4 mx-auto mb-1 text-teal-600" />
+            <Factory className="h-4 w-4 mx-auto mb-1 text-[#D4AF37]" />
             <Badge className={`${getRatingColor(project.carbonIntensity)} text-xs`}>{project.carbonIntensity}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Carbon ({project.ciValue})</p>
+            <p className="text-xs text-gray-600 mt-1">Carbon ({project.ciValue})</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-3 text-center">
-            <TrendingUp className="h-4 w-4 mx-auto mb-1 text-amber-600" />
+            <TrendingUp className="h-4 w-4 mx-auto mb-1 text-[#D4AF37]" />
             <Badge className={`${getRatingColor(project.offtake)} text-xs`}>{project.offtake}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Offtake</p>
+            <p className="text-xs text-gray-600 mt-1">Offtake</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-3 text-center">
             <Building2 className="h-4 w-4 mx-auto mb-1 text-indigo-600" />
             <Badge className={`${getRatingColor(project.govSupport)} text-xs`}>{project.govSupport}</Badge>
-            <p className="text-xs text-muted-foreground mt-1">Gov Support</p>
+            <p className="text-xs text-gray-600 mt-1">Gov Support</p>
           </CardContent>
         </Card>
       </div>
@@ -904,7 +904,7 @@ export default function ProjectRatingDetail() {
                         {item.rating.split(" ")[0]}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs text-muted-foreground">{item.justification}</TableCell>
+                    <TableCell className="text-xs text-gray-600">{item.justification}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -933,7 +933,7 @@ export default function ProjectRatingDetail() {
                   </span>
                 </div>
                 <Progress value={getRiskProgress(item.level)} className="h-2" />
-                <p className="text-xs text-muted-foreground">{item.description}</p>
+                <p className="text-xs text-gray-600">{item.description}</p>
               </div>
             ))}
           </CardContent>
@@ -999,8 +999,8 @@ export default function ProjectRatingDetail() {
                     <TableCell className="text-center">{item.bagasseImpact}</TableCell>
                     <TableCell className="text-center">
                       <Badge variant="outline" className={
-                        item.viability === "Viable" ? "border-emerald-500 text-emerald-600" :
-                        item.viability === "Reduced capacity" ? "border-amber-500 text-amber-600" :
+                        item.viability === "Viable" ? "border-[#D4AF37] text-[#D4AF37]" :
+                        item.viability === "Reduced capacity" ? "border-[#D4AF37] text-[#D4AF37]" :
                         item.viability === "Marginal" ? "border-orange-500 text-orange-600" :
                         "border-red-500 text-red-600"
                       }>
@@ -1020,19 +1020,19 @@ export default function ProjectRatingDetail() {
         <CardContent className="p-4">
           <div className="grid md:grid-cols-4 gap-4 text-sm">
             <div>
-              <p className="text-muted-foreground">Feedstock</p>
+              <p className="text-gray-600">Feedstock</p>
               <p className="font-medium">{project.feedstock}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Technology Pathway</p>
+              <p className="text-gray-600">Technology Pathway</p>
               <p className="font-medium">{project.pathway}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Location</p>
+              <p className="text-gray-600">Location</p>
               <p className="font-medium">{project.location}</p>
             </div>
             <div>
-              <p className="text-muted-foreground">Government Funding</p>
+              <p className="text-gray-600">Government Funding</p>
               <p className="font-medium">{project.funding}</p>
             </div>
           </div>

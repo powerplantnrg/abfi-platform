@@ -97,7 +97,7 @@ export default function BankabilityAssessment() {
         <div className="container py-8">
           <Card>
             <CardContent className="pt-6">
-              <p className="text-muted-foreground">Project not found</p>
+              <p className="text-gray-600">Project not found</p>
             </CardContent>
           </Card>
         </div>
@@ -282,7 +282,7 @@ export default function BankabilityAssessment() {
                         <Label className="font-semibold">
                           Volume Security (30%)
                         </Label>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           Tier 1 coverage, total secured volume, flex bands
                         </p>
                       </div>
@@ -306,7 +306,7 @@ export default function BankabilityAssessment() {
                         <Label className="font-semibold">
                           Counterparty Quality (25%)
                         </Label>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           Grower qualifications, financial strength, track
                           record
                         </p>
@@ -331,7 +331,7 @@ export default function BankabilityAssessment() {
                         <Label className="font-semibold">
                           Contract Structure (20%)
                         </Label>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           Take-or-pay terms, pricing mechanisms, security
                           packages
                         </p>
@@ -356,7 +356,7 @@ export default function BankabilityAssessment() {
                         <Label className="font-semibold">
                           Concentration Risk (15%)
                         </Label>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           Supplier HHI, geographic diversity, single event
                           exposure
                         </p>
@@ -381,7 +381,7 @@ export default function BankabilityAssessment() {
                         <Label className="font-semibold">
                           Operational Readiness (10%)
                         </Label>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           Project status, timeline, regulatory approvals
                         </p>
                       </div>
@@ -471,7 +471,7 @@ export default function BankabilityAssessment() {
                   <div className={`text-6xl font-bold mb-2 ${rating.color}`}>
                     {rating.rating}
                   </div>
-                  <div className="text-sm text-muted-foreground mb-1">
+                  <div className="text-sm text-gray-600 mb-1">
                     Composite Score: {compositeScore}/100
                   </div>
                   <div className="text-sm font-medium">
@@ -482,7 +482,7 @@ export default function BankabilityAssessment() {
                 <div className="space-y-3 text-sm">
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Volume Security
                       </span>
                       <span className="font-medium">{volumeSecurityScore}</span>
@@ -491,7 +491,7 @@ export default function BankabilityAssessment() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Counterparty Quality
                       </span>
                       <span className="font-medium">
@@ -505,7 +505,7 @@ export default function BankabilityAssessment() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Contract Structure
                       </span>
                       <span className="font-medium">
@@ -516,7 +516,7 @@ export default function BankabilityAssessment() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Concentration Risk
                       </span>
                       <span className="font-medium">
@@ -527,7 +527,7 @@ export default function BankabilityAssessment() {
                   </div>
                   <div>
                     <div className="flex justify-between mb-1">
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Operational Readiness
                       </span>
                       <span className="font-medium">
@@ -552,7 +552,7 @@ export default function BankabilityAssessment() {
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">
+                  <span className="text-gray-600">
                     Total Agreements
                   </span>
                   <span className="font-medium">
@@ -560,25 +560,25 @@ export default function BankabilityAssessment() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Tier 1 Coverage</span>
+                  <span className="text-gray-600">Tier 1 Coverage</span>
                   <span className="font-medium">
                     {supplyMetrics.tier1Percent}%
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Tier 2 Coverage</span>
+                  <span className="text-gray-600">Tier 2 Coverage</span>
                   <span className="font-medium">
                     {supplyMetrics.tier2Percent}%
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Options</span>
+                  <span className="text-gray-600">Options</span>
                   <span className="font-medium">
                     {supplyMetrics.optionsPercent}%
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">ROFR</span>
+                  <span className="text-gray-600">ROFR</span>
                   <span className="font-medium">
                     {supplyMetrics.rofrPercent}%
                   </span>
@@ -595,7 +595,7 @@ export default function BankabilityAssessment() {
                   <Badge className="bg-green-100 text-green-800 mb-1">
                     AAA-AA
                   </Badge>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Exceptional to very strong (85-100)
                   </p>
                 </div>
@@ -603,7 +603,7 @@ export default function BankabilityAssessment() {
                   <Badge className="bg-blue-100 text-blue-800 mb-1">
                     A-BBB
                   </Badge>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Strong to good (70-84)
                   </p>
                 </div>
@@ -611,17 +611,17 @@ export default function BankabilityAssessment() {
                   <Badge className="bg-yellow-100 text-yellow-800 mb-1">
                     BB
                   </Badge>
-                  <p className="text-muted-foreground">Adequate (60-69)</p>
+                  <p className="text-gray-600">Adequate (60-69)</p>
                 </div>
                 <div>
                   <Badge className="bg-orange-100 text-orange-800 mb-1">
                     B
                   </Badge>
-                  <p className="text-muted-foreground">Marginal (50-59)</p>
+                  <p className="text-gray-600">Marginal (50-59)</p>
                 </div>
                 <div>
                   <Badge className="bg-red-100 text-red-800 mb-1">CCC</Badge>
-                  <p className="text-muted-foreground">Weak (&lt;50)</p>
+                  <p className="text-gray-600">Weak (&lt;50)</p>
                 </div>
               </CardContent>
             </Card>

@@ -107,13 +107,13 @@ const MOCK_PROJECTS = [
 ];
 
 const RATING_COLORS: Record<string, string> = {
-  AAA: "bg-emerald-500 text-white",
-  AA: "bg-green-500 text-white",
-  A: "bg-lime-500 text-white",
-  BBB: "bg-yellow-500 text-white",
-  BB: "bg-amber-500 text-white",
-  B: "bg-orange-500 text-white",
-  CCC: "bg-red-500 text-white",
+  AAA: "bg-[#D4AF37] text-black",
+  AA: "bg-green-500 text-black",
+  A: "bg-lime-500 text-black",
+  BBB: "bg-yellow-500 text-black",
+  BB: "bg-[#D4AF37] text-black",
+  B: "bg-orange-500 text-black",
+  CCC: "bg-red-500 text-black",
 };
 
 const STATUS_CONFIG: Record<
@@ -203,7 +203,7 @@ export default function BankabilityDashboard() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white py-16 lg:py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-black py-16 lg:py-20 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-blue-500/10 blur-[100px]" />
           <div className="absolute -bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-indigo-500/10 blur-[80px]" />
@@ -223,7 +223,7 @@ export default function BankabilityDashboard() {
                 {isUsingMockData && (
                   <Badge
                     variant="outline"
-                    className="border-amber-400/50 text-amber-300 bg-amber-500/10"
+                    className="border-amber-400/50 text-amber-300 bg-[#D4AF37]/10"
                   >
                     Demo Data
                   </Badge>
@@ -233,7 +233,7 @@ export default function BankabilityDashboard() {
               <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
                 Bankability Dashboard
               </h1>
-              <p className="text-xl text-slate-300 leading-relaxed">
+              <p className="text-xl text-gray-600 leading-relaxed">
                 Manage bioenergy projects, track supply chain integrity, and
                 generate investment-grade bankability assessments.
               </p>
@@ -255,28 +255,28 @@ export default function BankabilityDashboard() {
           {/* Stats Row */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {projects.length}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Active Projects</div>
+              <div className="text-sm text-gray-500 mt-1">Active Projects</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
               <div className="text-3xl font-bold font-mono text-blue-400">
                 {totalCapacity}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Total MW</div>
+              <div className="text-sm text-gray-500 mt-1">Total MW</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {avgRating.toFixed(0)}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Avg Score</div>
+              <div className="text-sm text-gray-500 mt-1">Avg Score</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {totalSuppliers}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Suppliers</div>
+              <div className="text-sm text-gray-500 mt-1">Suppliers</div>
             </div>
           </div>
         </PageContainer>
@@ -285,11 +285,11 @@ export default function BankabilityDashboard() {
       <PageContainer>
         {/* Results Header */}
         <div className="flex items-center justify-between mb-6 -mt-4">
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             <strong className="text-foreground">{projects.length}</strong>{" "}
             project{projects.length !== 1 ? "s" : ""} tracked
             {isUsingMockData && (
-              <span className="ml-2 text-amber-600">(Demo data)</span>
+              <span className="ml-2 text-[#D4AF37]">(Demo data)</span>
             )}
           </p>
           <div className="flex items-center gap-2">
@@ -331,17 +331,17 @@ export default function BankabilityDashboard() {
                   <CardHeader>
                     <div className="flex justify-between items-start">
                       <div className="flex items-start gap-4 flex-1">
-                        <div className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                          <Building2 className="h-6 w-6 text-primary" />
+                        <div className="p-3 rounded-xl bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                          <Building2 className="h-6 w-6 text-[#D4AF37]" />
                         </div>
                         <div className="flex-1">
-                          <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                          <CardTitle className="text-xl group-hover:text-[#D4AF37] transition-colors">
                             {project.name}
                           </CardTitle>
                           <CardDescription className="mt-1 text-sm">
                             {project.description || "No description provided"}
                           </CardDescription>
-                          <div className="flex items-center gap-3 mt-3 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-3 mt-3 text-sm text-gray-600">
                             <span className="flex items-center gap-1">
                               <MapPin className="h-3.5 w-3.5" />
                               {project.facilityLocation || project.state}
@@ -383,18 +383,18 @@ export default function BankabilityDashboard() {
                     {/* Key Metrics */}
                     <div className="grid md:grid-cols-4 gap-4">
                       <div className="p-3 rounded-lg bg-muted/50">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                           Capacity
                         </p>
                         <p className="font-semibold font-mono text-lg mt-1">
                           {project.nameplateCapacity?.toLocaleString()}{" "}
-                          <span className="text-muted-foreground text-sm">
+                          <span className="text-gray-600 text-sm">
                             MW
                           </span>
                         </p>
                       </div>
                       <div className="p-3 rounded-lg bg-muted/50">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                           Target COD
                         </p>
                         <p className="font-semibold text-lg mt-1">
@@ -407,7 +407,7 @@ export default function BankabilityDashboard() {
                         </p>
                       </div>
                       <div className="p-3 rounded-lg bg-muted/50">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                           Debt Tenor
                         </p>
                         <p className="font-semibold font-mono text-lg mt-1">
@@ -417,7 +417,7 @@ export default function BankabilityDashboard() {
                         </p>
                       </div>
                       <div className="p-3 rounded-lg bg-muted/50">
-                        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                        <p className="text-xs font-medium text-gray-600 uppercase tracking-wide">
                           Suppliers
                         </p>
                         <p className="font-semibold font-mono text-lg mt-1">
@@ -430,7 +430,7 @@ export default function BankabilityDashboard() {
                     <div className="p-4 rounded-xl bg-muted/30 border space-y-4">
                       <div className="flex justify-between items-center">
                         <h4 className="font-semibold flex items-center gap-2">
-                          <Activity className="h-4 w-4 text-primary" />
+                          <Activity className="h-4 w-4 text-[#D4AF37]" />
                           Supply Position
                         </h4>
                         <Badge variant="outline" className="text-xs">
@@ -441,7 +441,7 @@ export default function BankabilityDashboard() {
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">
+                            <span className="text-gray-600">
                               Primary Coverage (Tier 1)
                             </span>
                             <span className="font-medium font-mono">
@@ -452,14 +452,14 @@ export default function BankabilityDashboard() {
                             value={(project.primaryCoverage || 0) / 1.2}
                             className="h-2"
                           />
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             Long-term take-or-pay contracts
                           </p>
                         </div>
 
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">
+                            <span className="text-gray-600">
                               Secondary Coverage (Tier 2)
                             </span>
                             <span className="font-medium font-mono">
@@ -470,17 +470,17 @@ export default function BankabilityDashboard() {
                             value={(project.secondaryCoverage || 0) / 0.3}
                             className="h-2"
                           />
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             Contingent supply options
                           </p>
                         </div>
                       </div>
 
                       <div className="pt-3 border-t flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-gray-600">
                           Total Contracted Volume
                         </span>
-                        <span className="font-semibold font-mono text-emerald-600">
+                        <span className="font-semibold font-mono text-[#D4AF37]">
                           {(project.totalContracted || 0).toLocaleString()}{" "}
                           tonnes/year
                         </span>
@@ -491,7 +491,7 @@ export default function BankabilityDashboard() {
                     {project.bankabilityScore && (
                       <div className="p-4 rounded-xl border space-y-4">
                         <h4 className="font-semibold flex items-center gap-2">
-                          <Shield className="h-4 w-4 text-primary" />
+                          <Shield className="h-4 w-4 text-[#D4AF37]" />
                           5-Pillar Bankability Assessment
                         </h4>
                         <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
@@ -500,7 +500,7 @@ export default function BankabilityDashboard() {
                               score={Math.round(project.bankabilityScore)}
                               size="md"
                             />
-                            <div className="text-xs text-muted-foreground mt-1 font-medium">
+                            <div className="text-xs text-gray-600 mt-1 font-medium">
                               Composite
                             </div>
                           </div>
@@ -538,7 +538,7 @@ export default function BankabilityDashboard() {
                               <div className="text-2xl font-bold font-mono">
                                 {pillar.score || "--"}
                               </div>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-gray-600">
                                 {pillar.label} ({pillar.weight})
                               </div>
                             </div>
@@ -554,7 +554,7 @@ export default function BankabilityDashboard() {
                       project.bankabilityRating === "B") && (
                       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
                         <div className="p-1.5 rounded-lg bg-amber-100">
-                          <AlertCircle className="h-4 w-4 text-amber-600" />
+                          <AlertCircle className="h-4 w-4 text-[#D4AF37]" />
                         </div>
                         <div className="text-sm">
                           <div className="font-medium text-amber-800">
@@ -612,7 +612,7 @@ export default function BankabilityDashboard() {
                   <h3 className="text-xl font-semibold mb-2">
                     Need to secure feedstock supply?
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Browse our marketplace of verified futures listings from
                     qualified growers across Australia.
                   </p>

@@ -149,7 +149,7 @@ export default function SupplierFeedstocks() {
         <div className="mb-8 flex justify-between items-center">
           <div>
             <h1 className="text-4xl font-bold mb-2">My Feedstocks</h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Manage your feedstock listings
             </p>
           </div>
@@ -213,16 +213,16 @@ export default function SupplierFeedstocks() {
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-4 gap-4 text-sm">
                     <div>
-                      <div className="text-muted-foreground">ABFI Score</div>
-                      <div className="text-2xl font-bold text-primary">
+                      <div className="text-gray-600">ABFI Score</div>
+                      <div className="text-2xl font-bold text-[#D4AF37]">
                         {feedstock.abfiScore?.toFixed(1) || "N/A"}
                       </div>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs text-gray-600">
                         Grade: {feedstock.abfiGrade || "Pending"}
                       </div>
                     </div>
                     <div>
-                      <div className="text-muted-foreground">
+                      <div className="text-gray-600">
                         Annual Capacity
                       </div>
                       <div className="font-medium">
@@ -231,7 +231,7 @@ export default function SupplierFeedstocks() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-muted-foreground">
+                      <div className="text-gray-600">
                         Available Volume
                       </div>
                       <div className="font-medium">
@@ -240,7 +240,7 @@ export default function SupplierFeedstocks() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-muted-foreground">Price</div>
+                      <div className="text-gray-600">Price</div>
                       <div className="font-medium">
                         ${feedstock.pricePerTonne?.toFixed(2) || "N/A"}/tonne
                       </div>
@@ -308,7 +308,7 @@ export default function SupplierFeedstocks() {
                     )}
                   </div>
 
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-gray-600">
                     Created {formatDate(feedstock.createdAt)} • Last updated{" "}
                     {formatDate(feedstock.updatedAt)}
                   </div>
@@ -319,11 +319,11 @@ export default function SupplierFeedstocks() {
         ) : (
           <Card>
             <CardContent className="py-12 text-center">
-              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Package className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">
                 No feedstocks listed yet
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-gray-600 mb-4">
                 Start by adding your first feedstock listing
               </p>
               <Link href="/feedstock/create">
@@ -349,7 +349,7 @@ export default function SupplierFeedstocks() {
             <div className="space-y-4 py-4">
               <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
                 <div className="flex items-center gap-3 mb-3">
-                  <Award className="h-8 w-8 text-emerald-600" />
+                  <Award className="h-8 w-8 text-[#D4AF37]" />
                   <div>
                     <div className="font-semibold text-emerald-900">
                       ABFI Rating Certificate
@@ -368,7 +368,7 @@ export default function SupplierFeedstocks() {
                   <div>• Valid for 12 months</div>
                 </div>
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-gray-600">
                 <strong>Revenue:</strong> $3,000 - $15,000 per certificate
               </div>
             </div>
@@ -382,7 +382,7 @@ export default function SupplierFeedstocks() {
               <Button
                 onClick={confirmGenerateCertificate}
                 disabled={generateCertificate.isPending}
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-[#D4AF37] hover:bg-emerald-700"
               >
                 {generateCertificate.isPending ? (
                   <>
@@ -443,7 +443,7 @@ export default function SupplierFeedstocks() {
                 />
               </div>
 
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-gray-600">
                 <strong>Revenue:</strong> $75,000 - $300,000 per asset pack
               </div>
             </div>

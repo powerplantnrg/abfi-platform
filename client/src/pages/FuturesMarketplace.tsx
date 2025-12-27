@@ -70,16 +70,16 @@ const CROP_TYPE_LABELS: Record<string, string> = {
 };
 
 const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
-  bamboo: <Sprout className="h-5 w-5 text-emerald-600" />,
+  bamboo: <Sprout className="h-5 w-5 text-[#D4AF37]" />,
   rotation_forestry: <TreeDeciduous className="h-5 w-5 text-green-600" />,
-  eucalyptus: <TreeDeciduous className="h-5 w-5 text-teal-600" />,
+  eucalyptus: <TreeDeciduous className="h-5 w-5 text-[#D4AF37]" />,
   poplar: <TreeDeciduous className="h-5 w-5 text-lime-600" />,
   willow: <TreeDeciduous className="h-5 w-5 text-green-700" />,
   miscanthus: <Leaf className="h-5 w-5 text-yellow-600" />,
-  switchgrass: <Leaf className="h-5 w-5 text-amber-600" />,
+  switchgrass: <Leaf className="h-5 w-5 text-[#D4AF37]" />,
   arundo_donax: <Leaf className="h-5 w-5 text-orange-600" />,
   hemp: <Leaf className="h-5 w-5 text-green-500" />,
-  other_perennial: <Sprout className="h-5 w-5 text-emerald-500" />,
+  other_perennial: <Sprout className="h-5 w-5 text-[#D4AF37]" />,
 };
 
 // Mock data for demonstration - Bamboo featured prominently
@@ -245,10 +245,10 @@ export default function FuturesMarketplace() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 text-white py-16 lg:py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 text-black py-16 lg:py-20 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-emerald-500/10 blur-[100px]" />
-          <div className="absolute -bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-teal-500/10 blur-[80px]" />
+          <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-[#D4AF37]/10 blur-[100px]" />
+          <div className="absolute -bottom-1/4 -left-1/4 w-[400px] h-[400px] rounded-full bg-[#D4AF37]/10 blur-[80px]" />
         </div>
 
         <PageContainer className="relative z-10" padding="none">
@@ -256,7 +256,7 @@ export default function FuturesMarketplace() {
             <div className="flex flex-wrap gap-2 mb-6">
               <Badge
                 variant="outline"
-                className="border-emerald-400/50 text-emerald-300 bg-emerald-500/10"
+                className="border-emerald-400/50 text-emerald-300 bg-[#D4AF37]/10"
               >
                 <Zap className="h-3 w-3 mr-1" />
                 Live Marketplace
@@ -264,7 +264,7 @@ export default function FuturesMarketplace() {
               {isUsingMockData && (
                 <Badge
                   variant="outline"
-                  className="border-amber-400/50 text-amber-300 bg-amber-500/10"
+                  className="border-amber-400/50 text-amber-300 bg-[#D4AF37]/10"
                 >
                   Demo Data
                 </Badge>
@@ -274,22 +274,22 @@ export default function FuturesMarketplace() {
             <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
               Futures Marketplace
             </h1>
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed">
+            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
               Secure long-term supply of sustainable perennial biomass. Browse
               verified futures listings and express interest in multi-year
               contracts with qualified growers.
             </p>
 
             <div className="flex flex-wrap gap-3">
-              <Badge className="bg-white/10 text-white border-white/20 py-2 px-4">
+              <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
                 <TreeDeciduous className="h-4 w-4 mr-2" />
                 Perennial Crops
               </Badge>
-              <Badge className="bg-white/10 text-white border-white/20 py-2 px-4">
+              <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
                 <Calendar className="h-4 w-4 mr-2" />
                 Up to 25 Year Contracts
               </Badge>
-              <Badge className="bg-white/10 text-white border-white/20 py-2 px-4">
+              <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
                 <ShieldCheck className="h-4 w-4 mr-2" />
                 GQ1-GQ4 Verified
               </Badge>
@@ -298,30 +298,30 @@ export default function FuturesMarketplace() {
 
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {totalListings}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Active Listings</div>
+              <div className="text-sm text-gray-500 mt-1">Active Listings</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-emerald-400">
+              <div className="text-3xl font-bold font-mono text-[#D4AF37]">
                 {(totalVolume / 1000).toFixed(0)}k
               </div>
-              <div className="text-sm text-slate-400 mt-1">
+              <div className="text-sm text-gray-500 mt-1">
                 Tonnes Available
               </div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 ${avgPrice.toFixed(0)}
               </div>
-              <div className="text-sm text-slate-400 mt-1">Avg Price/Tonne</div>
+              <div className="text-sm text-gray-500 mt-1">Avg Price/Tonne</div>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-white">
+              <div className="text-3xl font-bold font-mono text-black">
                 {(totalHectares / 1000).toFixed(1)}k
               </div>
-              <div className="text-sm text-slate-400 mt-1">Hectares</div>
+              <div className="text-sm text-gray-500 mt-1">Hectares</div>
             </div>
           </div>
         </PageContainer>
@@ -333,7 +333,7 @@ export default function FuturesMarketplace() {
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2 text-lg">
-                <Filter className="h-5 w-5 text-primary" />
+                <Filter className="h-5 w-5 text-[#D4AF37]" />
                 Filter Listings
               </CardTitle>
               {hasFilters && (
@@ -415,11 +415,11 @@ export default function FuturesMarketplace() {
 
         {/* Results Header */}
         <div className="flex items-center justify-between mb-6">
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             <strong className="text-foreground">{futures.length}</strong>{" "}
             futures listing{futures.length !== 1 ? "s" : ""} found
             {isUsingMockData && (
-              <span className="ml-2 text-amber-600">(Demo data)</span>
+              <span className="ml-2 text-[#D4AF37]">(Demo data)</span>
             )}
           </p>
           <div className="flex items-center gap-2">
@@ -470,9 +470,9 @@ export default function FuturesMarketplace() {
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-3">
-                        <div className="p-2.5 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
+                        <div className="p-2.5 bg-[#D4AF37]/10 rounded-xl group-hover:bg-[#D4AF37]/20 transition-colors">
                           {CROP_TYPE_ICONS[f.cropType] || (
-                            <Sprout className="h-5 w-5 text-primary" />
+                            <Sprout className="h-5 w-5 text-[#D4AF37]" />
                           )}
                         </div>
                         <div>
@@ -504,14 +504,14 @@ export default function FuturesMarketplace() {
 
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-3 text-sm">
-                      <div className="flex items-center gap-2 text-muted-foreground">
+                      <div className="flex items-center gap-2 text-gray-600">
                         <MapPin className="h-4 w-4 shrink-0" />
                         <span className="truncate">
                           {f.state}
                           {f.region && `, ${f.region}`}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
+                      <div className="flex items-center gap-2 text-gray-600">
                         <Calendar className="h-4 w-4 shrink-0" />
                         <span>
                           {f.projectionStartYear}-{f.projectionEndYear}
@@ -521,15 +521,15 @@ export default function FuturesMarketplace() {
 
                     <div className="bg-muted/50 rounded-lg p-3 space-y-3">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-gray-600">
                           Available
                         </span>
-                        <span className="font-semibold text-emerald-600 font-mono">
+                        <span className="font-semibold text-[#D4AF37] font-mono">
                           {totalAvailable.toLocaleString()}t
                         </span>
                       </div>
                       <div>
-                        <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                        <div className="flex justify-between text-xs text-gray-600 mb-1">
                           <span>Contracted</span>
                           <span>{contractedPercent.toFixed(0)}%</span>
                         </div>
@@ -541,7 +541,7 @@ export default function FuturesMarketplace() {
                         </div>
                       </div>
                       <div className="flex justify-between text-sm pt-1 border-t border-border/50">
-                        <span className="text-muted-foreground">
+                        <span className="text-gray-600">
                           Contract Period
                         </span>
                         <span className="font-medium">
@@ -551,7 +551,7 @@ export default function FuturesMarketplace() {
                     </div>
 
                     {f.supplierName && (
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-gray-600">
                         <span className="font-medium text-foreground">
                           {f.supplierName}
                         </span>
@@ -560,20 +560,20 @@ export default function FuturesMarketplace() {
 
                     <div className="flex items-center justify-between pt-3 border-t">
                       <div className="flex items-center gap-1">
-                        <DollarSign className="h-4 w-4 text-muted-foreground" />
+                        <DollarSign className="h-4 w-4 text-gray-600" />
                         <span className="font-semibold text-lg">
                           {f.indicativePricePerTonne
                             ? `$${parseFloat(f.indicativePricePerTonne).toFixed(0)}`
                             : "TBD"}
                         </span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm text-gray-600">
                           /t
                         </span>
                       </div>
                       <Link href={`/futures/${f.id}`}>
                         <Button
                           size="sm"
-                          className="group-hover:bg-primary group-hover:text-primary-foreground"
+                          className="group-hover:bg-primary group-hover:text-[#D4AF37]-foreground"
                         >
                           View Details
                           <ChevronRight className="h-4 w-4 ml-1" />
@@ -589,14 +589,14 @@ export default function FuturesMarketplace() {
 
         {/* CTA Section */}
         <section className="mt-16 mb-8">
-          <Card className="bg-gradient-to-r from-primary/5 to-emerald-500/5 border-primary/20">
+          <Card className="bg-gradient-to-r from-primary/5 to-[#D4AF37]/5 border-primary/20">
             <CardContent className="py-8">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
                   <h3 className="text-xl font-semibold mb-2">
                     Are you a biomass producer?
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     List your perennial crop futures and connect with verified
                     buyers seeking long-term supply.
                   </p>

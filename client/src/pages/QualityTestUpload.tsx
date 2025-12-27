@@ -94,7 +94,7 @@ export default function QualityTestUpload() {
             <FileUp className="h-10 w-10" />
             Upload Quality Test
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Add laboratory test results for your feedstock
           </p>
         </div>
@@ -229,7 +229,7 @@ export default function QualityTestUpload() {
                   value={documentUrl}
                   onChange={e => setDocumentUrl(e.target.value)}
                 />
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-gray-600 mt-1">
                   Upload your PDF report to S3 and paste the URL here
                 </p>
               </div>
@@ -267,7 +267,7 @@ export default function QualityTestUpload() {
         <Card className="mt-6 bg-blue-50 border-blue-200">
           <CardContent className="pt-6">
             <h3 className="font-semibold mb-2">Why upload quality tests?</h3>
-            <ul className="text-sm text-muted-foreground space-y-1">
+            <ul className="text-sm text-gray-600 space-y-1">
               <li>• Improves your ABFI quality score (25% of total rating)</li>
               <li>• Builds buyer confidence with verified data</li>
               <li>• Demonstrates consistent quality standards</li>

@@ -85,7 +85,7 @@ function GQTierCard({
       )}
     >
       {featured && (
-        <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
+        <div className="absolute top-0 right-0 bg-[#D4AF37] text-black text-xs px-3 py-1 rounded-bl-lg font-medium">
           Top Tier
         </div>
       )}
@@ -101,7 +101,7 @@ function GQTierCard({
         <div className="space-y-4">
           <div>
             <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
-              <FileCheck className="h-4 w-4 text-muted-foreground" />
+              <FileCheck className="h-4 w-4 text-gray-600" />
               Requirements
             </h4>
             <ul className="space-y-1.5">
@@ -110,14 +110,14 @@ function GQTierCard({
                   <CheckCircle2
                     className={cn("h-4 w-4 mt-0.5 shrink-0", colors.text)}
                   />
-                  <span className="text-muted-foreground">{req}</span>
+                  <span className="text-gray-600">{req}</span>
                 </li>
               ))}
             </ul>
           </div>
           <div>
             <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
-              <Star className="h-4 w-4 text-muted-foreground" />
+              <Star className="h-4 w-4 text-gray-600" />
               Benefits
             </h4>
             <ul className="space-y-1.5">
@@ -126,7 +126,7 @@ function GQTierCard({
                   <TrendingUp
                     className={cn("h-4 w-4 mt-0.5 shrink-0", colors.text)}
                   />
-                  <span className="text-muted-foreground">{benefit}</span>
+                  <span className="text-gray-600">{benefit}</span>
                 </li>
               ))}
             </ul>
@@ -141,13 +141,13 @@ export default function GrowerQualificationTiers() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 text-black overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
         <div className="container mx-auto px-4 py-20 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <Badge className="mb-4 bg-white/20 text-white border-white/30">
+            <Badge className="mb-4 bg-white/20 text-black border-white/30">
               <Shield className="h-3.5 w-3.5 mr-1.5" />
               Grower Qualification System
             </Badge>
@@ -167,7 +167,7 @@ export default function GrowerQualificationTiers() {
                 </Button>
               </Link>
               <Link href="/for-growers">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white/30 text-black hover:bg-white/10">
                   Learn More
                 </Button>
               </Link>
@@ -181,20 +181,20 @@ export default function GrowerQualificationTiers() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">4</div>
-              <div className="text-sm text-muted-foreground">Qualification Tiers</div>
+              <div className="text-3xl font-bold text-[#D4AF37]">4</div>
+              <div className="text-sm text-gray-600">Qualification Tiers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">15%</div>
-              <div className="text-sm text-muted-foreground">Price Premium at GQ1</div>
+              <div className="text-3xl font-bold text-[#D4AF37]">15%</div>
+              <div className="text-sm text-gray-600">Price Premium at GQ1</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">100+</div>
-              <div className="text-sm text-muted-foreground">Verified Growers</div>
+              <div className="text-3xl font-bold text-[#D4AF37]">100+</div>
+              <div className="text-sm text-gray-600">Verified Growers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-emerald-600">24hr</div>
-              <div className="text-sm text-muted-foreground">Verification Time</div>
+              <div className="text-3xl font-bold text-[#D4AF37]">24hr</div>
+              <div className="text-sm text-gray-600">Verification Time</div>
             </div>
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function GrowerQualificationTiers() {
             <h2 className="text-3xl font-display font-bold mb-4">
               Your Path to GQ1 Status
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Progress through standardized tiers as you demonstrate operational
               maturity. Higher tiers unlock better pricing and buyer access.
             </p>
@@ -298,7 +298,7 @@ export default function GrowerQualificationTiers() {
             <h2 className="text-3xl font-display font-bold mb-4">
               How Qualification Works
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Our assessment process is transparent and designed to help you
               progress through tiers efficiently.
             </p>
@@ -308,10 +308,10 @@ export default function GrowerQualificationTiers() {
             <Card>
               <CardContent className="pt-6">
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-                  <FileCheck className="h-6 w-6 text-emerald-600" />
+                  <FileCheck className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">1. Register & Submit</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   Complete your producer registration with ABN verification,
                   property details, and initial documentation.
                 </p>
@@ -320,10 +320,10 @@ export default function GrowerQualificationTiers() {
             <Card>
               <CardContent className="pt-6">
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-                  <BarChart3 className="h-6 w-6 text-emerald-600" />
+                  <BarChart3 className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">2. Build Track Record</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   Deliver quality feedstock, maintain certifications, and
                   accumulate verified operational history.
                 </p>
@@ -332,10 +332,10 @@ export default function GrowerQualificationTiers() {
             <Card>
               <CardContent className="pt-6">
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-                  <TrendingUp className="h-6 w-6 text-emerald-600" />
+                  <TrendingUp className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">3. Progress & Unlock</h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   As you meet tier requirements, automatically unlock better
                   pricing, buyer access, and financing options.
                 </p>
@@ -346,7 +346,7 @@ export default function GrowerQualificationTiers() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-emerald-800 to-teal-900 text-white">
+      <section className="py-20 bg-gradient-to-br from-emerald-800 to-teal-900 text-black">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto">
             <Leaf className="h-12 w-12 mx-auto mb-6 text-emerald-300" />
@@ -365,7 +365,7 @@ export default function GrowerQualificationTiers() {
                 </Button>
               </Link>
               <Link href="/for-growers">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white/30 text-black hover:bg-white/10">
                   <Users className="mr-2 h-4 w-4" />
                   Grower Benefits
                 </Button>

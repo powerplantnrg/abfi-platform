@@ -87,8 +87,8 @@ export default function BuyerRegistration() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <Card variant="elevated" className="max-w-md">
           <CardHeader className="text-center">
-            <div className="p-3 rounded-xl bg-primary/10 w-fit mx-auto mb-4">
-              <ShoppingCart className="h-8 w-8 text-primary" />
+            <div className="p-3 rounded-xl bg-[#D4AF37]/10 w-fit mx-auto mb-4">
+              <ShoppingCart className="h-8 w-8 text-[#D4AF37]" />
             </div>
             <CardTitle className="heading-3">Authentication Required</CardTitle>
             <CardDescription className="body-lg">
@@ -107,8 +107,8 @@ export default function BuyerRegistration() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer group">
-              <div className="p-1.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6 text-primary" />
+              <div className="p-1.5 rounded-lg bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <span className="text-xl font-bold text-foreground">ABFI</span>
             </div>
@@ -134,7 +134,7 @@ export default function BuyerRegistration() {
           <h1 className="heading-1 text-foreground mb-2">
             Register as a Buyer
           </h1>
-          <p className="text-muted-foreground body-lg max-w-xl mx-auto">
+          <p className="text-gray-600 body-lg max-w-xl mx-auto">
             Source verified biofuel feedstocks from trusted suppliers across
             Australia
           </p>
@@ -143,8 +143,8 @@ export default function BuyerRegistration() {
         <Card variant="elevated">
           <CardHeader>
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <ShoppingCart className="h-5 w-5 text-primary" />
+              <div className="p-2 rounded-lg bg-[#D4AF37]/10">
+                <ShoppingCart className="h-5 w-5 text-[#D4AF37]" />
               </div>
               <div>
                 <CardTitle>Buyer Information</CardTitle>
@@ -167,7 +167,7 @@ export default function BuyerRegistration() {
                 maxLength={11}
                 className="font-mono"
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-gray-600">
                 11 digits, no spaces
               </p>
             </div>
@@ -298,7 +298,7 @@ export default function BuyerRegistration() {
                   <h4 className="font-semibold text-foreground mb-2">
                     What You'll Get
                   </h4>
-                  <ul className="text-sm text-muted-foreground space-y-1.5">
+                  <ul className="text-sm text-gray-600 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />
                       <span>

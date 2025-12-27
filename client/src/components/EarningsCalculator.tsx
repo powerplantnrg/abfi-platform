@@ -69,7 +69,7 @@ export default function EarningsCalculator() {
             background: "linear-gradient(135deg, #2d5a27, #4a7c43)",
           }}
         >
-          <TrendingUp className="h-8 w-8 text-white" />
+          <TrendingUp className="h-8 w-8 text-black" />
         </div>
         <h3
           className="text-3xl mb-2"

@@ -70,7 +70,7 @@ export default function FeedstockDetail() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#D4AF37]" />
       </div>
     );
   }
@@ -78,7 +78,7 @@ export default function FeedstockDetail() {
   if (error || !feedstock) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-        <p className="text-lg text-muted-foreground">Feedstock not found</p>
+        <p className="text-lg text-gray-600">Feedstock not found</p>
         <Link href="/browse">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -108,12 +108,12 @@ export default function FeedstockDetail() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <div className="bg-primary text-primary-foreground py-8">
+      <div className="bg-primary text-[#D4AF37]-foreground py-8">
         <div className="container">
           <Link href="/browse">
             <Button
               variant="ghost"
-              className="mb-4 text-primary-foreground hover:bg-primary-foreground/10"
+              className="mb-4 text-[#D4AF37]-foreground hover:bg-primary-foreground/10"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Browse
@@ -140,7 +140,7 @@ export default function FeedstockDetail() {
             <div className="text-right">
               <div className="text-sm opacity-90 mb-1">ABFI Score</div>
               <div
-                className={`inline-flex items-center justify-center w-20 h-20 rounded-full ${getScoreColor(feedstock.abfiScore)} text-white font-bold text-2xl`}
+                className={`inline-flex items-center justify-center w-20 h-20 rounded-full ${getScoreColor(feedstock.abfiScore)} text-black font-bold text-2xl`}
               >
                 {feedstock.abfiScore || "N/A"}
               </div>
@@ -167,7 +167,7 @@ export default function FeedstockDetail() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       State
                     </div>
                     <div className="font-medium">
@@ -178,7 +178,7 @@ export default function FeedstockDetail() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Location
                     </div>
                     <div className="font-medium">
@@ -186,7 +186,7 @@ export default function FeedstockDetail() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Annual Capacity
                     </div>
                     <div className="font-medium">
@@ -196,7 +196,7 @@ export default function FeedstockDetail() {
                     </div>
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Available Volume
                     </div>
                     <div className="font-medium">
@@ -209,12 +209,12 @@ export default function FeedstockDetail() {
 
                 {feedstock.pricePerTonne && (
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Price
                     </div>
-                    <div className="text-2xl font-bold text-primary">
+                    <div className="text-2xl font-bold text-[#D4AF37]">
                       ${feedstock.pricePerTonne}{" "}
-                      <span className="text-sm font-normal text-muted-foreground">
+                      <span className="text-sm font-normal text-gray-600">
                         per tonne
                       </span>
                     </div>
@@ -234,7 +234,7 @@ export default function FeedstockDetail() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Carbon Intensity
                     </div>
                     <div className="font-medium">
@@ -243,7 +243,7 @@ export default function FeedstockDetail() {
                   </div>
                   {feedstock.productionMethod && (
                     <div className="col-span-2">
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm text-gray-600 mb-1">
                         Production Method
                       </div>
                       <div className="font-medium capitalize">
@@ -350,7 +350,7 @@ export default function FeedstockDetail() {
                 <Badge variant="secondary" className="text-sm">
                   {feedstock.verificationLevel?.replace("_", " ").toUpperCase()}
                 </Badge>
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="text-xs text-gray-600 mt-2">
                   Verification level indicates the degree of third-party
                   validation
                 </p>
@@ -419,13 +419,13 @@ export default function FeedstockDetail() {
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <div>
-                  <div className="text-muted-foreground mb-1">Listed</div>
+                  <div className="text-gray-600 mb-1">Listed</div>
                   <div>
                     {new Date(feedstock.createdAt).toLocaleDateString()}
                   </div>
                 </div>
                 <div>
-                  <div className="text-muted-foreground mb-1">Last Updated</div>
+                  <div className="text-gray-600 mb-1">Last Updated</div>
                   <div>
                     {new Date(feedstock.updatedAt).toLocaleDateString()}
                   </div>

@@ -52,7 +52,7 @@ export default function SupplyAgreements() {
       <div className="container py-8">
         <Card>
           <CardContent className="pt-6">
-            <p className="text-muted-foreground">Project not found</p>
+            <p className="text-gray-600">Project not found</p>
           </CardContent>
         </Card>
       </div>
@@ -155,9 +155,9 @@ export default function SupplyAgreements() {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <Calendar className="h-4 w-4 text-gray-600" />
             <div>
-              <p className="text-muted-foreground">Term</p>
+              <p className="text-gray-600">Term</p>
               <p className="font-medium">
                 {new Date(agreement.startDate).toLocaleDateString()} -{" "}
                 {new Date(agreement.endDate).toLocaleDateString()}
@@ -166,9 +166,9 @@ export default function SupplyAgreements() {
           </div>
 
           <div className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="h-4 w-4 text-gray-600" />
             <div>
-              <p className="text-muted-foreground">Pricing</p>
+              <p className="text-gray-600">Pricing</p>
               <p className="font-medium">
                 {formatPricingMechanism(agreement.pricingMechanism)}
               </p>
@@ -177,9 +177,9 @@ export default function SupplyAgreements() {
 
           {agreement.takeOrPayPercent && (
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-muted-foreground" />
+              <Shield className="h-4 w-4 text-gray-600" />
               <div>
-                <p className="text-muted-foreground">Take-or-Pay</p>
+                <p className="text-gray-600">Take-or-Pay</p>
                 <p className="font-medium">{agreement.takeOrPayPercent}%</p>
               </div>
             </div>
@@ -187,9 +187,9 @@ export default function SupplyAgreements() {
 
           {agreement.deliverOrPayPercent && (
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-muted-foreground" />
+              <Shield className="h-4 w-4 text-gray-600" />
               <div>
-                <p className="text-muted-foreground">Deliver-or-Pay</p>
+                <p className="text-gray-600">Deliver-or-Pay</p>
                 <p className="font-medium">{agreement.deliverOrPayPercent}%</p>
               </div>
             </div>
@@ -197,9 +197,9 @@ export default function SupplyAgreements() {
 
           {agreement.bankGuaranteePercent && (
             <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-muted-foreground" />
+              <Shield className="h-4 w-4 text-gray-600" />
               <div>
-                <p className="text-muted-foreground">Bank Guarantee</p>
+                <p className="text-gray-600">Bank Guarantee</p>
                 <p className="font-medium">{agreement.bankGuaranteePercent}%</p>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function SupplyAgreements() {
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-green-600" />
               <div>
-                <p className="text-muted-foreground">Lender Rights</p>
+                <p className="text-gray-600">Lender Rights</p>
                 <p className="font-medium text-green-600">Step-in Enabled</p>
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function SupplyAgreements() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-[#1B4332]">{project.name}</h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-gray-600 mt-1">
             Supply Agreement Portfolio Management
           </p>
         </div>
@@ -285,7 +285,7 @@ export default function SupplyAgreements() {
                   style={{ width: `${Math.min(tier1Percent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-gray-600 mt-1">
                 {tier1Volume.toLocaleString()} /{" "}
                 {(
                   ((project.nameplateCapacity || 0) *
@@ -311,7 +311,7 @@ export default function SupplyAgreements() {
                   style={{ width: `${Math.min(tier2Percent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-gray-600 mt-1">
                 {tier2Volume.toLocaleString()} /{" "}
                 {(
                   ((project.nameplateCapacity || 0) *
@@ -337,7 +337,7 @@ export default function SupplyAgreements() {
                   style={{ width: `${Math.min(optionPercent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-gray-600 mt-1">
                 {optionVolume.toLocaleString()} /{" "}
                 {(
                   ((project.nameplateCapacity || 0) *
@@ -363,7 +363,7 @@ export default function SupplyAgreements() {
                   style={{ width: `${Math.min(rofrPercent, 100)}%` }}
                 />
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-gray-600 mt-1">
                 {rofrVolume.toLocaleString()} /{" "}
                 {(
                   ((project.nameplateCapacity || 0) *
@@ -383,7 +383,7 @@ export default function SupplyAgreements() {
               </span>
             </div>
             {totalPercent < 150 && (
-              <div className="flex items-center gap-2 mt-2 text-amber-600">
+              <div className="flex items-center gap-2 mt-2 text-[#D4AF37]">
                 <AlertCircle className="h-4 w-4" />
                 <p className="text-sm">
                   {(150 - totalPercent).toFixed(1)}% below target (150% of
@@ -413,7 +413,7 @@ export default function SupplyAgreements() {
         <TabsContent value="tier1" className="space-y-4">
           {tier1Agreements.length === 0 ? (
             <Card>
-              <CardContent className="pt-6 text-center text-muted-foreground">
+              <CardContent className="pt-6 text-center text-gray-600">
                 <p>No Tier 1 agreements yet</p>
                 <Button
                   variant="outline"
@@ -441,7 +441,7 @@ export default function SupplyAgreements() {
         <TabsContent value="tier2" className="space-y-4">
           {tier2Agreements.length === 0 ? (
             <Card>
-              <CardContent className="pt-6 text-center text-muted-foreground">
+              <CardContent className="pt-6 text-center text-gray-600">
                 <p>No Tier 2 agreements yet</p>
                 <Button
                   variant="outline"
@@ -469,7 +469,7 @@ export default function SupplyAgreements() {
         <TabsContent value="options" className="space-y-4">
           {optionAgreements.length === 0 ? (
             <Card>
-              <CardContent className="pt-6 text-center text-muted-foreground">
+              <CardContent className="pt-6 text-center text-gray-600">
                 <p>No call option agreements yet</p>
                 <Button
                   variant="outline"
@@ -497,7 +497,7 @@ export default function SupplyAgreements() {
         <TabsContent value="rofr" className="space-y-4">
           {rofrAgreements.length === 0 ? (
             <Card>
-              <CardContent className="pt-6 text-center text-muted-foreground">
+              <CardContent className="pt-6 text-center text-gray-600">
                 <p>No ROFR agreements yet</p>
                 <Button
                   variant="outline"

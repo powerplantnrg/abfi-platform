@@ -82,7 +82,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="card-description"
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn("text-gray-600 text-sm", className)}
       {...props}
     />
   );
@@ -167,17 +167,17 @@ const StatsCard = React.forwardRef<
     };
 
     const iconVariantStyles = {
-      default: "bg-primary/10 text-primary",
+      default: "bg-[#D4AF37]/10 text-[#D4AF37]",
       success: "bg-success/10 text-success",
       warning: "bg-warning/10 text-warning",
       info: "bg-info/10 text-info",
-      premium: "bg-gradient-to-br from-primary/20 to-primary/10 text-primary",
+      premium: "bg-gradient-to-br from-primary/20 to-primary/10 text-[#D4AF37]",
     };
 
     const trendColors = {
       up: "text-success",
       down: "text-destructive",
-      neutral: "text-muted-foreground",
+      neutral: "text-gray-600",
     };
 
     const trendArrows = {
@@ -212,7 +212,7 @@ const StatsCard = React.forwardRef<
         <CardContent className={sizes.card}>
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-1.5 min-w-0 flex-1">
-              <p className="text-sm font-medium text-muted-foreground truncate">
+              <p className="text-sm font-medium text-gray-600 truncate">
                 {title}
               </p>
               <div className="flex items-baseline gap-2 flex-wrap">
@@ -239,7 +239,7 @@ const StatsCard = React.forwardRef<
                 )}
               </div>
               {description && (
-                <p className="text-xs text-muted-foreground">{description}</p>
+                <p className="text-xs text-gray-600">{description}</p>
               )}
             </div>
             {icon && (

@@ -184,7 +184,7 @@ export default function BankabilityExplainer() {
               className="text-2xl"
               style={{
                 fontFamily: "'DM Serif Display', serif",
-                color: "var(--text-primary)",
+                color: "var(--text-[#D4AF37])",
               }}
             >
               BioFeed <span style={{ color: "var(--accent-gold)" }}>AU</span>
@@ -329,7 +329,7 @@ export default function BankabilityExplainer() {
                     <div className="text-center max-w-[160px]">
                       <h4
                         className="text-sm font-semibold mb-1.5"
-                        style={{ color: "var(--text-primary)" }}
+                        style={{ color: "var(--text-[#D4AF37])" }}
                       >
                         {step.title}
                       </h4>
@@ -400,7 +400,7 @@ export default function BankabilityExplainer() {
                 </div>
                 <h3
                   className="text-base font-semibold mb-2.5"
-                  style={{ color: "var(--text-primary)" }}
+                  style={{ color: "var(--text-[#D4AF37])" }}
                 >
                   {card.title}
                 </h3>
@@ -491,7 +491,7 @@ export default function BankabilityExplainer() {
                 </div>
                 <h4
                   className="text-sm font-semibold mb-1.5"
-                  style={{ color: "var(--text-primary)" }}
+                  style={{ color: "var(--text-[#D4AF37])" }}
                 >
                   {feature.title}
                 </h4>
@@ -662,7 +662,7 @@ export default function BankabilityExplainer() {
                   <div>
                     <h4
                       className="text-sm font-semibold mb-1"
-                      style={{ color: "var(--text-primary)" }}
+                      style={{ color: "var(--text-[#D4AF37])" }}
                     >
                       {feature.title}
                     </h4>

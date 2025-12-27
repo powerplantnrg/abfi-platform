@@ -5,7 +5,7 @@ export function createPopupHTML(layerId: string, props: any): string {
     case "sugar-mills":
       return `
         <div class="p-3 min-w-[280px]">
-          <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Mill"}</h3>
+          <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Mill"}</h3>
           <div class="space-y-1.5 text-sm">
             <div class="flex justify-between">
               <span class="text-gray-600">Location:</span>
@@ -64,7 +64,7 @@ export function createPopupHTML(layerId: string, props: any): string {
     case "grain-regions":
       return `
         <div class="p-3 min-w-[280px]">
-          <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Region"}</h3>
+          <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Region"}</h3>
           <div class="space-y-1.5 text-sm">
             <div class="flex justify-between">
               <span class="text-gray-600">State:</span>
@@ -108,7 +108,7 @@ export function createPopupHTML(layerId: string, props: any): string {
       if (props?.type === "forestry_facility") {
         return `
           <div class="p-3 min-w-[280px]">
-            <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Facility"}</h3>
+            <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Facility"}</h3>
             <div class="space-y-1.5 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-600">Type:</span>
@@ -158,7 +158,7 @@ export function createPopupHTML(layerId: string, props: any): string {
       } else {
         return `
           <div class="p-3 min-w-[280px]">
-            <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Region"}</h3>
+            <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Region"}</h3>
             <div class="space-y-1.5 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-600">State:</span>
@@ -200,7 +200,7 @@ export function createPopupHTML(layerId: string, props: any): string {
     case "biogas-facilities":
       return `
         <div class="p-3 min-w-[280px]">
-          <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Facility"}</h3>
+          <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Facility"}</h3>
           <div class="space-y-1.5 text-sm">
             <div class="flex justify-between">
               <span class="text-gray-600">Type:</span>
@@ -259,7 +259,7 @@ export function createPopupHTML(layerId: string, props: any): string {
     case "biofuel-plants":
       return `
         <div class="p-3 min-w-[280px]">
-          <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Plant"}</h3>
+          <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Plant"}</h3>
           <div class="space-y-1.5 text-sm">
             <div class="flex justify-between">
               <span class="text-gray-600">Fuel Type:</span>
@@ -303,7 +303,7 @@ export function createPopupHTML(layerId: string, props: any): string {
       if (props?.infrastructure_type === "port") {
         return `
           <div class="p-3 min-w-[280px]">
-            <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Port"}</h3>
+            <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Port"}</h3>
             <div class="space-y-1.5 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-600">Type:</span>
@@ -345,7 +345,7 @@ export function createPopupHTML(layerId: string, props: any): string {
       } else if (props?.infrastructure_type === "grain_hub") {
         return `
           <div class="p-3 min-w-[280px]">
-            <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Grain Hub"}</h3>
+            <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Grain Hub"}</h3>
             <div class="space-y-1.5 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-600">Type:</span>
@@ -373,7 +373,7 @@ export function createPopupHTML(layerId: string, props: any): string {
       } else if (props?.infrastructure_type === "rail_line") {
         return `
           <div class="p-3 min-w-[280px]">
-            <h3 class="font-bold text-lg mb-3 text-primary border-b pb-2">${props?.name || "Unknown Rail Line"}</h3>
+            <h3 class="font-bold text-lg mb-3 text-[#D4AF37] border-b pb-2">${props?.name || "Unknown Rail Line"}</h3>
             <div class="space-y-1.5 text-sm">
               <div class="flex justify-between">
                 <span class="text-gray-600">Type:</span>

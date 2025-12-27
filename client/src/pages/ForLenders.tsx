@@ -57,10 +57,10 @@ function EvidenceChainDemo() {
   ];
 
   return (
-    <div className="bg-slate-800 rounded-xl p-6">
+    <div className="bg-white rounded-xl p-6">
       <div className="flex items-center gap-2 mb-4">
         <Lock className="h-4 w-4 text-blue-400" />
-        <span className="text-sm font-medium text-slate-300">
+        <span className="text-sm font-medium text-gray-600">
           SHA-256 Evidence Chain
         </span>
       </div>
@@ -68,12 +68,12 @@ function EvidenceChainDemo() {
         {blocks.map((block, i) => (
           <div key={i} className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-blue-400" />
-            <div className="flex-1 bg-slate-700/50 rounded-lg p-3 flex items-center justify-between">
+            <div className="flex-1 bg-gray-50/50 rounded-lg p-3 flex items-center justify-between">
               <div>
-                <span className="text-xs text-slate-400">{block.type}</span>
-                <div className="font-mono text-sm text-white">{block.hash}</div>
+                <span className="text-xs text-gray-500">{block.type}</span>
+                <div className="font-mono text-sm text-black">{block.hash}</div>
               </div>
-              <span className="text-xs text-slate-500">{block.time}</span>
+              <span className="text-xs text-black0">{block.time}</span>
             </div>
             {i < blocks.length - 1 && (
               <div className="absolute left-[11px] mt-8 w-0.5 h-6 bg-blue-400/30" />
@@ -81,8 +81,8 @@ function EvidenceChainDemo() {
           </div>
         ))}
       </div>
-      <div className="mt-4 pt-4 border-t border-slate-700 flex items-center justify-between">
-        <span className="text-xs text-slate-500">Chain integrity verified</span>
+      <div className="mt-4 pt-4 border-t border-gray-200 flex items-center justify-between">
+        <span className="text-xs text-black0">Chain integrity verified</span>
         <Badge className="bg-green-500/20 text-green-400 border-0">
           <CheckCircle2 className="h-3 w-3 mr-1" />
           Valid
@@ -100,8 +100,8 @@ export default function ForLenders() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6 text-primary" />
+              <div className="p-2 rounded-xl bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <span className="text-xl font-bold text-foreground font-display">
                 ABFI
@@ -124,7 +124,7 @@ export default function ForLenders() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-900 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-900 text-black">
         <div className="absolute inset-0 opacity-10">
           <svg
             className="w-full h-full"
@@ -154,7 +154,7 @@ export default function ForLenders() {
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 mb-6"
+                className="border-white/20 text-black/90 bg-white/5 mb-6"
               >
                 <Banknote className="h-3 w-3 mr-1.5" />
                 For Lenders & Financiers
@@ -191,7 +191,7 @@ export default function ForLenders() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/30 text-black hover:bg-white/10 bg-transparent"
                 >
                   View Compliance Dashboard
                 </Button>
@@ -221,7 +221,7 @@ export default function ForLenders() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Built for Financial Due Diligence
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Every feature designed with lending compliance requirements in
               mind.
             </p>
@@ -275,7 +275,7 @@ export default function ForLenders() {
                     <CardTitle className="text-lg">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       {item.description}
                     </p>
                   </CardContent>
@@ -287,20 +287,20 @@ export default function ForLenders() {
       </section>
 
       {/* Evidence Chain Demo */}
-      <section className="py-20 bg-slate-900 text-white">
+      <section className="py-20 bg-white text-black">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <FadeInUp>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 mb-4"
+                className="border-white/20 text-black/90 mb-4"
               >
                 Cryptographic Security
               </Badge>
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 Immutable Audit Trails
               </h2>
-              <p className="text-lg text-slate-300 mb-6">
+              <p className="text-lg text-gray-600 mb-6">
                 Every action on the platform creates a cryptographically-signed
                 record. The evidence chain is mathematically tamper-proof and
                 independently verifiable.
@@ -314,21 +314,21 @@ export default function ForLenders() {
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-blue-400 shrink-0" />
-                    <span className="text-slate-300">{item}</span>
+                    <span className="text-gray-600">{item}</span>
                   </li>
                 ))}
               </ul>
               <div className="flex gap-3">
                 <Badge
                   variant="outline"
-                  className="border-slate-600 text-slate-400"
+                  className="border-gray-200 text-gray-500"
                 >
                   <Lock className="h-3 w-3 mr-1" />
                   256-bit Encryption
                 </Badge>
                 <Badge
                   variant="outline"
-                  className="border-slate-600 text-slate-400"
+                  className="border-gray-200 text-gray-500"
                 >
                   <Database className="h-3 w-3 mr-1" />
                   AU Data Residency
@@ -353,7 +353,7 @@ export default function ForLenders() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Covenant Monitoring That Never Sleeps
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Automated systems check covenant compliance continuously. Get
               alerts before problems escalate.
             </p>
@@ -384,7 +384,7 @@ export default function ForLenders() {
                     ].map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-muted-foreground"
+                        className="flex items-start gap-2 text-gray-600"
                       >
                         <CheckCircle2 className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -419,7 +419,7 @@ export default function ForLenders() {
                     ].map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-muted-foreground"
+                        className="flex items-start gap-2 text-gray-600"
                       >
                         <AlertTriangle className="h-4 w-4 text-red-500 shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -443,7 +443,7 @@ export default function ForLenders() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
               Everything You Need in One Place
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               A dedicated portal for financial institutions to monitor their
               bioenergy portfolio.
             </p>
@@ -501,7 +501,7 @@ export default function ForLenders() {
                     <CardTitle className="text-base">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <p className="text-sm text-gray-600">{item.desc}</p>
                   </CardContent>
                 </Card>
               </StaggerItem>
@@ -521,7 +521,7 @@ export default function ForLenders() {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 Fits Your Existing Workflows
               </h2>
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-lg text-gray-600 mb-6">
                 ABFI integrates with your existing loan management and risk
                 systems. No disruption to established processes.
               </p>
@@ -535,7 +535,7 @@ export default function ForLenders() {
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0" />
-                    <span className="text-muted-foreground">{item}</span>
+                    <span className="text-gray-600">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -548,10 +548,10 @@ export default function ForLenders() {
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
-              <Card className="bg-slate-900 text-white border-0">
+              <Card className="bg-white text-black border-0">
                 <CardContent className="p-6">
                   <div className="font-mono text-sm">
-                    <div className="text-slate-500 mb-2">
+                    <div className="text-black0 mb-2">
                       // Example API Response
                     </div>
                     <pre className="text-xs leading-relaxed">
@@ -574,12 +574,12 @@ export default function ForLenders() {
       </section>
 
       {/* Intelligence Suite */}
-      <section className="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-900 text-white">
+      <section className="py-20 bg-gradient-to-br from-indigo-900 via-purple-900 to-indigo-900 text-black">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-16">
             <Badge
               variant="outline"
-              className="border-white/20 text-white/90 bg-white/5 mb-4"
+              className="border-white/20 text-black/90 bg-white/5 mb-4"
             >
               <LineChart className="h-3 w-3 mr-1.5" />
               AI-Powered Intelligence
@@ -601,7 +601,7 @@ export default function ForLenders() {
                     <div className="h-12 w-12 rounded-xl bg-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <Eye className="h-6 w-6 text-purple-400" />
                     </div>
-                    <CardTitle className="text-white">Stealth Discovery</CardTitle>
+                    <CardTitle className="text-black">Stealth Discovery</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-indigo-200 mb-4">
@@ -624,7 +624,7 @@ export default function ForLenders() {
                     <div className="h-12 w-12 rounded-xl bg-blue-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <TrendingUp className="h-6 w-6 text-blue-400" />
                     </div>
-                    <CardTitle className="text-white">Lending Sentiment</CardTitle>
+                    <CardTitle className="text-black">Lending Sentiment</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-indigo-200 mb-4">
@@ -647,7 +647,7 @@ export default function ForLenders() {
                     <div className="h-12 w-12 rounded-xl bg-green-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <BarChart3 className="h-6 w-6 text-green-400" />
                     </div>
-                    <CardTitle className="text-white">Feedstock Prices</CardTitle>
+                    <CardTitle className="text-black">Feedstock Prices</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-indigo-200 mb-4">
@@ -667,10 +667,10 @@ export default function ForLenders() {
               <Link href="/policy-carbon">
                 <Card className="h-full bg-white/10 border-white/20 hover:bg-white/15 transition-colors cursor-pointer group">
                   <CardHeader>
-                    <div className="h-12 w-12 rounded-xl bg-amber-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                       <FileText className="h-6 w-6 text-amber-400" />
                     </div>
-                    <CardTitle className="text-white">Policy & Carbon</CardTitle>
+                    <CardTitle className="text-black">Policy & Carbon</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-indigo-200 mb-4">
@@ -690,7 +690,7 @@ export default function ForLenders() {
       </section>
 
       {/* Stats */}
-      <section className="py-16 bg-blue-500 text-white">
+      <section className="py-16 bg-blue-500 text-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             <div>
@@ -730,7 +730,7 @@ export default function ForLenders() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
               Ready for Bank-Grade Bioenergy Monitoring?
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-gray-600 mb-8">
               Join leading financial institutions using ABFI to confidently
               finance Australia's bioenergy future.
             </p>
@@ -758,11 +758,11 @@ export default function ForLenders() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <Link href="/">
               <div className="flex items-center gap-2">
-                <Leaf className="h-5 w-5 text-primary" />
+                <Leaf className="h-5 w-5 text-[#D4AF37]" />
                 <span className="font-bold font-display">ABFI</span>
               </div>
             </Link>
-            <div className="flex gap-6 text-sm text-muted-foreground">
+            <div className="flex gap-6 text-sm text-gray-600">
               <Link
                 href="/for-growers"
                 className="hover:text-foreground transition-colors"

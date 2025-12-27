@@ -51,43 +51,43 @@ import {
 // Rating color schemes
 const getRatingColor = (rating: string) => {
   const colors: Record<string, string> = {
-    "AAA": "bg-emerald-500 text-white",
-    "AA": "bg-emerald-400 text-white",
-    "A": "bg-green-500 text-white",
-    "BBB": "bg-yellow-500 text-white",
-    "BB": "bg-amber-500 text-white",
-    "B": "bg-orange-500 text-white",
-    "CCC": "bg-red-500 text-white",
-    "D": "bg-gray-700 text-white",
-    "N/R": "bg-gray-400 text-white",
-    "GC1": "bg-emerald-500 text-white",
-    "GC2": "bg-green-500 text-white",
-    "GC3": "bg-amber-500 text-white",
-    "GC4": "bg-red-500 text-white",
-    "TR1": "bg-emerald-500 text-white",
-    "TR2": "bg-green-500 text-white",
-    "TR3": "bg-amber-500 text-white",
-    "TR4": "bg-red-500 text-white",
-    "CI-A": "bg-emerald-500 text-white",
-    "CI-B": "bg-green-500 text-white",
-    "CI-C": "bg-amber-500 text-white",
-    "CI-D": "bg-red-500 text-white",
-    "OQ1": "bg-emerald-500 text-white",
-    "OQ2": "bg-green-500 text-white",
-    "OQ3": "bg-amber-500 text-white",
-    "OQ4": "bg-red-500 text-white",
-    "GS1": "bg-emerald-500 text-white",
-    "GS2": "bg-green-500 text-white",
-    "GS3": "bg-amber-500 text-white",
-    "GS4": "bg-red-500 text-white",
+    "AAA": "bg-[#D4AF37] text-black",
+    "AA": "bg-emerald-400 text-black",
+    "A": "bg-green-500 text-black",
+    "BBB": "bg-yellow-500 text-black",
+    "BB": "bg-[#D4AF37] text-black",
+    "B": "bg-orange-500 text-black",
+    "CCC": "bg-red-500 text-black",
+    "D": "bg-gray-700 text-black",
+    "N/R": "bg-gray-400 text-black",
+    "GC1": "bg-[#D4AF37] text-black",
+    "GC2": "bg-green-500 text-black",
+    "GC3": "bg-[#D4AF37] text-black",
+    "GC4": "bg-red-500 text-black",
+    "TR1": "bg-[#D4AF37] text-black",
+    "TR2": "bg-green-500 text-black",
+    "TR3": "bg-[#D4AF37] text-black",
+    "TR4": "bg-red-500 text-black",
+    "CI-A": "bg-[#D4AF37] text-black",
+    "CI-B": "bg-green-500 text-black",
+    "CI-C": "bg-[#D4AF37] text-black",
+    "CI-D": "bg-red-500 text-black",
+    "OQ1": "bg-[#D4AF37] text-black",
+    "OQ2": "bg-green-500 text-black",
+    "OQ3": "bg-[#D4AF37] text-black",
+    "OQ4": "bg-red-500 text-black",
+    "GS1": "bg-[#D4AF37] text-black",
+    "GS2": "bg-green-500 text-black",
+    "GS3": "bg-[#D4AF37] text-black",
+    "GS4": "bg-red-500 text-black",
     "N/A": "bg-gray-300 text-gray-600",
   };
-  return colors[rating] || "bg-gray-400 text-white";
+  return colors[rating] || "bg-gray-400 text-black";
 };
 
 const getSignalColor = (signal: string) => {
-  if (signal.includes("BULLISH")) return "text-emerald-600 bg-emerald-50 border-emerald-200";
-  if (signal.includes("NEUTRAL")) return "text-amber-600 bg-amber-50 border-amber-200";
+  if (signal.includes("BULLISH")) return "text-[#D4AF37] bg-emerald-50 border-emerald-200";
+  if (signal.includes("NEUTRAL")) return "text-[#D4AF37] bg-amber-50 border-amber-200";
   if (signal.includes("BEARISH")) return "text-red-600 bg-red-50 border-red-200";
   if (signal.includes("ON HOLD")) return "text-gray-600 bg-gray-50 border-gray-200";
   if (signal.includes("MOTHBALLED") || signal.includes("CANCELLED")) return "text-gray-500 bg-gray-100 border-gray-300";
@@ -469,7 +469,7 @@ export default function ProjectRatingsMatrix() {
           </Button>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Project Ratings Matrix</h1>
-            <p className="text-muted-foreground">December 2025 Assessment — 16 Projects</p>
+            <p className="text-gray-600">December 2025 Assessment — 16 Projects</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -486,48 +486,48 @@ export default function ProjectRatingsMatrix() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Investment Grade</p>
-                <p className="text-2xl font-bold text-emerald-600">{investmentGrade}</p>
+                <p className="text-sm text-gray-600">Investment Grade</p>
+                <p className="text-2xl font-bold text-[#D4AF37]">{investmentGrade}</p>
               </div>
               <CheckCircle2 className="h-8 w-8 text-emerald-200" />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">A or above</p>
+            <p className="text-xs text-gray-600 mt-1">A or above</p>
           </CardContent>
         </Card>
         <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setBankabilityFilter("borderline")}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Borderline/Moderate</p>
-                <p className="text-2xl font-bold text-amber-600">{borderline}</p>
+                <p className="text-sm text-gray-600">Borderline/Moderate</p>
+                <p className="text-2xl font-bold text-[#D4AF37]">{borderline}</p>
               </div>
               <AlertTriangle className="h-8 w-8 text-amber-200" />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">BBB to BB</p>
+            <p className="text-xs text-gray-600 mt-1">BBB to BB</p>
           </CardContent>
         </Card>
         <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setBankabilityFilter("speculative")}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">High Risk/Speculative</p>
+                <p className="text-sm text-gray-600">High Risk/Speculative</p>
                 <p className="text-2xl font-bold text-red-600">{speculative}</p>
               </div>
               <XCircle className="h-8 w-8 text-red-200" />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">B or CCC</p>
+            <p className="text-xs text-gray-600 mt-1">B or CCC</p>
           </CardContent>
         </Card>
         <Card className="cursor-pointer hover:shadow-md transition-shadow" onClick={() => setBankabilityFilter("inactive")}>
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Inactive/On Hold</p>
+                <p className="text-sm text-gray-600">Inactive/On Hold</p>
                 <p className="text-2xl font-bold text-gray-600">{inactive}</p>
               </div>
               <Clock className="h-8 w-8 text-gray-200" />
             </div>
-            <p className="text-xs text-muted-foreground mt-1">D or N/R</p>
+            <p className="text-xs text-gray-600 mt-1">D or N/R</p>
           </CardContent>
         </Card>
       </div>
@@ -537,7 +537,7 @@ export default function ProjectRatingsMatrix() {
         <CardContent className="p-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-600" />
               <Input
                 placeholder="Search projects, companies, or pathways..."
                 value={searchQuery}
@@ -625,7 +625,7 @@ export default function ProjectRatingsMatrix() {
                         <TableCell>
                           <div>
                             <p className="font-medium">{project.name}</p>
-                            <p className="text-xs text-muted-foreground">{project.company}</p>
+                            <p className="text-xs text-gray-600">{project.company}</p>
                           </div>
                         </TableCell>
                         <TableCell className="text-center">
@@ -707,11 +707,11 @@ export default function ProjectRatingsMatrix() {
                           </Badge>
                         </TableCell>
                         <TableCell className="text-xs">{project.pathway}</TableCell>
-                        <TableCell className="text-xs text-muted-foreground max-w-[200px] truncate">
+                        <TableCell className="text-xs text-gray-600 max-w-[200px] truncate">
                           {project.notes}
                         </TableCell>
                         <TableCell>
-                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          <ChevronRight className="h-4 w-4 text-gray-600" />
                         </TableCell>
                       </TableRow>
                     ))}
@@ -722,7 +722,7 @@ export default function ProjectRatingsMatrix() {
           </ScrollArea>
 
           {filteredProjects.length === 0 && (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-gray-600">
               No projects match your filters
             </div>
           )}
@@ -749,11 +749,11 @@ export default function ProjectRatingsMatrix() {
             <div className="border-l pl-6">
               <p className="font-semibold mb-2">Signals</p>
               <div className="flex gap-3">
-                <Badge variant="outline" className="text-emerald-600 bg-emerald-50 border-emerald-200 text-xs">
+                <Badge variant="outline" className="text-[#D4AF37] bg-emerald-50 border-emerald-200 text-xs">
                   <TrendingUp className="h-3 w-3 mr-1" />
                   BULLISH
                 </Badge>
-                <Badge variant="outline" className="text-amber-600 bg-amber-50 border-amber-200 text-xs">
+                <Badge variant="outline" className="text-[#D4AF37] bg-amber-50 border-amber-200 text-xs">
                   <Minus className="h-3 w-3 mr-1" />
                   NEUTRAL
                 </Badge>

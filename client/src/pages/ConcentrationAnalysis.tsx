@@ -207,10 +207,10 @@ export default function ConcentrationAnalysis() {
       <div className="container py-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <PieChart className="h-8 w-8 text-primary" />
+            <PieChart className="h-8 w-8 text-[#D4AF37]" />
             <h1 className="text-3xl font-bold">Concentration Risk Analysis</h1>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Analyze supplier concentration and geographic distribution for your
             bioenergy projects
           </p>
@@ -256,11 +256,11 @@ export default function ConcentrationAnalysis() {
             ) : !agreements || agreements.length === 0 ? (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <BarChart3 className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">
                     No Supply Agreements
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-gray-600 mb-4">
                     Add supply agreements to analyze concentration risk
                   </p>
                   <Button
@@ -300,14 +300,14 @@ export default function ConcentrationAnalysis() {
                     <div className="space-y-4">
                       <div>
                         <p className="text-4xl font-bold mb-2">{hhi}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           {hhiInterpretation.description}
                         </p>
                       </div>
 
                       <div className="p-4 bg-muted rounded-lg">
                         <h4 className="font-semibold mb-2">HHI Benchmarks</h4>
-                        <ul className="text-sm space-y-1 text-muted-foreground">
+                        <ul className="text-sm space-y-1 text-gray-600">
                           <li>
                             • <strong>0-1,500:</strong> Competitive market (low
                             concentration)
@@ -337,7 +337,7 @@ export default function ConcentrationAnalysis() {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                       <div className="p-4 border rounded-lg">
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-gray-600 mb-1">
                           Total Suppliers
                         </p>
                         <p className="text-3xl font-bold">
@@ -345,24 +345,24 @@ export default function ConcentrationAnalysis() {
                         </p>
                       </div>
                       <div className="p-4 border rounded-lg">
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-gray-600 mb-1">
                           Largest Supplier
                         </p>
                         <p className="text-3xl font-bold">
                           {supplierMetrics.largestSupplierPercent}%
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           of total volume
                         </p>
                       </div>
                       <div className="p-4 border rounded-lg">
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-gray-600 mb-1">
                           Top 3 Suppliers
                         </p>
                         <p className="text-3xl font-bold">
                           {supplierMetrics.top3SuppliersPercent}%
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           of total volume
                         </p>
                       </div>
@@ -402,10 +402,10 @@ export default function ConcentrationAnalysis() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-600">
                                 {supplier.volume.toLocaleString()} tonnes
                               </p>
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-600">
                                 {supplier.agreements.length} agreement
                                 {supplier.agreements.length !== 1 ? "s" : ""}
                               </p>
@@ -431,26 +431,26 @@ export default function ConcentrationAnalysis() {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="p-4 border rounded-lg">
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-gray-600 mb-1">
                           Climate Zones
                         </p>
                         <p className="text-3xl font-bold">
                           {geoDistribution.climateZones}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           {geoDistribution.climateZones < 2
                             ? "High geographic concentration"
                             : "Good diversification"}
                         </p>
                       </div>
                       <div className="p-4 border rounded-lg">
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm text-gray-600 mb-1">
                           Regions
                         </p>
                         <p className="text-3xl font-bold">
                           {geoDistribution.regions.length}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-gray-600 mt-1">
                           states/territories
                         </p>
                       </div>
@@ -458,7 +458,7 @@ export default function ConcentrationAnalysis() {
 
                     <div className="mt-6 p-4 bg-muted rounded-lg">
                       <h4 className="font-semibold mb-2">Risk Assessment</h4>
-                      <ul className="text-sm space-y-1 text-muted-foreground">
+                      <ul className="text-sm space-y-1 text-gray-600">
                         <li>
                           • <strong>Single Event Exposure:</strong>{" "}
                           {supplierMetrics.largestSupplierPercent}% of supply at

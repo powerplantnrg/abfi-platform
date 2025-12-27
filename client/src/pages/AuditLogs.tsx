@@ -132,9 +132,9 @@ export default function AuditLogs() {
         <PageContainer>
           <Card className="mt-8">
             <CardContent className="py-12 text-center">
-              <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Only administrators can view audit logs.
               </p>
             </CardContent>
@@ -147,7 +147,7 @@ export default function AuditLogs() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 text-white py-12 lg:py-16 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 text-black py-12 lg:py-16 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-indigo-500/10 blur-[100px]" />
         </div>
@@ -168,7 +168,7 @@ export default function AuditLogs() {
               <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
                 Audit Logs
               </h1>
-              <p className="text-xl text-slate-300 leading-relaxed">
+              <p className="text-xl text-gray-600 leading-relaxed">
                 Comprehensive audit trail for all platform operations. Track changes,
                 verify compliance, and maintain regulatory defensibility.
               </p>
@@ -189,7 +189,7 @@ export default function AuditLogs() {
                   </div>
                   <div>
                     <div className="text-2xl font-bold">{stats.totalLogs}</div>
-                    <div className="text-sm text-muted-foreground">Total Logs</div>
+                    <div className="text-sm text-gray-600">Total Logs</div>
                   </div>
                 </div>
               </CardContent>
@@ -204,7 +204,7 @@ export default function AuditLogs() {
                     <div className="text-2xl font-bold">
                       {Object.keys(stats.entityCounts).length}
                     </div>
-                    <div className="text-sm text-muted-foreground">Entity Types</div>
+                    <div className="text-sm text-gray-600">Entity Types</div>
                   </div>
                 </div>
               </CardContent>
@@ -219,7 +219,7 @@ export default function AuditLogs() {
                     <div className="text-2xl font-bold">
                       {Object.keys(stats.actionCounts).length}
                     </div>
-                    <div className="text-sm text-muted-foreground">Action Types</div>
+                    <div className="text-sm text-gray-600">Action Types</div>
                   </div>
                 </div>
               </CardContent>
@@ -234,7 +234,7 @@ export default function AuditLogs() {
                     <div className="text-2xl font-bold">
                       {Object.keys(stats.userCounts).length}
                     </div>
-                    <div className="text-sm text-muted-foreground">Active Users</div>
+                    <div className="text-sm text-gray-600">Active Users</div>
                   </div>
                 </div>
               </CardContent>
@@ -329,9 +329,9 @@ export default function AuditLogs() {
               </div>
             ) : !logs || logs.length === 0 ? (
               <div className="text-center py-12">
-                <FileSearch className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <FileSearch className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No Logs Found</h3>
-                <p className="text-muted-foreground">
+                <p className="text-gray-600">
                   No audit logs match your filter criteria.
                 </p>
               </div>
@@ -359,18 +359,18 @@ export default function AuditLogs() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <span className="text-muted-foreground">{log.entityType}</span>
+                        <span className="text-gray-600">{log.entityType}</span>
                         <span className="font-mono text-xs ml-1">#{log.entityId}</span>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
-                          <User className="h-3 w-3 text-muted-foreground" />
+                          <User className="h-3 w-3 text-gray-600" />
                           <span className="font-mono text-xs">
                             {log.userId || "System"}
                           </span>
                         </div>
                       </TableCell>
-                      <TableCell className="font-mono text-xs text-muted-foreground">
+                      <TableCell className="font-mono text-xs text-gray-600">
                         {log.ipAddress || "N/A"}
                       </TableCell>
                       <TableCell className="text-right">
@@ -394,15 +394,15 @@ export default function AuditLogs() {
                             <div className="space-y-4">
                               <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                  <Label className="text-muted-foreground">ID</Label>
+                                  <Label className="text-gray-600">ID</Label>
                                   <div className="font-mono">{log.id}</div>
                                 </div>
                                 <div>
-                                  <Label className="text-muted-foreground">Timestamp</Label>
+                                  <Label className="text-gray-600">Timestamp</Label>
                                   <div>{formatDate(log.createdAt)}</div>
                                 </div>
                                 <div>
-                                  <Label className="text-muted-foreground">Action</Label>
+                                  <Label className="text-gray-600">Action</Label>
                                   <div>
                                     <Badge className={getActionColor(log.action)}>
                                       {log.action}
@@ -410,23 +410,23 @@ export default function AuditLogs() {
                                   </div>
                                 </div>
                                 <div>
-                                  <Label className="text-muted-foreground">Entity</Label>
+                                  <Label className="text-gray-600">Entity</Label>
                                   <div>
                                     {log.entityType} #{log.entityId}
                                   </div>
                                 </div>
                                 <div>
-                                  <Label className="text-muted-foreground">User ID</Label>
+                                  <Label className="text-gray-600">User ID</Label>
                                   <div className="font-mono">{log.userId || "System"}</div>
                                 </div>
                                 <div>
-                                  <Label className="text-muted-foreground">IP Address</Label>
+                                  <Label className="text-gray-600">IP Address</Label>
                                   <div className="font-mono">{log.ipAddress || "N/A"}</div>
                                 </div>
                               </div>
                               {log.userAgent && (
                                 <div>
-                                  <Label className="text-muted-foreground">User Agent</Label>
+                                  <Label className="text-gray-600">User Agent</Label>
                                   <div className="text-xs bg-muted p-2 rounded font-mono overflow-x-auto">
                                     {log.userAgent}
                                   </div>
@@ -434,7 +434,7 @@ export default function AuditLogs() {
                               )}
                               {log.changes && (
                                 <div>
-                                  <Label className="text-muted-foreground">Changes</Label>
+                                  <Label className="text-gray-600">Changes</Label>
                                   <pre className="text-xs bg-muted p-3 rounded overflow-x-auto max-h-64">
                                     {JSON.stringify(log.changes, null, 2)}
                                   </pre>

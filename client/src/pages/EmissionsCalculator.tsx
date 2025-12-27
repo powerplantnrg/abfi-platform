@@ -91,12 +91,12 @@ function ResultCard({
   return (
     <div className={cn("p-4 rounded-lg border", variantStyles[variant])}>
       <div className="flex items-center gap-2 mb-2">
-        {Icon && <Icon className="h-4 w-4 text-muted-foreground" />}
-        <span className="text-sm text-muted-foreground">{label}</span>
+        {Icon && <Icon className="h-4 w-4 text-gray-600" />}
+        <span className="text-sm text-gray-600">{label}</span>
       </div>
       <div className="flex items-baseline gap-1">
         <span className="text-2xl font-bold font-mono">{value}</span>
-        <span className="text-sm text-muted-foreground">{unit}</span>
+        <span className="text-sm text-gray-600">{unit}</span>
       </div>
     </div>
   );
@@ -232,11 +232,11 @@ function TransportCalculator() {
                 />
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-3 bg-slate-50 rounded-lg">
-                    <p className="text-xs text-muted-foreground">Tonne-km</p>
+                    <p className="text-xs text-gray-600">Tonne-km</p>
                     <p className="font-mono font-medium">{result.tonneKm}</p>
                   </div>
                   <div className="p-3 bg-slate-50 rounded-lg">
-                    <p className="text-xs text-muted-foreground">Factor Used</p>
+                    <p className="text-xs text-gray-600">Factor Used</p>
                     <p className="font-mono font-medium">{result.factorUsed} {result.factorUnit}</p>
                   </div>
                 </div>
@@ -314,15 +314,15 @@ function CORSIACalculator() {
                 <h4 className="text-sm font-medium mb-3">CORSIA Default Values</h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Conventional Jet A-1</span>
+                    <span className="text-gray-600">Conventional Jet A-1</span>
                     <span className="font-mono">{defaults.conventional_jet} gCO2e/MJ</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">UCO HEFA</span>
+                    <span className="text-gray-600">UCO HEFA</span>
                     <span className="font-mono">{defaults.saf_hefa_used_cooking_oil} gCO2e/MJ</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">FT Municipal Waste</span>
+                    <span className="text-gray-600">FT Municipal Waste</span>
                     <span className="font-mono">{defaults.saf_ft_municipal_waste} gCO2e/MJ</span>
                   </div>
                 </div>
@@ -370,13 +370,13 @@ function CORSIACalculator() {
                     result.meetsCorsia ? "bg-emerald-50" : "bg-amber-50"
                   )}>
                     {result.meetsCorsia ? (
-                      <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                      <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
                     ) : (
-                      <AlertTriangle className="h-5 w-5 text-amber-600" />
+                      <AlertTriangle className="h-5 w-5 text-[#D4AF37]" />
                     )}
                     <div>
                       <p className="font-medium text-sm">CORSIA Eligible</p>
-                      <p className="text-xs text-muted-foreground">Requires ≥10% GHG reduction</p>
+                      <p className="text-xs text-gray-600">Requires ≥10% GHG reduction</p>
                     </div>
                   </div>
 
@@ -385,13 +385,13 @@ function CORSIACalculator() {
                     result.meetsRedII ? "bg-emerald-50" : "bg-red-50"
                   )}>
                     {result.meetsRedII ? (
-                      <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                      <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
                     ) : (
                       <AlertTriangle className="h-5 w-5 text-red-600" />
                     )}
                     <div>
                       <p className="font-medium text-sm">RED II Compliant</p>
-                      <p className="text-xs text-muted-foreground">Requires ≥65% GHG reduction</p>
+                      <p className="text-xs text-gray-600">Requires ≥65% GHG reduction</p>
                     </div>
                   </div>
                 </div>
@@ -567,12 +567,12 @@ function FeedstockCalculator() {
                   <h4 className="text-sm font-medium">Emissions Breakdown</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Cultivation</span>
+                      <span className="text-sm text-gray-600">Cultivation</span>
                       <span className="font-mono text-sm">{result.cultivationEmissionsKgCo2e} kg CO2e</span>
                     </div>
                     <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-emerald-500"
+                        className="h-full bg-[#D4AF37]"
                         style={{
                           width: `${(result.cultivationEmissionsKgCo2e / result.totalEmissionsKgCo2e) * 100}%`
                         }}
@@ -581,7 +581,7 @@ function FeedstockCalculator() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Transport</span>
+                      <span className="text-sm text-gray-600">Transport</span>
                       <span className="font-mono text-sm">{result.transportEmissionsKgCo2e} kg CO2e</span>
                     </div>
                     <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -631,7 +631,7 @@ export default function EmissionsCalculator() {
         <Card className="max-w-md w-full">
           <CardHeader className="text-center">
             <div className="mx-auto mb-4 w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center">
-              <Calculator className="h-8 w-8 text-emerald-600" />
+              <Calculator className="h-8 w-8 text-[#D4AF37]" />
             </div>
             <CardTitle className="text-2xl">Emissions Calculator</CardTitle>
             <CardDescription>
@@ -639,7 +639,7 @@ export default function EmissionsCalculator() {
             </CardDescription>
           </CardHeader>
           <CardContent className="text-center space-y-4">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               Sign in to access the full emissions calculator with transport mode analysis, lifecycle assessment, and compliance reporting.
             </p>
             <Button asChild className="w-full">
@@ -659,10 +659,10 @@ export default function EmissionsCalculator() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-slate-900 mb-1 flex items-center gap-3">
-                <BarChart3 className="h-8 w-8 text-emerald-600" />
+                <BarChart3 className="h-8 w-8 text-[#D4AF37]" />
                 Emissions Calculator
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 ISO 14083, ISO 14064-1, and CORSIA compliant emissions calculations
               </p>
             </div>

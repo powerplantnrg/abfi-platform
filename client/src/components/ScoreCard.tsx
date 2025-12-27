@@ -144,7 +144,7 @@ export function ScoreCard({
           <span className={cn("font-mono font-bold text-lg", tier.colorClass)}>
             {score}
           </span>
-          <span className="text-xs text-muted-foreground">/ {maxScore}</span>
+          <span className="text-xs text-gray-600">/ {maxScore}</span>
         </div>
       </div>
     );
@@ -156,7 +156,7 @@ export function ScoreCard({
         <CardContent className="pt-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <IconComponent className="h-5 w-5 text-muted-foreground" />
+              <IconComponent className="h-5 w-5 text-gray-600" />
               <span className="font-medium">{title}</span>
             </div>
             <Badge variant="outline" className={cn(tier.colorClass)}>
@@ -164,7 +164,7 @@ export function ScoreCard({
             </Badge>
           </div>
           <ScoreGauge score={score} size="lg" />
-          <p className="text-center text-sm text-muted-foreground mt-3">
+          <p className="text-center text-sm text-gray-600 mt-3">
             {tier.label}
           </p>
         </CardContent>
@@ -193,14 +193,14 @@ export function ScoreCard({
           {showProgress && (
             <div>
               <Progress value={percentage} className="h-2" />
-              <div className="flex justify-between text-xs text-muted-foreground mt-1">
+              <div className="flex justify-between text-xs text-gray-600 mt-1">
                 <span>0</span>
                 <span>{maxScore}</span>
               </div>
             </div>
           )}
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Rating</span>
+            <span className="text-sm text-gray-600">Rating</span>
             <Badge
               variant="outline"
               className={cn("font-mono font-semibold", tier.colorClass)}
@@ -230,7 +230,7 @@ export function ScoreCard({
       <CardContent className="space-y-4">
         <div className="text-center">
           <div className={cn("metric-xl", tier.colorClass)}>{score}</div>
-          <div className="text-sm text-muted-foreground">out of {maxScore}</div>
+          <div className="text-sm text-gray-600">out of {maxScore}</div>
           <Badge
             variant="outline"
             className={cn("mt-2 font-mono", tier.colorClass)}
@@ -388,7 +388,7 @@ export function ScoreGauge({
         </motion.span>
         {showTier && (
           <motion.span
-            className={cn("font-medium text-muted-foreground", config.tierSize)}
+            className={cn("font-medium text-gray-600", config.tierSize)}
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: duration * 0.5, duration: 0.3 }}
@@ -417,32 +417,32 @@ export function RatingBadge({
   const getRatingInfo = (r: string): { color: string; description: string } => {
     switch (r) {
       case "AAA":
-        return { color: "bg-green-600 text-white", description: "Exceptional" };
+        return { color: "bg-green-600 text-black", description: "Exceptional" };
       case "AA":
-        return { color: "bg-green-500 text-white", description: "Very Strong" };
+        return { color: "bg-green-500 text-black", description: "Very Strong" };
       case "A":
-        return { color: "bg-blue-600 text-white", description: "Strong" };
+        return { color: "bg-blue-600 text-black", description: "Strong" };
       case "BBB":
-        return { color: "bg-blue-500 text-white", description: "Good" };
+        return { color: "bg-blue-500 text-black", description: "Good" };
       case "BB":
-        return { color: "bg-yellow-600 text-white", description: "Adequate" };
+        return { color: "bg-yellow-600 text-black", description: "Adequate" };
       case "B":
-        return { color: "bg-orange-600 text-white", description: "Marginal" };
+        return { color: "bg-orange-600 text-black", description: "Marginal" };
       case "CCC":
-        return { color: "bg-red-600 text-white", description: "Weak" };
+        return { color: "bg-red-600 text-black", description: "Weak" };
       case "GQ1":
-        return { color: "bg-green-600 text-white", description: "Premier" };
+        return { color: "bg-green-600 text-black", description: "Premier" };
       case "GQ2":
-        return { color: "bg-blue-600 text-white", description: "Qualified" };
+        return { color: "bg-blue-600 text-black", description: "Qualified" };
       case "GQ3":
-        return { color: "bg-yellow-600 text-white", description: "Developing" };
+        return { color: "bg-yellow-600 text-black", description: "Developing" };
       case "GQ4":
         return {
-          color: "bg-orange-600 text-white",
+          color: "bg-orange-600 text-black",
           description: "Provisional",
         };
       default:
-        return { color: "bg-gray-500 text-white", description: "Unrated" };
+        return { color: "bg-gray-500 text-black", description: "Unrated" };
     }
   };
 
@@ -460,7 +460,7 @@ export function RatingBadge({
         <Badge className={`${info.color} ${sizeClasses[size]} font-bold`}>
           {rating}
         </Badge>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-sm text-gray-600">
           {info.description}
         </span>
       </div>
@@ -498,9 +498,9 @@ export function ScoreBreakdown({
           <div key={index} className="space-y-1">
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-2">
-                <span className="text-muted-foreground">{score.label}</span>
+                <span className="text-gray-600">{score.label}</span>
                 {score.weight && (
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-gray-600">
                     ({score.weight}%)
                   </span>
                 )}
@@ -529,11 +529,11 @@ export function ABFIScoreBadge({
   className = "",
 }: ABFIScoreBadgeProps) {
   const getScoreColor = (s: number): string => {
-    if (s >= 90) return "bg-green-600 text-white";
-    if (s >= 80) return "bg-blue-600 text-white";
-    if (s >= 70) return "bg-yellow-600 text-white";
-    if (s >= 60) return "bg-orange-600 text-white";
-    return "bg-red-600 text-white";
+    if (s >= 90) return "bg-green-600 text-black";
+    if (s >= 80) return "bg-blue-600 text-black";
+    if (s >= 70) return "bg-yellow-600 text-black";
+    if (s >= 60) return "bg-orange-600 text-black";
+    return "bg-red-600 text-black";
   };
 
   const sizeClasses = {
@@ -545,7 +545,7 @@ export function ABFIScoreBadge({
   return (
     <div className={`inline-flex items-center gap-2 ${className}`}>
       {showLabel && (
-        <span className="text-sm text-muted-foreground">ABFI Score:</span>
+        <span className="text-sm text-gray-600">ABFI Score:</span>
       )}
       <Badge
         className={`${getScoreColor(score)} ${sizeClasses[size]} font-bold`}

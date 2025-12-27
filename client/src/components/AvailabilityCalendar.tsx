@@ -174,7 +174,7 @@ export function AvailabilityCalendar({
         )}
 
         {value.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-gray-600">
             <Calendar className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p className="text-sm">No availability windows added yet</p>
             <p className="text-xs mt-1">
@@ -187,7 +187,7 @@ export function AvailabilityCalendar({
               .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
               .map(([month, windows]) => (
                 <div key={month}>
-                  <div className="text-sm font-semibold mb-2 text-muted-foreground">
+                  <div className="text-sm font-semibold mb-2 text-gray-600">
                     {month}
                   </div>
                   <div className="space-y-2">
@@ -207,7 +207,7 @@ export function AvailabilityCalendar({
                             </Badge>
                           </div>
                           {window.notes && (
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               {window.notes}
                             </p>
                           )}
@@ -231,7 +231,7 @@ export function AvailabilityCalendar({
         {value.length > 0 && (
           <div className="border-t pt-4">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">
+              <span className="text-gray-600">
                 Total Available Volume
               </span>
               <span className="font-semibold">
@@ -270,7 +270,7 @@ export function AvailabilityDisplay({
   if (compact) {
     return (
       <div className={`flex items-center gap-2 ${className}`}>
-        <Calendar className="h-4 w-4 text-muted-foreground" />
+        <Calendar className="h-4 w-4 text-gray-600" />
         <span className="text-sm">
           {windows.length} window{windows.length !== 1 ? "s" : ""} •{" "}
           {totalVolume.toLocaleString()}t total
@@ -286,7 +286,7 @@ export function AvailabilityDisplay({
         Availability Windows
       </div>
       {windows.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-gray-600">
           No availability windows specified
         </p>
       ) : (
@@ -301,7 +301,7 @@ export function AvailabilityDisplay({
                   {formatDate(window.startDate)} - {formatDate(window.endDate)}
                 </div>
                 {window.notes && (
-                  <div className="text-xs text-muted-foreground">
+                  <div className="text-xs text-gray-600">
                     {window.notes}
                   </div>
                 )}
@@ -310,7 +310,7 @@ export function AvailabilityDisplay({
             </div>
           ))}
           <div className="flex justify-between text-sm pt-2 border-t">
-            <span className="text-muted-foreground">Total</span>
+            <span className="text-gray-600">Total</span>
             <span className="font-semibold">
               {totalVolume.toLocaleString()} tonnes
             </span>

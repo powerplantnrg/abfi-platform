@@ -44,12 +44,12 @@ import {
 // Rating colors
 const getCIRatingColor = (rating: string) => {
   const colors: Record<string, string> = {
-    "CI-A": "bg-emerald-500 text-white",
-    "CI-B": "bg-green-500 text-white",
-    "CI-C": "bg-amber-500 text-white",
-    "CI-D": "bg-red-500 text-white",
+    "CI-A": "bg-[#D4AF37] text-black",
+    "CI-B": "bg-green-500 text-black",
+    "CI-C": "bg-[#D4AF37] text-black",
+    "CI-D": "bg-red-500 text-black",
   };
-  return colors[rating] || "bg-gray-400 text-white";
+  return colors[rating] || "bg-gray-400 text-black";
 };
 
 // Pathway CI benchmarks
@@ -86,9 +86,9 @@ const projectCIEstimates = [
 
 // CI Rating definitions
 const ciRatingDefs = [
-  { rating: "CI-A", range: "≤20 gCO₂e/MJ", reduction: "≥78%", color: "bg-emerald-500" },
+  { rating: "CI-A", range: "≤20 gCO₂e/MJ", reduction: "≥78%", color: "bg-[#D4AF37]" },
   { rating: "CI-B", range: "21-35 gCO₂e/MJ", reduction: "61-77%", color: "bg-green-500" },
-  { rating: "CI-C", range: "36-53 gCO₂e/MJ", reduction: "40-60%", color: "bg-amber-500" },
+  { rating: "CI-C", range: "36-53 gCO₂e/MJ", reduction: "40-60%", color: "bg-[#D4AF37]" },
   { rating: "CI-D", range: "≥54 gCO₂e/MJ", reduction: "<40%", color: "bg-red-500" },
 ];
 
@@ -117,7 +117,7 @@ export default function CarbonIntensityAnalysis() {
           </Button>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Carbon Intensity Analysis</h1>
-            <p className="text-muted-foreground">Lifecycle GHG emissions vs 89 gCO₂e/MJ baseline</p>
+            <p className="text-gray-600">Lifecycle GHG emissions vs 89 gCO₂e/MJ baseline</p>
           </div>
         </div>
         <div className="flex gap-2">
@@ -132,37 +132,37 @@ export default function CarbonIntensityAnalysis() {
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-3xl font-bold text-emerald-600">{ciACount}</div>
-            <div className="text-xs text-muted-foreground">CI-A Rated</div>
-            <div className="text-xs text-muted-foreground">≥78% reduction</div>
+            <div className="text-3xl font-bold text-[#D4AF37]">{ciACount}</div>
+            <div className="text-xs text-gray-600">CI-A Rated</div>
+            <div className="text-xs text-gray-600">≥78% reduction</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <div className="text-3xl font-bold text-green-600">{ciBCount}</div>
-            <div className="text-xs text-muted-foreground">CI-B Rated</div>
-            <div className="text-xs text-muted-foreground">61-77% reduction</div>
+            <div className="text-xs text-gray-600">CI-B Rated</div>
+            <div className="text-xs text-gray-600">61-77% reduction</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-3xl font-bold text-amber-600">{ciCCount}</div>
-            <div className="text-xs text-muted-foreground">CI-C Rated</div>
-            <div className="text-xs text-muted-foreground">40-60% reduction</div>
+            <div className="text-3xl font-bold text-[#D4AF37]">{ciCCount}</div>
+            <div className="text-xs text-gray-600">CI-C Rated</div>
+            <div className="text-xs text-gray-600">40-60% reduction</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <div className="text-3xl font-bold text-blue-600">{eligibleCount}</div>
-            <div className="text-xs text-muted-foreground">Cleaner Fuels</div>
-            <div className="text-xs text-muted-foreground">Program Eligible</div>
+            <div className="text-xs text-gray-600">Cleaner Fuels</div>
+            <div className="text-xs text-gray-600">Program Eligible</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <div className="text-3xl font-bold">89</div>
-            <div className="text-xs text-muted-foreground">Baseline</div>
-            <div className="text-xs text-muted-foreground">gCO₂e/MJ</div>
+            <div className="text-xs text-gray-600">Baseline</div>
+            <div className="text-xs text-gray-600">gCO₂e/MJ</div>
           </CardContent>
         </Card>
       </div>
@@ -185,7 +185,7 @@ export default function CarbonIntensityAnalysis() {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium text-sm">{def.range}</span>
-                    <span className="text-sm text-muted-foreground">({def.reduction} vs baseline)</span>
+                    <span className="text-sm text-gray-600">({def.reduction} vs baseline)</span>
                   </div>
                   <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
                     <div
@@ -200,7 +200,7 @@ export default function CarbonIntensityAnalysis() {
                 </div>
               </div>
             ))}
-            <div className="flex items-center justify-between text-xs text-muted-foreground mt-2">
+            <div className="flex items-center justify-between text-xs text-gray-600 mt-2">
               <span>0 gCO₂e/MJ</span>
               <span>89 gCO₂e/MJ (Baseline)</span>
             </div>
@@ -249,7 +249,7 @@ export default function CarbonIntensityAnalysis() {
                       <TableCell className="font-medium">{item.pathway}</TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <item.icon className="h-4 w-4 text-muted-foreground" />
+                          <item.icon className="h-4 w-4 text-gray-600" />
                           <span className="text-sm">{item.feedstock}</span>
                         </div>
                       </TableCell>
@@ -298,7 +298,7 @@ export default function CarbonIntensityAnalysis() {
                       </TableCell>
                       <TableCell className="text-center">
                         {item.eligible ? (
-                          <CheckCircle2 className="h-4 w-4 text-emerald-500 mx-auto" />
+                          <CheckCircle2 className="h-4 w-4 text-[#D4AF37] mx-auto" />
                         ) : (
                           <XCircle className="h-4 w-4 text-red-500 mx-auto" />
                         )}
@@ -339,7 +339,7 @@ export default function CarbonIntensityAnalysis() {
             <Card className="border-emerald-200 bg-emerald-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                  <CheckCircle2 className="h-4 w-4 text-[#D4AF37]" />
                   <span className="font-semibold text-emerald-900">Second-Generation (Residues)</span>
                 </div>
                 <p className="text-2xl font-mono text-emerald-700">0 ILUC</p>
@@ -350,7 +350,7 @@ export default function CarbonIntensityAnalysis() {
             <Card className="border-emerald-200 bg-emerald-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Droplets className="h-4 w-4 text-emerald-600" />
+                  <Droplets className="h-4 w-4 text-[#D4AF37]" />
                   <span className="font-semibold text-emerald-900">Waste Oils/Fats</span>
                 </div>
                 <p className="text-2xl font-mono text-emerald-700">~15-25 gCO₂e/MJ</p>
@@ -372,7 +372,7 @@ export default function CarbonIntensityAnalysis() {
             <Card className="border-amber-200 bg-amber-50/30">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Zap className="h-4 w-4 text-amber-600" />
+                  <Zap className="h-4 w-4 text-[#D4AF37]" />
                   <span className="font-semibold text-amber-900">Power-to-Liquid</span>
                 </div>
                 <p className="text-2xl font-mono text-amber-700">0-80+ gCO₂e/MJ</p>
@@ -406,23 +406,23 @@ export default function CarbonIntensityAnalysis() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="p-4 border rounded-lg">
               <h4 className="font-semibold mb-2">Australia Cleaner Fuels</h4>
-              <p className="text-2xl font-mono text-emerald-600">≤60 gCO₂e/MJ</p>
-              <p className="text-xs text-muted-foreground mt-1">Program threshold</p>
+              <p className="text-2xl font-mono text-[#D4AF37]">≤60 gCO₂e/MJ</p>
+              <p className="text-xs text-gray-600 mt-1">Program threshold</p>
             </div>
             <div className="p-4 border rounded-lg">
               <h4 className="font-semibold mb-2">EU RED III</h4>
-              <p className="text-2xl font-mono text-emerald-600">≤35 gCO₂e/MJ</p>
-              <p className="text-xs text-muted-foreground mt-1">~60% reduction required</p>
+              <p className="text-2xl font-mono text-[#D4AF37]">≤35 gCO₂e/MJ</p>
+              <p className="text-xs text-gray-600 mt-1">~60% reduction required</p>
             </div>
             <div className="p-4 border rounded-lg">
               <h4 className="font-semibold mb-2">CORSIA</h4>
-              <p className="text-2xl font-mono text-amber-600">10% reduction</p>
-              <p className="text-xs text-muted-foreground mt-1">Minimum baseline</p>
+              <p className="text-2xl font-mono text-[#D4AF37]">10% reduction</p>
+              <p className="text-xs text-gray-600 mt-1">Minimum baseline</p>
             </div>
             <div className="p-4 border rounded-lg">
               <h4 className="font-semibold mb-2">US RFS D7</h4>
               <p className="text-2xl font-mono text-green-600">≤50%</p>
-              <p className="text-xs text-muted-foreground mt-1">vs petroleum baseline</p>
+              <p className="text-xs text-gray-600 mt-1">vs petroleum baseline</p>
             </div>
           </div>
         </CardContent>
@@ -431,7 +431,7 @@ export default function CarbonIntensityAnalysis() {
       {/* Key Finding */}
       <Card className="border-emerald-200 bg-emerald-50/50">
         <CardContent className="p-4 flex items-start gap-3">
-          <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 shrink-0" />
+          <CheckCircle2 className="h-5 w-5 text-[#D4AF37] mt-0.5 shrink-0" />
           <div>
             <h3 className="font-semibold text-emerald-900">Key Finding: Australian CI Competitive Advantage</h3>
             <p className="text-sm text-emerald-800 mt-1">

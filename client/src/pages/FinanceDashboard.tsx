@@ -139,8 +139,8 @@ const INTELLIGENCE_TOOLS = [
     description: "Real-time price intelligence",
     badge: "Live",
     href: "/feedstock-prices",
-    color: "text-emerald-600",
-    bgColor: "bg-emerald-500/10",
+    color: "text-[#D4AF37]",
+    bgColor: "bg-[#D4AF37]/10",
   },
   {
     id: "policy",
@@ -149,8 +149,8 @@ const INTELLIGENCE_TOOLS = [
     description: "Regulatory timeline",
     badge: "Updated",
     href: "/policy-carbon",
-    color: "text-amber-600",
-    bgColor: "bg-amber-500/10",
+    color: "text-[#D4AF37]",
+    bgColor: "bg-[#D4AF37]/10",
   },
 ];
 
@@ -175,19 +175,19 @@ export default function FinanceDashboard() {
       case "medium":
         return {
           badge: "bg-amber-100 text-amber-800 border-amber-200",
-          icon: "text-amber-500",
+          icon: "text-[#D4AF37]",
           border: "border-l-amber-500",
         };
       case "low":
         return {
           badge: "bg-emerald-100 text-emerald-800 border-emerald-200",
-          icon: "text-emerald-500",
+          icon: "text-[#D4AF37]",
           border: "border-l-emerald-500",
         };
       default:
         return {
           badge: "bg-slate-100 text-slate-800 border-slate-200",
-          icon: "text-slate-500",
+          icon: "text-black0",
           border: "border-l-slate-500",
         };
     }
@@ -202,7 +202,7 @@ export default function FinanceDashboard() {
             {QUICK_STATS.map((stat, index) => (
               <div key={index} className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-lg bg-muted/50 flex items-center justify-center">
-                  <stat.icon className="h-5 w-5 text-primary" />
+                  <stat.icon className="h-5 w-5 text-[#D4AF37]" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -224,7 +224,7 @@ export default function FinanceDashboard() {
                       {stat.change}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <p className="text-xs text-gray-600">{stat.label}</p>
                 </div>
               </div>
             ))}
@@ -269,7 +269,7 @@ export default function FinanceDashboard() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="flex items-center gap-2">
-                      <Bell className="h-5 w-5 text-amber-500" />
+                      <Bell className="h-5 w-5 text-[#D4AF37]" />
                       Risk Alerts
                     </CardTitle>
                     <Button variant="ghost" size="sm" onClick={() => setActiveTab("alerts")}>
@@ -303,7 +303,7 @@ export default function FinanceDashboard() {
                               </div>
                               <div>
                                 <p className="font-medium text-sm">{alert.title}</p>
-                                <p className="text-xs text-muted-foreground mt-0.5">
+                                <p className="text-xs text-gray-600 mt-0.5">
                                   {alert.entity} · Score: {alert.entityScore}
                                 </p>
                               </div>
@@ -312,7 +312,7 @@ export default function FinanceDashboard() {
                               <Badge variant="outline" className={cn("text-xs", styles.badge)}>
                                 {alert.category}
                               </Badge>
-                              <p className="text-xs text-muted-foreground mt-1">{alert.time}</p>
+                              <p className="text-xs text-gray-600 mt-1">{alert.time}</p>
                             </div>
                           </div>
                         </div>
@@ -341,15 +341,15 @@ export default function FinanceDashboard() {
                           <div
                             className={cn(
                               "h-2 w-2 rounded-full",
-                              entity.status === "high" && "bg-emerald-500",
+                              entity.status === "high" && "bg-[#D4AF37]",
                               entity.status === "medium" && "bg-blue-500",
-                              entity.status === "watch" && "bg-amber-500",
+                              entity.status === "watch" && "bg-[#D4AF37]",
                               entity.status === "new" && "bg-purple-500"
                             )}
                           />
                           <div>
                             <p className="text-sm font-medium">{entity.name}</p>
-                            <p className="text-xs text-muted-foreground">{entity.signals} signals</p>
+                            <p className="text-xs text-gray-600">{entity.signals} signals</p>
                           </div>
                         </div>
                         <div className="text-right">
@@ -357,7 +357,7 @@ export default function FinanceDashboard() {
                           <p
                             className={cn(
                               "text-xs",
-                              entity.change > 0 ? "text-emerald-600" : "text-red-600"
+                              entity.change > 0 ? "text-[#D4AF37]" : "text-red-600"
                             )}
                           >
                             {entity.change > 0 ? "+" : ""}
@@ -399,7 +399,7 @@ export default function FinanceDashboard() {
                         <CardDescription className="text-xs">{tool.description}</CardDescription>
                       </CardHeader>
                       <CardContent className="pt-0">
-                        <div className="flex items-center text-sm text-primary font-medium">
+                        <div className="flex items-center text-sm text-[#D4AF37] font-medium">
                           Open Tool
                           <ChevronRight className="h-4 w-4 ml-1" />
                         </div>
@@ -456,8 +456,8 @@ export default function FinanceDashboard() {
                             </div>
                             <div>
                               <p className="font-medium">{alert.title}</p>
-                              <p className="text-sm text-muted-foreground mt-1">{alert.description}</p>
-                              <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                              <p className="text-sm text-gray-600 mt-1">{alert.description}</p>
+                              <div className="flex items-center gap-3 mt-2 text-xs text-gray-600">
                                 <span className="flex items-center gap-1">
                                   <Building2 className="h-3 w-3" />
                                   {alert.entity}
@@ -514,28 +514,28 @@ export default function FinanceDashboard() {
                         <div
                           className={cn(
                             "h-3 w-3 rounded-full",
-                            entity.status === "high" && "bg-emerald-500",
+                            entity.status === "high" && "bg-[#D4AF37]",
                             entity.status === "medium" && "bg-blue-500",
-                            entity.status === "watch" && "bg-amber-500",
+                            entity.status === "watch" && "bg-[#D4AF37]",
                             entity.status === "new" && "bg-purple-500"
                           )}
                         />
                         <div>
                           <p className="font-medium">{entity.name}</p>
-                          <p className="text-sm text-muted-foreground">{entity.signals} active signals</p>
+                          <p className="text-sm text-gray-600">{entity.signals} active signals</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-6">
                         <div>
-                          <p className="text-sm text-muted-foreground">Score</p>
+                          <p className="text-sm text-gray-600">Score</p>
                           <p className="text-lg font-bold">{entity.score}</p>
                         </div>
                         <div>
-                          <p className="text-sm text-muted-foreground">Change</p>
+                          <p className="text-sm text-gray-600">Change</p>
                           <p
                             className={cn(
                               "text-lg font-bold flex items-center",
-                              entity.change > 0 ? "text-emerald-600" : entity.change < 0 ? "text-red-600" : ""
+                              entity.change > 0 ? "text-[#D4AF37]" : entity.change < 0 ? "text-red-600" : ""
                             )}
                           >
                             {entity.change > 0 ? (
@@ -603,10 +603,10 @@ export default function FinanceDashboard() {
                         className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
                       >
                         <div className="flex items-center gap-3">
-                          <FileText className="h-5 w-5 text-muted-foreground" />
+                          <FileText className="h-5 w-5 text-gray-600" />
                           <div>
                             <p className="font-medium text-sm">{report.name}</p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-gray-600">
                               {report.type} · {report.date}
                             </p>
                           </div>
@@ -628,8 +628,8 @@ export default function FinanceDashboard() {
                 <CardDescription>Programmatic access to risk scores and intelligence data</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="bg-slate-900 rounded-lg p-4 text-white font-mono text-sm mb-4">
-                  <p className="text-slate-400">// Example API Response</p>
+                <div className="bg-white rounded-lg p-4 text-black font-mono text-sm mb-4">
+                  <p className="text-gray-500">// Example API Response</p>
                   <pre className="mt-2 overflow-x-auto">{`{
   "entity_id": "ENT-2024-0042",
   "canonical_name": "Southern Oil Refining",

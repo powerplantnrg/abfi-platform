@@ -136,7 +136,7 @@ export default function ProcurementScenarios() {
 
   const getConcentrationLabel = (hhi: number) => {
     if (hhi < 1500) return { label: "Low", color: "text-green-600 bg-green-50" };
-    if (hhi < 2500) return { label: "Moderate", color: "text-amber-600 bg-amber-50" };
+    if (hhi < 2500) return { label: "Moderate", color: "text-[#D4AF37] bg-amber-50" };
     return { label: "High", color: "text-red-600 bg-red-50" };
   };
 
@@ -151,7 +151,7 @@ export default function ProcurementScenarios() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white py-12 lg:py-16 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-black py-12 lg:py-16 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/10 blur-[100px]" />
         </div>
@@ -172,14 +172,14 @@ export default function ProcurementScenarios() {
               <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
                 Procurement Scenarios
               </h1>
-              <p className="text-xl text-slate-300 leading-relaxed">
+              <p className="text-xl text-gray-600 leading-relaxed">
                 Model volume security, optimize supplier portfolios, and stress-test 
                 your feedstock procurement strategy.
               </p>
             </div>
 
             <div className="flex gap-3">
-              <Button variant="outline" className="bg-white/10 border-white/20 text-white hover:bg-white/20">
+              <Button variant="outline" className="bg-white/10 border-white/20 text-black hover:bg-white/20">
                 <Download className="h-4 w-4 mr-2" />
                 Export Report
               </Button>
@@ -212,7 +212,7 @@ export default function ProcurementScenarios() {
               <Card className="lg:col-span-1">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Target className="h-5 w-5 text-primary" />
+                    <Target className="h-5 w-5 text-[#D4AF37]" />
                     Scenario Parameters
                   </CardTitle>
                   <CardDescription>
@@ -227,7 +227,7 @@ export default function ProcurementScenarios() {
                       value={requiredVolume}
                       onChange={(e) => setRequiredVolume(parseInt(e.target.value) || 0)}
                     />
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-600">
                       Your target feedstock procurement
                     </p>
                   </div>
@@ -240,7 +240,7 @@ export default function ProcurementScenarios() {
                       max={50}
                       step={5}
                     />
-                    <div className="flex justify-between text-xs text-muted-foreground">
+                    <div className="flex justify-between text-xs text-gray-600">
                       <span>0%</span>
                       <span className="font-medium">{supplierLossPercent}% loss</span>
                       <span>50%</span>
@@ -255,7 +255,7 @@ export default function ProcurementScenarios() {
                       max={30}
                       step={5}
                     />
-                    <div className="flex justify-between text-xs text-muted-foreground">
+                    <div className="flex justify-between text-xs text-gray-600">
                       <span>0%</span>
                       <span className="font-medium">±{priceVolatility}%</span>
                       <span>30%</span>
@@ -271,7 +271,7 @@ export default function ProcurementScenarios() {
                       max={99}
                       step={1}
                     />
-                    <div className="flex justify-between text-xs text-muted-foreground">
+                    <div className="flex justify-between text-xs text-gray-600">
                       <span>70%</span>
                       <span className="font-medium">{(minReliability * 100).toFixed(0)}%</span>
                       <span>99%</span>
@@ -302,7 +302,7 @@ export default function ProcurementScenarios() {
               <Card className="lg:col-span-2">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5 text-primary" />
+                    <BarChart3 className="h-5 w-5 text-[#D4AF37]" />
                     Scenario Results
                   </CardTitle>
                   <CardDescription>
@@ -315,7 +315,7 @@ export default function ProcurementScenarios() {
                       {/* Key Metrics */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="bg-muted/50 rounded-lg p-4">
-                          <div className="text-sm text-muted-foreground">Volume Secured</div>
+                          <div className="text-sm text-gray-600">Volume Secured</div>
                           <div className="text-2xl font-bold font-mono">
                             {scenarioResults.volumeSecured.toLocaleString()}t
                           </div>
@@ -323,33 +323,33 @@ export default function ProcurementScenarios() {
                             value={scenarioResults.coveragePercent} 
                             className="h-2 mt-2"
                           />
-                          <div className="text-xs text-muted-foreground mt-1">
+                          <div className="text-xs text-gray-600 mt-1">
                             {scenarioResults.coveragePercent.toFixed(1)}% of target
                           </div>
                         </div>
 
                         <div className="bg-muted/50 rounded-lg p-4">
-                          <div className="text-sm text-muted-foreground">Avg Price</div>
+                          <div className="text-sm text-gray-600">Avg Price</div>
                           <div className="text-2xl font-bold font-mono">
                             ${scenarioResults.avgPrice.toFixed(0)}/t
                           </div>
-                          <div className="text-xs text-muted-foreground mt-1">
+                          <div className="text-xs text-gray-600 mt-1">
                             Total: ${(scenarioResults.totalCost / 1000000).toFixed(1)}M
                           </div>
                         </div>
 
                         <div className="bg-muted/50 rounded-lg p-4">
-                          <div className="text-sm text-muted-foreground">Suppliers</div>
+                          <div className="text-sm text-gray-600">Suppliers</div>
                           <div className="text-2xl font-bold font-mono">
                             {scenarioResults.supplierCount}
                           </div>
-                          <div className="text-xs text-muted-foreground mt-1">
+                          <div className="text-xs text-gray-600 mt-1">
                             Active suppliers
                           </div>
                         </div>
 
                         <div className="bg-muted/50 rounded-lg p-4">
-                          <div className="text-sm text-muted-foreground">Concentration</div>
+                          <div className="text-sm text-gray-600">Concentration</div>
                           <Badge 
                             className={cn(
                               "text-xs mt-1",
@@ -358,23 +358,23 @@ export default function ProcurementScenarios() {
                           >
                             {getConcentrationLabel(scenarioResults.concentrationRisk).label}
                           </Badge>
-                          <div className="text-xs text-muted-foreground mt-2">
+                          <div className="text-xs text-gray-600 mt-2">
                             HHI: {scenarioResults.concentrationRisk.toFixed(0)}
                           </div>
                         </div>
                       </div>
 
                       {/* Coverage Visualization */}
-                      <div className="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-6">
+                      <div className="bg-slate-50 dark:bg-white/50 rounded-lg p-6">
                         <h4 className="font-semibold mb-4">Volume Coverage Analysis</h4>
-                        <div className="relative h-8 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                        <div className="relative h-8 bg-slate-200 dark:bg-white rounded-full overflow-hidden">
                           <div 
                             className={cn(
                               "h-full rounded-full transition-all",
                               scenarioResults.coveragePercent >= 100 
                                 ? "bg-green-500" 
                                 : scenarioResults.coveragePercent >= 80 
-                                  ? "bg-amber-500" 
+                                  ? "bg-[#D4AF37]" 
                                   : "bg-red-500"
                             )}
                             style={{ width: `${Math.min(scenarioResults.coveragePercent, 100)}%` }}
@@ -385,7 +385,7 @@ export default function ProcurementScenarios() {
                         </div>
                         
                         {scenarioResults.coveragePercent < 100 && (
-                          <div className="flex items-center gap-2 mt-4 text-amber-600">
+                          <div className="flex items-center gap-2 mt-4 text-[#D4AF37]">
                             <AlertTriangle className="h-4 w-4" />
                             <span className="text-sm">
                               Volume gap: {(requiredVolume - scenarioResults.volumeSecured).toLocaleString()} tonnes
@@ -398,13 +398,13 @@ export default function ProcurementScenarios() {
                       {scenarioResults.recommendations.length > 0 && (
                         <div className="border rounded-lg p-4">
                           <h4 className="font-semibold mb-3 flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-primary" />
+                            <CheckCircle2 className="h-4 w-4 text-[#D4AF37]" />
                             Recommendations
                           </h4>
                           <ul className="space-y-2">
                             {scenarioResults.recommendations.map((rec, i) => (
                               <li key={i} className="flex items-start gap-2 text-sm">
-                                <ChevronRight className="h-4 w-4 mt-0.5 text-muted-foreground" />
+                                <ChevronRight className="h-4 w-4 mt-0.5 text-gray-600" />
                                 {rec}
                               </li>
                             ))}
@@ -413,7 +413,7 @@ export default function ProcurementScenarios() {
                       )}
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center py-12 text-muted-foreground">
+                    <div className="flex flex-col items-center justify-center py-12 text-gray-600">
                       <Calculator className="h-12 w-12 mb-4 opacity-50" />
                       <p>Configure parameters and run a scenario to see results</p>
                     </div>
@@ -428,7 +428,7 @@ export default function ProcurementScenarios() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-primary" />
+                  <Users className="h-5 w-5 text-[#D4AF37]" />
                   Supplier Comparison Matrix
                 </CardTitle>
                 <CardDescription>
@@ -487,7 +487,7 @@ export default function ProcurementScenarios() {
                           </TableCell>
                           <TableCell className="text-center">
                             {isSelected ? (
-                              <CheckCircle2 className="h-5 w-5 text-primary mx-auto" />
+                              <CheckCircle2 className="h-5 w-5 text-[#D4AF37] mx-auto" />
                             ) : (
                               <div className="h-5 w-5 rounded-full border-2 mx-auto" />
                             )}
@@ -500,11 +500,11 @@ export default function ProcurementScenarios() {
 
                 <div className="mt-6 flex items-center justify-between bg-muted/50 rounded-lg p-4">
                   <div>
-                    <span className="text-sm text-muted-foreground">Selected: </span>
+                    <span className="text-sm text-gray-600">Selected: </span>
                     <span className="font-semibold">{selectedSuppliers.length} suppliers</span>
                   </div>
                   <div>
-                    <span className="text-sm text-muted-foreground">Total Capacity: </span>
+                    <span className="text-sm text-gray-600">Total Capacity: </span>
                     <span className="font-mono font-semibold">
                       {MOCK_SUPPLIERS
                         .filter(s => selectedSuppliers.includes(s.id))
@@ -528,7 +528,7 @@ export default function ProcurementScenarios() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Layers className="h-5 w-5 text-primary" />
+                  <Layers className="h-5 w-5 text-[#D4AF37]" />
                   Portfolio Optimization
                 </CardTitle>
                 <CardDescription>
@@ -539,7 +539,7 @@ export default function ProcurementScenarios() {
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                   <div className="space-y-4">
                     <h4 className="font-semibold flex items-center gap-2">
-                      <Target className="h-4 w-4 text-primary" />
+                      <Target className="h-4 w-4 text-[#D4AF37]" />
                       Optimization Goals
                     </h4>
                     <div className="space-y-3">
@@ -560,7 +560,7 @@ export default function ProcurementScenarios() {
 
                   <div className="space-y-4">
                     <h4 className="font-semibold flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-primary" />
+                      <Shield className="h-4 w-4 text-[#D4AF37]" />
                       Constraints
                     </h4>
                     <div className="space-y-3">
@@ -596,20 +596,20 @@ export default function ProcurementScenarios() {
 
                   <div className="space-y-4">
                     <h4 className="font-semibold flex items-center gap-2">
-                      <LineChart className="h-4 w-4 text-primary" />
+                      <LineChart className="h-4 w-4 text-[#D4AF37]" />
                       Output
                     </h4>
                     <Button className="w-full">
                       <Calculator className="h-4 w-4 mr-2" />
                       Run Optimization
                     </Button>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-600">
                       Uses linear programming to find optimal supplier allocation
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-6">
+                <div className="bg-slate-50 dark:bg-white/50 rounded-lg p-6">
                   <h4 className="font-semibold mb-4">Optimal Portfolio Allocation</h4>
                   <div className="space-y-3">
                     {MOCK_SUPPLIERS.slice(0, 4).map((supplier, i) => {
@@ -618,7 +618,7 @@ export default function ProcurementScenarios() {
                         <div key={supplier.id} className="flex items-center gap-4">
                           <div className="w-40 text-sm truncate">{supplier.name}</div>
                           <div className="flex-1">
-                            <div className="h-6 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                            <div className="h-6 bg-slate-200 dark:bg-white rounded-full overflow-hidden">
                               <div 
                                 className="h-full bg-primary rounded-full"
                                 style={{ width: `${allocation}%` }}
@@ -628,7 +628,7 @@ export default function ProcurementScenarios() {
                           <div className="w-16 text-right font-mono text-sm">
                             {allocation}%
                           </div>
-                          <div className="w-24 text-right font-mono text-sm text-muted-foreground">
+                          <div className="w-24 text-right font-mono text-sm text-gray-600">
                             {Math.round((requiredVolume * allocation) / 100).toLocaleString()}t
                           </div>
                         </div>

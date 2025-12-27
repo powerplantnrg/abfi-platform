@@ -72,7 +72,7 @@ import { useState } from "react";
 const RISK_TYPE_ICONS: Record<string, React.ReactNode> = {
   bushfire: <Flame className="h-4 w-4 text-orange-500" />,
   flood: <Droplets className="h-4 w-4 text-blue-500" />,
-  drought: <Thermometer className="h-4 w-4 text-amber-600" />,
+  drought: <Thermometer className="h-4 w-4 text-[#D4AF37]" />,
   cyclone: <Wind className="h-4 w-4 text-purple-500" />,
   storm: <Cloud className="h-4 w-4 text-gray-500" />,
   heatwave: <Thermometer className="h-4 w-4 text-red-500" />,
@@ -87,7 +87,7 @@ const RISK_TYPE_ICONS: Record<string, React.ReactNode> = {
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   weather: <Cloud className="h-4 w-4 text-blue-500" />,
   biomass: <Flame className="h-4 w-4 text-green-500" />,
-  agriculture: <Globe className="h-4 w-4 text-amber-500" />,
+  agriculture: <Globe className="h-4 w-4 text-[#D4AF37]" />,
   hazards: <AlertTriangle className="h-4 w-4 text-red-500" />,
   policy: <FileText className="h-4 w-4 text-indigo-500" />,
   spatial: <MapPin className="h-4 w-4 text-purple-500" />,
@@ -119,7 +119,7 @@ function StatsCard({
   variant?: "default" | "success" | "warning" | "error";
 }) {
   const variants = {
-    default: "bg-primary/10",
+    default: "bg-[#D4AF37]/10",
     success: "bg-green-500/10",
     warning: "bg-yellow-500/10",
     error: "bg-red-500/10",
@@ -141,7 +141,7 @@ function StatsCard({
     <Card>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-muted-foreground">
+          <span className="text-sm font-medium text-gray-600">
             {title}
           </span>
           <div className={cn("p-2 rounded-lg", variants[variant])}>
@@ -150,7 +150,7 @@ function StatsCard({
         </div>
         <div className="text-2xl font-bold">{value}</div>
         {description && (
-          <p className="text-xs text-muted-foreground mt-1">{description}</p>
+          <p className="text-xs text-gray-600 mt-1">{description}</p>
         )}
         {trend && (
           <div className="flex items-center gap-1 mt-2">
@@ -201,7 +201,7 @@ function GridCellMap({ cells }: { cells: Array<{ cellId: string; lat: number; ln
                   className={cn(
                     "w-full text-left px-2 py-1 rounded text-xs transition-colors",
                     selectedCell === cell.cellId
-                      ? "bg-primary text-primary-foreground"
+                      ? "bg-primary text-[#D4AF37]-foreground"
                       : "hover:bg-muted"
                   )}
                 >
@@ -220,7 +220,7 @@ function GridCellMap({ cells }: { cells: Array<{ cellId: string; lat: number; ln
           <div className="flex items-center justify-between">
             <div>
               <div className="font-medium">{cells.find(c => c.cellId === selectedCell)?.name}</div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-gray-600">
                 {cells.find(c => c.cellId === selectedCell)?.lat.toFixed(4)},
                 {cells.find(c => c.cellId === selectedCell)?.lng.toFixed(4)}
               </div>
@@ -281,7 +281,7 @@ function WeatherApiPanel() {
                         <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse" />
                         <div>
                           <div className="font-medium text-green-600">API Connected</div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             Ready for weather data ingestion
                           </div>
                         </div>
@@ -291,7 +291,7 @@ function WeatherApiPanel() {
                         <div className="h-3 w-3 bg-red-500 rounded-full" />
                         <div>
                           <div className="font-medium text-red-600">API Error</div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             {apiStatus?.error || "Connection failed"}
                           </div>
                         </div>
@@ -302,7 +302,7 @@ function WeatherApiPanel() {
                       <div className="h-3 w-3 bg-yellow-500 rounded-full" />
                       <div>
                         <div className="font-medium text-yellow-600">Not Configured</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-gray-600">
                           Set TOMORROW_IO_API_KEY in environment
                         </div>
                       </div>
@@ -334,28 +334,28 @@ function WeatherApiPanel() {
                 <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
                   <Thermometer className="h-4 w-4 text-red-500" />
                   <div>
-                    <div className="text-xs text-muted-foreground">Temperature</div>
+                    <div className="text-xs text-gray-600">Temperature</div>
                     <div className="font-medium">-10°C to 50°C</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
                   <CloudRain className="h-4 w-4 text-blue-500" />
                   <div>
-                    <div className="text-xs text-muted-foreground">Precipitation</div>
+                    <div className="text-xs text-gray-600">Precipitation</div>
                     <div className="font-medium">mm/hr</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
                   <Wind className="h-4 w-4 text-gray-500" />
                   <div>
-                    <div className="text-xs text-muted-foreground">Wind Speed</div>
+                    <div className="text-xs text-gray-600">Wind Speed</div>
                     <div className="font-medium">km/h</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg">
                   <Flame className="h-4 w-4 text-orange-500" />
                   <div>
-                    <div className="text-xs text-muted-foreground">Fire Index</div>
+                    <div className="text-xs text-gray-600">Fire Index</div>
                     <div className="font-medium">0-200</div>
                   </div>
                 </div>
@@ -386,7 +386,7 @@ function WeatherApiPanel() {
           ) : gridCells ? (
             <GridCellMap cells={gridCells} />
           ) : (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-gray-600">
               <MapPin className="h-12 w-12 mx-auto mb-4 opacity-20" />
               <p>No grid cells configured</p>
             </div>
@@ -445,12 +445,12 @@ function DataSourcesPanel() {
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-primary/10 rounded-lg">
-                <Satellite className="h-6 w-6 text-primary" />
+              <div className="p-3 bg-[#D4AF37]/10 rounded-lg">
+                <Satellite className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <div>
                 <div className="font-semibold">Australian Data Sources</div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-gray-600">
                   {availableSources?.length ?? 0} pre-configured sources available
                 </div>
               </div>
@@ -475,7 +475,7 @@ function DataSourcesPanel() {
                 {CATEGORY_ICONS[category] || <Database className="h-4 w-4" />}
                 <div>
                   <div className="text-xs font-medium capitalize">{category}</div>
-                  <div className="text-xs text-muted-foreground">{sources?.length} sources</div>
+                  <div className="text-xs text-gray-600">{sources?.length} sources</div>
                 </div>
               </div>
             ))}
@@ -526,7 +526,7 @@ function DataSourcesPanel() {
                     <TableCell>
                       <div className="font-medium">{source.name}</div>
                       {source.attributionText && (
-                        <div className="text-xs text-muted-foreground truncate max-w-xs">
+                        <div className="text-xs text-gray-600 truncate max-w-xs">
                           {source.attributionText}
                         </div>
                       )}
@@ -563,7 +563,7 @@ function DataSourcesPanel() {
               </TableBody>
             </Table>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
+            <div className="text-center py-12 text-gray-600">
               <Database className="h-12 w-12 mx-auto mb-4 opacity-20" />
               <p className="font-medium">No data sources configured</p>
               <p className="text-sm mt-1">
@@ -678,12 +678,12 @@ export default function AdminRSIE() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Shield className="h-6 w-6 text-primary" />
+            <div className="p-2 bg-[#D4AF37]/10 rounded-lg">
+              <Shield className="h-6 w-6 text-[#D4AF37]" />
             </div>
             <div>
               <h1 className="text-2xl font-bold">RSIE Dashboard</h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 Risk & Supply Intelligence Engine
               </p>
             </div>
@@ -721,7 +721,7 @@ export default function AdminRSIE() {
             title="Data Sources"
             value={`${enabledSourcesCount}/${totalSourcesCount}`}
             description="Enabled sources"
-            icon={<Database className="h-4 w-4 text-primary" />}
+            icon={<Database className="h-4 w-4 text-[#D4AF37]" />}
             loading={loadingDataSources}
             variant={totalSourcesCount > 0 ? "success" : "warning"}
           />
@@ -824,7 +824,7 @@ export default function AdminRSIE() {
                               </span>
                               <Badge
                                 className={cn(
-                                  "text-xs text-white",
+                                  "text-xs text-black",
                                   SEVERITY_COLORS[event.severity]
                                 )}
                               >
@@ -845,7 +845,7 @@ export default function AdminRSIE() {
                                 {event.eventStatus}
                               </Badge>
                             </div>
-                            <div className="text-sm text-muted-foreground mt-1">
+                            <div className="text-sm text-gray-600 mt-1">
                               <span>Score: {event.scoreTotal}</span>
                               <span className="mx-2">|</span>
                               <span>
@@ -878,7 +878,7 @@ export default function AdminRSIE() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <CheckCircle2 className="h-12 w-12 mx-auto mb-4 opacity-20 text-green-500" />
                     <p className="font-medium">No active risk events</p>
                     <p className="text-sm">
@@ -977,7 +977,7 @@ export default function AdminRSIE() {
                     </TableBody>
                   </Table>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <Activity className="h-12 w-12 mx-auto mb-4 opacity-20" />
                     <p className="font-medium">No ingestion runs yet</p>
                     <p className="text-sm">
@@ -1036,11 +1036,11 @@ export default function AdminRSIE() {
                             </Badge>
                           </div>
                           {item.summary && (
-                            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                            <p className="text-sm text-gray-600 mt-1 line-clamp-2">
                               {item.summary}
                             </p>
                           )}
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground mt-2">
+                          <div className="flex items-center gap-3 text-xs text-gray-600 mt-2">
                             {item.publisher && <span>{item.publisher}</span>}
                             {item.publishedAt && (
                               <span>
@@ -1064,7 +1064,7 @@ export default function AdminRSIE() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <Newspaper className="h-12 w-12 mx-auto mb-4 opacity-20" />
                     <p className="font-medium">No intelligence items yet</p>
                     <p className="text-sm">

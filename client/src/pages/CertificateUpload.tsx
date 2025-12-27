@@ -172,8 +172,8 @@ export default function CertificateUpload() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer">
-              <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">ABFI</span>
+              <Leaf className="h-8 w-8 text-[#D4AF37]" />
+              <span className="text-2xl font-bold text-[#D4AF37]">ABFI</span>
             </div>
           </Link>
           <Link href="/dashboard">
@@ -188,8 +188,8 @@ export default function CertificateUpload() {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
-            <FileText className="h-8 w-8 text-primary" />
-            <h1 className="text-4xl font-bold text-primary">
+            <FileText className="h-8 w-8 text-[#D4AF37]" />
+            <h1 className="text-4xl font-bold text-[#D4AF37]">
               Upload Certificate
             </h1>
           </div>
@@ -211,7 +211,7 @@ export default function CertificateUpload() {
               </div>
               <div className="text-right">
                 <p className="text-sm text-gray-600">Current ABFI Score</p>
-                <p className="text-2xl font-bold text-primary">
+                <p className="text-2xl font-bold text-[#D4AF37]">
                   {feedstock.abfiScore || "N/A"}
                 </p>
               </div>

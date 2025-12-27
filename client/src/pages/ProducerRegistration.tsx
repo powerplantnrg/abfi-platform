@@ -24,13 +24,13 @@ export default function ProducerRegistration() {
         <div className="container mx-auto flex h-16 items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-2 text-white hover:opacity-80"
+            className="flex items-center gap-2 text-black hover:opacity-80"
           >
             <Leaf className="h-6 w-6" />
             <span className="text-xl font-semibold">ABFI</span>
           </Link>
           <div className="flex items-center gap-4">
-            <Link href="/login" className="text-white/80 hover:text-white">
+            <Link href="/login" className="text-black/80 hover:text-black">
               Sign In
             </Link>
             <Link href="/buyer-registration">
@@ -48,12 +48,12 @@ export default function ProducerRegistration() {
       {/* Hero Section */}
       <section className="py-20">
         <div className="container mx-auto text-center">
-          <h1 className="mb-6 text-5xl font-bold text-white">
+          <h1 className="mb-6 text-5xl font-bold text-black">
             Connect Your Feedstock to
             <br />
             <span className="text-[#F4C430]">Australia's Bioenergy Future</span>
           </h1>
-          <p className="mx-auto mb-12 max-w-2xl text-xl text-white/80">
+          <p className="mx-auto mb-12 max-w-2xl text-xl text-black/80">
             Join Australia's premier bioenergy feedstock marketplace. Get
             verified ABFI ratings, connect with premium buyers, and secure
             long-term contracts.
@@ -83,15 +83,15 @@ export default function ProducerRegistration() {
 
           {/* Trust Indicators */}
           <div className="mt-12 flex items-center justify-center gap-8">
-            <div className="flex items-center gap-2 text-white/60">
+            <div className="flex items-center gap-2 text-black/60">
               <Shield className="h-5 w-5" />
               <span className="text-sm">Government Certified</span>
             </div>
-            <div className="flex items-center gap-2 text-white/60">
+            <div className="flex items-center gap-2 text-black/60">
               <CheckCircle2 className="h-5 w-5" />
               <span className="text-sm">CANEGROWERS Partner</span>
             </div>
-            <div className="flex items-center gap-2 text-white/60">
+            <div className="flex items-center gap-2 text-black/60">
               <TrendingUp className="h-5 w-5" />
               <span className="text-sm">500+ Active Producers</span>
             </div>
@@ -216,7 +216,7 @@ export default function ProducerRegistration() {
             <Link href="/producer-registration/account-setup">
               <Button
                 size="lg"
-                className="bg-[#0F3A5C] text-white hover:bg-[#0F3A5C]/90"
+                className="bg-[#0F3A5C] text-black hover:bg-[#0F3A5C]/90"
               >
                 Start Registration
               </Button>
@@ -227,7 +227,7 @@ export default function ProducerRegistration() {
 
       {/* Footer */}
       <footer className="border-t border-white/10 bg-[#0F3A5C] py-8">
-        <div className="container mx-auto text-center text-white/60">
+        <div className="container mx-auto text-center text-black/60">
           <p>
             &copy; 2024 Australian Bioenergy Feedstock Institute. All rights
             reserved.

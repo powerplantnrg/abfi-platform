@@ -99,12 +99,12 @@ export default function Notifications() {
               <Bell className="h-10 w-10" />
               Notifications
               {unreadCount > 0 && (
-                <Badge className="bg-red-500 text-white">
+                <Badge className="bg-red-500 text-black">
                   {unreadCount} new
                 </Badge>
               )}
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Stay updated with your platform activity
             </p>
           </div>
@@ -163,7 +163,7 @@ export default function Notifications() {
                             <h3 className="font-semibold">
                               {notification.title}
                             </h3>
-                            <span className="text-xs text-muted-foreground whitespace-nowrap ml-4">
+                            <span className="text-xs text-gray-600 whitespace-nowrap ml-4">
                               {new Date(
                                 notification.createdAt
                               ).toLocaleDateString()}{" "}
@@ -175,12 +175,12 @@ export default function Notifications() {
                               })}
                             </span>
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             {notification.message}
                           </p>
                           {!notification.readAt && (
                             <Badge
-                              className="mt-2 bg-primary text-primary-foreground"
+                              className="mt-2 bg-primary text-[#D4AF37]-foreground"
                               variant="default"
                             >
                               New
@@ -195,11 +195,11 @@ export default function Notifications() {
             ) : (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <Bell className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <Bell className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">
                     No notifications yet
                   </h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     You'll see updates about inquiries, verifications, and
                     ratings here
                   </p>
@@ -241,7 +241,7 @@ export default function Notifications() {
                             <h3 className="font-semibold">
                               {notification.title}
                             </h3>
-                            <span className="text-xs text-muted-foreground whitespace-nowrap ml-4">
+                            <span className="text-xs text-gray-600 whitespace-nowrap ml-4">
                               {new Date(
                                 notification.createdAt
                               ).toLocaleDateString()}{" "}
@@ -253,11 +253,11 @@ export default function Notifications() {
                               })}
                             </span>
                           </div>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-gray-600">
                             {notification.message}
                           </p>
                           <Badge
-                            className="mt-2 bg-primary text-primary-foreground"
+                            className="mt-2 bg-primary text-[#D4AF37]-foreground"
                             variant="default"
                           >
                             New
@@ -271,9 +271,9 @@ export default function Notifications() {
             ) : (
               <Card>
                 <CardContent className="py-12 text-center">
-                  <CheckCheck className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                  <CheckCheck className="h-12 w-12 text-gray-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">All caught up!</h3>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     You have no unread notifications
                   </p>
                 </CardContent>

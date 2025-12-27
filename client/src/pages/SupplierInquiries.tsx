@@ -52,7 +52,7 @@ export default function SupplierInquiries() {
       <div className="container py-8">
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Received Inquiries</h1>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Manage inquiries from buyers interested in your feedstocks
           </p>
         </div>
@@ -98,9 +98,9 @@ export default function SupplierInquiries() {
                 <CardContent className="space-y-4">
                   <div className="grid md:grid-cols-3 gap-4 text-sm">
                     <div className="flex items-center gap-2">
-                      <Package className="h-4 w-4 text-muted-foreground" />
+                      <Package className="h-4 w-4 text-gray-600" />
                       <div>
-                        <div className="text-muted-foreground">Feedstock</div>
+                        <div className="text-gray-600">Feedstock</div>
                         <div className="font-medium">
                           {inquiry.feedstockId
                             ? `ABFI-${inquiry.feedstockId}`
@@ -110,9 +110,9 @@ export default function SupplierInquiries() {
                     </div>
                     {inquiry.volumeRequired && (
                       <div className="flex items-center gap-2">
-                        <Package className="h-4 w-4 text-muted-foreground" />
+                        <Package className="h-4 w-4 text-gray-600" />
                         <div>
-                          <div className="text-muted-foreground">
+                          <div className="text-gray-600">
                             Volume Needed
                           </div>
                           <div className="font-medium">
@@ -123,9 +123,9 @@ export default function SupplierInquiries() {
                     )}
                     {inquiry.deliveryLocation && (
                       <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <Calendar className="h-4 w-4 text-gray-600" />
                         <div>
-                          <div className="text-muted-foreground">
+                          <div className="text-gray-600">
                             Delivery To
                           </div>
                           <div className="font-medium">
@@ -139,7 +139,7 @@ export default function SupplierInquiries() {
                   {inquiry.message && (
                     <div className="bg-muted p-4 rounded-lg">
                       <div className="text-sm font-medium mb-1">Message:</div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {inquiry.message}
                       </p>
                     </div>
@@ -185,9 +185,9 @@ export default function SupplierInquiries() {
         ) : (
           <Card>
             <CardContent className="py-12 text-center">
-              <Inbox className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Inbox className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">No inquiries yet</h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-gray-600 mb-4">
                 When buyers send inquiries about your feedstocks, they'll appear
                 here
               </p>

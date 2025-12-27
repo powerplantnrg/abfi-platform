@@ -60,7 +60,7 @@ const SAMPLE_ACTIVITIES = [
     time: "10:30 AM",
     message: "New contract signed for 500t Bamboo - Queensland Biomass Co.",
     status: "Signed",
-    statusColor: "bg-emerald-500",
+    statusColor: "bg-[#D4AF37]",
   },
   {
     time: "09:15 AM",
@@ -72,13 +72,13 @@ const SAMPLE_ACTIVITIES = [
     time: "Yesterday, 4:45 PM",
     message: "Payment received for Contract #ABF-2025-0042",
     status: "Received",
-    statusColor: "bg-emerald-500",
+    statusColor: "bg-[#D4AF37]",
   },
   {
     time: "Yesterday, 3:00 PM",
     message: "Lab certificate uploaded for Bamboo Lot #BD-2025-178",
     status: "Uploaded",
-    statusColor: "bg-amber-500",
+    statusColor: "bg-[#D4AF37]",
   },
 ];
 
@@ -103,8 +103,8 @@ function StatsCardNew({
 
   const iconStyles = {
     default: "text-slate-600",
-    success: "text-emerald-600",
-    warning: "text-amber-600",
+    success: "text-[#D4AF37]",
+    warning: "text-[#D4AF37]",
     info: "text-blue-600",
   };
 
@@ -113,7 +113,7 @@ function StatsCardNew({
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-muted-foreground font-medium">{title}</p>
+            <p className="text-sm text-gray-600 font-medium">{title}</p>
             <p className="text-3xl font-bold mt-1 font-mono">{value}</p>
           </div>
           <div
@@ -205,8 +205,8 @@ function DonutChart({
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-2xl font-bold">{total}</span>
-          <span className="text-xs text-muted-foreground">Total</span>
-          <span className="text-xs text-muted-foreground">Contracts</span>
+          <span className="text-xs text-gray-600">Total</span>
+          <span className="text-xs text-gray-600">Contracts</span>
         </div>
       </div>
       <div className="space-y-2">
@@ -216,7 +216,7 @@ function DonutChart({
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: segment.color }}
             />
-            <span className="text-muted-foreground">{segment.label}</span>
+            <span className="text-gray-600">{segment.label}</span>
             <span className="font-medium">({segment.value}%)</span>
           </div>
         ))}
@@ -360,14 +360,14 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-teal-500 to-emerald-500 flex items-center justify-center text-white font-semibold">
+                  <div className="h-10 w-10 rounded-full bg-gradient-to-br from-teal-500 to-[#D4AF37] flex items-center justify-center text-black font-semibold">
                     {user?.name?.charAt(0) || "U"}
                   </div>
                   <div>
                     <h1 className="text-2xl font-bold text-slate-900">
                       Welcome back, {user?.name || "User"}
                     </h1>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-gray-600 text-sm">
                       Here's what's happening with your Australian biomass portfolio today.
                     </p>
                   </div>
@@ -377,7 +377,7 @@ export default function Dashboard() {
                 <StatusIndicator status="active" label="Platform Online" />
                 <div className="h-8 w-px bg-slate-200" />
                 <div className="text-right">
-                  <p className="text-xs text-muted-foreground">Last updated</p>
+                  <p className="text-xs text-gray-600">Last updated</p>
                   <p className="text-sm font-medium">{new Date().toLocaleTimeString()}</p>
                 </div>
               </div>
@@ -425,7 +425,7 @@ export default function Dashboard() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-amber-100">
-                    <Shield className="h-5 w-5 text-amber-600" />
+                    <Shield className="h-5 w-5 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-lg">Admin Access</CardTitle>
@@ -434,7 +434,7 @@ export default function Dashboard() {
                     </CardDescription>
                   </div>
                 </div>
-                <Badge variant="outline" className="text-amber-600 border-amber-300">
+                <Badge variant="outline" className="text-[#D4AF37] border-amber-300">
                   Admin
                 </Badge>
               </div>
@@ -445,10 +445,10 @@ export default function Dashboard() {
                   <Card className="border-amber-200 hover:shadow-md transition-shadow cursor-pointer">
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3 mb-2">
-                        <Clock className="h-4 w-4 text-amber-600" />
+                        <Clock className="h-4 w-4 text-[#D4AF37]" />
                         <span className="font-medium">Pending Verifications</span>
                       </div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         Review bamboo supplier submissions
                       </p>
                     </CardContent>
@@ -461,7 +461,7 @@ export default function Dashboard() {
                       <BarChart3 className="h-4 w-4 text-slate-600" />
                       <span className="font-medium">Platform Analytics</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Monitor marketplace activity
                     </p>
                   </CardContent>
@@ -473,7 +473,7 @@ export default function Dashboard() {
                       <FileText className="h-4 w-4 text-slate-600" />
                       <span className="font-medium">Audit Logs</span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Review system activity
                     </p>
                   </CardContent>
@@ -492,7 +492,7 @@ export default function Dashboard() {
                 <Card className="group h-full border-2 hover:border-[#D4AF37] transition-colors">
                   <CardHeader className="pb-4">
                     <div className="p-3 rounded-xl bg-slate-100 w-fit mb-4 group-hover:bg-amber-50 transition-colors">
-                      <Building2 className="h-8 w-8 text-slate-700 group-hover:text-amber-600" />
+                      <Building2 className="h-8 w-8 text-slate-700 group-hover:text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-xl">Register as Supplier</CardTitle>
                     <CardDescription className="text-base">
@@ -500,17 +500,17 @@ export default function Dashboard() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ul className="space-y-3 text-sm text-muted-foreground mb-6">
+                    <ul className="space-y-3 text-sm text-gray-600 mb-6">
                       <li className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        <CheckCircle className="h-4 w-4 text-[#D4AF37]" />
                         Get ABFI-rated for your bamboo feedstocks
                       </li>
                       <li className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        <CheckCircle className="h-4 w-4 text-[#D4AF37]" />
                         Access Australian biofuel buyer network
                       </li>
                       <li className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        <CheckCircle className="h-4 w-4 text-[#D4AF37]" />
                         Receive expressions of interest
                       </li>
                     </ul>
@@ -530,7 +530,7 @@ export default function Dashboard() {
                 <Card className="group h-full border-2 hover:border-[#D4AF37] transition-colors">
                   <CardHeader className="pb-4">
                     <div className="p-3 rounded-xl bg-slate-100 w-fit mb-4 group-hover:bg-amber-50 transition-colors">
-                      <ShoppingCart className="h-8 w-8 text-slate-700 group-hover:text-amber-600" />
+                      <ShoppingCart className="h-8 w-8 text-slate-700 group-hover:text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-xl">Register as Buyer</CardTitle>
                     <CardDescription className="text-base">
@@ -538,17 +538,17 @@ export default function Dashboard() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <ul className="space-y-3 text-sm text-muted-foreground mb-6">
+                    <ul className="space-y-3 text-sm text-gray-600 mb-6">
                       <li className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        <CheckCircle className="h-4 w-4 text-[#D4AF37]" />
                         Access ABFI-rated bamboo suppliers
                       </li>
                       <li className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        <CheckCircle className="h-4 w-4 text-[#D4AF37]" />
                         Advanced search and filtering
                       </li>
                       <li className="flex items-center gap-3">
-                        <CheckCircle className="h-4 w-4 text-emerald-500" />
+                        <CheckCircle className="h-4 w-4 text-[#D4AF37]" />
                         Submit expressions of interest
                       </li>
                     </ul>
@@ -581,14 +581,14 @@ export default function Dashboard() {
                         className="flex items-start justify-between py-2 border-b last:border-0"
                       >
                         <div className="flex-1">
-                          <p className="text-sm text-muted-foreground mb-1">
+                          <p className="text-sm text-gray-600 mb-1">
                             {activity.time}
                           </p>
                           <p className="text-sm">{activity.message}</p>
                         </div>
                         <Badge
                           className={cn(
-                            "ml-4 text-white border-0",
+                            "ml-4 text-black border-0",
                             activity.statusColor
                           )}
                         >
@@ -664,18 +664,18 @@ export default function Dashboard() {
               {/* Contract Status - Enhanced */}
               <GlassCard glow="subtle" className="p-5">
                 <div className="flex items-center gap-2 mb-4">
-                  <FileText className="h-5 w-5 text-teal-600" />
+                  <FileText className="h-5 w-5 text-[#D4AF37]" />
                   <h3 className="font-semibold">Contract Status</h3>
                 </div>
                 <div className="flex items-center justify-center gap-8">
                   <ProgressRing progress={65} color="success" label="Active" />
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                      <div className="w-3 h-3 rounded-full bg-[#D4AF37]" />
                       <span className="text-sm">Active (65%)</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-amber-500" />
+                      <div className="w-3 h-3 rounded-full bg-[#D4AF37]" />
                       <span className="text-sm">Pending (20%)</span>
                     </div>
                     <div className="flex items-center gap-2">
@@ -690,7 +690,7 @@ export default function Dashboard() {
               <Card className="bg-gradient-to-br from-emerald-50 to-white border-emerald-200">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-2">
-                    <Leaf className="h-5 w-5 text-emerald-600" />
+                    <Leaf className="h-5 w-5 text-[#D4AF37]" />
                     <CardTitle className="text-lg text-emerald-800">
                       Featured: Bamboo
                     </CardTitle>
@@ -704,16 +704,16 @@ export default function Dashboard() {
                   </p>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div className="bg-card rounded-lg p-3 border border-emerald-100">
-                      <p className="text-muted-foreground">Energy Content</p>
+                      <p className="text-gray-600">Energy Content</p>
                       <p className="font-semibold text-emerald-800">18.5 MJ/kg</p>
                     </div>
                     <div className="bg-card rounded-lg p-3 border border-emerald-100">
-                      <p className="text-muted-foreground">Moisture</p>
+                      <p className="text-gray-600">Moisture</p>
                       <p className="font-semibold text-emerald-800">8-12%</p>
                     </div>
                   </div>
                   <Link href="/browse?feedstock=bamboo">
-                    <Button className="w-full mt-4 bg-emerald-600 hover:bg-emerald-700">
+                    <Button className="w-full mt-4 bg-[#D4AF37] hover:bg-emerald-700">
                       Explore Bamboo Listings
                     </Button>
                   </Link>
@@ -742,7 +742,7 @@ export default function Dashboard() {
                             ? "Verified"
                             : "Pending"}
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-gray-600 mt-1">
                           Verification Status
                         </p>
                       </div>
@@ -750,7 +750,7 @@ export default function Dashboard() {
                         <p className="text-3xl font-bold text-slate-900 font-mono">
                           0
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-gray-600 mt-1">
                           Active Bamboo Listings
                         </p>
                       </div>
@@ -758,7 +758,7 @@ export default function Dashboard() {
                         <p className="text-3xl font-bold text-slate-900 font-mono">
                           0
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-gray-600 mt-1">
                           Pending EOIs
                         </p>
                       </div>
@@ -770,7 +770,7 @@ export default function Dashboard() {
                         <p className="text-3xl font-bold text-slate-900 font-mono">
                           0
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-gray-600 mt-1">
                           Saved Searches
                         </p>
                       </div>
@@ -778,7 +778,7 @@ export default function Dashboard() {
                         <p className="text-3xl font-bold text-slate-900 font-mono">
                           0
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-gray-600 mt-1">
                           My EOIs Submitted
                         </p>
                       </div>
@@ -786,7 +786,7 @@ export default function Dashboard() {
                         <p className="text-3xl font-bold text-slate-900 font-mono">
                           0
                         </p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-sm text-gray-600 mt-1">
                           Active Contracts
                         </p>
                       </div>

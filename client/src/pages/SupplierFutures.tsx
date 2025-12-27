@@ -207,7 +207,7 @@ export default function SupplierFutures() {
             <h1 className="text-2xl font-bold mb-1">
               Futures Listings
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-gray-600">
               Manage your long-term perennial crop projections and EOIs
             </p>
           </div>
@@ -225,8 +225,8 @@ export default function SupplierFutures() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
-                <Sprout className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Active Listings</span>
+                <Sprout className="h-4 w-4 text-gray-600" />
+                <span className="text-sm text-gray-600">Active Listings</span>
               </div>
               <div className="text-3xl font-bold font-mono">{stats.active}</div>
             </CardContent>
@@ -234,8 +234,8 @@ export default function SupplierFutures() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Total Projected</span>
+                <TrendingUp className="h-4 w-4 text-gray-600" />
+                <span className="text-sm text-gray-600">Total Projected</span>
               </div>
               <div className="text-3xl font-bold font-mono">
                 {(stats.totalProjected / 1000).toFixed(0)}k t
@@ -245,8 +245,8 @@ export default function SupplierFutures() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
-                <FileText className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Contracted</span>
+                <FileText className="h-4 w-4 text-gray-600" />
+                <span className="text-sm text-gray-600">Contracted</span>
               </div>
               <div className="text-3xl font-bold font-mono">
                 {(stats.totalContracted / 1000).toFixed(0)}k t
@@ -256,14 +256,14 @@ export default function SupplierFutures() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm text-muted-foreground">Pending EOIs</span>
+                <Users className="h-4 w-4 text-gray-600" />
+                <span className="text-sm text-gray-600">Pending EOIs</span>
               </div>
               <div className="text-3xl font-bold font-mono">
                 {stats.pendingEOIs}
               </div>
               {stats.pendingEOIs > 0 && (
-                <div className="text-xs text-amber-600 mt-1">
+                <div className="text-xs text-[#D4AF37] mt-1">
                   Requires attention
                 </div>
               )}
@@ -314,7 +314,7 @@ export default function SupplierFutures() {
                           </div>
                           <div>
                             <span className="text-lg">{f.futuresId}</span>
-                            <p className="text-sm font-normal text-muted-foreground">
+                            <p className="text-sm font-normal text-gray-600">
                               {f.title ||
                                 `${f.landAreaHectares}ha ${CROP_TYPE_LABELS[f.cropType]} plantation`}
                             </p>
@@ -334,21 +334,21 @@ export default function SupplierFutures() {
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                       <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground" />
+                        <MapPin className="h-4 w-4 text-gray-600" />
                         <span>
                           {f.state}
                           {f.region ? `, ${f.region}` : ""}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-muted-foreground" />
+                        <Calendar className="h-4 w-4 text-gray-600" />
                         <span>
                           {f.projectionStartYear} - {f.projectionEndYear} (
                           {projectionYears} years)
                         </span>
                       </div>
                       <div>
-                        <div className="text-muted-foreground text-xs">
+                        <div className="text-gray-600 text-xs">
                           Land Area
                         </div>
                         <div className="font-semibold">
@@ -356,7 +356,7 @@ export default function SupplierFutures() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-muted-foreground text-xs">
+                        <div className="text-gray-600 text-xs">
                           Indicative Price
                         </div>
                         <div className="font-semibold font-mono">
@@ -371,7 +371,7 @@ export default function SupplierFutures() {
                     <div className="bg-muted/50 rounded-xl p-4 space-y-3">
                       <div className="grid grid-cols-3 gap-4 text-sm">
                         <div>
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Total Projected
                           </span>
                           <p className="font-semibold font-mono">
@@ -382,7 +382,7 @@ export default function SupplierFutures() {
                           </p>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Contracted
                           </span>
                           <p className="font-semibold text-blue-600 font-mono">
@@ -393,7 +393,7 @@ export default function SupplierFutures() {
                           </p>
                         </div>
                         <div>
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Available
                           </span>
                           <p className="font-semibold text-green-600 font-mono">
@@ -406,7 +406,7 @@ export default function SupplierFutures() {
                       </div>
                       <div>
                         <div className="flex justify-between text-xs mb-1">
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Availability
                           </span>
                           <span>{Math.round(availablePercent)}%</span>
@@ -420,7 +420,7 @@ export default function SupplierFutures() {
                       <div className="flex items-center gap-4">
                         {f.eoiCounts && f.eoiCounts.total > 0 ? (
                           <div className="flex items-center gap-2 text-sm">
-                            <Users className="h-4 w-4 text-muted-foreground" />
+                            <Users className="h-4 w-4 text-gray-600" />
                             <span>
                               <strong>{f.eoiCounts.total}</strong> EOIs received
                             </span>
@@ -439,7 +439,7 @@ export default function SupplierFutures() {
                             )}
                           </div>
                         ) : (
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-gray-600">
                             No EOIs yet
                           </span>
                         )}
@@ -450,7 +450,7 @@ export default function SupplierFutures() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="group-hover:border-primary group-hover:text-primary"
+                            className="group-hover:border-primary group-hover:text-[#D4AF37]"
                           >
                             <Eye className="h-4 w-4 mr-2" />
                             View Details
@@ -475,7 +475,7 @@ export default function SupplierFutures() {
                       </div>
                     </div>
 
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-gray-600">
                       Created {formatDate(f.createdAt)}
                       {f.publishedAt &&
                         ` • Published ${formatDate(f.publishedAt)}`}
@@ -489,12 +489,12 @@ export default function SupplierFutures() {
           <Card className="border-dashed">
             <CardContent className="py-16 text-center">
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-100 flex items-center justify-center">
-                <Sprout className="h-8 w-8 text-emerald-600" />
+                <Sprout className="h-8 w-8 text-[#D4AF37]" />
               </div>
               <h3 className="text-xl font-semibold mb-2">
                 No futures listings yet
               </h3>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+              <p className="text-gray-600 mb-6 max-w-md mx-auto">
                 Create your first futures listing to advertise long-term
                 perennial crop supply and connect with buyers looking for
                 reliable biomass sources.
@@ -516,11 +516,11 @@ export default function SupplierFutures() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-emerald-100 rounded-xl">
-                  <Package className="h-6 w-6 text-emerald-600" />
+                  <Package className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <div>
                   <h3 className="font-semibold">View Your EOIs</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-gray-600">
                     Track and respond to expressions of interest from buyers
                   </p>
                 </div>

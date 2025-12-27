@@ -175,7 +175,7 @@ export default function PolicyCarbonDashboard() {
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
-              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Retry
@@ -202,7 +202,7 @@ export default function PolicyCarbonDashboard() {
               </Link>
             </div>
             <h1 className="text-3xl font-bold">Policy & Carbon Revenue</h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-gray-600 mt-1">
               Track Australian bioenergy policy and calculate carbon revenue projections
             </p>
           </div>
@@ -225,7 +225,7 @@ export default function PolicyCarbonDashboard() {
                     {kpi.label === "ACCU Price" ? `$${kpi.value}` : kpi.value}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-gray-600 mt-1">
                   {kpi.subtitle}
                 </p>
               </CardContent>
@@ -268,7 +268,7 @@ export default function PolicyCarbonDashboard() {
                     <div className="space-y-6">
                       {Object.entries(timelineByMonth).map(([month, events]) => (
                         <div key={month}>
-                          <h4 className="font-semibold text-sm text-muted-foreground mb-3">
+                          <h4 className="font-semibold text-sm text-gray-600 mb-3">
                             {month}
                           </h4>
                           <div className="space-y-2">
@@ -300,7 +300,7 @@ export default function PolicyCarbonDashboard() {
                                 >
                                   {event.event_type.replace("_", " ")}
                                 </Badge>
-                                <span className="text-sm text-muted-foreground">
+                                <span className="text-sm text-gray-600">
                                   {formatDate(event.date)}
                                 </span>
                               </div>
@@ -329,7 +329,7 @@ export default function PolicyCarbonDashboard() {
                         className="p-2 rounded border bg-yellow-50 border-yellow-200"
                       >
                         <div className="font-medium text-sm">{item.title}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-gray-600">
                           {item.jurisdiction}
                         </div>
                       </div>
@@ -351,7 +351,7 @@ export default function PolicyCarbonDashboard() {
                         className="p-2 rounded border bg-blue-50 border-blue-200"
                       >
                         <div className="font-medium text-sm">{item.title}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-gray-600">
                           {item.jurisdiction}
                         </div>
                       </div>
@@ -373,7 +373,7 @@ export default function PolicyCarbonDashboard() {
                         className="p-2 rounded border bg-green-50 border-green-200"
                       >
                         <div className="font-medium text-sm">{item.title}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-gray-600">
                           {item.jurisdiction}
                         </div>
                       </div>
@@ -467,7 +467,7 @@ export default function PolicyCarbonDashboard() {
                       step={0.5}
                     />
                     {accuPrice && (
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-gray-600">
                         Current ACCU spot: ${accuPrice.price} (
                         {accuPrice.change >= 0 ? "+" : ""}
                         {accuPrice.change_pct.toFixed(1)}%)
@@ -524,7 +524,7 @@ export default function PolicyCarbonDashboard() {
                       </div>
 
                       <div className="p-4 rounded-lg border">
-                        <div className="text-sm text-muted-foreground mb-1">
+                        <div className="text-sm text-gray-600 mb-1">
                           Safeguard Mechanism Benefit
                         </div>
                         <div className="text-xl font-bold">
@@ -532,18 +532,18 @@ export default function PolicyCarbonDashboard() {
                         </div>
                       </div>
 
-                      <div className="p-6 rounded-lg bg-primary/10 border border-primary/20">
-                        <div className="text-sm text-primary mb-1">
+                      <div className="p-6 rounded-lg bg-[#D4AF37]/10 border border-primary/20">
+                        <div className="text-sm text-[#D4AF37] mb-1">
                           Total Annual Carbon Revenue
                         </div>
-                        <div className="text-3xl font-bold text-primary">
+                        <div className="text-3xl font-bold text-[#D4AF37]">
                           {formatCurrency(calcResult.total_annual_revenue)}
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-4 text-center">
                         <div className="p-3 rounded border">
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             Low Scenario (-20%)
                           </div>
                           <div className="font-semibold text-red-600">
@@ -551,7 +551,7 @@ export default function PolicyCarbonDashboard() {
                           </div>
                         </div>
                         <div className="p-3 rounded border">
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             High Scenario (+20%)
                           </div>
                           <div className="font-semibold text-green-600">
@@ -561,7 +561,7 @@ export default function PolicyCarbonDashboard() {
                       </div>
                     </div>
                   ) : (
-                    <div className="py-12 text-center text-muted-foreground">
+                    <div className="py-12 text-center text-gray-600">
                       <Calculator className="h-12 w-12 mx-auto mb-4 opacity-50" />
                       <p>Configure your project parameters and click calculate</p>
                     </div>
@@ -639,7 +639,7 @@ export default function PolicyCarbonDashboard() {
                         <div className="flex items-start justify-between">
                           <div>
                             <div className="font-semibold">{agreement.offtaker}</div>
-                            <div className="text-sm text-muted-foreground">
+                            <div className="text-sm text-gray-600">
                               {agreement.mandate}
                             </div>
                           </div>
@@ -647,7 +647,7 @@ export default function PolicyCarbonDashboard() {
                             {agreement.premium}
                           </Badge>
                         </div>
-                        <div className="mt-2 flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-600">
                           <span>{agreement.volume}</span>
                           <span>{agreement.term}</span>
                         </div>

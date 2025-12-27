@@ -61,8 +61,8 @@ import { SimpleLeafletMap, type MapMarker } from "@/components/SimpleLeafletMap"
 const PIPELINE_STAGES = [
   { id: "discovery", label: "Discovery", color: "bg-slate-500" },
   { id: "outreach", label: "Outreach", color: "bg-blue-500" },
-  { id: "negotiation", label: "Negotiation", color: "bg-amber-500" },
-  { id: "contracted", label: "Contracted", color: "bg-emerald-500" },
+  { id: "negotiation", label: "Negotiation", color: "bg-[#D4AF37]" },
+  { id: "contracted", label: "Contracted", color: "bg-[#D4AF37]" },
 ];
 
 // Mock deal pipeline data
@@ -123,10 +123,10 @@ const DEAL_PIPELINE = [
 
 // Quick stats
 const QUICK_STATS = [
-  { label: "Pipeline Value", value: "$15.6M", icon: DollarSign, color: "text-emerald-600" },
+  { label: "Pipeline Value", value: "$15.6M", icon: DollarSign, color: "text-[#D4AF37]" },
   { label: "Active Deals", value: "4", icon: Target, color: "text-blue-600" },
   { label: "Suppliers Tracked", value: "247", icon: Building2, color: "text-purple-600" },
-  { label: "Avg. Confidence", value: "72%", icon: Shield, color: "text-amber-600" },
+  { label: "Avg. Confidence", value: "72%", icon: Shield, color: "text-[#D4AF37]" },
 ];
 
 // Registry suppliers for map
@@ -198,7 +198,7 @@ export default function DeveloperDashboard() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <p className="text-xs text-gray-600">{stat.label}</p>
                 </div>
               </div>
             ))}
@@ -214,7 +214,7 @@ export default function DeveloperDashboard() {
           <div className="p-4 border-b">
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-600" />
                 <Input
                   placeholder="Search suppliers..."
                   value={searchQuery}
@@ -284,7 +284,7 @@ export default function DeveloperDashboard() {
                             stage.color
                           )}
                         />
-                        <p className="text-xs text-muted-foreground">{stage.label}</p>
+                        <p className="text-xs text-gray-600">{stage.label}</p>
                         <p className="text-lg font-bold">{count}</p>
                       </div>
                     );
@@ -311,12 +311,12 @@ export default function DeveloperDashboard() {
                             <div className="flex items-center gap-2">
                               <p className="font-medium text-sm truncate">{deal.name}</p>
                               <Badge
-                                className={cn("text-xs shrink-0", stage?.color, "text-white")}
+                                className={cn("text-xs shrink-0", stage?.color, "text-black")}
                               >
                                 {stage?.label}
                               </Badge>
                             </div>
-                            <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                            <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
                               <span className="flex items-center gap-1">
                                 <MapPin className="h-3 w-3" />
                                 {deal.location.label}
@@ -326,12 +326,12 @@ export default function DeveloperDashboard() {
                             </div>
                           </div>
                           <div className="text-right shrink-0">
-                            <p className="text-sm font-bold text-emerald-600">{deal.value}</p>
-                            <p className="text-xs text-muted-foreground">{deal.probability}%</p>
+                            <p className="text-sm font-bold text-[#D4AF37]">{deal.value}</p>
+                            <p className="text-xs text-gray-600">{deal.probability}%</p>
                           </div>
                         </div>
                         <div className="flex items-center justify-between mt-2 pt-2 border-t text-xs">
-                          <span className="text-muted-foreground">{deal.nextAction}</span>
+                          <span className="text-gray-600">{deal.nextAction}</span>
                           <Badge variant="outline" className="text-xs">
                             {deal.dueDate}
                           </Badge>
@@ -354,12 +354,12 @@ export default function DeveloperDashboard() {
                       <div className="p-2 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            {feed.type === "price" && <TrendingUp className="h-4 w-4 text-emerald-500" />}
+                            {feed.type === "price" && <TrendingUp className="h-4 w-4 text-[#D4AF37]" />}
                             {feed.type === "policy" && <FileText className="h-4 w-4 text-blue-500" />}
-                            {feed.type === "signal" && <Eye className="h-4 w-4 text-amber-500" />}
+                            {feed.type === "signal" && <Eye className="h-4 w-4 text-[#D4AF37]" />}
                             <span className="text-sm">{feed.title}</span>
                           </div>
-                          <span className="text-xs text-muted-foreground">{feed.time}</span>
+                          <span className="text-xs text-gray-600">{feed.time}</span>
                         </div>
                       </div>
                     </Link>
@@ -468,7 +468,7 @@ export default function DeveloperDashboard() {
                               <div className="flex items-start justify-between mb-2">
                                 <div>
                                   <p className="font-medium text-sm">{deal.name}</p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-gray-600">
                                     {deal.type} · {deal.volume}
                                   </p>
                                 </div>
@@ -486,14 +486,14 @@ export default function DeveloperDashboard() {
                                 </Badge>
                               </div>
                               <div className="flex items-center justify-between text-xs">
-                                <span className="text-emerald-600 font-bold">
+                                <span className="text-[#D4AF37] font-bold">
                                   {deal.value}
                                 </span>
-                                <span className="text-muted-foreground">
+                                <span className="text-gray-600">
                                   {deal.probability}% probability
                                 </span>
                               </div>
-                              <div className="mt-2 pt-2 border-t flex items-center gap-1 text-xs text-muted-foreground">
+                              <div className="mt-2 pt-2 border-t flex items-center gap-1 text-xs text-gray-600">
                                 <Calendar className="h-3 w-3" />
                                 {deal.nextAction} · {deal.dueDate}
                               </div>
@@ -501,7 +501,7 @@ export default function DeveloperDashboard() {
                           </Card>
                         ))}
                         {getDealsForStage(stage.id).length === 0 && (
-                          <div className="text-center py-8 text-muted-foreground text-sm">
+                          <div className="text-center py-8 text-gray-600 text-sm">
                             No deals in this stage
                           </div>
                         )}

@@ -127,11 +127,11 @@ function CircuitPattern({ className }: { className?: string }) {
 // Bankability rating badge component
 function RatingBadge({ rating, label }: { rating: string; label: string }) {
   const colors: Record<string, string> = {
-    AAA: "bg-emerald-500",
+    AAA: "bg-[#D4AF37]",
     AA: "bg-green-500",
     A: "bg-lime-500",
     BBB: "bg-yellow-500",
-    BB: "bg-amber-500",
+    BB: "bg-[#D4AF37]",
     B: "bg-orange-500",
   };
 
@@ -141,7 +141,7 @@ function RatingBadge({ rating, label }: { rating: string; label: string }) {
         className={cn("w-3 h-3 rounded-full", colors[rating] || "bg-gray-400")}
       />
       <span className="font-mono text-sm font-semibold">{rating}</span>
-      <span className="text-xs text-muted-foreground">{label}</span>
+      <span className="text-xs text-gray-600">{label}</span>
     </div>
   );
 }
@@ -157,14 +157,14 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="p-2 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                <Leaf className="h-6 w-6 text-primary" />
+              <div className="p-2 rounded-xl bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20 transition-colors">
+                <Leaf className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold text-foreground font-display">
                   ABFI
                 </span>
-                <span className="text-[10px] text-muted-foreground -mt-1 hidden sm:block">
+                <span className="text-[10px] text-gray-600 -mt-1 hidden sm:block">
                   Bank-Grade Infrastructure
                 </span>
               </div>
@@ -265,8 +265,8 @@ export default function Home() {
       {/* Hero Section - Enhanced */}
       <section className="relative overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-        <GridPattern className="text-white" />
+        <div className="absolute inset-0 bg-white" />
+        <GridPattern className="text-black" />
         <CircuitPattern />
 
         {/* Animated Gradient Orbs */}
@@ -278,7 +278,7 @@ export default function Home() {
               scale: [1, 1.2, 1],
             }}
             transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-primary/20 blur-[120px]"
+            className="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-[#D4AF37]/20 blur-[120px]"
           />
           <motion.div
             animate={{
@@ -287,7 +287,7 @@ export default function Home() {
               scale: [1.2, 1, 1.2],
             }}
             transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-emerald-500/15 blur-[100px]"
+            className="absolute -bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-[#D4AF37]/15 blur-[100px]"
           />
         </div>
 
@@ -297,28 +297,28 @@ export default function Home() {
             <FadeInUp className="flex flex-wrap justify-center gap-3 mb-8">
               <Badge
                 variant="outline"
-                className="border-amber-400/40 text-amber-300 bg-amber-500/10 backdrop-blur-sm px-3 py-1.5"
+                className="border-[#D4AF37]/40 text-[#D4AF37] bg-[#D4AF37]/10 backdrop-blur-sm px-3 py-1.5"
               >
                 <Blocks className="h-3 w-3 mr-1.5" />
                 Blockchain Anchored
               </Badge>
               <Badge
                 variant="outline"
-                className="border-emerald-400/40 text-emerald-300 bg-emerald-500/10 backdrop-blur-sm px-3 py-1.5"
+                className="border-[#D4AF37]/40 text-[#D4AF37] bg-[#D4AF37]/10 backdrop-blur-sm px-3 py-1.5"
               >
                 <BadgeCheck className="h-3 w-3 mr-1.5" />
                 GO Certificates
               </Badge>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 backdrop-blur-sm px-3 py-1.5"
+                className="border-white/20 text-black/90 bg-white/5 backdrop-blur-sm px-3 py-1.5"
               >
                 <Fingerprint className="h-3 w-3 mr-1.5" />
                 Verifiable Credentials
               </Badge>
               <Badge
                 variant="outline"
-                className="border-white/20 text-white/90 bg-white/5 backdrop-blur-sm px-3 py-1.5"
+                className="border-white/20 text-black/90 bg-white/5 backdrop-blur-sm px-3 py-1.5"
               >
                 <Shield className="h-3 w-3 mr-1.5" />
                 Bank-Grade Infrastructure
@@ -327,14 +327,14 @@ export default function Home() {
 
             {/* Main Headline */}
             <FadeInUp delay={0.1} className="text-center mb-8">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-[1.1] text-white">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-[1.1] text-black">
                 Australia's Bamboo
                 <br />
-                <span className="bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#D4AF37] via-[#D4AF37] to-[#D4AF37] bg-clip-text text-transparent">
                   Bioenergy Marketplace
                 </span>
               </h1>
-              <p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Connect with verified Australian bamboo suppliers. Bank-grade
                 infrastructure transforms biomass supply agreements into
                 auditable, cryptographically-secured assets that lenders trust.
@@ -356,7 +356,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/30 text-black hover:bg-white/10 bg-transparent"
                 >
                   <Building2 className="h-4 w-4 mr-2" />
                   I'm a Developer
@@ -366,7 +366,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 bg-transparent"
+                  className="border-white/30 text-black hover:bg-white/10 bg-transparent"
                 >
                   <Banknote className="h-4 w-4 mr-2" />
                   I'm a Lender
@@ -379,37 +379,37 @@ export default function Home() {
               <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 max-w-4xl mx-auto">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-white font-mono">
+                    <div className="text-3xl md:text-4xl font-bold text-black font-mono">
                       <AnimatedCounter
                         value={45}
                         suffix="+"
                       />
                     </div>
-                    <div className="text-sm text-slate-400 mt-1">
+                    <div className="text-sm text-gray-500 mt-1">
                       Bamboo Suppliers
                     </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-white font-mono">
+                    <div className="text-3xl md:text-4xl font-bold text-black font-mono">
                       <AnimatedCounter value={650} suffix="k" />
                     </div>
-                    <div className="text-sm text-slate-400 mt-1">
+                    <div className="text-sm text-gray-500 mt-1">
                       Tonnes Bamboo/Year
                     </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-white font-mono">
+                    <div className="text-3xl md:text-4xl font-bold text-black font-mono">
                       <AnimatedCounter value={12} suffix="k" />
                     </div>
-                    <div className="text-sm text-slate-400 mt-1">
+                    <div className="text-sm text-gray-500 mt-1">
                       Hectares Certified
                     </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl md:text-4xl font-bold text-emerald-400 font-mono">
+                    <div className="text-3xl md:text-4xl font-bold text-[#D4AF37] font-mono">
                       A$145
                     </div>
-                    <div className="text-sm text-slate-400 mt-1">
+                    <div className="text-sm text-gray-500 mt-1">
                       Avg Price/Tonne
                     </div>
                   </div>
@@ -438,13 +438,13 @@ export default function Home() {
       {/* Trust Bar */}
       <section className="py-8 bg-muted/30 border-y">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 text-gray-600">
             <div className="flex items-center gap-2">
-              <Blocks className="h-5 w-5 text-amber-600" />
+              <Blocks className="h-5 w-5 text-[#D4AF37]" />
               <span className="text-sm font-medium">Ethereum Anchored</span>
             </div>
             <div className="flex items-center gap-2">
-              <BadgeCheck className="h-5 w-5 text-emerald-600" />
+              <BadgeCheck className="h-5 w-5 text-[#D4AF37]" />
               <span className="text-sm font-medium">GO Scheme Ready</span>
             </div>
             <div className="flex items-center gap-2">
@@ -469,7 +469,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
               Built for Every Stakeholder
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Whether you grow Australian bamboo, develop bioenergy projects, or finance them — ABFI
               provides the infrastructure to make deals happen with confidence.
             </p>
@@ -479,11 +479,11 @@ export default function Home() {
             {/* Growers Card */}
             <StaggerItem>
               <HoverCard className="h-full">
-                <Card className="h-full border-2 border-transparent hover:border-emerald-500/30 transition-colors overflow-hidden group">
-                  <div className="h-2 bg-gradient-to-r from-emerald-500 to-green-500" />
+                <Card className="h-full border-2 border-transparent hover:border-[#D4AF37]/30 transition-colors overflow-hidden group">
+                  <div className="h-2 bg-gradient-to-r from-[#D4AF37] to-green-500" />
                   <CardHeader className="pb-4">
-                    <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center mb-4 group-hover:bg-emerald-500/20 transition-colors">
-                      <TreeDeciduous className="h-7 w-7 text-emerald-600" />
+                    <div className="h-14 w-14 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center mb-4 group-hover:bg-[#D4AF37]/20 transition-colors">
+                      <TreeDeciduous className="h-7 w-7 text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-2xl">
                       Bamboo Growers
@@ -502,15 +502,15 @@ export default function Home() {
                         "Track all biomass contracts in one place",
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground">{item}</span>
+                          <CheckCircle2 className="h-4 w-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                          <span className="text-gray-600">{item}</span>
                         </li>
                       ))}
                     </ul>
                     <div className="pt-4 border-t">
                       <Link href="/for-growers">
                         <Button
-                          className="w-full bg-emerald-500 hover:bg-emerald-600"
+                          className="w-full bg-[#D4AF37] hover:bg-[#D4AF37]"
                           rightIcon={<ArrowRight className="h-4 w-4" />}
                         >
                           Start Growing Value
@@ -525,11 +525,11 @@ export default function Home() {
             {/* Developers Card */}
             <StaggerItem>
               <HoverCard className="h-full">
-                <Card className="h-full border-2 border-transparent hover:border-amber-500/30 transition-colors overflow-hidden group">
-                  <div className="h-2 bg-gradient-to-r from-amber-500 to-yellow-500" />
+                <Card className="h-full border-2 border-transparent hover:border-[#D4AF37]/30 transition-colors overflow-hidden group">
+                  <div className="h-2 bg-gradient-to-r from-[#D4AF37] to-[#E5C158]" />
                   <CardHeader className="pb-4">
-                    <div className="h-14 w-14 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-4 group-hover:bg-amber-500/20 transition-colors">
-                      <Building2 className="h-7 w-7 text-amber-600" />
+                    <div className="h-14 w-14 rounded-2xl bg-[#D4AF37]/10 flex items-center justify-center mb-4 group-hover:bg-[#D4AF37]/20 transition-colors">
+                      <Building2 className="h-7 w-7 text-[#D4AF37]" />
                     </div>
                     <CardTitle className="text-2xl">
                       Project Developers
@@ -548,15 +548,15 @@ export default function Home() {
                         "Continuous covenant monitoring",
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground">{item}</span>
+                          <CheckCircle2 className="h-4 w-4 text-[#D4AF37] shrink-0 mt-0.5" />
+                          <span className="text-gray-600">{item}</span>
                         </li>
                       ))}
                     </ul>
                     <div className="pt-4 border-t">
                       <Link href="/for-developers">
                         <Button
-                          className="w-full bg-amber-500 hover:bg-amber-600 text-white"
+                          className="w-full bg-[#D4AF37] hover:bg-[#D4AF37] text-black"
                           rightIcon={<ArrowRight className="h-4 w-4" />}
                         >
                           Assess Your Project
@@ -595,7 +595,7 @@ export default function Home() {
                       ].map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-sm">
                           <CheckCircle2 className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
-                          <span className="text-muted-foreground">{item}</span>
+                          <span className="text-gray-600">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -618,20 +618,20 @@ export default function Home() {
       </section>
 
       {/* Technical Differentiation */}
-      <section className="py-20 lg:py-28 bg-slate-900 text-white relative overflow-hidden">
-        <GridPattern className="text-white" />
+      <section className="py-20 lg:py-28 bg-white text-black relative overflow-hidden">
+        <GridPattern className="text-black" />
         <div className="container mx-auto px-4 relative z-10">
           <FadeInUp className="text-center mb-16">
             <Badge
               variant="outline"
-              className="border-white/20 text-white/90 mb-4"
+              className="border-white/20 text-black/90 mb-4"
             >
               Why ABFI is Different
             </Badge>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
               Infrastructure, Not Just Software
             </h2>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Every data point is cryptographically secured, temporally
               versioned, and audit-ready from day one.
             </p>
@@ -681,11 +681,11 @@ export default function Home() {
             ].map((item, i) => (
               <StaggerItem key={i}>
                 <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
-                  <div className="h-12 w-12 rounded-xl bg-primary/20 flex items-center justify-center mb-4">
-                    <item.icon className="h-6 w-6 text-primary" />
+                  <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center mb-4">
+                    <item.icon className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-400">{item.description}</p>
+                  <p className="text-sm text-gray-500">{item.description}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -704,7 +704,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
                 From Subjective to Systematic
               </h2>
-              <p className="text-lg text-muted-foreground mb-8">
+              <p className="text-lg text-gray-600 mb-8">
                 Traditional biomass supply assessment relies on spreadsheets and
                 gut feel. ABFI provides the industry's first standardized,
                 auditable bankability framework.
@@ -713,25 +713,25 @@ export default function Home() {
               <div className="space-y-4 mb-8">
                 <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                   <RatingBadge rating="AAA" label="Prime Investment Grade" />
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Lowest Risk
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                   <RatingBadge rating="AA" label="High Investment Grade" />
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Very Low Risk
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                   <RatingBadge rating="A" label="Investment Grade" />
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Low Risk
                   </span>
                 </div>
                 <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
                   <RatingBadge rating="BBB" label="Lower Investment Grade" />
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Moderate Risk
                   </span>
                 </div>
@@ -748,7 +748,7 @@ export default function Home() {
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 text-white">
+              <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-8 text-black">
                 <h3 className="text-xl font-semibold mb-6">
                   5-Pillar Assessment Framework
                 </h3>
@@ -757,7 +757,7 @@ export default function Home() {
                     {
                       name: "Volume Security",
                       score: 92,
-                      color: "bg-emerald-500",
+                      color: "bg-[#D4AF37]",
                     },
                     {
                       name: "Counterparty Quality",
@@ -767,7 +767,7 @@ export default function Home() {
                     {
                       name: "Contract Structure",
                       score: 95,
-                      color: "bg-emerald-500",
+                      color: "bg-[#D4AF37]",
                     },
                     {
                       name: "Concentration Risk",
@@ -797,9 +797,9 @@ export default function Home() {
                   ))}
                 </div>
                 <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-                  <span className="text-slate-400">Overall Rating</span>
+                  <span className="text-gray-500">Overall Rating</span>
                   <div className="flex items-center gap-3">
-                    <span className="text-4xl font-bold font-mono text-emerald-400">
+                    <span className="text-4xl font-bold font-mono text-[#D4AF37]">
                       AA+
                     </span>
                   </div>
@@ -811,7 +811,7 @@ export default function Home() {
       </section>
 
       {/* Blockchain & GO Infrastructure - NEW SECTION */}
-      <section className="py-20 lg:py-28 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white relative overflow-hidden">
+      <section className="py-20 lg:py-28 bg-white text-black relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <GridPattern />
         </div>
@@ -819,14 +819,14 @@ export default function Home() {
           <FadeInUp className="text-center mb-16">
             <Badge
               variant="outline"
-              className="border-amber-400/40 text-amber-300 bg-amber-500/10 mb-4"
+              className="border-amber-400/40 text-amber-300 bg-[#D4AF37]/10 mb-4"
             >
               v3.1 Smart Infrastructure
             </Badge>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
               Blockchain-Powered Trust Layer
             </h2>
-            <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               The only bioenergy platform with native blockchain anchoring,
               Guarantee of Origin certificates, and W3C Verifiable Credentials.
             </p>
@@ -835,9 +835,9 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
             {/* Evidence Vault Card */}
             <FadeInUp delay={0.1}>
-              <div className="bg-gradient-to-br from-amber-500/10 to-orange-500/5 border border-amber-500/20 rounded-2xl p-8">
+              <div className="bg-gradient-to-br from-[#D4AF37]/10 to-orange-500/5 border border-[#D4AF37]/20 rounded-2xl p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="h-14 w-14 rounded-xl bg-amber-500/20 flex items-center justify-center">
+                  <div className="h-14 w-14 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center">
                     <Blocks className="h-7 w-7 text-amber-400" />
                   </div>
                   <div>
@@ -853,14 +853,14 @@ export default function Home() {
                     "IPFS decentralized content-addressed storage",
                     "Complete audit trail with on-chain verification",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-300">
+                    <li key={i} className="flex items-start gap-3 text-gray-600">
                       <CheckCircle2 className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
                 <Link href="/evidence-vault">
-                  <Button className="bg-amber-500 hover:bg-amber-600 text-white">
+                  <Button className="bg-[#D4AF37] hover:bg-[#D4AF37] text-black">
                     Explore Evidence Vault
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -870,10 +870,10 @@ export default function Home() {
 
             {/* GO Certificates Card */}
             <FadeInUp delay={0.2}>
-              <div className="bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-500/20 rounded-2xl p-8">
+              <div className="bg-gradient-to-br from-[#D4AF37]/10 to-teal-500/5 border border-[#D4AF37]/20 rounded-2xl p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="h-14 w-14 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                    <BadgeCheck className="h-7 w-7 text-emerald-400" />
+                  <div className="h-14 w-14 rounded-xl bg-[#D4AF37]/20 flex items-center justify-center">
+                    <BadgeCheck className="h-7 w-7 text-[#D4AF37]" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold">GO Certificates</h3>
@@ -888,14 +888,14 @@ export default function Home() {
                     "Integration with energy market regulators",
                     "Automated compliance and reporting",
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-slate-300">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0 mt-0.5" />
+                    <li key={i} className="flex items-start gap-3 text-gray-600">
+                      <CheckCircle2 className="h-5 w-5 text-[#D4AF37] shrink-0 mt-0.5" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
                 <Link href="/go-scheme">
-                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+                  <Button className="bg-[#D4AF37] hover:bg-[#D4AF37] text-black">
                     Explore GO Scheme
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -913,14 +913,14 @@ export default function Home() {
                 </div>
                 <div className="text-center md:text-left flex-1">
                   <h3 className="text-xl font-bold mb-2">W3C Verifiable Credentials</h3>
-                  <p className="text-slate-400">
+                  <p className="text-gray-500">
                     Every certificate, rating, and qualification is issued as a
                     cryptographically-signed Verifiable Credential with a Decentralized Identifier (DID).
                     Any third party can independently verify authenticity without contacting ABFI.
                   </p>
                 </div>
                 <Link href="/credentials">
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 shrink-0">
+                  <Button variant="outline" className="border-white/20 text-black hover:bg-white/10 shrink-0">
                     Learn More
                   </Button>
                 </Link>
@@ -940,7 +940,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
               Complete Bioenergy Ecosystem
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From supply discovery to compliance certificates - everything integrated
               with blockchain-grade security.
             </p>
@@ -1001,17 +1001,17 @@ export default function Home() {
                   <CardHeader className="pb-2">
                     <div className={cn(
                       "h-10 w-10 rounded-lg flex items-center justify-center mb-3",
-                      (item as any).highlight ? "bg-primary/20" : "bg-primary/10"
+                      (item as any).highlight ? "bg-[#D4AF37]/20" : "bg-[#D4AF37]/10"
                     )}>
                       <item.icon className={cn(
                         "h-5 w-5",
-                        (item as any).highlight ? "text-primary" : "text-primary"
+                        (item as any).highlight ? "text-[#D4AF37]" : "text-[#D4AF37]"
                       )} />
                     </div>
                     <CardTitle className="text-base">{item.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <p className="text-sm text-gray-600">{item.desc}</p>
                   </CardContent>
                 </Card>
               </StaggerItem>
@@ -1053,12 +1053,12 @@ export default function Home() {
               <StaggerItem key={i}>
                 <Card className="h-full">
                   <CardContent className="pt-6">
-                    <p className="text-muted-foreground mb-6 italic">
+                    <p className="text-gray-600 mb-6 italic">
                       "{testimonial.quote}"
                     </p>
                     <div>
                       <p className="font-semibold">{testimonial.author}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {testimonial.company}
                       </p>
                     </div>
@@ -1071,7 +1071,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-28 bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground relative overflow-hidden">
+      <section className="py-20 lg:py-28 bg-gradient-to-br from-primary via-primary to-primary/90 text-[#D4AF37]-foreground relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <GridPattern />
         </div>
@@ -1098,7 +1098,7 @@ export default function Home() {
                 <Button
                   size="xl"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10"
+                  className="border-white/30 text-black hover:bg-white/10"
                 >
                   Explore Features
                 </Button>
@@ -1109,16 +1109,16 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t bg-slate-900 text-slate-300 py-16">
+      <footer className="border-t bg-white text-gray-600 py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
             {/* Brand */}
             <div className="lg:col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <div className="p-1.5 rounded-lg bg-primary/20">
-                  <Leaf className="h-5 w-5 text-primary" />
+                <div className="p-1.5 rounded-lg bg-[#D4AF37]/20">
+                  <Leaf className="h-5 w-5 text-[#D4AF37]" />
                 </div>
-                <span className="text-lg font-bold font-display text-white">
+                <span className="text-lg font-bold font-display text-black">
                   ABFI
                 </span>
               </div>
@@ -1130,14 +1130,14 @@ export default function Home() {
               <div className="flex gap-3">
                 <Badge
                   variant="outline"
-                  className="border-slate-700 text-slate-400 text-xs"
+                  className="border-gray-200 text-gray-500 text-xs"
                 >
                   <Lock className="h-3 w-3 mr-1" />
                   SOC 2
                 </Badge>
                 <Badge
                   variant="outline"
-                  className="border-slate-700 text-slate-400 text-xs"
+                  className="border-gray-200 text-gray-500 text-xs"
                 >
                   <Shield className="h-3 w-3 mr-1" />
                   ISO 27001
@@ -1147,12 +1147,12 @@ export default function Home() {
 
             {/* For Growers */}
             <div>
-              <h3 className="font-semibold mb-4 text-white">For Growers</h3>
+              <h3 className="font-semibold mb-4 text-black">For Growers</h3>
               <ul className="space-y-3 text-sm">
                 <li>
                   <Link
                     href="/producer-registration"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Register Supply
                   </Link>
@@ -1160,7 +1160,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/supplier/futures"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     List Futures
                   </Link>
@@ -1168,7 +1168,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/for-growers"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Grower Benefits
                   </Link>
@@ -1176,7 +1176,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/grower-qualification"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     GQ Tiers
                   </Link>
@@ -1186,12 +1186,12 @@ export default function Home() {
 
             {/* For Developers */}
             <div>
-              <h3 className="font-semibold mb-4 text-white">For Developers</h3>
+              <h3 className="font-semibold mb-4 text-black">For Developers</h3>
               <ul className="space-y-3 text-sm">
                 <li>
                   <Link
                     href="/futures"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Marketplace
                   </Link>
@@ -1199,7 +1199,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/bankability"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Bankability
                   </Link>
@@ -1207,7 +1207,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/for-developers"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     How It Works
                   </Link>
@@ -1215,7 +1215,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/feedstock-map"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Supply Map
                   </Link>
@@ -1225,12 +1225,12 @@ export default function Home() {
 
             {/* For Lenders */}
             <div>
-              <h3 className="font-semibold mb-4 text-white">For Lenders</h3>
+              <h3 className="font-semibold mb-4 text-black">For Lenders</h3>
               <ul className="space-y-3 text-sm">
                 <li>
                   <Link
                     href="/lender-portal"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Lender Portal
                   </Link>
@@ -1238,7 +1238,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/compliance-dashboard"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Compliance
                   </Link>
@@ -1246,7 +1246,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/for-lenders"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Risk Framework
                   </Link>
@@ -1254,7 +1254,7 @@ export default function Home() {
                 <li>
                   <Link
                     href="/platform-features"
-                    className="hover:text-white transition-colors"
+                    className="hover:text-black transition-colors"
                   >
                     Platform Features
                   </Link>
@@ -1263,27 +1263,27 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-slate-500">
+          <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-black0">
               © {new Date().getFullYear()} Australian Bioenergy Feedstock
               Institute. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm text-slate-500">
+            <div className="flex gap-6 text-sm text-black0">
               <Link
                 href="/privacy"
-                className="hover:text-white transition-colors"
+                className="hover:text-black transition-colors"
               >
                 Privacy
               </Link>
               <Link
                 href="/terms"
-                className="hover:text-white transition-colors"
+                className="hover:text-black transition-colors"
               >
                 Terms
               </Link>
               <Link
                 href="/security"
-                className="hover:text-white transition-colors"
+                className="hover:text-black transition-colors"
               >
                 Security
               </Link>

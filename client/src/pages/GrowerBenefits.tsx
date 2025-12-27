@@ -128,7 +128,7 @@ export default function GrowerBenefits() {
                 background: "linear-gradient(135deg, #2d5a27, #4a7c43)",
               }}
             >
-              <Shield className="h-6 w-6 text-white" />
+              <Shield className="h-6 w-6 text-black" />
             </div>
             <h1
               className="text-3xl"
@@ -243,7 +243,7 @@ export default function GrowerBenefits() {
                 boxShadow: "0 4px 20px rgba(45, 90, 39, 0.3)",
               }}
             >
-              <ArrowRight className="h-6 w-6 text-white" />
+              <ArrowRight className="h-6 w-6 text-black" />
             </div>
           </div>
 
@@ -322,7 +322,7 @@ export default function GrowerBenefits() {
               🛡️
             </div>
             <h3
-              className="text-4xl mb-3 text-white"
+              className="text-4xl mb-3 text-black"
               style={{
                 fontFamily: "'DM Serif Display', serif",
                 fontWeight: 400,
@@ -362,7 +362,7 @@ export default function GrowerBenefits() {
                 >
                   {protection.icon}
                 </div>
-                <h4 className="text-base font-semibold text-white mb-2">
+                <h4 className="text-base font-semibold text-black mb-2">
                   {protection.title}
                 </h4>
                 <p
@@ -517,7 +517,7 @@ export default function GrowerBenefits() {
           }}
         >
           <h3
-            className="text-3xl mb-4 text-white"
+            className="text-3xl mb-4 text-black"
             style={{ fontFamily: "'DM Serif Display', serif", fontWeight: 400 }}
           >
             Ready to Get Fair Prices?

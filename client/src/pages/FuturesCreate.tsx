@@ -357,7 +357,7 @@ export default function FuturesCreate() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-teal-600 via-emerald-600 to-green-700 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-[#D4AF37] via-emerald-600 to-green-700 text-black overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
@@ -366,7 +366,7 @@ export default function FuturesCreate() {
           <Link href="/supplier/futures">
             <Button
               variant="ghost"
-              className="mb-6 text-white/80 hover:text-white hover:bg-white/10"
+              className="mb-6 text-black/80 hover:text-black hover:bg-white/10"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to My Futures
@@ -374,7 +374,7 @@ export default function FuturesCreate() {
           </Link>
 
           <div className="max-w-3xl">
-            <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm mb-4">
+            <Badge className="bg-white/20 text-black border-white/30 backdrop-blur-sm mb-4">
               <TreeDeciduous className="h-3.5 w-3.5 mr-1.5" />
               {editId ? "Edit Listing" : "New Listing"}
             </Badge>
@@ -407,8 +407,8 @@ export default function FuturesCreate() {
                     className={cn(
                       "flex items-center justify-center w-12 h-12 rounded-xl border-2 transition-all",
                       currentStep >= step
-                        ? "bg-teal-600 border-teal-600 text-white shadow-lg shadow-teal-600/25"
-                        : "bg-card border-border text-muted-foreground",
+                        ? "bg-[#D4AF37] border-[#D4AF37] text-black shadow-lg shadow-teal-600/25"
+                        : "bg-card border-border text-gray-600",
                       step < currentStep && "cursor-pointer hover:opacity-80"
                     )}
                     disabled={step >= currentStep}
@@ -423,7 +423,7 @@ export default function FuturesCreate() {
                     <div
                       className={cn(
                         "flex-1 h-1 mx-2 rounded-full transition-colors",
-                        currentStep > step ? "bg-teal-600" : "bg-border"
+                        currentStep > step ? "bg-[#D4AF37]" : "bg-border"
                       )}
                     />
                   )}
@@ -438,8 +438,8 @@ export default function FuturesCreate() {
                 className={cn(
                   "text-xs font-medium transition-colors text-center w-16",
                   currentStep >= i + 1
-                    ? "text-teal-600 font-semibold"
-                    : "text-muted-foreground"
+                    ? "text-[#D4AF37] font-semibold"
+                    : "text-gray-600"
                 )}
               >
                 {label}
@@ -458,7 +458,7 @@ export default function FuturesCreate() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-xl bg-teal-100">
-                    <Leaf className="h-6 w-6 text-teal-600" />
+                    <Leaf className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">Crop Details</CardTitle>
@@ -481,7 +481,7 @@ export default function FuturesCreate() {
                       {CROP_TYPE_OPTIONS.map(crop => (
                         <SelectItem key={crop.value} value={crop.value}>
                           <div className="flex items-center gap-2">
-                            <crop.icon className="h-4 w-4 text-teal-600" />
+                            <crop.icon className="h-4 w-4 text-[#D4AF37]" />
                             {crop.label}
                           </div>
                         </SelectItem>
@@ -541,7 +541,7 @@ export default function FuturesCreate() {
                     onClick={() => setCurrentStep(2)}
                     disabled={!canProceedStep1}
                     size="lg"
-                    className="bg-teal-600 hover:bg-teal-700"
+                    className="bg-[#D4AF37] hover:bg-teal-700"
                   >
                     Next Step
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -557,7 +557,7 @@ export default function FuturesCreate() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-xl bg-teal-100">
-                    <MapPin className="h-6 w-6 text-teal-600" />
+                    <MapPin className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">Location & Land</CardTitle>
@@ -654,7 +654,7 @@ export default function FuturesCreate() {
                     onClick={() => setCurrentStep(3)}
                     disabled={!canProceedStep2}
                     size="lg"
-                    className="bg-teal-600 hover:bg-teal-700"
+                    className="bg-[#D4AF37] hover:bg-teal-700"
                   >
                     Next Step
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -670,7 +670,7 @@ export default function FuturesCreate() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-xl bg-teal-100">
-                    <Calendar className="h-6 w-6 text-teal-600" />
+                    <Calendar className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">
@@ -813,7 +813,7 @@ export default function FuturesCreate() {
                     }}
                     disabled={!canProceedStep3}
                     size="lg"
-                    className="bg-teal-600 hover:bg-teal-700"
+                    className="bg-[#D4AF37] hover:bg-teal-700"
                   >
                     Next Step
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -829,7 +829,7 @@ export default function FuturesCreate() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-xl bg-teal-100">
-                    <TrendingUp className="h-6 w-6 text-teal-600" />
+                    <TrendingUp className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">
@@ -844,7 +844,7 @@ export default function FuturesCreate() {
               <CardContent className="space-y-6">
                 <div className="bg-teal-50 border border-teal-100 rounded-xl p-5 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                   <div>
-                    <p className="text-sm text-teal-600 mb-1">
+                    <p className="text-sm text-[#D4AF37] mb-1">
                       Total Projected Volume
                     </p>
                     <p className="text-3xl font-bold text-teal-800 font-mono">
@@ -881,7 +881,7 @@ export default function FuturesCreate() {
                       </div>
                       <div className="grid md:grid-cols-4 gap-4">
                         <div className="space-y-1.5">
-                          <Label className="text-xs text-muted-foreground">
+                          <Label className="text-xs text-gray-600">
                             Projected Tonnes *
                           </Label>
                           <Input
@@ -899,7 +899,7 @@ export default function FuturesCreate() {
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <Label className="text-xs text-muted-foreground">
+                          <Label className="text-xs text-gray-600">
                             Confidence %
                           </Label>
                           <Input
@@ -919,7 +919,7 @@ export default function FuturesCreate() {
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <Label className="text-xs text-muted-foreground">
+                          <Label className="text-xs text-gray-600">
                             Harvest Season
                           </Label>
                           <Select
@@ -944,7 +944,7 @@ export default function FuturesCreate() {
                           </Select>
                         </div>
                         <div className="space-y-1.5">
-                          <Label className="text-xs text-muted-foreground">
+                          <Label className="text-xs text-gray-600">
                             Notes
                           </Label>
                           <Input
@@ -974,7 +974,7 @@ export default function FuturesCreate() {
                     onClick={() => setCurrentStep(5)}
                     disabled={!canProceedStep4}
                     size="lg"
-                    className="bg-teal-600 hover:bg-teal-700"
+                    className="bg-[#D4AF37] hover:bg-teal-700"
                   >
                     Next Step
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -990,7 +990,7 @@ export default function FuturesCreate() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-xl bg-teal-100">
-                    <DollarSign className="h-6 w-6 text-teal-600" />
+                    <DollarSign className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">
@@ -1019,7 +1019,7 @@ export default function FuturesCreate() {
                       onChange={e => setIndicativePricePerTonne(e.target.value)}
                       className="h-12 font-mono"
                     />
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-600">
                       Leave blank for "negotiable"
                     </p>
                   </div>
@@ -1125,7 +1125,7 @@ export default function FuturesCreate() {
                   <Button
                     onClick={() => setCurrentStep(6)}
                     size="lg"
-                    className="bg-teal-600 hover:bg-teal-700"
+                    className="bg-[#D4AF37] hover:bg-teal-700"
                   >
                     Review
                     <ArrowRight className="h-4 w-4 ml-2" />
@@ -1141,7 +1141,7 @@ export default function FuturesCreate() {
               <CardHeader>
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-xl bg-teal-100">
-                    <FileText className="h-6 w-6 text-teal-600" />
+                    <FileText className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <CardTitle className="text-2xl">Review & Submit</CardTitle>
@@ -1155,25 +1155,25 @@ export default function FuturesCreate() {
                 {/* Summary Cards */}
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-muted/50 rounded-xl p-5 space-y-2">
-                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider">
+                    <h4 className="font-semibold text-xs text-gray-600 uppercase tracking-wider">
                       CROP
                     </h4>
                     <p className="font-bold text-lg">
                       {CROP_TYPE_OPTIONS.find(c => c.value === cropType)?.label}
                       {cropVariety && ` - ${cropVariety}`}
                     </p>
-                    <p className="text-sm text-muted-foreground">{title}</p>
+                    <p className="text-sm text-gray-600">{title}</p>
                   </div>
 
                   <div className="bg-muted/50 rounded-xl p-5 space-y-2">
-                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider">
+                    <h4 className="font-semibold text-xs text-gray-600 uppercase tracking-wider">
                       LOCATION
                     </h4>
                     <p className="font-bold text-lg">
                       {AUSTRALIAN_STATES.find(s => s.value === state)?.label}
                       {region && `, ${region}`}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       {parseFloat(landAreaHectares).toLocaleString()} ha (
                       {
                         LAND_STATUS_OPTIONS.find(l => l.value === landStatus)
@@ -1184,13 +1184,13 @@ export default function FuturesCreate() {
                   </div>
 
                   <div className="bg-muted/50 rounded-xl p-5 space-y-2">
-                    <h4 className="font-semibold text-xs text-muted-foreground uppercase tracking-wider">
+                    <h4 className="font-semibold text-xs text-gray-600 uppercase tracking-wider">
                       TIMELINE
                     </h4>
                     <p className="font-bold text-lg">
                       {projectionStartYear} - {projectionEndYear}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       {parseInt(projectionEndYear) -
                         parseInt(projectionStartYear) +
                         1}{" "}
@@ -1201,13 +1201,13 @@ export default function FuturesCreate() {
                   </div>
 
                   <div className="bg-teal-50 border border-teal-100 rounded-xl p-5 space-y-2">
-                    <h4 className="font-semibold text-xs text-teal-600 uppercase tracking-wider">
+                    <h4 className="font-semibold text-xs text-[#D4AF37] uppercase tracking-wider">
                       VOLUME
                     </h4>
                     <p className="font-bold text-2xl text-teal-800 font-mono">
                       {totalProjectedTonnes.toLocaleString()} t
                     </p>
-                    <p className="text-sm text-teal-600">
+                    <p className="text-sm text-[#D4AF37]">
                       ~
                       {Math.round(
                         totalProjectedTonnes /
@@ -1231,16 +1231,16 @@ export default function FuturesCreate() {
                         ${parseFloat(indicativePricePerTonne).toFixed(2)}/tonne
                       </span>
                     ) : (
-                      <span className="text-emerald-600">Negotiable</span>
+                      <span className="text-[#D4AF37]">Negotiable</span>
                     )}
                     {priceEscalationPercent && (
-                      <span className="text-emerald-600 ml-2">
+                      <span className="text-[#D4AF37] ml-2">
                         (+{priceEscalationPercent}% p.a.)
                       </span>
                     )}
                   </p>
                   {pricingNotes && (
-                    <p className="text-sm text-emerald-600 mt-2 italic">
+                    <p className="text-sm text-[#D4AF37] mt-2 italic">
                       {pricingNotes}
                     </p>
                   )}
@@ -1258,7 +1258,7 @@ export default function FuturesCreate() {
                           <p className="text-2xl font-bold font-mono">
                             {expectedCarbonIntensity}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             kg CO₂e/t
                           </p>
                         </div>
@@ -1268,7 +1268,7 @@ export default function FuturesCreate() {
                           <p className="text-2xl font-bold font-mono">
                             {expectedMoistureContent}%
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             Moisture
                           </p>
                         </div>
@@ -1278,7 +1278,7 @@ export default function FuturesCreate() {
                           <p className="text-2xl font-bold font-mono">
                             {expectedEnergyContent}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             GJ/t Energy
                           </p>
                         </div>
@@ -1311,7 +1311,7 @@ export default function FuturesCreate() {
                       onClick={() => handleSubmit(true)}
                       disabled={isSubmitting}
                       size="lg"
-                      className="bg-teal-600 hover:bg-teal-700"
+                      className="bg-[#D4AF37] hover:bg-teal-700"
                     >
                       <Send className="h-4 w-4 mr-2" />
                       {isSubmitting ? "Publishing..." : "Publish Now"}

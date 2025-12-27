@@ -69,7 +69,7 @@ export function SectionHeader({
         {description && (
           <p
             className={cn(
-              "text-muted-foreground",
+              "text-gray-600",
               descriptionSizes[size],
               align === "center" && "max-w-2xl mx-auto"
             )}

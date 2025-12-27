@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-[transform,box-shadow,background-color] duration-150",
+          "bg-primary text-[#D4AF37]-foreground shadow-sm hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-[transform,box-shadow,background-color] duration-150",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:ring-destructive/40 transition-[transform,box-shadow,background-color] duration-150",
         outline:
@@ -20,12 +20,12 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-[transform,background-color] duration-150",
         ghost:
           "hover:bg-accent/80 hover:text-accent-foreground transition-[background-color,color] duration-150",
-        link: "text-primary underline-offset-4 hover:underline transition-colors duration-150",
+        link: "text-[#D4AF37] underline-offset-4 hover:underline transition-colors duration-150",
         premium:
-          "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md hover:shadow-lg hover:from-amber-400 hover:to-amber-500 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] btn-glow transition-[transform,box-shadow] duration-150",
+          "bg-gradient-to-r from-[#D4AF37] to-amber-600 text-black shadow-md hover:shadow-lg hover:from-amber-400 hover:to-amber-500 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] btn-glow transition-[transform,box-shadow] duration-150",
         success:
           "bg-success text-success-foreground shadow-sm hover:bg-success/90 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-[transform,box-shadow,background-color] duration-150",
-        cta: "btn-cta text-white font-semibold hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
+        cta: "btn-cta text-black font-semibold hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
       },
       size: {
         default: "h-10 px-4 py-2",

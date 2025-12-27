@@ -95,7 +95,7 @@ export default function GrowerQualification() {
         <div className="container py-8">
           <Card>
             <CardContent className="pt-6">
-              <p className="text-muted-foreground">Supplier not found</p>
+              <p className="text-gray-600">Supplier not found</p>
             </CardContent>
           </Card>
         </div>
@@ -194,7 +194,7 @@ export default function GrowerQualification() {
                         {operatingHistoryScore}/100
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Years in operation, track record, consistency of supply
                     </p>
                     <Slider
@@ -216,7 +216,7 @@ export default function GrowerQualification() {
                         {financialStrengthScore}/100
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Revenue, profitability, debt levels, working capital
                     </p>
                     <Slider
@@ -238,7 +238,7 @@ export default function GrowerQualification() {
                         {landTenureScore}/100
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Ownership vs lease, tenure length, encumbrances
                     </p>
                     <Slider
@@ -260,7 +260,7 @@ export default function GrowerQualification() {
                         {productionCapacityScore}/100
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Scale, equipment, infrastructure, growth potential
                     </p>
                     <Slider
@@ -280,7 +280,7 @@ export default function GrowerQualification() {
                         {creditScore}/100
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Credit history, payment terms compliance, defaults
                     </p>
                     <Slider
@@ -302,7 +302,7 @@ export default function GrowerQualification() {
                         {insuranceScore}/100
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       Liability, property, crop insurance adequacy
                     </p>
                     <Slider
@@ -393,27 +393,27 @@ export default function GrowerQualification() {
                   >
                     {compositeScore}
                   </div>
-                  <div className="text-sm text-muted-foreground mb-4">
+                  <div className="text-sm text-gray-600 mb-4">
                     Composite Score
                   </div>
 
                   <div className="inline-flex items-center gap-2 px-4 py-2 bg-muted rounded-full">
                     <Award className="h-5 w-5" />
                     <span className="font-semibold">{qualification.level}</span>
-                    <span className="text-muted-foreground">•</span>
+                    <span className="text-gray-600">•</span>
                     <span>{qualification.name}</span>
                   </div>
                 </div>
 
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">
+                    <span className="text-gray-600">
                       Operating History
                     </span>
                     <span className="font-medium">{operatingHistoryScore}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">
+                    <span className="text-gray-600">
                       Financial Strength
                     </span>
                     <span className="font-medium">
@@ -421,11 +421,11 @@ export default function GrowerQualification() {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Land Tenure</span>
+                    <span className="text-gray-600">Land Tenure</span>
                     <span className="font-medium">{landTenureScore}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">
+                    <span className="text-gray-600">
                       Production Capacity
                     </span>
                     <span className="font-medium">
@@ -433,11 +433,11 @@ export default function GrowerQualification() {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Credit Rating</span>
+                    <span className="text-gray-600">Credit Rating</span>
                     <span className="font-medium">{creditScore}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Insurance</span>
+                    <span className="text-gray-600">Insurance</span>
                     <span className="font-medium">{insuranceScore}</span>
                   </div>
                 </div>
@@ -456,7 +456,7 @@ export default function GrowerQualification() {
                   <div className="font-semibold text-green-600">
                     GQ1 - Premier (85-100)
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Highest tier. Suitable for Tier 1 core agreements with
                     minimal security requirements.
                   </p>
@@ -465,7 +465,7 @@ export default function GrowerQualification() {
                   <div className="font-semibold text-blue-600">
                     GQ2 - Qualified (70-84)
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Strong growers suitable for Tier 1 or Tier 2 with moderate
                     security.
                   </p>
@@ -474,7 +474,7 @@ export default function GrowerQualification() {
                   <div className="font-semibold text-yellow-600">
                     GQ3 - Developing (55-69)
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     Emerging growers suitable for Tier 2 or options with
                     enhanced security.
                   </p>
@@ -483,7 +483,7 @@ export default function GrowerQualification() {
                   <div className="font-semibold text-orange-600">
                     GQ4 - Provisional (&lt;55)
                   </div>
-                  <p className="text-muted-foreground">
+                  <p className="text-gray-600">
                     New or unproven growers. Require substantial security and
                     monitoring.
                   </p>

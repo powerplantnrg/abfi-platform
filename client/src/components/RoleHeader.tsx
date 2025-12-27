@@ -53,8 +53,8 @@ const ROLE_CONFIGS: RoleConfig[] = [
     id: "grower",
     label: "Grower",
     icon: Leaf,
-    color: "text-emerald-600",
-    bgColor: "bg-emerald-500/10",
+    color: "text-[#D4AF37]",
+    bgColor: "bg-[#D4AF37]/10",
     dashboardPath: "/grower/dashboard",
     description: "Feedstock producers & farmers",
   },
@@ -71,8 +71,8 @@ const ROLE_CONFIGS: RoleConfig[] = [
     id: "lender",
     label: "Lender",
     icon: TrendingUp,
-    color: "text-amber-600",
-    bgColor: "bg-amber-500/10",
+    color: "text-[#D4AF37]",
+    bgColor: "bg-[#D4AF37]/10",
     dashboardPath: "/finance/dashboard",
     description: "Banks & financial institutions",
   },
@@ -138,7 +138,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
         {/* Left: Logo */}
         <div className="flex items-center gap-2 shrink-0">
           <div className="flex items-center gap-2">
-            <Leaf className="h-5 w-5 text-primary" />
+            <Leaf className="h-5 w-5 text-[#D4AF37]" />
             <span className="font-bold tracking-tight hidden sm:inline">
               ABFI
             </span>
@@ -147,7 +147,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
 
         {/* Center: Role Switcher */}
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground hidden md:inline">
+          <span className="text-sm text-gray-600 hidden md:inline">
             I'm a:
           </span>
           <DropdownMenu>
@@ -163,7 +163,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
               >
                 <roleConfig.icon className={cn("h-4 w-4", roleConfig.color)} />
                 <span className={roleConfig.color}>{roleConfig.label}</span>
-                <ChevronDown className="h-3 w-3 text-muted-foreground" />
+                <ChevronDown className="h-3 w-3 text-gray-600" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" className="w-56">
@@ -181,7 +181,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium">{r.label}</span>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-gray-600">
                       {r.description}
                     </span>
                   </div>
@@ -196,7 +196,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
           {/* Search - Hidden on small screens */}
           <form onSubmit={handleSearch} className="hidden lg:flex">
             <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-600" />
               <Input
                 type="search"
                 placeholder="Search feedstocks..."
@@ -249,7 +249,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
                   className="relative h-8 w-8 rounded-full"
                 >
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className="text-xs font-medium bg-primary/10">
+                    <AvatarFallback className="text-xs font-medium bg-[#D4AF37]/10">
                       {user?.name?.charAt(0).toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
@@ -264,7 +264,7 @@ export default function RoleHeader({ className }: RoleHeaderProps) {
                   </Avatar>
                   <div className="flex flex-col">
                     <p className="text-sm font-medium">{user?.name || "User"}</p>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-xs text-gray-600 truncate">
                       {user?.email || ""}
                     </p>
                   </div>

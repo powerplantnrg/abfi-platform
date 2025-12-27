@@ -29,7 +29,7 @@ export default function ProducerRegistrationSuccess() {
         <div className="flex justify-center mb-8">
           <div className="relative">
             <div className="w-24 h-24 bg-gradient-to-br from-[#2d5a27] to-[#4a7c43] rounded-full flex items-center justify-center shadow-2xl">
-              <Check className="w-12 h-12 text-white" />
+              <Check className="w-12 h-12 text-black" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-br from-[#2d5a27] to-[#4a7c43] rounded-full blur-xl opacity-40" />
           </div>
@@ -115,7 +115,7 @@ export default function ProducerRegistrationSuccess() {
                   className="w-12 h-12 rounded-lg flex items-center justify-center mb-4"
                   style={{ background: "#2d5a27" }}
                 >
-                  <FileText className="w-6 h-6 text-white" />
+                  <FileText className="w-6 h-6 text-black" />
                 </div>
                 <h3
                   className="text-lg font-semibold mb-2"
@@ -136,7 +136,7 @@ export default function ProducerRegistrationSuccess() {
                   className="w-12 h-12 rounded-lg flex items-center justify-center mb-4"
                   style={{ background: "#2d5a27" }}
                 >
-                  <Clock className="w-6 h-6 text-white" />
+                  <Clock className="w-6 h-6 text-black" />
                 </div>
                 <h3
                   className="text-lg font-semibold mb-2"
@@ -157,7 +157,7 @@ export default function ProducerRegistrationSuccess() {
                   className="w-12 h-12 rounded-lg flex items-center justify-center mb-4"
                   style={{ background: "#2d5a27" }}
                 >
-                  <TrendingUp className="w-6 h-6 text-white" />
+                  <TrendingUp className="w-6 h-6 text-black" />
                 </div>
                 <h3
                   className="text-lg font-semibold mb-2"
@@ -264,7 +264,7 @@ export default function ProducerRegistrationSuccess() {
           <Link href="/grower-benefits">
             <Button
               size="lg"
-              className="text-white"
+              className="text-black"
               style={{
                 background: "linear-gradient(135deg, #2d5a27, #4a7c43)",
               }}

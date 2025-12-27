@@ -88,8 +88,8 @@ function StatsCard({
 
   const iconStyles = {
     default: "text-slate-600",
-    success: "text-emerald-600",
-    warning: "text-amber-600",
+    success: "text-[#D4AF37]",
+    warning: "text-[#D4AF37]",
     info: "text-blue-600",
     pending: "text-orange-600",
   };
@@ -99,10 +99,10 @@ function StatsCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-muted-foreground font-medium">{title}</p>
+            <p className="text-sm text-gray-600 font-medium">{title}</p>
             <p className="text-3xl font-bold mt-1 font-mono">{value}</p>
             {description && (
-              <p className="text-xs text-muted-foreground mt-1">{description}</p>
+              <p className="text-xs text-gray-600 mt-1">{description}</p>
             )}
           </div>
           <div
@@ -132,7 +132,7 @@ function StatusBadge({ status }: { status: string }) {
 
   return (
     <Badge variant={config.variant} className={cn(
-      status === "anchored" && "bg-emerald-500 hover:bg-emerald-600",
+      status === "anchored" && "bg-[#D4AF37] hover:bg-[#D4AF37]",
       status === "pending" && "bg-amber-100 text-amber-800 hover:bg-amber-200",
       status === "batched" && "bg-blue-100 text-blue-800 hover:bg-blue-200"
     )}>
@@ -152,7 +152,7 @@ function HashDisplay({ hash, label }: { hash: string; label?: string }) {
 
   return (
     <div className="flex items-center gap-2">
-      {label && <span className="text-sm text-muted-foreground">{label}:</span>}
+      {label && <span className="text-sm text-gray-600">{label}:</span>}
       <code className="text-xs bg-slate-100 px-2 py-1 rounded font-mono">
         {truncated}
       </code>
@@ -205,18 +205,18 @@ function MerkleProofViewer({ manifestId }: { manifestId: number }) {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label className="text-xs text-muted-foreground">Chain</Label>
+                <Label className="text-xs text-gray-600">Chain</Label>
                 <p className="font-medium">{proof.chainName} (ID: {proof.chainId})</p>
               </div>
               <div>
-                <Label className="text-xs text-muted-foreground">Status</Label>
+                <Label className="text-xs text-gray-600">Status</Label>
                 <p className="font-medium">
                   {proof.verified ? (
-                    <span className="text-emerald-600 flex items-center gap-1">
+                    <span className="text-[#D4AF37] flex items-center gap-1">
                       <CheckCircle2 className="h-4 w-4" /> Verified
                     </span>
                   ) : (
-                    <span className="text-amber-600 flex items-center gap-1">
+                    <span className="text-[#D4AF37] flex items-center gap-1">
                       <Clock className="h-4 w-4" /> Pending
                     </span>
                   )}
@@ -225,27 +225,27 @@ function MerkleProofViewer({ manifestId }: { manifestId: number }) {
             </div>
 
             <div>
-              <Label className="text-xs text-muted-foreground">Merkle Root</Label>
+              <Label className="text-xs text-gray-600">Merkle Root</Label>
               <code className="block text-xs bg-slate-100 p-2 rounded font-mono break-all mt-1">
                 {proof.merkleRoot}
               </code>
             </div>
 
             <div>
-              <Label className="text-xs text-muted-foreground">Leaf Hash</Label>
+              <Label className="text-xs text-gray-600">Leaf Hash</Label>
               <code className="block text-xs bg-slate-100 p-2 rounded font-mono break-all mt-1">
                 {proof.leafHash}
               </code>
             </div>
 
             <div>
-              <Label className="text-xs text-muted-foreground">Leaf Index</Label>
+              <Label className="text-xs text-gray-600">Leaf Index</Label>
               <p className="font-mono">{proof.leafIndex}</p>
             </div>
 
             {proof.txHash && (
               <div>
-                <Label className="text-xs text-muted-foreground">Transaction Hash</Label>
+                <Label className="text-xs text-gray-600">Transaction Hash</Label>
                 <div className="flex items-center gap-2 mt-1">
                   <code className="text-xs bg-slate-100 p-2 rounded font-mono break-all flex-1">
                     {proof.txHash}
@@ -264,19 +264,19 @@ function MerkleProofViewer({ manifestId }: { manifestId: number }) {
 
             {proof.blockNumber && (
               <div>
-                <Label className="text-xs text-muted-foreground">Block Number</Label>
+                <Label className="text-xs text-gray-600">Block Number</Label>
                 <p className="font-mono">{proof.blockNumber}</p>
               </div>
             )}
 
             <div>
-              <Label className="text-xs text-muted-foreground">Proof Path</Label>
+              <Label className="text-xs text-gray-600">Proof Path</Label>
               <div className="bg-slate-50 p-3 rounded mt-1 max-h-48 overflow-y-auto">
                 {proof.proofPath && Array.isArray(proof.proofPath) ? (
                   <div className="space-y-2">
                     {proof.proofPath.map((step: { hash: string; position: string }, idx: number) => (
                       <div key={idx} className="flex items-center gap-2 text-xs">
-                        <span className="text-muted-foreground">{idx + 1}.</span>
+                        <span className="text-gray-600">{idx + 1}.</span>
                         <code className="font-mono bg-white px-2 py-1 rounded break-all flex-1">
                           {step.hash}
                         </code>
@@ -287,13 +287,13 @@ function MerkleProofViewer({ manifestId }: { manifestId: number }) {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground">No proof path available</p>
+                  <p className="text-sm text-gray-600">No proof path available</p>
                 )}
               </div>
             </div>
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-gray-600">
             <AlertCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p>No Merkle proof available yet</p>
             <p className="text-sm">This manifest has not been anchored to blockchain</p>
@@ -544,14 +544,14 @@ export default function EvidenceVaultDashboard() {
           <GlassCard glow="gold" hover={false} className="p-6">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
-                  <Shield className="h-7 w-7 text-white" />
+                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#D4AF37] to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                  <Shield className="h-7 w-7 text-black" />
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900">
                     Evidence Vault
                   </h1>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-gray-600 text-sm">
                     Blockchain-anchored document integrity verification
                   </p>
                 </div>
@@ -560,7 +560,7 @@ export default function EvidenceVaultDashboard() {
                 {/* Service Status Indicators */}
                 <div className="flex items-center gap-4 px-4 py-2 bg-slate-50/80 rounded-xl">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">Blockchain:</span>
+                    <span className="text-xs text-gray-600">Blockchain:</span>
                     <StatusIndicator
                       status={blockchainHealth?.configured ? (blockchainHealth.connected ? "active" : "error") : "pending"}
                       size="sm"
@@ -568,7 +568,7 @@ export default function EvidenceVaultDashboard() {
                   </div>
                   <div className="h-4 w-px bg-slate-200" />
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">IPFS:</span>
+                    <span className="text-xs text-gray-600">IPFS:</span>
                     <StatusIndicator
                       status={ipfsHealth?.configured ? (ipfsHealth.connected ? "active" : "error") : "pending"}
                       size="sm"
@@ -643,17 +643,17 @@ export default function EvidenceVaultDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Chain Anchors</h3>
-                <p className="text-xs text-muted-foreground">Blockchain transaction batches</p>
+                <p className="text-xs text-gray-600">Blockchain transaction batches</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center p-4 bg-slate-50/80 rounded-xl border border-slate-100">
                 <p className="text-3xl font-bold font-mono">{stats?.totalAnchors || 0}</p>
-                <p className="text-sm text-muted-foreground">Total Anchors</p>
+                <p className="text-sm text-gray-600">Total Anchors</p>
               </div>
               <div className="text-center p-4 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-100">
                 <p className="text-3xl font-bold font-mono text-emerald-700">{stats?.confirmedAnchors || 0}</p>
-                <p className="text-sm text-muted-foreground">Confirmed</p>
+                <p className="text-sm text-gray-600">Confirmed</p>
               </div>
             </div>
           </GlassCard>
@@ -665,16 +665,16 @@ export default function EvidenceVaultDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold">Hash Algorithm</h3>
-                <p className="text-xs text-muted-foreground">Cryptographic standards used</p>
+                <p className="text-xs text-gray-600">Cryptographic standards used</p>
               </div>
             </div>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-slate-50/80 rounded-xl border border-slate-100">
-                <span className="text-sm text-muted-foreground">Document Hash</span>
+                <span className="text-sm text-gray-600">Document Hash</span>
                 <Badge variant="outline" className="bg-white">SHA-256</Badge>
               </div>
               <div className="flex items-center justify-between p-3 bg-slate-50/80 rounded-xl border border-slate-100">
-                <span className="text-sm text-muted-foreground">Merkle Tree</span>
+                <span className="text-sm text-gray-600">Merkle Tree</span>
                 <Badge variant="outline" className="bg-white">Keccak-256</Badge>
               </div>
             </div>
@@ -687,7 +687,7 @@ export default function EvidenceVaultDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="text-lg flex items-center gap-2">
-                  <FileCheck className="h-5 w-5 text-amber-600" />
+                  <FileCheck className="h-5 w-5 text-[#D4AF37]" />
                   Pending Manifests
                 </CardTitle>
                 <CardDescription>Documents awaiting blockchain anchoring</CardDescription>
@@ -772,7 +772,7 @@ export default function EvidenceVaultDashboard() {
                         <TableCell>
                           <StatusBadge status={manifest.anchorStatus} />
                         </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
+                        <TableCell className="text-sm text-gray-600">
                           {manifest.createdAt ? new Date(manifest.createdAt).toLocaleDateString() : '-'}
                         </TableCell>
                         <TableCell className="text-right">
@@ -784,7 +784,7 @@ export default function EvidenceVaultDashboard() {
                 </Table>
               </div>
             ) : (
-              <div className="text-center py-12 text-muted-foreground">
+              <div className="text-center py-12 text-gray-600">
                 <FileCheck className="h-12 w-12 mx-auto mb-3 opacity-50" />
                 <p>No pending manifests</p>
                 <p className="text-sm">Create a new manifest to get started</p>
@@ -797,7 +797,7 @@ export default function EvidenceVaultDashboard() {
         <Card className="mt-8 bg-gradient-to-br from-slate-50 to-white">
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <Shield className="h-5 w-5 text-amber-600" />
+              <Shield className="h-5 w-5 text-[#D4AF37]" />
               How Evidence Vault Works
             </CardTitle>
           </CardHeader>
@@ -808,7 +808,7 @@ export default function EvidenceVaultDashboard() {
                   <Hash className="h-6 w-6 text-blue-600" />
                 </div>
                 <h4 className="font-semibold mb-2">1. Hash Documents</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   Documents are hashed using SHA-256, creating a unique fingerprint without storing the actual content.
                 </p>
               </div>
@@ -817,16 +817,16 @@ export default function EvidenceVaultDashboard() {
                   <GitBranch className="h-6 w-6 text-purple-600" />
                 </div>
                 <h4 className="font-semibold mb-2">2. Merkle Batching</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   Multiple hashes are combined into a Merkle tree, generating a single root hash for efficient verification.
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
-                  <Link2 className="h-6 w-6 text-emerald-600" />
+                  <Link2 className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <h4 className="font-semibold mb-2">3. Blockchain Anchor</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   The Merkle root is anchored to Ethereum, providing immutable proof of document existence at a point in time.
                 </p>
               </div>

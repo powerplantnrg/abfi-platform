@@ -59,7 +59,7 @@ export default function Explainers() {
             className="text-4xl mb-3"
             style={{
               fontFamily: "'DM Serif Display', serif",
-              color: "var(--text-primary)"
+              color: "var(--text-[#D4AF37])"
             }}
           >
             Platform Explainers
@@ -113,7 +113,7 @@ export default function Explainers() {
                         <div className="flex items-center justify-between">
                           <h3
                             className="font-semibold text-sm truncate"
-                            style={{ color: isActive ? category.color : "var(--text-primary)" }}
+                            style={{ color: isActive ? category.color : "var(--text-[#D4AF37])" }}
                           >
                             {set.title}
                           </h3>
@@ -157,7 +157,7 @@ export default function Explainers() {
               className="mt-6 p-6 rounded-xl"
               style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-subtle)" }}
             >
-              <h3 className="font-semibold mb-3" style={{ color: "var(--text-primary)" }}>
+              <h3 className="font-semibold mb-3" style={{ color: "var(--text-[#D4AF37])" }}>
                 About This Topic
               </h3>
               <div className="prose prose-sm" style={{ color: "var(--text-secondary)" }}>

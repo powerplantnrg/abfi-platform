@@ -208,12 +208,12 @@ export default function DemandSignalDetail() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-white">
+      <section className="bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-black">
         <PageContainer size="lg" padding="md" className="py-8">
           <Button
             variant="ghost"
             onClick={() => setLocation("/demand-signals")}
-            className="mb-4 text-white/80 hover:text-white hover:bg-white/10"
+            className="mb-4 text-black/80 hover:text-black hover:bg-white/10"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Demand Signals
@@ -222,7 +222,7 @@ export default function DemandSignalDetail() {
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
             <div className="flex-1">
               {showingMockData && (
-                <Badge className="mb-3 bg-white/20 text-white border-white/30">
+                <Badge className="mb-3 bg-white/20 text-black border-white/30">
                   Demo Data
                 </Badge>
               )}
@@ -230,14 +230,14 @@ export default function DemandSignalDetail() {
                 <Badge className={`${category.bg} ${category.text} border-0`}>
                   {category.label}
                 </Badge>
-                <Badge variant="outline" className="text-white border-white/30">
+                <Badge variant="outline" className="text-black border-white/30">
                   {signal.feedstockType}
                 </Badge>
                 <Badge
                   variant={
                     signal.status === "published" ? "default" : "secondary"
                   }
-                  className="bg-emerald-500 text-white border-0"
+                  className="bg-[#D4AF37] text-black border-0"
                 >
                   {signal.status}
                 </Badge>
@@ -245,7 +245,7 @@ export default function DemandSignalDetail() {
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-3">
                 {signal.title}
               </h1>
-              <div className="flex items-center gap-4 text-white/70 text-sm">
+              <div className="flex items-center gap-4 text-black/70 text-sm">
                 <span className="flex items-center gap-1">
                   <Building2 className="h-4 w-4" />
                   {(signal as any).buyerName || "Verified Buyer"}
@@ -259,9 +259,9 @@ export default function DemandSignalDetail() {
               <div className="text-4xl md:text-5xl font-bold font-mono">
                 {signal.annualVolume?.toLocaleString()}
               </div>
-              <div className="text-white/70">tonnes/year</div>
+              <div className="text-black/70">tonnes/year</div>
               {signal.volumeFlexibility && (
-                <div className="text-sm text-white/60 mt-1">
+                <div className="text-sm text-black/60 mt-1">
                   ±{signal.volumeFlexibility}% flexibility
                 </div>
               )}
@@ -280,12 +280,12 @@ export default function DemandSignalDetail() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Package className="h-5 w-5 text-primary" />
+                    <Package className="h-5 w-5 text-[#D4AF37]" />
                     Overview
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed">
                     {signal.description}
                   </p>
                 </CardContent>
@@ -296,14 +296,14 @@ export default function DemandSignalDetail() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
+                  <Package className="h-5 w-5 text-[#D4AF37]" />
                   Volume Requirements
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Annual Volume
                     </div>
                     <div className="text-xl font-bold font-mono">
@@ -312,7 +312,7 @@ export default function DemandSignalDetail() {
                   </div>
                   {signal.volumeFlexibility && (
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm text-gray-600 mb-1">
                         Flexibility
                       </div>
                       <div className="text-xl font-bold">
@@ -321,7 +321,7 @@ export default function DemandSignalDetail() {
                     </div>
                   )}
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Delivery Frequency
                     </div>
                     <div className="text-xl font-bold capitalize">
@@ -330,7 +330,7 @@ export default function DemandSignalDetail() {
                   </div>
                   {signal.contractTerm && (
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm text-gray-600 mb-1">
                         Contract Term
                       </div>
                       <div className="text-xl font-bold">
@@ -352,7 +352,7 @@ export default function DemandSignalDetail() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Beaker className="h-5 w-5 text-primary" />
+                    <Beaker className="h-5 w-5 text-[#D4AF37]" />
                     Quality Specifications
                   </CardTitle>
                 </CardHeader>
@@ -360,7 +360,7 @@ export default function DemandSignalDetail() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-6">
                     {signal.minMoistureContent && (
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">
+                        <div className="text-sm text-gray-600 mb-1">
                           Min Moisture
                         </div>
                         <div className="font-semibold">
@@ -370,7 +370,7 @@ export default function DemandSignalDetail() {
                     )}
                     {signal.maxMoistureContent && (
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">
+                        <div className="text-sm text-gray-600 mb-1">
                           Max Moisture
                         </div>
                         <div className="font-semibold">
@@ -380,7 +380,7 @@ export default function DemandSignalDetail() {
                     )}
                     {signal.minEnergyContent && (
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">
+                        <div className="text-sm text-gray-600 mb-1">
                           Min Energy Content
                         </div>
                         <div className="font-semibold">
@@ -390,7 +390,7 @@ export default function DemandSignalDetail() {
                     )}
                     {signal.maxAshContent && (
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">
+                        <div className="text-sm text-gray-600 mb-1">
                           Max Ash
                         </div>
                         <div className="font-semibold">
@@ -400,7 +400,7 @@ export default function DemandSignalDetail() {
                     )}
                     {signal.maxChlorineContent && (
                       <div>
-                        <div className="text-sm text-muted-foreground mb-1">
+                        <div className="text-sm text-gray-600 mb-1">
                           Max Chlorine
                         </div>
                         <div className="font-semibold">
@@ -411,7 +411,7 @@ export default function DemandSignalDetail() {
                   </div>
                   {signal.otherQualitySpecs && (
                     <div className="pt-4 border-t">
-                      <div className="text-sm text-muted-foreground mb-2">
+                      <div className="text-sm text-gray-600 mb-2">
                         Additional Requirements
                       </div>
                       <p className="text-sm">{signal.otherQualitySpecs}</p>
@@ -425,25 +425,25 @@ export default function DemandSignalDetail() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Truck className="h-5 w-5 text-primary" />
+                  <Truck className="h-5 w-5 text-[#D4AF37]" />
                   Delivery Requirements
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Delivery Location
                     </div>
                     <div className="font-semibold flex items-center gap-1">
-                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                      <MapPin className="h-4 w-4 text-gray-600" />
                       {signal.deliveryLocation}
                       {signal.deliveryState && `, ${signal.deliveryState}`}
                     </div>
                   </div>
                   {signal.maxTransportDistance && (
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm text-gray-600 mb-1">
                         Max Transport Distance
                       </div>
                       <div className="font-semibold">
@@ -452,7 +452,7 @@ export default function DemandSignalDetail() {
                     </div>
                   )}
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Delivery Method
                     </div>
                     <div className="font-semibold capitalize">
@@ -467,7 +467,7 @@ export default function DemandSignalDetail() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-primary" />
+                  <DollarSign className="h-5 w-5 text-[#D4AF37]" />
                   Pricing
                 </CardTitle>
               </CardHeader>
@@ -475,26 +475,26 @@ export default function DemandSignalDetail() {
                 <div className="grid grid-cols-2 gap-6">
                   {signal.indicativePriceMin && signal.indicativePriceMax && (
                     <div>
-                      <div className="text-sm text-muted-foreground mb-1">
+                      <div className="text-sm text-gray-600 mb-1">
                         Indicative Price Range
                       </div>
-                      <div className="text-2xl font-bold font-mono text-primary">
+                      <div className="text-2xl font-bold font-mono text-[#D4AF37]">
                         ${signal.indicativePriceMin} - $
                         {signal.indicativePriceMax}
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-gray-600">
                         AUD per tonne
                       </div>
                     </div>
                   )}
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">
+                    <div className="text-sm text-gray-600 mb-1">
                       Pricing Mechanism
                     </div>
                     <div className="font-semibold capitalize">
                       {signal.pricingMechanism}
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">
+                    <div className="text-xs text-gray-600 mt-1">
                       {signal.pricingMechanism === "indexed" &&
                         "Price adjusts with market indices"}
                       {signal.pricingMechanism === "fixed" &&
@@ -514,7 +514,7 @@ export default function DemandSignalDetail() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Leaf className="h-5 w-5 text-primary" />
+                    <Leaf className="h-5 w-5 text-[#D4AF37]" />
                     Sustainability Requirements
                   </CardTitle>
                 </CardHeader>
@@ -538,14 +538,14 @@ export default function DemandSignalDetail() {
                     <h3 className="font-semibold mb-2">
                       Response Deadline Passed
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       This demand signal is no longer accepting responses.
                     </p>
                   </div>
                 ) : (
                   <>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-sm text-gray-600">
                         Response Deadline
                       </span>
                       <Badge
@@ -736,7 +736,7 @@ export default function DemandSignalDetail() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-gray-600">
                     Supply Start
                   </div>
                   <div className="font-semibold">
@@ -745,7 +745,7 @@ export default function DemandSignalDetail() {
                 </div>
                 {signal.supplyEndDate && (
                   <div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-gray-600">
                       Supply End
                     </div>
                     <div className="font-semibold">
@@ -754,7 +754,7 @@ export default function DemandSignalDetail() {
                   </div>
                 )}
                 <div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-gray-600">
                     Response Deadline
                   </div>
                   <div className="font-semibold text-red-600">
@@ -771,7 +771,7 @@ export default function DemandSignalDetail() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-2 text-sm text-gray-600">
                     <Zap className="h-4 w-4" />
                     Responses
                   </span>
@@ -780,7 +780,7 @@ export default function DemandSignalDetail() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-2 text-sm text-gray-600">
                     <Eye className="h-4 w-4" />
                     Views
                   </span>
@@ -788,13 +788,13 @@ export default function DemandSignalDetail() {
                 </div>
                 <div className="pt-3 border-t">
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">
+                    <span className="text-gray-600">
                       Volume Coverage
                     </span>
                     <span className="font-medium">{responseCoverage}%</span>
                   </div>
                   <Progress value={responseCoverage} className="h-2" />
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="text-xs text-gray-600 mt-2">
                     Estimated coverage based on {signal.responseCount || 0}{" "}
                     responses
                   </p>
@@ -812,14 +812,14 @@ export default function DemandSignalDetail() {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Building2 className="h-6 w-6 text-primary" />
+                  <div className="w-12 h-12 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center">
+                    <Building2 className="h-6 w-6 text-[#D4AF37]" />
                   </div>
                   <div>
                     <div className="font-semibold">
                       {(signal as any).buyerName || "Verified Buyer"}
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-gray-600">
                       ABFI Verified
                     </div>
                   </div>

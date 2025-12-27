@@ -156,12 +156,12 @@ export default function CreateDemandSignal() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-white">
+      <section className="bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900 text-black">
         <PageContainer size="lg" padding="md" className="py-8">
           <Button
             variant="ghost"
             onClick={() => setLocation("/demand-signals")}
-            className="mb-4 text-white/80 hover:text-white hover:bg-white/10"
+            className="mb-4 text-black/80 hover:text-black hover:bg-white/10"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Demand Signals
@@ -172,13 +172,13 @@ export default function CreateDemandSignal() {
               <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">
                 Post Demand Signal
               </h1>
-              <p className="text-white/70">
+              <p className="text-black/70">
                 Specify your feedstock requirements to connect with verified
                 suppliers
               </p>
             </div>
             <div className="hidden md:flex items-center gap-2">
-              <Badge variant="outline" className="text-white border-white/30">
+              <Badge variant="outline" className="text-black border-white/30">
                 Step {currentStep} of {STEPS.length}
               </Badge>
             </div>
@@ -201,10 +201,10 @@ export default function CreateDemandSignal() {
                   onClick={() => setCurrentStep(step.id)}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg whitespace-nowrap transition-all ${
                     isActive
-                      ? "bg-primary text-white"
+                      ? "bg-primary text-black"
                       : isComplete
-                        ? "bg-primary/10 text-primary"
-                        : "text-muted-foreground hover:bg-muted"
+                        ? "bg-[#D4AF37]/10 text-[#D4AF37]"
+                        : "text-gray-600 hover:bg-muted"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -226,7 +226,7 @@ export default function CreateDemandSignal() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
+                  <Package className="h-5 w-5 text-[#D4AF37]" />
                   Basic Information
                 </CardTitle>
                 <CardDescription>
@@ -244,7 +244,7 @@ export default function CreateDemandSignal() {
                     className="mt-1.5"
                     required
                   />
-                  <p className="text-sm text-muted-foreground mt-1.5">
+                  <p className="text-sm text-gray-600 mt-1.5">
                     A clear title helps suppliers quickly understand your needs
                   </p>
                 </div>
@@ -315,7 +315,7 @@ export default function CreateDemandSignal() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
+                  <Package className="h-5 w-5 text-[#D4AF37]" />
                   Volume Requirements
                 </CardTitle>
                 <CardDescription>
@@ -353,7 +353,7 @@ export default function CreateDemandSignal() {
                       placeholder="e.g., 10"
                       className="mt-1.5"
                     />
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-gray-600 mt-1">
                       Acceptable variation in volume
                     </p>
                   </div>
@@ -388,7 +388,7 @@ export default function CreateDemandSignal() {
                   <h4 className="font-medium mb-2">Volume Calculator</h4>
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
-                      <div className="text-muted-foreground">Daily</div>
+                      <div className="text-gray-600">Daily</div>
                       <div className="font-mono font-medium">
                         {formData.annualVolume
                           ? `${Math.round(parseInt(formData.annualVolume) / 365)} t`
@@ -396,7 +396,7 @@ export default function CreateDemandSignal() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-muted-foreground">Monthly</div>
+                      <div className="text-gray-600">Monthly</div>
                       <div className="font-mono font-medium">
                         {formData.annualVolume
                           ? `${Math.round(parseInt(formData.annualVolume) / 12).toLocaleString()} t`
@@ -404,7 +404,7 @@ export default function CreateDemandSignal() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-muted-foreground">Quarterly</div>
+                      <div className="text-gray-600">Quarterly</div>
                       <div className="font-mono font-medium">
                         {formData.annualVolume
                           ? `${Math.round(parseInt(formData.annualVolume) / 4).toLocaleString()} t`
@@ -422,7 +422,7 @@ export default function CreateDemandSignal() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Beaker className="h-5 w-5 text-primary" />
+                  <Beaker className="h-5 w-5 text-[#D4AF37]" />
                   Quality Specifications
                 </CardTitle>
                 <CardDescription>
@@ -535,7 +535,7 @@ export default function CreateDemandSignal() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-primary" />
+                  <MapPin className="h-5 w-5 text-[#D4AF37]" />
                   Delivery Requirements
                 </CardTitle>
                 <CardDescription>
@@ -598,7 +598,7 @@ export default function CreateDemandSignal() {
                       placeholder="e.g., 200"
                       className="mt-1.5"
                     />
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-gray-600 mt-1">
                       Leave blank for no restriction
                     </p>
                   </div>
@@ -636,7 +636,7 @@ export default function CreateDemandSignal() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-primary" />
+                  <DollarSign className="h-5 w-5 text-[#D4AF37]" />
                   Pricing
                 </CardTitle>
                 <CardDescription>
@@ -706,7 +706,7 @@ export default function CreateDemandSignal() {
                 {formData.annualVolume && formData.indicativePriceMax && (
                   <div className="bg-primary/5 rounded-lg p-4 border border-primary/20">
                     <h4 className="font-medium mb-2">Estimated Annual Value</h4>
-                    <div className="text-2xl font-bold font-mono text-primary">
+                    <div className="text-2xl font-bold font-mono text-[#D4AF37]">
                       $
                       {(
                         parseInt(formData.annualVolume) *
@@ -714,7 +714,7 @@ export default function CreateDemandSignal() {
                       ).toLocaleString()}{" "}
                       AUD
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-gray-600 mt-1">
                       Based on max price × annual volume
                     </p>
                   </div>
@@ -728,7 +728,7 @@ export default function CreateDemandSignal() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-primary" />
+                  <Calendar className="h-5 w-5 text-[#D4AF37]" />
                   Timeline
                 </CardTitle>
                 <CardDescription>
@@ -792,7 +792,7 @@ export default function CreateDemandSignal() {
                       className="mt-1.5"
                       required
                     />
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-gray-600 mt-1">
                       After this date, no new responses can be submitted
                     </p>
                   </div>
@@ -823,7 +823,7 @@ export default function CreateDemandSignal() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                    <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
                     Review Your Demand Signal
                   </CardTitle>
                   <CardDescription>
@@ -834,14 +834,14 @@ export default function CreateDemandSignal() {
                   <div className="space-y-6">
                     {/* Basic Info */}
                     <div className="border-b pb-4">
-                      <h4 className="text-sm font-medium text-muted-foreground mb-2">
+                      <h4 className="text-sm font-medium text-gray-600 mb-2">
                         BASIC INFORMATION
                       </h4>
                       <h3 className="text-xl font-semibold">
                         {formData.title || "Untitled Signal"}
                       </h3>
                       {formData.description && (
-                        <p className="text-muted-foreground mt-2">
+                        <p className="text-gray-600 mt-2">
                           {formData.description}
                         </p>
                       )}
@@ -858,7 +858,7 @@ export default function CreateDemandSignal() {
                     {/* Volume */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-b pb-4">
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Annual Volume
                         </div>
                         <div className="font-semibold font-mono">
@@ -868,7 +868,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Flexibility
                         </div>
                         <div className="font-semibold">
@@ -878,7 +878,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Frequency
                         </div>
                         <div className="font-semibold capitalize">
@@ -886,7 +886,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Contract Term
                         </div>
                         <div className="font-semibold">
@@ -900,7 +900,7 @@ export default function CreateDemandSignal() {
                     {/* Location & Delivery */}
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border-b pb-4">
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Delivery Location
                         </div>
                         <div className="font-semibold">
@@ -908,7 +908,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Delivery Method
                         </div>
                         <div className="font-semibold capitalize">
@@ -916,7 +916,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Max Distance
                         </div>
                         <div className="font-semibold">
@@ -930,7 +930,7 @@ export default function CreateDemandSignal() {
                     {/* Pricing */}
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border-b pb-4">
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Price Range
                         </div>
                         <div className="font-semibold font-mono">
@@ -941,7 +941,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Pricing Mechanism
                         </div>
                         <div className="font-semibold capitalize">
@@ -953,7 +953,7 @@ export default function CreateDemandSignal() {
                     {/* Timeline */}
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Supply Start
                         </div>
                         <div className="font-semibold">
@@ -961,7 +961,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Supply End
                         </div>
                         <div className="font-semibold">
@@ -969,7 +969,7 @@ export default function CreateDemandSignal() {
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-sm text-gray-600">
                           Response Deadline
                         </div>
                         <div className="font-semibold text-red-600">

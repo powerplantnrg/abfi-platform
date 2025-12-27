@@ -374,7 +374,7 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
                 <Menu className="h-5 w-5 text-slate-700" />
               </button>
               <div className="flex items-center gap-2">
-                <Leaf className="h-5 w-5 text-teal-600" />
+                <Leaf className="h-5 w-5 text-[#D4AF37]" />
                 <span className="font-semibold tracking-tight text-foreground">
                   ABFI
                 </span>

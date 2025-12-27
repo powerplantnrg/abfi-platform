@@ -124,9 +124,9 @@ const MY_LISTINGS = [
 
 // Quick stats
 const QUICK_STATS = [
-  { label: "Active Listings", value: "2", icon: Leaf, color: "text-emerald-600" },
+  { label: "Active Listings", value: "2", icon: Leaf, color: "text-[#D4AF37]" },
   { label: "Total Volume", value: "3,300 t", icon: TrendingUp, color: "text-blue-600" },
-  { label: "Pending Inquiries", value: "4", icon: Bell, color: "text-amber-600" },
+  { label: "Pending Inquiries", value: "4", icon: Bell, color: "text-[#D4AF37]" },
   { label: "Avg. Rating", value: "A", icon: Star, color: "text-purple-600" },
 ];
 
@@ -184,7 +184,7 @@ export default function GrowerDashboard() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="text-xs text-muted-foreground">{stat.label}</p>
+                  <p className="text-xs text-gray-600">{stat.label}</p>
                 </div>
               </div>
             ))}
@@ -204,7 +204,7 @@ export default function GrowerDashboard() {
                   <CardHeader className="pb-2 pt-4">
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-sm flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                        <CheckCircle2 className="h-4 w-4 text-[#D4AF37]" />
                         Complete Setup
                       </CardTitle>
                       <Badge variant="outline" className="text-xs bg-emerald-100 text-emerald-700">
@@ -220,11 +220,11 @@ export default function GrowerDashboard() {
                           key={item.id}
                           className={cn(
                             "flex items-center gap-2 text-xs",
-                            item.completed ? "text-emerald-700" : "text-muted-foreground"
+                            item.completed ? "text-emerald-700" : "text-gray-600"
                           )}
                         >
                           {item.completed ? (
-                            <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                            <CheckCircle2 className="h-3 w-3 text-[#D4AF37]" />
                           ) : (
                             <Circle className="h-3 w-3" />
                           )}
@@ -241,7 +241,7 @@ export default function GrowerDashboard() {
               {/* Priority Actions */}
               <div>
                 <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-amber-500" />
+                  <AlertTriangle className="h-4 w-4 text-[#D4AF37]" />
                   Priority Actions
                 </h3>
                 <div className="space-y-2">
@@ -260,7 +260,7 @@ export default function GrowerDashboard() {
                             className={cn(
                               "h-8 w-8 rounded-lg flex items-center justify-center shrink-0",
                               action.priority === "high"
-                                ? "bg-amber-500/10"
+                                ? "bg-[#D4AF37]/10"
                                 : "bg-muted"
                             )}
                           >
@@ -268,18 +268,18 @@ export default function GrowerDashboard() {
                               className={cn(
                                 "h-4 w-4",
                                 action.priority === "high"
-                                  ? "text-amber-600"
-                                  : "text-muted-foreground"
+                                  ? "text-[#D4AF37]"
+                                  : "text-gray-600"
                               )}
                             />
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium">{action.title}</p>
-                            <p className="text-xs text-muted-foreground line-clamp-1">
+                            <p className="text-xs text-gray-600 line-clamp-1">
                               {action.description}
                             </p>
                           </div>
-                          <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
+                          <ChevronRight className="h-4 w-4 text-gray-600 shrink-0" />
                         </div>
                       </div>
                     </Link>
@@ -291,7 +291,7 @@ export default function GrowerDashboard() {
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-sm font-semibold flex items-center gap-2">
-                    <Leaf className="h-4 w-4 text-emerald-600" />
+                    <Leaf className="h-4 w-4 text-[#D4AF37]" />
                     My Listings
                   </h3>
                   <Link href="/feedstock/create">
@@ -305,8 +305,8 @@ export default function GrowerDashboard() {
                 <div className="space-y-2">
                   {MY_LISTINGS.length === 0 ? (
                     <div className="text-center py-8 px-4 border rounded-lg border-dashed">
-                      <Leaf className="h-8 w-8 mx-auto mb-2 text-muted-foreground/50" />
-                      <p className="text-sm text-muted-foreground">No listings yet</p>
+                      <Leaf className="h-8 w-8 mx-auto mb-2 text-gray-600/50" />
+                      <p className="text-sm text-gray-600">No listings yet</p>
                       <Link href="/feedstock/create">
                         <Button size="sm" className="mt-3" variant="default">
                           <Plus className="h-4 w-4 mr-2" />
@@ -352,7 +352,7 @@ export default function GrowerDashboard() {
                                     {listing.status}
                                   </Badge>
                                 </div>
-                                <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
+                                <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
                                   <span className="flex items-center gap-1">
                                     <MapPin className="h-3 w-3" />
                                     {listing.location.label}
@@ -397,36 +397,36 @@ export default function GrowerDashboard() {
                               <div className="grid grid-cols-2 gap-3 pt-3">
                                 {/* Volume */}
                                 <div className="flex items-center gap-2">
-                                  <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                                  <TrendingUp className="h-4 w-4 text-gray-600" />
                                   <div>
-                                    <p className="text-xs text-muted-foreground">Volume</p>
+                                    <p className="text-xs text-gray-600">Volume</p>
                                     <p className="text-sm font-medium">{listing.volume}</p>
                                   </div>
                                 </div>
 
                                 {/* Next Harvest */}
                                 <div className="flex items-center gap-2">
-                                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                                  <Calendar className="h-4 w-4 text-gray-600" />
                                   <div>
-                                    <p className="text-xs text-muted-foreground">Harvest</p>
+                                    <p className="text-xs text-gray-600">Harvest</p>
                                     <p className="text-sm font-medium">{listing.nextHarvest}</p>
                                   </div>
                                 </div>
 
                                 {/* Quality Score */}
                                 <div className="flex items-center gap-2">
-                                  <Shield className="h-4 w-4 text-muted-foreground" />
+                                  <Shield className="h-4 w-4 text-gray-600" />
                                   <div>
-                                    <p className="text-xs text-muted-foreground">Quality</p>
+                                    <p className="text-xs text-gray-600">Quality</p>
                                     <p className="text-sm font-medium">{listing.quality}%</p>
                                   </div>
                                 </div>
 
                                 {/* Inquiries */}
                                 <div className="flex items-center gap-2">
-                                  <Bell className="h-4 w-4 text-muted-foreground" />
+                                  <Bell className="h-4 w-4 text-gray-600" />
                                   <div>
-                                    <p className="text-xs text-muted-foreground">Inquiries</p>
+                                    <p className="text-xs text-gray-600">Inquiries</p>
                                     <p className="text-sm font-medium">{listing.inquiries}</p>
                                   </div>
                                 </div>
@@ -436,7 +436,7 @@ export default function GrowerDashboard() {
                               {listing.moisture !== null && (
                                 <div className="mt-3 pt-3 border-t">
                                   <div className="flex items-center justify-between text-xs">
-                                    <span className="flex items-center gap-1 text-muted-foreground">
+                                    <span className="flex items-center gap-1 text-gray-600">
                                       <Droplets className="h-3 w-3" />
                                       Moisture Content
                                     </span>
@@ -487,11 +487,11 @@ export default function GrowerDashboard() {
             <h4 className="text-xs font-semibold mb-2">My Feedstocks</h4>
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-xs">
-                <div className="h-3 w-3 rounded-full bg-emerald-500" />
+                <div className="h-3 w-3 rounded-full bg-[#D4AF37]" />
                 <span>Active ({MY_LISTINGS.filter((l) => l.status === "active").length})</span>
               </div>
               <div className="flex items-center gap-2 text-xs">
-                <div className="h-3 w-3 rounded-full bg-amber-500" />
+                <div className="h-3 w-3 rounded-full bg-[#D4AF37]" />
                 <span>Pending ({MY_LISTINGS.filter((l) => l.status === "pending").length})</span>
               </div>
             </div>

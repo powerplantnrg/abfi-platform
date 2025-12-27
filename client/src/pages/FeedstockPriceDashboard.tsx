@@ -175,7 +175,7 @@ export default function FeedstockPriceDashboard() {
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
-              <p className="text-muted-foreground mb-4">{error}</p>
+              <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Retry
@@ -202,7 +202,7 @@ export default function FeedstockPriceDashboard() {
               </Link>
             </div>
             <h1 className="text-3xl font-bold">Feedstock Price Index</h1>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-gray-600 mt-1">
               IOSCO-compliant pricing methodology for biofuel feedstocks
             </p>
           </div>
@@ -263,7 +263,7 @@ export default function FeedstockPriceDashboard() {
                   <span className="text-3xl font-bold">
                     {formatCurrency(kpi.price)}
                   </span>
-                  <span className="text-sm text-muted-foreground mb-1">
+                  <span className="text-sm text-gray-600 mb-1">
                     /{kpi.unit}
                   </span>
                 </div>
@@ -460,7 +460,7 @@ export default function FeedstockPriceDashboard() {
                       />
                       <div>
                         <div className="font-medium">{region.region_name}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-xs text-gray-600">
                           {region.region}
                         </div>
                       </div>

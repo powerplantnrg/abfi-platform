@@ -182,9 +182,9 @@ export default function PlatformHealth() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-slate-900 via-emerald-900/20 to-slate-900 text-white py-12 lg:py-16 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-slate-900 via-emerald-900/20 to-slate-900 text-black py-12 lg:py-16 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-emerald-500/10 blur-[100px]" />
+          <div className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] rounded-full bg-[#D4AF37]/10 blur-[100px]" />
         </div>
 
         <PageContainer className="relative z-10" padding="none">
@@ -194,7 +194,7 @@ export default function PlatformHealth() {
                 <Badge
                   variant="outline"
                   className={cn(
-                    "border-emerald-400/50 text-emerald-300 bg-emerald-500/10",
+                    "border-emerald-400/50 text-emerald-300 bg-[#D4AF37]/10",
                     overallStatus === "operational" && "border-emerald-400/50",
                     overallStatus === "degraded" && "border-yellow-400/50 text-yellow-300 bg-yellow-500/10",
                     overallStatus === "outage" && "border-red-400/50 text-red-300 bg-red-500/10"
@@ -211,7 +211,7 @@ export default function PlatformHealth() {
               <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
                 Platform Status
               </h1>
-              <p className="text-xl text-slate-300 leading-relaxed">
+              <p className="text-xl text-gray-600 leading-relaxed">
                 Real-time monitoring, uptime tracking, and trust certifications
                 for the ABFI platform.
               </p>
@@ -222,7 +222,7 @@ export default function PlatformHealth() {
                 onClick={handleRefresh}
                 disabled={isRefreshing}
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10"
+                className="border-white/20 text-black hover:bg-white/10"
               >
                 <RefreshCw className={cn("h-4 w-4 mr-2", isRefreshing && "animate-spin")} />
                 Refresh
@@ -230,7 +230,7 @@ export default function PlatformHealth() {
             </div>
           </div>
 
-          <div className="mt-6 text-sm text-slate-400">
+          <div className="mt-6 text-sm text-gray-500">
             <Clock className="h-4 w-4 inline mr-1" />
             Last updated: {lastUpdated.toLocaleString("en-AU")}
           </div>
@@ -261,14 +261,14 @@ export default function PlatformHealth() {
                     >
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg bg-muted">
-                          <Icon className="h-4 w-4 text-muted-foreground" />
+                          <Icon className="h-4 w-4 text-gray-600" />
                         </div>
                         <div>
                           <div className="font-medium flex items-center gap-2">
                             {component.name}
                             {getStatusIcon(component.status)}
                           </div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             {component.uptime}% uptime • {component.responseTime}ms avg
                           </div>
                         </div>
@@ -314,7 +314,7 @@ export default function PlatformHealth() {
                           isExceeding ? "text-green-600" : "text-red-600"
                         )}>
                           {metric.actual}{metric.unit}
-                          <span className="text-muted-foreground ml-1">
+                          <span className="text-gray-600 ml-1">
                             / {metric.target}{metric.unit} target
                           </span>
                         </span>
@@ -348,7 +348,7 @@ export default function PlatformHealth() {
                   <div className="text-center py-8">
                     <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
                     <p className="font-medium">No incidents in the past 90 days</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       All systems have been operating normally
                     </p>
                   </div>
@@ -392,7 +392,7 @@ export default function PlatformHealth() {
                               {incident.impact}
                             </Badge>
                           </div>
-                          <div className="text-xs text-muted-foreground mt-1">
+                          <div className="text-xs text-gray-600 mt-1">
                             {incident.date} • Duration: {incident.duration}
                           </div>
                         </div>
@@ -425,12 +425,12 @@ export default function PlatformHealth() {
                       className="p-4 rounded-lg border bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="p-2 rounded-lg bg-primary/10">
-                          <Icon className="h-5 w-5 text-primary" />
+                        <div className="p-2 rounded-lg bg-[#D4AF37]/10">
+                          <Icon className="h-5 w-5 text-[#D4AF37]" />
                         </div>
                         <div className="flex-1">
                           <div className="font-semibold">{badge.name}</div>
-                          <div className="text-xs text-muted-foreground mb-2">
+                          <div className="text-xs text-gray-600 mb-2">
                             {badge.description}
                           </div>
                           <Badge
@@ -446,7 +446,7 @@ export default function PlatformHealth() {
                             {badge.status.charAt(0).toUpperCase() + badge.status.slice(1)}
                           </Badge>
                           {badge.validUntil && (
-                            <div className="text-xs text-muted-foreground mt-2">
+                            <div className="text-xs text-gray-600 mt-2">
                               Valid until: {badge.validUntil}
                             </div>
                           )}
@@ -468,19 +468,19 @@ export default function PlatformHealth() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Active Users</span>
+                  <span className="text-sm text-gray-600">Active Users</span>
                   <span className="font-mono font-semibold">2,547</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">API Calls Today</span>
+                  <span className="text-sm text-gray-600">API Calls Today</span>
                   <span className="font-mono font-semibold">1.2M</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Certificates Issued</span>
+                  <span className="text-sm text-gray-600">Certificates Issued</span>
                   <span className="font-mono font-semibold">847</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Data Points</span>
+                  <span className="text-sm text-gray-600">Data Points</span>
                   <span className="font-mono font-semibold">45.3M</span>
                 </div>
               </CardContent>

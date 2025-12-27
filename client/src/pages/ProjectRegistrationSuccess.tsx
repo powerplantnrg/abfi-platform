@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function ProjectRegistrationSuccess() {
   return (
-    <div className="min-h-screen bg-[#0a0f14] text-white">
+    <div className="min-h-screen bg-[#0a0f14] text-black">
       {/* Background gradients */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#c9a962]/5 rounded-full blur-[120px]" />
@@ -17,7 +17,7 @@ export default function ProjectRegistrationSuccess() {
         <div className="flex justify-center mb-8">
           <div className="relative">
             <div className="w-24 h-24 bg-gradient-to-br from-[#c9a962] to-[#a88a4a] rounded-full flex items-center justify-center">
-              <Check className="w-12 h-12 text-white" />
+              <Check className="w-12 h-12 text-black" />
             </div>
             <div className="absolute inset-0 bg-gradient-to-br from-[#c9a962] to-[#a88a4a] rounded-full blur-xl opacity-50" />
           </div>
@@ -130,7 +130,7 @@ export default function ProjectRegistrationSuccess() {
           <Link href="/browse">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-[#c9a962] to-[#a88a4a] hover:from-[#a88a4a] hover:to-[#8a6e3a] text-white"
+              className="bg-gradient-to-r from-[#c9a962] to-[#a88a4a] hover:from-[#a88a4a] hover:to-[#8a6e3a] text-black"
             >
               Browse Feedstock Suppliers
               <ArrowRight className="ml-2 w-4 h-4" />

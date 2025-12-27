@@ -95,7 +95,7 @@ export default function InquiryResponse() {
         <div className="container py-8">
           <Card>
             <CardContent className="pt-6">
-              <p className="text-muted-foreground">Inquiry not found</p>
+              <p className="text-gray-600">Inquiry not found</p>
             </CardContent>
           </Card>
         </div>
@@ -174,7 +174,7 @@ export default function InquiryResponse() {
             <CardContent className="space-y-4">
               <div>
                 <h4 className="font-semibold mb-2">{inquiry.subject}</h4>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-gray-600">
                   Received on {formatDate(inquiry.createdAt)}
                 </p>
               </div>
@@ -182,9 +182,9 @@ export default function InquiryResponse() {
               <div className="grid gap-3 text-sm">
                 {inquiry.feedstockId && (
                   <div className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <Package className="h-4 w-4 text-gray-600" />
                     <div>
-                      <span className="text-muted-foreground">Feedstock:</span>{" "}
+                      <span className="text-gray-600">Feedstock:</span>{" "}
                       <span className="font-medium">
                         ABFI-{inquiry.feedstockId}
                       </span>
@@ -194,9 +194,9 @@ export default function InquiryResponse() {
 
                 {inquiry.volumeRequired && (
                   <div className="flex items-center gap-2">
-                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <Package className="h-4 w-4 text-gray-600" />
                     <div>
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Volume Needed:
                       </span>{" "}
                       <span className="font-medium">
@@ -208,9 +208,9 @@ export default function InquiryResponse() {
 
                 {inquiry.deliveryLocation && (
                   <div className="flex items-center gap-2">
-                    <Truck className="h-4 w-4 text-muted-foreground" />
+                    <Truck className="h-4 w-4 text-gray-600" />
                     <div>
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Delivery To:
                       </span>{" "}
                       <span className="font-medium">
@@ -222,9 +222,9 @@ export default function InquiryResponse() {
 
                 {inquiry.deliveryTimeframeStart && (
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <Calendar className="h-4 w-4 text-gray-600" />
                     <div>
-                      <span className="text-muted-foreground">
+                      <span className="text-gray-600">
                         Target Date:
                       </span>{" "}
                       <span className="font-medium">
@@ -240,7 +240,7 @@ export default function InquiryResponse() {
                   <div className="text-sm font-medium mb-2">
                     Buyer's Message:
                   </div>
-                  <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                  <p className="text-sm text-gray-600 whitespace-pre-wrap">
                     {inquiry.message}
                   </p>
                 </div>
@@ -390,7 +390,7 @@ export default function InquiryResponse() {
                     onChange={e => setResponse(e.target.value)}
                     required
                   />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-gray-600">
                     This message will be sent to the buyer along with your
                     pricing and terms
                   </p>

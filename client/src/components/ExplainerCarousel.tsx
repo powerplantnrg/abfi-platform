@@ -33,7 +33,7 @@ export function ExplainerCarousel({
     <div className={`rounded-2xl overflow-hidden ${className}`} style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-subtle)" }}>
       {/* Header */}
       <div className="p-6 pb-4" style={{ borderBottom: "1px solid var(--border-subtle)" }}>
-        <h3 className="text-xl font-semibold mb-1" style={{ color: "var(--text-primary)" }}>
+        <h3 className="text-xl font-semibold mb-1" style={{ color: "var(--text-[#D4AF37])" }}>
           {title}
         </h3>
         {description && (
@@ -64,7 +64,7 @@ export function ExplainerCarousel({
             border: "1px solid rgba(255,255,255,0.1)"
           }}
         >
-          <ChevronLeft className="w-5 h-5 text-white" />
+          <ChevronLeft className="w-5 h-5 text-black" />
         </button>
         <button
           onClick={goToNext}
@@ -75,7 +75,7 @@ export function ExplainerCarousel({
             border: "1px solid rgba(255,255,255,0.1)"
           }}
         >
-          <ChevronRight className="w-5 h-5 text-white" />
+          <ChevronRight className="w-5 h-5 text-black" />
         </button>
 
         {/* Panel Counter */}

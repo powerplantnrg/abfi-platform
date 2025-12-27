@@ -95,8 +95,8 @@ function StatsCard({
 
   const iconStyles = {
     default: "text-slate-600",
-    success: "text-emerald-600",
-    warning: "text-amber-600",
+    success: "text-[#D4AF37]",
+    warning: "text-[#D4AF37]",
     info: "text-blue-600",
   };
 
@@ -105,10 +105,10 @@ function StatsCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm text-muted-foreground font-medium">{title}</p>
+            <p className="text-sm text-gray-600 font-medium">{title}</p>
             <p className="text-3xl font-bold mt-1 font-mono">{value}</p>
             {description && (
-              <p className="text-xs text-muted-foreground mt-1">{description}</p>
+              <p className="text-xs text-gray-600 mt-1">{description}</p>
             )}
           </div>
           <div
@@ -487,10 +487,10 @@ export default function GOSchemeDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-slate-900 mb-1 flex items-center gap-3">
-                <Award className="h-8 w-8 text-amber-600" />
+                <Award className="h-8 w-8 text-[#D4AF37]" />
                 GO Certificates
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-gray-600">
                 REGO, PGO, and sustainability certification management
               </p>
             </div>
@@ -612,7 +612,7 @@ export default function GOSchemeDashboard() {
                             <TableCell className="font-mono">
                               {parseFloat(cert.energySourceMwh || "0").toLocaleString()}
                             </TableCell>
-                            <TableCell className="text-sm text-muted-foreground">
+                            <TableCell className="text-sm text-gray-600">
                               {cert.productionPeriodStart && cert.productionPeriodEnd ? (
                                 <>
                                   {new Date(cert.productionPeriodStart).toLocaleDateString()} -
@@ -623,7 +623,7 @@ export default function GOSchemeDashboard() {
                             <TableCell>
                               <CertificateStatusBadge status={cert.status} />
                             </TableCell>
-                            <TableCell className="text-sm text-muted-foreground">
+                            <TableCell className="text-sm text-gray-600">
                               {cert.issuedAt ? new Date(cert.issuedAt).toLocaleDateString() : '-'}
                             </TableCell>
                           </TableRow>
@@ -632,7 +632,7 @@ export default function GOSchemeDashboard() {
                     </Table>
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <Award className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>No certificates found</p>
                     <p className="text-sm">Issue a new certificate to get started</p>
@@ -676,7 +676,7 @@ export default function GOSchemeDashboard() {
                             </div>
                             <div>
                               <h4 className="font-medium">{pack.title}</h4>
-                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-2 text-sm text-gray-600">
                                 <Badge variant="outline" className="text-xs capitalize">
                                   {pack.packType?.replace(/_/g, ' ')}
                                 </Badge>
@@ -702,7 +702,7 @@ export default function GOSchemeDashboard() {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-muted-foreground">
+                  <div className="text-center py-12 text-gray-600">
                     <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
                     <p>No audit packs generated</p>
                     <p className="text-sm">Generate a new audit pack to get started</p>
@@ -734,7 +734,7 @@ export default function GOSchemeDashboard() {
                         <GOSchemeBadge scheme={scheme} />
                         <div>
                           <p className="font-medium text-sm">{name}</p>
-                          <p className="text-xs text-muted-foreground">{region}</p>
+                          <p className="text-xs text-gray-600">{region}</p>
                         </div>
                       </div>
                     </div>
@@ -759,7 +759,7 @@ export default function GOSchemeDashboard() {
                   ].map(({ source, name, icon: Icon }) => (
                     <div key={source} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                       <div className="p-2 bg-white rounded-lg">
-                        <Icon className="h-5 w-5 text-emerald-600" />
+                        <Icon className="h-5 w-5 text-[#D4AF37]" />
                       </div>
                       <span className="font-medium text-sm">{name}</span>
                     </div>

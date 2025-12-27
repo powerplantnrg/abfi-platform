@@ -75,7 +75,7 @@ export function LegalDisclaimer({
     return (
       <div
         className={cn(
-          "text-xs text-muted-foreground border-t pt-4 mt-6",
+          "text-xs text-gray-600 border-t pt-4 mt-6",
           className
         )}
       >
@@ -99,17 +99,17 @@ export function LegalDisclaimer({
   return (
     <div
       className={cn(
-        "bg-slate-50 dark:bg-slate-900/50 border rounded-lg p-4",
+        "bg-slate-50 dark:bg-white/50 border rounded-lg p-4",
         className
       )}
     >
       <div className="flex items-center gap-2 mb-3">
-        <Icon className="h-4 w-4 text-muted-foreground" />
+        <Icon className="h-4 w-4 text-gray-600" />
         <h4 className="font-semibold text-sm">{disclaimer.title}</h4>
       </div>
 
       {snapshotDate && (
-        <p className="text-sm text-muted-foreground mb-3">
+        <p className="text-sm text-gray-600 mb-3">
           <span className="font-medium">Assessment Date:</span>{" "}
           {formatDate(snapshotDate)}
         </p>
@@ -117,21 +117,21 @@ export function LegalDisclaimer({
 
       <ul className="space-y-2">
         {disclaimer.content.map((item, index) => (
-          <li key={index} className="text-xs text-muted-foreground flex gap-2">
-            <span className="text-muted-foreground/50">•</span>
+          <li key={index} className="text-xs text-gray-600 flex gap-2">
+            <span className="text-gray-600/50">•</span>
             <span>{item}</span>
           </li>
         ))}
       </ul>
 
-      <div className="mt-4 pt-3 border-t text-xs text-muted-foreground/70">
+      <div className="mt-4 pt-3 border-t text-xs text-gray-600/70">
         <p>
           For full legal terms, please refer to the{" "}
-          <a href="/terms" className="underline hover:text-primary">
+          <a href="/terms" className="underline hover:text-[#D4AF37]">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a href="/privacy" className="underline hover:text-primary">
+          <a href="/privacy" className="underline hover:text-[#D4AF37]">
             Privacy Policy
           </a>
           .
@@ -169,13 +169,13 @@ export function EvidenceProvenance({
   const getVerificationLabel = (method: string) => {
     switch (method) {
       case "self_declared":
-        return { label: "Self-Declared", color: "text-amber-600 bg-amber-50" };
+        return { label: "Self-Declared", color: "text-[#D4AF37] bg-amber-50" };
       case "third_party":
         return { label: "Third-Party Verified", color: "text-blue-600 bg-blue-50" };
       case "audited":
         return { label: "Independently Audited", color: "text-purple-600 bg-purple-50" };
       case "abfi_certified":
-        return { label: "ABFI Certified", color: "text-emerald-600 bg-emerald-50" };
+        return { label: "ABFI Certified", color: "text-[#D4AF37] bg-emerald-50" };
       default:
         return { label: "Unknown", color: "text-gray-600 bg-gray-50" };
     }
@@ -191,21 +191,21 @@ export function EvidenceProvenance({
       )}
     >
       <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
-        <Shield className="h-4 w-4 text-primary" />
+        <Shield className="h-4 w-4 text-[#D4AF37]" />
         Evidence Provenance
       </h4>
 
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div>
-          <p className="text-muted-foreground text-xs">Issuer</p>
+          <p className="text-gray-600 text-xs">Issuer</p>
           <p className="font-medium">{issuerName}</p>
           {issuerCredentials && (
-            <p className="text-xs text-muted-foreground">{issuerCredentials}</p>
+            <p className="text-xs text-gray-600">{issuerCredentials}</p>
           )}
         </div>
 
         <div>
-          <p className="text-muted-foreground text-xs">Verification</p>
+          <p className="text-gray-600 text-xs">Verification</p>
           <span
             className={cn(
               "inline-block px-2 py-0.5 rounded text-xs font-medium",
@@ -217,20 +217,20 @@ export function EvidenceProvenance({
         </div>
 
         <div>
-          <p className="text-muted-foreground text-xs">Issue Date</p>
+          <p className="text-gray-600 text-xs">Issue Date</p>
           <p className="font-mono text-xs">{formatDate(issueDate)}</p>
         </div>
 
         {expiryDate && (
           <div>
-            <p className="text-muted-foreground text-xs">Expiry Date</p>
+            <p className="text-gray-600 text-xs">Expiry Date</p>
             <p className="font-mono text-xs">{formatDate(expiryDate)}</p>
           </div>
         )}
 
         {lastVerificationDate && (
           <div className="col-span-2">
-            <p className="text-muted-foreground text-xs">Last Verified</p>
+            <p className="text-gray-600 text-xs">Last Verified</p>
             <p className="font-mono text-xs">{formatDate(lastVerificationDate)}</p>
           </div>
         )}
@@ -243,12 +243,12 @@ export function DataRetentionNotice({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "text-xs text-muted-foreground bg-muted/30 rounded p-3",
+        "text-xs text-gray-600 bg-muted/30 rounded p-3",
         className
       )}
     >
       <p className="font-medium mb-1">Data Retention Policy</p>
-      <ul className="space-y-1 text-muted-foreground/80">
+      <ul className="space-y-1 text-gray-600/80">
         <li>• Transaction records: Retained for 7 years</li>
         <li>• Audit logs: Retained for 10 years</li>
         <li>• User data: Retained while account is active + 2 years</li>

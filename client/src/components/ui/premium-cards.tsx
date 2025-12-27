@@ -38,7 +38,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         className={cn(
           "relative rounded-2xl border border-white/20",
           "bg-white/80 backdrop-blur-xl",
-          "dark:bg-slate-900/80 dark:border-white/10",
+          "dark:bg-white/80 dark:border-white/10",
           hover && "transition-shadow duration-300 hover:shadow-xl",
           glowStyles[glow],
           className
@@ -66,9 +66,9 @@ export function GradientBorderCard({
   gradient = "primary",
 }: GradientBorderCardProps) {
   const gradientStyles = {
-    primary: "from-teal-400 via-teal-500 to-teal-600",
+    primary: "from-teal-400 via-teal-500 to-[#D4AF37]",
     gold: "from-amber-400 via-yellow-500 to-orange-400",
-    success: "from-emerald-400 via-green-500 to-teal-500",
+    success: "from-[#D4AF37] via-green-500 to-teal-500",
     rainbow: "from-pink-500 via-purple-500 to-indigo-500",
   };
 
@@ -80,7 +80,7 @@ export function GradientBorderCard({
           gradientStyles[gradient]
         )}
       />
-      <div className="relative bg-white dark:bg-slate-900 rounded-2xl">
+      <div className="relative bg-white dark:bg-white rounded-2xl">
         {children}
       </div>
     </div>
@@ -122,13 +122,13 @@ export function StatsCardPremium({
     success: {
       bg: "bg-gradient-to-br from-emerald-50 to-teal-50",
       iconBg: "bg-emerald-100",
-      iconColor: "text-emerald-600",
+      iconColor: "text-[#D4AF37]",
       accentBorder: "border-l-emerald-500",
     },
     warning: {
       bg: "bg-gradient-to-br from-amber-50 to-orange-50",
       iconBg: "bg-amber-100",
-      iconColor: "text-amber-600",
+      iconColor: "text-[#D4AF37]",
       accentBorder: "border-l-amber-500",
     },
     info: {
@@ -148,9 +148,9 @@ export function StatsCardPremium({
   const styles = variantStyles[variant];
 
   const trendColors = {
-    up: "text-emerald-600 bg-emerald-50",
+    up: "text-[#D4AF37] bg-emerald-50",
     down: "text-red-600 bg-red-50",
-    neutral: "text-slate-500 bg-slate-50",
+    neutral: "text-black0 bg-slate-50",
   };
 
   const Wrapper = animated ? motion.div : "div";
@@ -174,10 +174,10 @@ export function StatsCardPremium({
     >
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="text-sm font-medium text-gray-600">{title}</p>
           <p className="text-3xl font-bold tracking-tight font-mono">{value}</p>
           {description && (
-            <p className="text-xs text-muted-foreground mt-1">{description}</p>
+            <p className="text-xs text-gray-600 mt-1">{description}</p>
           )}
           {trend && (
             <div
@@ -227,22 +227,22 @@ export function FeatureCard({
       className={cn(
         "group relative rounded-2xl border border-slate-200 bg-white p-6",
         "transition-all duration-300 hover:shadow-xl hover:border-teal-200",
-        "dark:bg-slate-900 dark:border-slate-700 dark:hover:border-teal-600",
+        "dark:bg-white dark:border-gray-200 dark:hover:border-[#D4AF37]",
         onClick && "cursor-pointer",
         className
       )}
     >
       {/* Hover gradient overlay */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-500/5 to-[#D4AF37]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative">
         <div className="mb-4 inline-flex p-3 rounded-xl bg-slate-100 group-hover:bg-teal-100 transition-colors duration-300">
-          <Icon className="h-6 w-6 text-slate-600 group-hover:text-teal-600 transition-colors duration-300" />
+          <Icon className="h-6 w-6 text-slate-600 group-hover:text-[#D4AF37] transition-colors duration-300" />
         </div>
         <h3 className="text-lg font-semibold mb-2 group-hover:text-teal-700 transition-colors duration-300">
           {title}
         </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">
+        <p className="text-sm text-gray-600 leading-relaxed">
           {description}
         </p>
       </div>
@@ -304,10 +304,10 @@ export function MetricCard({
     >
       {Icon && (
         <div className="flex justify-center mb-2">
-          <Icon className="h-5 w-5 text-muted-foreground" />
+          <Icon className="h-5 w-5 text-gray-600" />
         </div>
       )}
-      <p className={cn("text-muted-foreground mb-1", sizeStyles[size].labelSize)}>
+      <p className={cn("text-gray-600 mb-1", sizeStyles[size].labelSize)}>
         {label}
       </p>
       <p
@@ -318,7 +318,7 @@ export function MetricCard({
       >
         {value}
         {unit && (
-          <span className="text-muted-foreground font-normal text-base ml-1">
+          <span className="text-gray-600 font-normal text-base ml-1">
             {unit}
           </span>
         )}
@@ -355,8 +355,8 @@ export function ActionCard({
 
   const iconStyles = {
     default: "bg-slate-100 text-slate-600",
-    primary: "bg-teal-100 text-teal-600",
-    gold: "bg-amber-100 text-amber-600",
+    primary: "bg-teal-100 text-[#D4AF37]",
+    gold: "bg-amber-100 text-[#D4AF37]",
   };
 
   return (
@@ -377,7 +377,7 @@ export function ActionCard({
       <div className="text-left">
         <p className="font-medium">{label}</p>
         {description && (
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-gray-600">{description}</p>
         )}
       </div>
     </motion.button>
@@ -401,8 +401,8 @@ export function StatusIndicator({
   pulse = true,
 }: StatusIndicatorProps) {
   const statusStyles = {
-    active: "bg-emerald-500",
-    pending: "bg-amber-500",
+    active: "bg-[#D4AF37]",
+    pending: "bg-[#D4AF37]",
     inactive: "bg-slate-400",
     error: "bg-red-500",
   };
@@ -434,7 +434,7 @@ export function StatusIndicator({
         )}
       </span>
       {label && (
-        <span className="text-sm text-muted-foreground capitalize">{label}</span>
+        <span className="text-sm text-gray-600 capitalize">{label}</span>
       )}
     </div>
   );
@@ -501,7 +501,7 @@ export function ProgressRing({
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-lg font-bold font-mono">{progress}%</span>
           {label && (
-            <span className="text-xs text-muted-foreground">{label}</span>
+            <span className="text-xs text-gray-600">{label}</span>
           )}
         </div>
       )}

@@ -153,7 +153,7 @@ export default function ProjectRegistrationFlow() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0f14] text-white">
+    <div className="min-h-screen bg-[#0a0f14] text-black">
       {/* Background gradients */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-[15%] w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
@@ -179,7 +179,7 @@ export default function ProjectRegistrationFlow() {
                 <div
                   className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-mono text-sm transition-colors ${
                     step.id < currentStep
-                      ? "bg-green-500 border-green-500 text-white"
+                      ? "bg-green-500 border-green-500 text-black"
                       : step.id === currentStep
                         ? "bg-[#c9a962] border-[#c9a962] text-[#0a0f14]"
                         : "bg-[#1a222d] border-[#1a222d] text-gray-500"
@@ -241,7 +241,7 @@ export default function ProjectRegistrationFlow() {
             variant="outline"
             onClick={handlePrevious}
             disabled={currentStep === 1}
-            className="border-[#c9a962]/30 text-white hover:bg-[#c9a962]/10"
+            className="border-[#c9a962]/30 text-black hover:bg-[#c9a962]/10"
           >
             <ChevronLeft className="w-4 h-4 mr-2" />
             Previous
@@ -258,7 +258,7 @@ export default function ProjectRegistrationFlow() {
           ) : (
             <Button
               onClick={handleSubmit}
-              className="bg-gradient-to-r from-green-600 to-green-700 text-white hover:opacity-90"
+              className="bg-gradient-to-r from-green-600 to-green-700 text-black hover:opacity-90"
             >
               Submit Registration
             </Button>

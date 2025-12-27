@@ -227,7 +227,7 @@ const getEOIStatusIcon = (status: string) => {
     case "under_review":
       return <AlertCircle className="h-5 w-5 text-blue-600" />;
     case "accepted":
-      return <CheckCircle2 className="h-5 w-5 text-emerald-600" />;
+      return <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />;
     case "declined":
       return <XCircle className="h-5 w-5 text-red-600" />;
     case "withdrawn":
@@ -302,7 +302,7 @@ export default function MyEOIs() {
         {/* Header */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <FileText className="h-7 w-7 text-primary" />
+            <FileText className="h-7 w-7 text-[#D4AF37]" />
             <h1 className="text-2xl font-bold">My Expressions of Interest</h1>
             {isUsingMockData && (
               <Badge className="bg-amber-100 text-amber-800">
@@ -311,7 +311,7 @@ export default function MyEOIs() {
               </Badge>
             )}
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Track and manage your submitted EOIs for futures listings
           </p>
         </div>
@@ -323,13 +323,13 @@ export default function MyEOIs() {
                 <CardTitle className="text-sm font-medium">
                   Total EOIs
                 </CardTitle>
-                <FileText className="h-4 w-4 text-teal-600" />
+                <FileText className="h-4 w-4 text-[#D4AF37]" />
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold font-mono">
                   {stats.total}
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-600">
                   Submitted to suppliers
                 </p>
               </CardContent>
@@ -345,7 +345,7 @@ export default function MyEOIs() {
                 <div className="text-3xl font-bold font-mono">
                   {stats.pending}
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-600">
                   Awaiting response
                 </p>
               </CardContent>
@@ -353,13 +353,13 @@ export default function MyEOIs() {
             <Card className="border-l-4 border-l-emerald-500">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Accepted</CardTitle>
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                <CheckCircle2 className="h-4 w-4 text-[#D4AF37]" />
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold font-mono">
                   {stats.accepted}
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-600">
                   Ready for contract
                 </p>
               </CardContent>
@@ -375,7 +375,7 @@ export default function MyEOIs() {
                 <div className="text-3xl font-bold font-mono">
                   {stats.acceptedVolume.toLocaleString()}t
                 </div>
-                <p className="text-xs text-muted-foreground">Total committed</p>
+                <p className="text-xs text-gray-600">Total committed</p>
               </CardContent>
             </Card>
         </div>
@@ -406,7 +406,7 @@ export default function MyEOIs() {
                     </div>
                     <div>
                       <h2 className="text-xl font-bold">Pending Response</h2>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {pendingEOIs.length} EOI
                         {pendingEOIs.length !== 1 ? "s" : ""} awaiting supplier
                         review
@@ -434,11 +434,11 @@ export default function MyEOIs() {
                 <div>
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-emerald-100 rounded-lg">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                      <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
                     </div>
                     <div>
                       <h2 className="text-xl font-bold">Accepted</h2>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {activeEOIs.length} EOI
                         {activeEOIs.length !== 1 ? "s" : ""} ready for
                         contracting
@@ -461,10 +461,10 @@ export default function MyEOIs() {
                       <XCircle className="h-5 w-5 text-gray-500" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-muted-foreground">
+                      <h2 className="text-xl font-bold text-gray-600">
                         Closed
                       </h2>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         {closedEOIs.length} EOI
                         {closedEOIs.length !== 1 ? "s" : ""} declined, expired,
                         or withdrawn
@@ -483,16 +483,16 @@ export default function MyEOIs() {
             <Card className="max-w-2xl mx-auto">
               <CardContent className="py-16 text-center">
                 <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <FileText className="h-10 w-10 text-teal-600" />
+                  <FileText className="h-10 w-10 text-[#D4AF37]" />
                 </div>
                 <h3 className="text-2xl font-bold mb-3">No EOIs Yet</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                <p className="text-gray-600 mb-6 max-w-md mx-auto">
                   You haven't submitted any expressions of interest yet. Browse
                   the marketplace to find futures listings and secure your
                   long-term feedstock supply.
                 </p>
                 <Link href="/futures">
-                  <Button size="lg" className="bg-teal-600 hover:bg-teal-700">
+                  <Button size="lg" className="bg-[#D4AF37] hover:bg-teal-700">
                     Browse Futures Marketplace
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
@@ -524,10 +524,10 @@ function EOICard({
               <div className="p-3 bg-emerald-100 rounded-xl shrink-0">
                 {f ? (
                   CROP_TYPE_ICONS[f.cropType] || (
-                    <Sprout className="h-5 w-5 text-emerald-600" />
+                    <Sprout className="h-5 w-5 text-[#D4AF37]" />
                   )
                 ) : (
-                  <FileText className="h-5 w-5 text-emerald-600" />
+                  <FileText className="h-5 w-5 text-[#D4AF37]" />
                 )}
               </div>
               <div className="flex-1 min-w-0">
@@ -538,7 +538,7 @@ function EOICard({
                   </Badge>
                 </div>
                 {f && (
-                  <p className="text-muted-foreground text-sm truncate">
+                  <p className="text-gray-600 text-sm truncate">
                     {f.futuresId} • {f.title}
                   </p>
                 )}
@@ -548,7 +548,7 @@ function EOICard({
             {/* Details Grid */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm mb-4 p-4 bg-muted/30 rounded-lg">
               <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                   Interest Period
                 </p>
                 <p className="font-semibold">
@@ -556,7 +556,7 @@ function EOICard({
                 </p>
               </div>
               <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                   Annual Volume
                 </p>
                 <p className="font-semibold font-mono">
@@ -564,7 +564,7 @@ function EOICard({
                 </p>
               </div>
               <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                   Total Volume
                 </p>
                 <p className="font-semibold font-mono">
@@ -572,7 +572,7 @@ function EOICard({
                 </p>
               </div>
               <div>
-                <p className="text-muted-foreground text-xs uppercase tracking-wide mb-1">
+                <p className="text-gray-600 text-xs uppercase tracking-wide mb-1">
                   Offered Price
                 </p>
                 <p className="font-semibold font-mono">
@@ -585,7 +585,7 @@ function EOICard({
 
             {/* Futures Details */}
             {f && (
-              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-3">
+              <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-3">
                 <div className="flex items-center gap-1.5">
                   <MapPin className="h-4 w-4" />
                   {f.state}
@@ -610,14 +610,14 @@ function EOICard({
                 </p>
                 <p className="text-sm text-teal-700">{eoi.supplierResponse}</p>
                 {eoi.respondedAt && (
-                  <p className="text-xs text-teal-600 mt-2">
+                  <p className="text-xs text-[#D4AF37] mt-2">
                     Responded {formatDate(eoi.respondedAt)}
                   </p>
                 )}
               </div>
             )}
 
-            <div className="mt-3 text-xs text-muted-foreground">
+            <div className="mt-3 text-xs text-gray-600">
               Submitted {formatDate(eoi.createdAt)}
             </div>
           </div>

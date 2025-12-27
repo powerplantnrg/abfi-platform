@@ -73,7 +73,7 @@ export default function CertificateVerification() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0f14] text-white">
+    <div className="min-h-screen bg-[#0a0f14] text-black">
       {/* Background gradients */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-[10%] w-96 h-96 bg-green-500/3 rounded-full blur-3xl" />
@@ -191,7 +191,7 @@ export default function CertificateVerification() {
                         <p className="text-xs uppercase tracking-wide text-gray-500 mb-1">
                           Certificate ID
                         </p>
-                        <p className="font-mono text-sm text-white">
+                        <p className="font-mono text-sm text-black">
                           {verificationResult.certificateId}
                         </p>
                       </div>
@@ -207,7 +207,7 @@ export default function CertificateVerification() {
                         <p className="text-xs uppercase tracking-wide text-gray-500 mb-1">
                           Supplier
                         </p>
-                        <p className="text-sm text-white">
+                        <p className="text-sm text-black">
                           {verificationResult.supplier}
                         </p>
                       </div>
@@ -215,7 +215,7 @@ export default function CertificateVerification() {
                         <p className="text-xs uppercase tracking-wide text-gray-500 mb-1">
                           Feedstock Type
                         </p>
-                        <p className="text-sm text-white">
+                        <p className="text-sm text-black">
                           {verificationResult.feedstock}
                         </p>
                       </div>
@@ -223,7 +223,7 @@ export default function CertificateVerification() {
                         <p className="text-xs uppercase tracking-wide text-gray-500 mb-1">
                           Quantity
                         </p>
-                        <p className="text-sm text-white">
+                        <p className="text-sm text-black">
                           {verificationResult.quantity}
                         </p>
                       </div>
@@ -231,7 +231,7 @@ export default function CertificateVerification() {
                         <p className="text-xs uppercase tracking-wide text-gray-500 mb-1">
                           Issue Date
                         </p>
-                        <p className="text-sm text-white">
+                        <p className="text-sm text-black">
                           {verificationResult.issueDate}
                         </p>
                       </div>
@@ -314,7 +314,7 @@ export default function CertificateVerification() {
                         onClick={() => copyToClipboard(computedHash)}
                         variant="outline"
                         size="sm"
-                        className="flex-1 border-[#c9a962]/30 text-white hover:bg-[#c9a962]/10"
+                        className="flex-1 border-[#c9a962]/30 text-black hover:bg-[#c9a962]/10"
                       >
                         <Copy className="w-3 h-3 mr-2" />
                         {copied ? "Copied!" : "Copy Hash"}
@@ -401,7 +401,7 @@ export default function CertificateVerification() {
                           />
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-black">
                             {event.action}
                           </p>
                           <p className="text-xs text-gray-500 font-mono">
@@ -446,7 +446,7 @@ export default function CertificateVerification() {
             <div className="w-10 h-10 bg-[#c9a962]/15 rounded-lg flex items-center justify-center mb-3">
               <Shield className="w-5 h-5 text-[#c9a962]" />
             </div>
-            <h3 className="font-semibold text-white mb-2">Tamper-Proof</h3>
+            <h3 className="font-semibold text-black mb-2">Tamper-Proof</h3>
             <p className="text-xs text-gray-400 leading-relaxed">
               Cryptographic hashing ensures any modification to certificate data
               is immediately detectable
@@ -457,7 +457,7 @@ export default function CertificateVerification() {
             <div className="w-10 h-10 bg-green-500/15 rounded-lg flex items-center justify-center mb-3">
               <FileCheck className="w-5 h-5 text-green-400" />
             </div>
-            <h3 className="font-semibold text-white mb-2">
+            <h3 className="font-semibold text-black mb-2">
               Blockchain Anchored
             </h3>
             <p className="text-xs text-gray-400 leading-relaxed">
@@ -470,7 +470,7 @@ export default function CertificateVerification() {
             <div className="w-10 h-10 bg-blue-500/15 rounded-lg flex items-center justify-center mb-3">
               <Hash className="w-5 h-5 text-blue-400" />
             </div>
-            <h3 className="font-semibold text-white mb-2">SHA-256 Standard</h3>
+            <h3 className="font-semibold text-black mb-2">SHA-256 Standard</h3>
             <p className="text-xs text-gray-400 leading-relaxed">
               Industry-standard cryptographic algorithm used by banks and
               governments worldwide

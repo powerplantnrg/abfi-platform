@@ -767,14 +767,14 @@ export default function FeedstockMap() {
   return (
     <PageLayout showFooter={false}>
       {/* Compact Header */}
-      <section className="bg-gradient-to-r from-slate-900 to-teal-900 text-white py-8">
+      <section className="bg-gradient-to-r from-slate-900 to-teal-900 text-black py-8">
         <PageContainer padding="none">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Badge
                   variant="outline"
-                  className="border-teal-400/50 text-teal-300 bg-teal-500/10"
+                  className="border-teal-400/50 text-teal-300 bg-[#D4AF37]/10"
                 >
                   <Globe className="h-3 w-3 mr-1" />
                   Interactive GIS
@@ -789,7 +789,7 @@ export default function FeedstockMap() {
               <h1 className="text-2xl lg:text-3xl font-display font-bold">
                 Feedstock Supply Map
               </h1>
-              <p className="text-slate-300 text-sm mt-1">
+              <p className="text-gray-600 text-sm mt-1">
                 Visualize Australian biofuel projects, biomass resources, and infrastructure
               </p>
             </div>
@@ -797,7 +797,7 @@ export default function FeedstockMap() {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-white/20 text-white hover:bg-white/10"
+                className="border-white/20 text-black hover:bg-white/10"
                 asChild
               >
                 <Link href="/futures">
@@ -808,7 +808,7 @@ export default function FeedstockMap() {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-white/20 text-white hover:bg-white/10"
+                className="border-white/20 text-black hover:bg-white/10"
                 asChild
               >
                 <Link href="/ratings">
@@ -833,7 +833,7 @@ export default function FeedstockMap() {
             {/* Map Controls Bar */}
             <div className="bg-background border-t p-3 flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2 flex-1 min-w-[200px]">
-                <span className="text-sm text-muted-foreground whitespace-nowrap">
+                <span className="text-sm text-gray-600 whitespace-nowrap">
                   Catchment:
                 </span>
                 <Slider
@@ -899,7 +899,7 @@ export default function FeedstockMap() {
                       </div>
                     ))}
                   </div>
-                  <div className="text-xs text-muted-foreground mt-2">
+                  <div className="text-xs text-gray-600 mt-2">
                     {BIOFUEL_PROJECTS.length} projects mapped
                   </div>
                 </CardContent>
@@ -910,7 +910,7 @@ export default function FeedstockMap() {
                 <Card className="border-primary/20 bg-primary/5">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-base flex items-center gap-2">
-                      <Zap className="h-4 w-4 text-primary" />
+                      <Zap className="h-4 w-4 text-[#D4AF37]" />
                       Analysis Results
                     </CardTitle>
                     <CardDescription>
@@ -949,7 +949,7 @@ export default function FeedstockMap() {
                       <h4 className="text-sm font-medium">Facilities Found</h4>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Sugar Mills:
                           </span>
                           <span className="font-mono">
@@ -957,13 +957,13 @@ export default function FeedstockMap() {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Biogas:</span>
+                          <span className="text-gray-600">Biogas:</span>
                           <span className="font-mono">
                             {analysisResults.facilities.biogasFacilities}
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Biofuel:
                           </span>
                           <span className="font-mono">
@@ -971,7 +971,7 @@ export default function FeedstockMap() {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Ports:</span>
+                          <span className="text-gray-600">Ports:</span>
                           <span className="font-mono">
                             {analysisResults.facilities.ports}
                           </span>
@@ -986,7 +986,7 @@ export default function FeedstockMap() {
                       </h4>
                       <div className="space-y-1 text-sm">
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Bagasse:
                           </span>
                           <span className="font-mono">
@@ -994,7 +994,7 @@ export default function FeedstockMap() {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">
+                          <span className="text-gray-600">
                             Grain Stubble:
                           </span>
                           <span className="font-mono">
@@ -1003,7 +1003,7 @@ export default function FeedstockMap() {
                         </div>
                         <div className="flex justify-between font-semibold pt-1 border-t">
                           <span>Total:</span>
-                          <span className="font-mono text-primary">
+                          <span className="font-mono text-[#D4AF37]">
                             {analysisResults.feedstockTonnes.total.toLocaleString()}
                           </span>
                         </div>
@@ -1102,7 +1102,7 @@ export default function FeedstockMap() {
                             <div className="text-sm font-medium truncate">
                               {analysis.name}
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-xs text-gray-600">
                               {analysis.radiusKm}km
                             </div>
                           </div>

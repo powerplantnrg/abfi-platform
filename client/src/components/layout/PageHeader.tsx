@@ -120,19 +120,19 @@ export function PageHeader({
     {
       "bg-background/95": variant === "default",
       "bg-transparent border-transparent": variant === "transparent",
-      "bg-slate-900/95 border-slate-800": variant === "dark",
+      "bg-white/95 border-gray-200": variant === "dark",
     },
     className
   );
 
   const textClasses = cn({
     "text-foreground": variant === "default",
-    "text-white": variant === "transparent" || variant === "dark",
+    "text-black": variant === "transparent" || variant === "dark",
   });
 
   const mutedClasses = cn({
-    "text-muted-foreground": variant === "default",
-    "text-white/70": variant === "transparent" || variant === "dark",
+    "text-gray-600": variant === "default",
+    "text-black/70": variant === "transparent" || variant === "dark",
   });
 
   return (
@@ -145,14 +145,14 @@ export function PageHeader({
               className={cn(
                 "p-2 rounded-xl transition-colors",
                 variant === "default"
-                  ? "bg-primary/10 group-hover:bg-primary/20"
+                  ? "bg-[#D4AF37]/10 group-hover:bg-[#D4AF37]/20"
                   : "bg-white/10 group-hover:bg-white/20"
               )}
             >
               <Leaf
                 className={cn(
                   "h-6 w-6",
-                  variant === "default" ? "text-primary" : "text-white"
+                  variant === "default" ? "text-[#D4AF37]" : "text-black"
                 )}
               />
             </div>
@@ -187,7 +187,7 @@ export function PageHeader({
                   isActive("/futures") ||
                     isActive("/demand-signals") ||
                     isActive("/browse")
-                    ? "bg-primary/10 text-primary"
+                    ? "bg-[#D4AF37]/10 text-[#D4AF37]"
                     : ""
                 )}
               >
@@ -196,7 +196,7 @@ export function PageHeader({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-64">
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
+              <DropdownMenuLabel className="text-xs text-gray-600">
                 Browse Supply
               </DropdownMenuLabel>
               {marketplaceItems.map(item => (
@@ -204,12 +204,12 @@ export function PageHeader({
                   <Link href={item.href} className="cursor-pointer">
                     <div className="flex items-start gap-3 py-1">
                       {item.icon && (
-                        <item.icon className="h-4 w-4 mt-0.5 text-primary" />
+                        <item.icon className="h-4 w-4 mt-0.5 text-[#D4AF37]" />
                       )}
                       <div>
                         <div className="font-medium">{item.label}</div>
                         {item.description && (
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             {item.description}
                           </div>
                         )}
@@ -226,7 +226,7 @@ export function PageHeader({
               variant="ghost"
               size="sm"
               className={
-                isActive("/bankability") ? "bg-primary/10 text-primary" : ""
+                isActive("/bankability") ? "bg-[#D4AF37]/10 text-[#D4AF37]" : ""
               }
             >
               Bankability
@@ -238,7 +238,7 @@ export function PageHeader({
               variant="ghost"
               size="sm"
               className={
-                isActive("/feedstock-map") ? "bg-primary/10 text-primary" : ""
+                isActive("/feedstock-map") ? "bg-[#D4AF37]/10 text-[#D4AF37]" : ""
               }
             >
               <Map className="h-4 w-4 mr-1" />
@@ -255,7 +255,7 @@ export function PageHeader({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" className="w-64">
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
+              <DropdownMenuLabel className="text-xs text-gray-600">
                 Learn More
               </DropdownMenuLabel>
               {resourcesItems.map(item => (
@@ -263,12 +263,12 @@ export function PageHeader({
                   <Link href={item.href} className="cursor-pointer">
                     <div className="flex items-start gap-3 py-1">
                       {item.icon && (
-                        <item.icon className="h-4 w-4 mt-0.5 text-primary" />
+                        <item.icon className="h-4 w-4 mt-0.5 text-[#D4AF37]" />
                       )}
                       <div>
                         <div className="font-medium">{item.label}</div>
                         {item.description && (
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-xs text-gray-600">
                             {item.description}
                           </div>
                         )}
@@ -323,7 +323,7 @@ export function PageHeader({
             className="lg:hidden border-t bg-background overflow-hidden"
           >
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-1">
-              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2">
+              <div className="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 py-2">
                 Marketplace
               </div>
               {marketplaceItems.map(item => (
@@ -332,7 +332,7 @@ export function PageHeader({
                     variant="ghost"
                     className={cn(
                       "w-full justify-start gap-3",
-                      isActive(item.href) ? "bg-primary/10 text-primary" : ""
+                      isActive(item.href) ? "bg-[#D4AF37]/10 text-[#D4AF37]" : ""
                     )}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -342,7 +342,7 @@ export function PageHeader({
                 </Link>
               ))}
 
-              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2 mt-2">
+              <div className="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 py-2 mt-2">
                 Platform
               </div>
               <Link href="/bankability">
@@ -350,7 +350,7 @@ export function PageHeader({
                   variant="ghost"
                   className={cn(
                     "w-full justify-start gap-3",
-                    isActive("/bankability") ? "bg-primary/10 text-primary" : ""
+                    isActive("/bankability") ? "bg-[#D4AF37]/10 text-[#D4AF37]" : ""
                   )}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -364,7 +364,7 @@ export function PageHeader({
                   className={cn(
                     "w-full justify-start gap-3",
                     isActive("/feedstock-map")
-                      ? "bg-primary/10 text-primary"
+                      ? "bg-[#D4AF37]/10 text-[#D4AF37]"
                       : ""
                   )}
                   onClick={() => setMobileMenuOpen(false)}
@@ -374,7 +374,7 @@ export function PageHeader({
                 </Button>
               </Link>
 
-              <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3 py-2 mt-2">
+              <div className="text-xs font-semibold text-gray-600 uppercase tracking-wider px-3 py-2 mt-2">
                 Resources
               </div>
               {resourcesItems.map(item => (

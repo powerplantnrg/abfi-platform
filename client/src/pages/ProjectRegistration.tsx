@@ -9,7 +9,7 @@ import {
 
 export default function ProjectRegistration() {
   return (
-    <div className="min-h-screen bg-[#0a0f14] text-white">
+    <div className="min-h-screen bg-[#0a0f14] text-black">
       {/* Background gradients */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-[15%] w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />

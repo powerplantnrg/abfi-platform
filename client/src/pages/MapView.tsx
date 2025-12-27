@@ -167,8 +167,8 @@ export default function MapView() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link href="/">
             <div className="flex items-center gap-2 cursor-pointer">
-              <Leaf className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-primary">ABFI</span>
+              <Leaf className="h-8 w-8 text-[#D4AF37]" />
+              <span className="text-2xl font-bold text-[#D4AF37]">ABFI</span>
             </div>
           </Link>
           <div className="flex gap-2">
@@ -191,7 +191,7 @@ export default function MapView() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-primary mb-2">
+          <h1 className="text-4xl font-bold text-[#D4AF37] mb-2">
             Feedstock Map
           </h1>
           <p className="text-gray-600">
@@ -369,7 +369,7 @@ export default function MapView() {
                       </CardDescription>
                     </div>
                     <div className="text-right">
-                      <div className="flex items-center gap-1 text-primary font-bold text-xl">
+                      <div className="flex items-center gap-1 text-[#D4AF37] font-bold text-xl">
                         <Award className="h-5 w-5" />
                         {selectedFeedstock.abfiScore || "N/A"}
                       </div>

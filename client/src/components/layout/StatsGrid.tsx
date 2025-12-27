@@ -42,7 +42,7 @@ export function StatsGrid({
           <Card key={index} className="p-4 lg:p-6">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-muted-foreground mb-1">
+                <p className="text-sm text-gray-600 mb-1">
                   {stat.label}
                 </p>
                 <p className="text-2xl lg:text-3xl font-bold font-mono">
@@ -52,9 +52,9 @@ export function StatsGrid({
                   <p
                     className={cn(
                       "text-xs mt-1",
-                      stat.changeType === "positive" && "text-emerald-600",
+                      stat.changeType === "positive" && "text-[#D4AF37]",
                       stat.changeType === "negative" && "text-red-600",
-                      stat.changeType === "neutral" && "text-muted-foreground"
+                      stat.changeType === "neutral" && "text-gray-600"
                     )}
                   >
                     {stat.change}
@@ -65,7 +65,7 @@ export function StatsGrid({
                 <div
                   className={cn(
                     "p-2 rounded-lg",
-                    stat.iconColor || "bg-primary/10 text-primary"
+                    stat.iconColor || "bg-[#D4AF37]/10 text-[#D4AF37]"
                   )}
                 >
                   <stat.icon className="h-5 w-5" />
@@ -86,7 +86,7 @@ export function StatsGrid({
             <p className="text-3xl lg:text-4xl font-bold font-mono">
               {stat.value}
             </p>
-            <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+            <p className="text-sm text-gray-600 mt-1">{stat.label}</p>
           </div>
         ))}
       </div>
@@ -107,14 +107,14 @@ export function StatsGrid({
           <p className="text-2xl lg:text-3xl font-bold font-mono">
             {stat.value}
           </p>
-          <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+          <p className="text-sm text-gray-600 mt-1">{stat.label}</p>
           {stat.change && (
             <p
               className={cn(
                 "text-xs mt-1",
-                stat.changeType === "positive" && "text-emerald-600",
+                stat.changeType === "positive" && "text-[#D4AF37]",
                 stat.changeType === "negative" && "text-red-600",
-                stat.changeType === "neutral" && "text-muted-foreground"
+                stat.changeType === "neutral" && "text-gray-600"
               )}
             >
               {stat.change}

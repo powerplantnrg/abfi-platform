@@ -534,12 +534,12 @@ export default function FuturesDetailBuyer() {
   return (
     <PageLayout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-teal-800 via-emerald-800 to-green-900 text-white">
+      <section className="bg-gradient-to-br from-teal-800 via-emerald-800 to-green-900 text-black">
         <PageContainer size="lg" padding="md" className="py-8">
           <Button
             variant="ghost"
             onClick={() => setLocation("/futures")}
-            className="mb-4 text-white/80 hover:text-white hover:bg-white/10"
+            className="mb-4 text-black/80 hover:text-black hover:bg-white/10"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Marketplace
@@ -554,25 +554,25 @@ export default function FuturesDetailBuyer() {
               </div>
               <div>
                 {showingMockData && (
-                  <Badge className="mb-2 bg-white/20 text-white border-white/30">
+                  <Badge className="mb-2 bg-white/20 text-black border-white/30">
                     Demo Data
                   </Badge>
                 )}
                 <div className="flex items-center gap-3 mb-1">
                   <Badge
                     variant="outline"
-                    className="text-white border-white/30"
+                    className="text-black border-white/30"
                   >
                     {futures.futuresId}
                   </Badge>
-                  <Badge className="bg-emerald-500 text-white border-0">
+                  <Badge className="bg-[#D4AF37] text-black border-0">
                     {CROP_TYPE_LABELS[futures.cropType]}
                   </Badge>
                 </div>
                 <h1 className="text-2xl md:text-3xl font-display font-bold">
                   {futures.title}
                 </h1>
-                <div className="flex items-center gap-2 mt-2 text-white/70">
+                <div className="flex items-center gap-2 mt-2 text-black/70">
                   <MapPin className="h-4 w-4" />
                   <span>
                     {futures.state}
@@ -583,11 +583,11 @@ export default function FuturesDetailBuyer() {
             </div>
 
             <div className="lg:text-right">
-              <div className="text-sm text-white/70 mb-1">Total Available</div>
+              <div className="text-sm text-black/70 mb-1">Total Available</div>
               <div className="text-4xl md:text-5xl font-bold font-mono">
                 {totalAvailable.toLocaleString()}
               </div>
-              <div className="text-white/70">tonnes</div>
+              <div className="text-black/70">tonnes</div>
             </div>
           </div>
         </PageContainer>
@@ -602,41 +602,41 @@ export default function FuturesDetailBuyer() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-primary" />
+                  <TrendingUp className="h-5 w-5 text-[#D4AF37]" />
                   Volume Availability
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground mb-1">
+                    <p className="text-sm text-gray-600 mb-1">
                       Total Projected
                     </p>
                     <p className="text-2xl font-bold font-mono">
                       {totalProjected.toLocaleString()}
                     </p>
-                    <p className="text-xs text-muted-foreground">tonnes</p>
+                    <p className="text-xs text-gray-600">tonnes</p>
                   </div>
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-muted-foreground mb-1">
+                    <p className="text-sm text-gray-600 mb-1">
                       Contracted
                     </p>
                     <p className="text-2xl font-bold text-blue-600 font-mono">
                       {totalContracted.toLocaleString()}
                     </p>
-                    <p className="text-xs text-muted-foreground">tonnes</p>
+                    <p className="text-xs text-gray-600">tonnes</p>
                   </div>
                   <div className="text-center p-4 bg-green-50 rounded-lg">
                     <p className="text-sm text-green-600 mb-1">Available</p>
                     <p className="text-2xl font-bold text-green-700 font-mono">
                       {totalAvailable.toLocaleString()}
                     </p>
-                    <p className="text-xs text-muted-foreground">tonnes</p>
+                    <p className="text-xs text-gray-600">tonnes</p>
                   </div>
                 </div>
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">Availability</span>
+                    <span className="text-gray-600">Availability</span>
                     <span className="font-medium">
                       {Math.round(availablePercent)}%
                     </span>
@@ -650,30 +650,30 @@ export default function FuturesDetailBuyer() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-primary" />
+                  <Package className="h-5 w-5 text-[#D4AF37]" />
                   Listing Details
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Location & Land */}
                 <div>
-                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                     <MapPin className="h-4 w-4" />
                     Location & Land
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">State</p>
+                      <p className="text-sm text-gray-600">State</p>
                       <p className="font-semibold">{futures.state}</p>
                     </div>
                     {futures.region && (
                       <div>
-                        <p className="text-sm text-muted-foreground">Region</p>
+                        <p className="text-sm text-gray-600">Region</p>
                         <p className="font-semibold">{futures.region}</p>
                       </div>
                     )}
                     <div>
-                      <p className="text-sm text-muted-foreground">Land Area</p>
+                      <p className="text-sm text-gray-600">Land Area</p>
                       <p className="font-semibold">
                         {parseFloat(futures.landAreaHectares).toLocaleString()}{" "}
                         ha
@@ -684,20 +684,20 @@ export default function FuturesDetailBuyer() {
 
                 {/* Timeline */}
                 <div className="border-t pt-6">
-                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                     <Calendar className="h-4 w-4" />
                     Timeline
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         Projection Period
                       </p>
                       <p className="font-semibold">
                         {futures.projectionStartYear} -{" "}
                         {futures.projectionEndYear}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-gray-600">
                         (
                         {futures.projectionEndYear -
                           futures.projectionStartYear +
@@ -707,7 +707,7 @@ export default function FuturesDetailBuyer() {
                     </div>
                     {futures.firstHarvestYear && (
                       <div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           First Harvest
                         </p>
                         <p className="font-semibold">
@@ -720,24 +720,24 @@ export default function FuturesDetailBuyer() {
 
                 {/* Pricing */}
                 <div className="border-t pt-6">
-                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                     <DollarSign className="h-4 w-4" />
                     Pricing
                   </h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         Indicative Price
                       </p>
-                      <p className="text-2xl font-bold text-primary font-mono">
+                      <p className="text-2xl font-bold text-[#D4AF37] font-mono">
                         {futures.indicativePricePerTonne
                           ? `$${parseFloat(futures.indicativePricePerTonne).toFixed(2)}`
                           : "Negotiable"}
                       </p>
-                      <p className="text-xs text-muted-foreground">per tonne</p>
+                      <p className="text-xs text-gray-600">per tonne</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-600">
                         Annual Escalation
                       </p>
                       <p className="font-semibold">
@@ -746,7 +746,7 @@ export default function FuturesDetailBuyer() {
                     </div>
                   </div>
                   {futures.pricingNotes && (
-                    <p className="text-sm text-muted-foreground mt-3 bg-muted/50 p-3 rounded-lg">
+                    <p className="text-sm text-gray-600 mt-3 bg-muted/50 p-3 rounded-lg">
                       {futures.pricingNotes}
                     </p>
                   )}
@@ -757,27 +757,27 @@ export default function FuturesDetailBuyer() {
                   futures.expectedMoistureContent ||
                   futures.expectedEnergyContent) && (
                   <div className="border-t pt-6">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-muted-foreground">
+                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                       <BarChart3 className="h-4 w-4" />
                       Expected Quality Parameters
                     </h4>
                     <div className="grid grid-cols-3 gap-4">
                       {futures.expectedCarbonIntensity && (
                         <div className="p-3 bg-muted/50 rounded-lg text-center">
-                          <p className="text-xs text-muted-foreground mb-1">
+                          <p className="text-xs text-gray-600 mb-1">
                             Carbon Intensity
                           </p>
                           <p className="font-bold">
                             {futures.expectedCarbonIntensity}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-gray-600">
                             kg CO2e/t
                           </p>
                         </div>
                       )}
                       {futures.expectedMoistureContent && (
                         <div className="p-3 bg-muted/50 rounded-lg text-center">
-                          <p className="text-xs text-muted-foreground mb-1">
+                          <p className="text-xs text-gray-600 mb-1">
                             Moisture
                           </p>
                           <p className="font-bold">
@@ -787,13 +787,13 @@ export default function FuturesDetailBuyer() {
                       )}
                       {futures.expectedEnergyContent && (
                         <div className="p-3 bg-muted/50 rounded-lg text-center">
-                          <p className="text-xs text-muted-foreground mb-1">
+                          <p className="text-xs text-gray-600 mb-1">
                             Energy Content
                           </p>
                           <p className="font-bold">
                             {futures.expectedEnergyContent}
                           </p>
-                          <p className="text-xs text-muted-foreground">GJ/t</p>
+                          <p className="text-xs text-gray-600">GJ/t</p>
                         </div>
                       )}
                     </div>
@@ -804,7 +804,7 @@ export default function FuturesDetailBuyer() {
                 {futures.description && (
                   <div className="border-t pt-6">
                     <h4 className="font-semibold mb-3">Description</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                    <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
                       {futures.description}
                     </p>
                   </div>
@@ -817,7 +817,7 @@ export default function FuturesDetailBuyer() {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5 text-primary" />
+                    <BarChart3 className="h-5 w-5 text-[#D4AF37]" />
                     Yield Projections
                   </CardTitle>
                 </CardHeader>
@@ -859,7 +859,7 @@ export default function FuturesDetailBuyer() {
                                   p.confidencePercent >= 90
                                     ? "border-green-500 text-green-600"
                                     : p.confidencePercent >= 75
-                                      ? "border-amber-500 text-amber-600"
+                                      ? "border-[#D4AF37] text-[#D4AF37]"
                                       : "border-gray-500 text-gray-600"
                                 }
                               >
@@ -890,7 +890,7 @@ export default function FuturesDetailBuyer() {
                       {getEOIStatusIcon(existingEOI.status)}
                       <div>
                         <p className="font-medium">Your EOI</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           {existingEOI.eoiReference}
                         </p>
                       </div>
@@ -905,7 +905,7 @@ export default function FuturesDetailBuyer() {
                         <p className="text-sm font-medium mb-1">
                           Supplier Response:
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600">
                           {existingEOI.supplierResponse}
                         </p>
                       </div>
@@ -1019,7 +1019,7 @@ export default function FuturesDetailBuyer() {
                                 <strong>Total volume requested:</strong>{" "}
                                 {totalEOIVolume.toLocaleString()} tonnes
                               </p>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-sm text-gray-600">
                                 Available: {totalAvailable.toLocaleString()}{" "}
                                 tonnes
                               </p>
@@ -1190,7 +1190,7 @@ export default function FuturesDetailBuyer() {
                       {supplier.companyName}
                     </p>
                     {supplier.state && (
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
+                      <p className="text-sm text-gray-600 flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
                         {supplier.city && `${supplier.city}, `}
                         {supplier.state}
@@ -1199,7 +1199,7 @@ export default function FuturesDetailBuyer() {
                   </div>
 
                   {supplier.description && (
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-600">
                       {supplier.description}
                     </p>
                   )}
@@ -1207,10 +1207,10 @@ export default function FuturesDetailBuyer() {
                   <div className="space-y-2 pt-2 border-t">
                     {supplier.contactEmail && (
                       <div className="flex items-center gap-2 text-sm">
-                        <Mail className="h-4 w-4 text-muted-foreground" />
+                        <Mail className="h-4 w-4 text-gray-600" />
                         <a
                           href={`mailto:${supplier.contactEmail}`}
-                          className="text-primary hover:underline"
+                          className="text-[#D4AF37] hover:underline"
                         >
                           {supplier.contactEmail}
                         </a>
@@ -1218,10 +1218,10 @@ export default function FuturesDetailBuyer() {
                     )}
                     {supplier.contactPhone && (
                       <div className="flex items-center gap-2 text-sm">
-                        <Phone className="h-4 w-4 text-muted-foreground" />
+                        <Phone className="h-4 w-4 text-gray-600" />
                         <a
                           href={`tel:${supplier.contactPhone}`}
-                          className="text-primary hover:underline"
+                          className="text-[#D4AF37] hover:underline"
                         >
                           {supplier.contactPhone}
                         </a>
@@ -1229,12 +1229,12 @@ export default function FuturesDetailBuyer() {
                     )}
                     {supplier.website && (
                       <div className="flex items-center gap-2 text-sm">
-                        <Globe className="h-4 w-4 text-muted-foreground" />
+                        <Globe className="h-4 w-4 text-gray-600" />
                         <a
                           href={supplier.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary hover:underline"
+                          className="text-[#D4AF37] hover:underline"
                         >
                           {supplier.website.replace(/^https?:\/\//, "")}
                         </a>
@@ -1252,7 +1252,7 @@ export default function FuturesDetailBuyer() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Crop Type
                   </span>
                   <span className="font-medium">
@@ -1261,14 +1261,14 @@ export default function FuturesDetailBuyer() {
                 </div>
                 {futures.cropVariety && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-sm text-gray-600">
                       Variety
                     </span>
                     <span className="font-medium">{futures.cropVariety}</span>
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Contract Length
                   </span>
                   <span className="font-medium">
@@ -1279,7 +1279,7 @@ export default function FuturesDetailBuyer() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Avg. Annual Volume
                   </span>
                   <span className="font-medium font-mono">
@@ -1293,7 +1293,7 @@ export default function FuturesDetailBuyer() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-gray-600">
                     Published
                   </span>
                   <span className="font-medium">
@@ -1310,13 +1310,13 @@ export default function FuturesDetailBuyer() {
               <CardContent className="pt-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-emerald-100 rounded-lg">
-                    <Shield className="h-5 w-5 text-emerald-600" />
+                    <Shield className="h-5 w-5 text-[#D4AF37]" />
                   </div>
                   <div>
                     <p className="font-medium text-emerald-800">
                       ABFI Verified
                     </p>
-                    <p className="text-xs text-emerald-600">
+                    <p className="text-xs text-[#D4AF37]">
                       Supplier verified by ABFI
                     </p>
                   </div>

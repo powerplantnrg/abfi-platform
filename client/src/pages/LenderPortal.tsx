@@ -29,14 +29,14 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 
 const RATING_COLORS: Record<string, string> = {
-  AAA: "bg-emerald-500 text-white",
-  AA: "bg-green-500 text-white",
-  A: "bg-lime-500 text-white",
-  BBB: "bg-yellow-500 text-white",
-  BB: "bg-amber-500 text-white",
-  B: "bg-orange-500 text-white",
-  CCC: "bg-red-500 text-white",
-  CC: "bg-red-700 text-white",
+  AAA: "bg-[#D4AF37] text-black",
+  AA: "bg-green-500 text-black",
+  A: "bg-lime-500 text-black",
+  BBB: "bg-yellow-500 text-black",
+  BB: "bg-[#D4AF37] text-black",
+  B: "bg-orange-500 text-black",
+  CCC: "bg-red-500 text-black",
+  CC: "bg-red-700 text-black",
 };
 
 export default function LenderPortal() {
@@ -127,10 +127,10 @@ export default function LenderPortal() {
       <div className="container py-8">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <Shield className="h-8 w-8 text-primary" />
+            <Shield className="h-8 w-8 text-[#D4AF37]" />
             <h1 className="text-3xl font-bold">Lender Portal</h1>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Read-only monitoring view for financed bioenergy projects
           </p>
         </div>
@@ -138,11 +138,11 @@ export default function LenderPortal() {
         {!projects || projects.length === 0 ? (
           <Card>
             <CardContent className="py-12 text-center">
-              <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">
                 No Projects Available
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-600">
                 You don't have access to any projects yet. Contact your
                 relationship manager.
               </p>
@@ -170,7 +170,7 @@ export default function LenderPortal() {
                         onClick={() => setSelectedProject(project.id)}
                         className={`w-full text-left p-3 rounded-lg border transition-colors ${
                           selectedProject === project.id
-                            ? "bg-primary/10 border-primary"
+                            ? "bg-[#D4AF37]/10 border-primary"
                             : "hover:bg-muted/50"
                         }`}
                       >
@@ -237,7 +237,7 @@ export default function LenderPortal() {
                         <CardContent className="space-y-4">
                           <div className="grid grid-cols-3 gap-4">
                             <div>
-                              <div className="text-sm text-muted-foreground mb-1">
+                              <div className="text-sm text-gray-600 mb-1">
                                 Status
                               </div>
                               <Badge className={getStatusColor(project.status)}>
@@ -245,13 +245,13 @@ export default function LenderPortal() {
                               </Badge>
                             </div>
                             <div>
-                              <div className="text-sm text-muted-foreground mb-1">
+                              <div className="text-sm text-gray-600 mb-1">
                                 Bankability Rating
                               </div>
                               <span className="text-sm">Not assessed</span>
                             </div>
                             <div>
-                              <div className="text-sm text-muted-foreground mb-1">
+                              <div className="text-sm text-gray-600 mb-1">
                                 Technology
                               </div>
                               <div className="text-sm font-medium">N/A</div>
@@ -260,7 +260,7 @@ export default function LenderPortal() {
 
                           {project.description && (
                             <div>
-                              <div className="text-sm text-muted-foreground mb-1">
+                              <div className="text-sm text-gray-600 mb-1">
                                 Description
                               </div>
                               <p className="text-sm">{project.description}</p>
@@ -329,7 +329,7 @@ export default function LenderPortal() {
                           <div className="space-y-3">
                             <div>
                               <div className="flex justify-between text-sm mb-1">
-                                <span className="text-muted-foreground">
+                                <span className="text-gray-600">
                                   Tier 1 Coverage
                                 </span>
                                 <span className="font-medium">
@@ -340,7 +340,7 @@ export default function LenderPortal() {
                             </div>
                             <div>
                               <div className="flex justify-between text-sm mb-1">
-                                <span className="text-muted-foreground">
+                                <span className="text-gray-600">
                                   Total Primary Coverage
                                 </span>
                                 <span className="font-medium">0%</span>
@@ -434,29 +434,29 @@ export default function LenderPortal() {
                               </div>
                               <div className="grid grid-cols-3 gap-3 text-center">
                                 <div className="p-2 rounded bg-muted/50">
-                                  <div className="text-xs text-muted-foreground">Supply Shortfall</div>
+                                  <div className="text-xs text-gray-600">Supply Shortfall</div>
                                   <div className="font-mono font-semibold">{latestStressTest.supplyShortfallPercent}%</div>
                                 </div>
                                 <div className="p-2 rounded bg-muted/50">
-                                  <div className="text-xs text-muted-foreground">HHI Delta</div>
+                                  <div className="text-xs text-gray-600">HHI Delta</div>
                                   <div className="font-mono font-semibold">{latestStressTest.hhiDelta > 0 ? "+" : ""}{latestStressTest.hhiDelta}</div>
                                 </div>
                                 <div className="p-2 rounded bg-muted/50">
-                                  <div className="text-xs text-muted-foreground">Inv. Grade</div>
+                                  <div className="text-xs text-gray-600">Inv. Grade</div>
                                   <div>{latestStressTest.minimumRatingMaintained ?
                                     <CheckCircle className="h-4 w-4 text-green-600 mx-auto" /> :
                                     <AlertCircle className="h-4 w-4 text-red-600 mx-auto" />
                                   }</div>
                                 </div>
                               </div>
-                              <p className="text-xs text-muted-foreground">
+                              <p className="text-xs text-gray-600">
                                 Last tested: {new Date(latestStressTest.testDate).toLocaleDateString("en-AU")}
                               </p>
                             </div>
                           ) : (
                             <div className="text-center py-6">
-                              <AlertTriangle className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                              <p className="text-sm text-muted-foreground mb-3">
+                              <AlertTriangle className="h-8 w-8 text-gray-600 mx-auto mb-2" />
+                              <p className="text-sm text-gray-600 mb-3">
                                 No stress tests have been run for this project
                               </p>
                               <Link href="/stress-testing">
@@ -511,8 +511,8 @@ export default function LenderPortal() {
               ) : (
                 <Card>
                   <CardContent className="py-12 text-center">
-                    <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground">
+                    <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
+                    <p className="text-gray-600">
                       Select a project to view details
                     </p>
                   </CardContent>

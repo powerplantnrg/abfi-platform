@@ -52,9 +52,9 @@ export default function EvidenceManagement() {
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="py-12 text-center">
-            <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-gray-600">
               Only administrators and auditors can access evidence management.
             </p>
           </CardContent>
@@ -69,7 +69,7 @@ export default function EvidenceManagement() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
-              <Shield className="h-8 w-8 text-primary" />
+              <Shield className="h-8 w-8 text-[#D4AF37]" />
               <h1 className="text-3xl font-bold">Evidence Management</h1>
             </div>
             <Button onClick={() => setUploadDialogOpen(true)}>
@@ -77,7 +77,7 @@ export default function EvidenceManagement() {
               Upload Evidence
             </Button>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600">
             Manage evidence chain, verify documents, and ensure data provenance
           </p>
         </div>
@@ -91,7 +91,7 @@ export default function EvidenceManagement() {
                   Search
                 </Label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-600" />
                   <Input
                     id="search"
                     placeholder="Search by filename, issuer..."
@@ -205,7 +205,7 @@ export default function EvidenceManagement() {
               />
             </div>
 
-            <div className="mt-6 text-center text-sm text-muted-foreground">
+            <div className="mt-6 text-center text-sm text-gray-600">
               <p>Showing 3 of 3 evidence items</p>
             </div>
           </CardContent>
@@ -293,10 +293,10 @@ function EvidenceItem({
     >
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-3">
-          <FileText className="h-5 w-5 text-muted-foreground" />
+          <FileText className="h-5 w-5 text-gray-600" />
           <div>
             <div className="font-medium">{filename}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">
+            <div className="text-xs text-gray-600 mt-0.5">
               {getTypeLabel(type)} • Issued by {issuer}
             </div>
           </div>
@@ -317,13 +317,13 @@ function EvidenceItem({
 
       <div className="grid grid-cols-3 gap-4 text-xs">
         <div>
-          <div className="text-muted-foreground">Issued Date</div>
+          <div className="text-gray-600">Issued Date</div>
           <div className="font-medium mt-0.5">
             {new Date(issuedDate).toLocaleDateString()}
           </div>
         </div>
         <div>
-          <div className="text-muted-foreground">Expiry Date</div>
+          <div className="text-gray-600">Expiry Date</div>
           <div className="font-medium mt-0.5">
             {expiryDate
               ? new Date(expiryDate).toLocaleDateString()
@@ -331,7 +331,7 @@ function EvidenceItem({
           </div>
         </div>
         <div>
-          <div className="text-muted-foreground">File Hash (SHA-256)</div>
+          <div className="text-gray-600">File Hash (SHA-256)</div>
           <div className="font-mono font-medium mt-0.5">{hash}</div>
         </div>
       </div>
@@ -361,7 +361,7 @@ function UploadEvidenceDialog({ onClose }: UploadEvidenceDialogProps) {
           <div className="space-y-2">
             <Label htmlFor="file">Evidence File *</Label>
             <Input id="file" type="file" />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-gray-600">
               File will be automatically hashed (SHA-256) for integrity
               verification
             </p>
