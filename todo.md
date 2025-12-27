@@ -62,7 +62,7 @@
 - [x] Multi-step wizard (onboarding flows)
 - [x] Form validation with Zod
 - [x] File upload components
-- [ ] Location picker with map
+- [x] Location picker with map
 
 ### Notifications
 - [x] Toast notification system (Sonner)
@@ -94,8 +94,8 @@
 - [x] Read-only monitoring dashboard
 - [x] Covenant status indicators
 - [x] Contract renewal alerts
-- [ ] Portfolio overview
-- [ ] Risk analytics
+- [x] Portfolio overview
+- [x] Risk analytics
 
 ### Government Portal
 - [x] Compliance monitoring
@@ -109,7 +109,7 @@
 - [x] Monitoring jobs scheduler
 - [x] System analytics
 - [ ] User management interface
-- [ ] Audit log viewer
+- [x] Audit log viewer
 
 ---
 

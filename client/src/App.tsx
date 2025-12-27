@@ -44,6 +44,9 @@ const InquiryResponse = lazy(() => import("./pages/InquiryResponse"));
 const GrowerQualification = lazy(() => import("./pages/GrowerQualification"));
 const BankabilityAssessment = lazy(() => import("./pages/BankabilityAssessment"));
 const LenderPortal = lazy(() => import("./pages/LenderPortal"));
+const LenderPortfolioOverview = lazy(() => import("./pages/LenderPortfolioOverview"));
+const LenderRiskAnalytics = lazy(() => import("./pages/LenderRiskAnalytics"));
+const AdminAuditLogs = lazy(() => import("./pages/AdminAuditLogs"));
 const ComplianceDashboard = lazy(() => import("./pages/ComplianceDashboard"));
 const EvidenceManagement = lazy(() => import("./pages/EvidenceManagement"));
 const EvidenceVaultDashboard = lazy(() => import("./pages/EvidenceVaultDashboard"));
@@ -246,8 +249,10 @@ function Router() {
           component={BankabilityAssessment}
         />
         <Route path="/lender-portal" component={LenderPortal} />
+        <Route path="/lender/portfolio" component={LenderPortfolioOverview} />
+        <Route path="/lender/risk-analytics" component={LenderRiskAnalytics} />
         <Route path="/stress-testing" component={StressTesting} />
-        <Route path="/admin/audit-logs" component={AuditLogs} />
+        <Route path="/admin/audit-logs" component={AdminAuditLogs} />
         <Route path="/platform-health" component={PlatformHealth} />
         <Route path="/procurement-scenarios" component={ProcurementScenarios} />
         <Route path="/lending-sentiment" component={LendingSentimentDashboard} />
