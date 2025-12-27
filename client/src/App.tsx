@@ -141,6 +141,7 @@ const CarbonIntensityAnalysis = lazy(() => import("./pages/CarbonIntensityAnalys
 const Landing = lazy(() => import("./pages/Landing"));
 const Explore = lazy(() => import("./pages/Explore"));
 const GrowerDashboard = lazy(() => import("./pages/GrowerDashboard"));
+const GrowerSettings = lazy(() => import("./pages/GrowerSettings"));
 const DeveloperDashboard = lazy(() => import("./pages/DeveloperDashboard"));
 const FinanceDashboard = lazy(() => import("./pages/FinanceDashboard"));
 
@@ -176,6 +177,7 @@ function Router() {
         <Route path="/" component={Landing} />
         <Route path="/explore" component={Explore} />
         <Route path="/grower/dashboard" component={GrowerDashboard} />
+        <Route path="/grower/settings" component={GrowerSettings} />
         <Route path="/developer/dashboard" component={DeveloperDashboard} />
         <Route path="/finance/dashboard" component={FinanceDashboard} />
 

@@ -23,7 +23,7 @@
 
 ### Design System
 - [x] Implement design tokens (colors, typography, spacing)
-- [ ] Replace all icons with Lucide React
+- [x] Replace all icons with Lucide React (143 files using lucide-react)
 - [x] Add Inter + Plus Jakarta Sans fonts
 - [x] shadcn/ui component library
 
@@ -67,8 +67,8 @@
 ### Notifications
 - [x] Toast notification system (Sonner)
 - [x] SSE real-time updates
-- [ ] Announcement banner component
-- [ ] What's New changelog modal
+- [x] Announcement banner component
+- [x] What's New changelog modal
 
 ---
 
@@ -81,7 +81,7 @@
 - [x] Carbon intensity calculator
 - [x] Contract management
 - [x] Marketplace listing
-- [ ] Settings interface
+- [x] Settings interface
 
 ### Developer Portal
 - [x] Project registration flow
