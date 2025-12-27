@@ -8,6 +8,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserRoleProvider } from "./contexts/UserRoleContext";
 import { Analytics } from "@vercel/analytics/react";
 import AppLayout from "./components/AppLayout";
+import { HeyGenTour } from "./components/Onboarding/HeyGenTour";
+import { AvatarAssistant } from "./components/AIHelper/AvatarAssistant";
 
 // Lazy load all pages for code splitting
 const Home = lazy(() => import("./pages/Home"));
@@ -339,6 +341,8 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Router />
+            <HeyGenTour />
+            <AvatarAssistant />
             <Analytics />
           </TooltipProvider>
         </UserRoleProvider>

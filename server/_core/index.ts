@@ -12,6 +12,7 @@ import { initializeScheduler } from "../scheduler";
 import { handleManusWebhook } from "../manus";
 import { certificateVerificationRouter } from "../certificateVerificationApi";
 import { didResolutionRouter } from "../didResolutionApi";
+import { aiChatRouter } from "../aiChatRouter";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -85,6 +86,9 @@ async function startServer() {
   app.use("/api/did", didResolutionRouter);
   // Also mount at root for .well-known paths
   app.use(didResolutionRouter);
+
+  // AI Chat API for HeyGen Avatar Assistant
+  app.use("/api/ai-chat", aiChatRouter);
 
   // tRPC API
   app.use(
