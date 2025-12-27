@@ -49,22 +49,41 @@ interface ClimateData {
   note?: string;
 }
 
+interface SoilSummaryProperty {
+  value: number | null;
+  unit: string;
+  depth: string;
+}
+
+interface SoilLayer {
+  depth: string;
+  value: number | null;
+}
+
+interface SoilProperty {
+  name: string;
+  code: string;
+  unit: string;
+  description: string;
+  layers: SoilLayer[];
+}
+
 interface SoilData {
   location: { latitude: number; longitude: number };
-  properties: {
-    organicCarbon: { value: number; unit: string; depth: string; description: string };
-    clay: { value: number; unit: string; depth: string; description: string };
-    sand: { value: number; unit: string; depth: string; description: string };
-    pH: { value: number; unit: string; depth: string; description: string };
-    bulkDensity: { value: number; unit: string; depth: string; description: string };
-    availableWaterCapacity: { value: number; unit: string; depth: string; description: string };
+  queryInfo: {
+    resolution: string;
+    estimateType: string;
+    queryDate: string;
   };
-  carbonSequestrationPotential: {
-    rating: string;
-    estimatedRate: string;
-    unit: string;
-    confidence: string;
+  summary: {
+    organicCarbon: SoilSummaryProperty;
+    clay: SoilSummaryProperty;
+    sand: SoilSummaryProperty;
+    pH: SoilSummaryProperty;
+    bulkDensity: SoilSummaryProperty;
+    availableWater: SoilSummaryProperty;
   };
+  properties: SoilProperty[];
   source: string;
   sourceUrl: string;
 }
@@ -453,37 +472,83 @@ export default function AustralianDataExplorer() {
               </Card>
             ) : soilData ? (
               <>
-                {/* Carbon Sequestration Potential */}
-                <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+                {/* Query Info */}
+                <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-semibold text-green-900">Carbon Sequestration Potential</h3>
-                        <p className="text-green-700 mt-1">
-                          Estimated rate: <span className="font-bold">{soilData.carbonSequestrationPotential.estimatedRate} {soilData.carbonSequestrationPotential.unit}</span>
+                        <h3 className="text-lg font-semibold text-amber-900">Soil Analysis</h3>
+                        <p className="text-amber-700 mt-1">
+                          Resolution: <span className="font-medium">{soilData.queryInfo.resolution}</span>
                         </p>
                       </div>
-                      <Badge className={soilData.carbonSequestrationPotential.rating === "High" ? "bg-green-600" : "bg-yellow-600"}>
-                        {soilData.carbonSequestrationPotential.rating}
+                      <Badge className="bg-amber-600">
+                        {soilData.queryInfo.estimateType}
                       </Badge>
                     </div>
                   </CardContent>
                 </Card>
 
-                {/* Soil Properties Grid */}
+                {/* Soil Summary Grid */}
                 <div className="grid md:grid-cols-3 gap-4">
-                  {Object.entries(soilData.properties).map(([key, prop]) => (
+                  {[
+                    { key: "organicCarbon", label: "Organic Carbon", data: soilData.summary.organicCarbon },
+                    { key: "clay", label: "Clay Content", data: soilData.summary.clay },
+                    { key: "sand", label: "Sand Content", data: soilData.summary.sand },
+                    { key: "pH", label: "pH (Water)", data: soilData.summary.pH },
+                    { key: "bulkDensity", label: "Bulk Density", data: soilData.summary.bulkDensity },
+                    { key: "availableWater", label: "Available Water", data: soilData.summary.availableWater },
+                  ].map(({ key, label, data }) => (
                     <Card key={key}>
                       <CardContent className="pt-6">
-                        <p className="text-sm text-gray-500">{prop.description}</p>
+                        <p className="text-sm text-gray-500">{label}</p>
                         <p className="text-2xl font-bold mt-1">
-                          {typeof prop.value === "number" ? prop.value.toFixed(2) : prop.value} {prop.unit}
+                          {data.value !== null ? data.value.toFixed(2) : "N/A"} {data.unit}
                         </p>
-                        <p className="text-xs text-gray-400 mt-1">Depth: {prop.depth}</p>
+                        <p className="text-xs text-gray-400 mt-1">{data.depth}</p>
                       </CardContent>
                     </Card>
                   ))}
                 </div>
+
+                {/* Detailed Soil Layers */}
+                {soilData.properties.length > 0 && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Soil Profile by Depth</CardTitle>
+                      <CardDescription>Detailed measurements at different soil depths</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b">
+                              <th className="text-left py-2 px-3 font-medium">Property</th>
+                              {soilData.properties[0]?.layers.map((layer, i) => (
+                                <th key={i} className="text-right py-2 px-3 font-medium">{layer.depth}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {soilData.properties.map((prop) => (
+                              <tr key={prop.code} className="border-b last:border-0">
+                                <td className="py-2 px-3">
+                                  <span className="font-medium">{prop.name}</span>
+                                  <span className="text-gray-400 ml-1">({prop.unit})</span>
+                                </td>
+                                {prop.layers.map((layer, i) => (
+                                  <td key={i} className="text-right py-2 px-3">
+                                    {layer.value !== null ? layer.value.toFixed(2) : "-"}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
 
                 {/* Source Info */}
                 <div className="text-sm text-gray-500 flex justify-end">
