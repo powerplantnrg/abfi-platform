@@ -10,4 +10,14 @@ export const ENV = {
   // HeyGen AI Avatar Configuration
   heygenApiKey: process.env.HEYGEN_API_KEY ?? "",
   heygenAvatarId: process.env.HEYGEN_AVATAR_ID ?? "sam_australian_001",
+  // myGovID OAuth Configuration
+  myGovIdClientId: process.env.MYGOVID_CLIENT_ID ?? "",
+  myGovIdClientSecret: process.env.MYGOVID_CLIENT_SECRET ?? "",
+  myGovIdRedirectUri: process.env.MYGOVID_REDIRECT_URI ?? "http://localhost:3000/api/mygovid/callback",
+  // myGovID endpoints (production vs test)
+  myGovIdIssuer: process.env.MYGOVID_ISSUER ?? "https://auth.mygovid.gov.au",
+  myGovIdAuthEndpoint: process.env.MYGOVID_AUTH_ENDPOINT ?? "https://auth.mygovid.gov.au/oauth2/authorize",
+  myGovIdTokenEndpoint: process.env.MYGOVID_TOKEN_ENDPOINT ?? "https://auth.mygovid.gov.au/oauth2/token",
+  myGovIdUserInfoEndpoint: process.env.MYGOVID_USERINFO_ENDPOINT ?? "https://auth.mygovid.gov.au/oauth2/userinfo",
+  myGovIdJwksUri: process.env.MYGOVID_JWKS_URI ?? "https://auth.mygovid.gov.au/.well-known/jwks.json",
 };

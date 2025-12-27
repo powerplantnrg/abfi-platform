@@ -61,6 +61,7 @@ const GOSchemeDashboard = lazy(() => import("./pages/GOSchemeDashboard"));
 const FeedstockMap = lazy(() => import("./pages/FeedstockMap"));
 const AustralianDataExplorer = lazy(() => import("./pages/AustralianDataExplorer"));
 const DevLogin = lazy(() => import("./pages/DevLogin"));
+const MyGovIdLogin = lazy(() => import("./pages/MyGovIdLogin"));
 const ProducerRegistration = lazy(() => import("./pages/ProducerRegistration"));
 const ProducerAccountSetup = lazy(() => import("./pages/ProducerAccountSetup"));
 const ProducerPropertyMap = lazy(() => import("./pages/ProducerPropertyMap"));
@@ -314,6 +315,7 @@ function Router() {
         <Route path="/australian-data" component={AustralianDataExplorer} />
         <Route path="/login" component={DevLogin} />
         <Route path="/dev-login" component={DevLogin} />
+        <Route path="/mygovid-login" component={MyGovIdLogin} />
         <Route path="/producer-registration" component={ProducerRegistration} />
         <Route
           path="/producer-registration/account-setup"

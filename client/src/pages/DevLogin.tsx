@@ -10,7 +10,8 @@ import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { User, Shield, ShoppingCart, BarChart3, Loader2 } from "lucide-react";
+import { User, Shield, ShoppingCart, BarChart3, Loader2, Building2, ExternalLink } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 interface DevUser {
   id: number;
@@ -155,6 +156,43 @@ export default function DevLogin() {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* myGovID Section for Government Users */}
+        <div className="mt-8">
+          <div className="flex items-center gap-4 my-6">
+            <Separator className="flex-1" />
+            <span className="text-sm text-gray-500">Government Users</span>
+            <Separator className="flex-1" />
+          </div>
+
+          <Card className="border-2 border-blue-200 bg-blue-50/30">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-100 text-blue-800">
+                  <Building2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">myGovID Login</CardTitle>
+                  <CardDescription>
+                    Australian Government Digital Identity
+                  </CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Button
+                className="w-full bg-[#00698f] hover:bg-[#005a7a]"
+                onClick={() => setLocation("/mygovid-login")}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Continue with myGovID
+              </Button>
+              <p className="text-xs text-gray-500 mt-2 text-center">
+                For government compliance officers, ARENA/CEFC representatives, and regulators
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="mt-8 text-center text-sm text-gray-500">

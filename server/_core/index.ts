@@ -17,6 +17,7 @@ import { australianDataRouter } from "../apis/australianDataRouter";
 import { securityHeaders, rateLimit, rateLimitConfigs } from "./security";
 import { createSSERouter } from "./sse";
 import { createDevAuthRouter } from "./devAuth";
+import { createMyGovIdRouter } from "./myGovIdAuth";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -55,6 +56,7 @@ async function startServer() {
   // === Rate Limiting for Authentication ===
   // Strict limits: 5 attempts per 15 minutes
   app.use("/api/oauth", rateLimit(rateLimitConfigs.auth));
+  app.use("/api/mygovid", rateLimit(rateLimitConfigs.auth));
   app.use("/auth", rateLimit(rateLimitConfigs.auth));
 
   // === Rate Limiting for General API ===
@@ -124,6 +126,9 @@ async function startServer() {
 
   // Development authentication (only active in development mode)
   app.use("/api/dev-auth", createDevAuthRouter());
+
+  // myGovID OAuth authentication (Australian Government digital identity)
+  app.use("/api/mygovid", createMyGovIdRouter());
 
   // tRPC API
   app.use(
