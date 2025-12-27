@@ -55,7 +55,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import { MapView } from "@/components/Map";
+import { SimpleLeafletMap, type MapMarker } from "@/components/SimpleLeafletMap";
 
 // Pipeline stages
 const PIPELINE_STAGES = [
@@ -146,50 +146,40 @@ const INTELLIGENCE_FEEDS = [
 ];
 
 export default function DeveloperDashboard() {
-  const mapRef = useRef<google.maps.Map | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFeedstock, setSelectedFeedstock] = useState<string>("all");
   const [selectedDeal, setSelectedDeal] = useState<string | null>(null);
   const [activeView, setActiveView] = useState<"map" | "pipeline">("map");
 
-  const handleMapReady = useCallback((map: google.maps.Map) => {
-    mapRef.current = map;
-
-    // Add markers for registry suppliers
-    REGISTRY_SUPPLIERS.forEach((supplier) => {
-      if (window.google) {
-        const marker = new window.google.maps.marker.AdvancedMarkerElement({
-          map,
-          position: { lat: supplier.location.lat, lng: supplier.location.lng },
-          title: supplier.name,
-        });
-
-        marker.addListener("click", () => {
-          setSelectedDeal(supplier.id);
-        });
-      }
-    });
-
-    // Add markers for pipeline deals
-    DEAL_PIPELINE.forEach((deal) => {
-      if (window.google && deal.location) {
-        const pinColor = PIPELINE_STAGES.find(s => s.id === deal.stage)?.color || "bg-slate-500";
-        const marker = new window.google.maps.marker.AdvancedMarkerElement({
-          map,
-          position: { lat: deal.location.lat, lng: deal.location.lng },
-          title: deal.name,
-        });
-
-        marker.addListener("click", () => {
-          setSelectedDeal(deal.id);
-        });
-      }
-    });
-
-    // Fit bounds to Australia
-    map.setCenter({ lat: -25.2744, lng: 133.7751 });
-    map.setZoom(4);
-  }, []);
+  // Convert suppliers and deals to map markers
+  const mapMarkers: MapMarker[] = [
+    // Registry suppliers (gray markers)
+    ...REGISTRY_SUPPLIERS.map((supplier) => ({
+      id: supplier.id,
+      lat: supplier.location.lat,
+      lng: supplier.location.lng,
+      title: supplier.name,
+      color: "#94a3b8", // slate-400
+      onClick: () => setSelectedDeal(supplier.id),
+    })),
+    // Pipeline deals (colored by stage)
+    ...DEAL_PIPELINE.filter(deal => deal.location).map((deal) => {
+      const stageColors: Record<string, string> = {
+        discovery: "#64748b", // slate-500
+        outreach: "#3b82f6", // blue-500
+        negotiation: "#f59e0b", // amber-500
+        contracted: "#22c55e", // emerald-500
+      };
+      return {
+        id: deal.id,
+        lat: deal.location.lat,
+        lng: deal.location.lng,
+        title: deal.name,
+        color: stageColors[deal.stage] || "#3b82f6",
+        onClick: () => setSelectedDeal(deal.id),
+      };
+    }),
+  ];
 
   const getDealsForStage = (stageId: string) => {
     return DEAL_PIPELINE.filter((deal) => deal.stage === stageId);
@@ -415,11 +405,11 @@ export default function DeveloperDashboard() {
         <div className="flex-1 relative min-h-[400px] lg:min-h-0">
           {activeView === "map" ? (
             <>
-              <MapView
+              <SimpleLeafletMap
                 className="w-full h-full"
-                initialCenter={{ lat: -25.2744, lng: 133.7751 }}
-                initialZoom={4}
-                onMapReady={handleMapReady}
+                center={{ lat: -25.2744, lng: 133.7751 }}
+                zoom={4}
+                markers={mapMarkers}
               />
 
               {/* Map Legend */}

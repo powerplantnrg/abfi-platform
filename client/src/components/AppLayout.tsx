@@ -184,13 +184,13 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
   ) => (
     <>
       {showTitle && (
-        <div className="px-4 py-2 mt-4">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+        <div className="px-4 pt-5 pb-2">
+          <p className="text-[10px] font-bold text-sidebar-foreground/50 uppercase tracking-[0.15em]">
             {!isCollapsed ? title : ""}
           </p>
         </div>
       )}
-      <SidebarMenu className="px-2 py-1">
+      <SidebarMenu className="px-2 py-0.5">
         {items.map((item) => {
           const isActive =
             location === item.path || location.startsWith(item.path + "/");
@@ -200,12 +200,16 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
                 isActive={isActive}
                 onClick={() => setLocation(item.path)}
                 tooltip={item.label}
-                className="h-10 transition-all font-normal"
+                className={`h-9 transition-all font-medium rounded-lg ${
+                  isActive
+                    ? "bg-sidebar-primary/15 text-sidebar-primary border-l-2 border-sidebar-primary"
+                    : "text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+                }`}
               >
                 <item.icon
-                  className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                  className={`h-4 w-4 ${isActive ? "text-sidebar-primary" : "text-sidebar-foreground/60"}`}
                 />
-                <span>{item.label}</span>
+                <span className="text-sm">{item.label}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           );
@@ -222,11 +226,11 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
           className="border-r-0"
           disableTransition={isResizing}
         >
-          <SidebarHeader className="h-16 justify-center">
-            <div className="flex items-center gap-3 px-2 transition-all w-full">
+          <SidebarHeader className="h-16 justify-center border-b border-sidebar-border/30">
+            <div className="flex items-center gap-3 px-3 transition-all w-full">
               <button
                 onClick={toggleSidebar}
-                className="h-8 w-8 flex items-center justify-center hover:bg-sidebar-accent rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
+                className="h-9 w-9 flex items-center justify-center hover:bg-sidebar-accent/50 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring shrink-0"
                 aria-label="Toggle navigation"
               >
                 {isCollapsed ? (
@@ -236,19 +240,26 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
                 )}
               </button>
               {!isCollapsed && (
-                <div className="flex items-center gap-2 min-w-0">
-                  <Leaf className="h-5 w-5 text-sidebar-primary shrink-0" />
-                  <span className="font-bold tracking-tight truncate text-sidebar-foreground">
-                    ABFI Platform
-                  </span>
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="h-8 w-8 rounded-lg bg-sidebar-primary/20 flex items-center justify-center shrink-0">
+                    <Leaf className="h-4.5 w-4.5 text-sidebar-primary" />
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-bold tracking-tight truncate text-sidebar-foreground text-sm">
+                      ABFI Platform
+                    </span>
+                    <span className="text-[10px] text-sidebar-foreground/50 tracking-wide">
+                      Biofuels Intelligence
+                    </span>
+                  </div>
                 </div>
               )}
             </div>
           </SidebarHeader>
 
-          <SidebarContent className="gap-0">
+          <SidebarContent className="gap-0 pt-2">
             {/* Main Menu */}
-            <SidebarMenu className="px-2 py-1">
+            <SidebarMenu className="px-2 py-0.5">
               {mainMenuItems.map((item) => {
                 const isActive = location === item.path;
                 return (
@@ -257,12 +268,16 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
                       isActive={isActive}
                       onClick={() => setLocation(item.path)}
                       tooltip={item.label}
-                      className="h-10 transition-all font-normal"
+                      className={`h-9 transition-all font-medium rounded-lg ${
+                        isActive
+                          ? "bg-sidebar-primary/15 text-sidebar-primary border-l-2 border-sidebar-primary"
+                          : "text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent/50"
+                      }`}
                     >
                       <item.icon
-                        className={`h-4 w-4 ${isActive ? "text-primary" : ""}`}
+                        className={`h-4 w-4 ${isActive ? "text-sidebar-primary" : "text-sidebar-foreground/60"}`}
                       />
-                      <span>{item.label}</span>
+                      <span className="text-sm">{item.label}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
@@ -288,23 +303,23 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
             {user?.role === "admin" && renderMenuSection("Admin", adminMenuItems)}
           </SidebarContent>
 
-          <SidebarFooter className="p-3">
+          <SidebarFooter className="p-3 border-t border-sidebar-border/30">
             {loading ? (
-              <div className="h-11 animate-pulse bg-muted rounded-lg" />
+              <div className="h-11 animate-pulse bg-sidebar-accent/30 rounded-lg" />
             ) : user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-3 rounded-lg px-1 py-1 hover:bg-accent/50 transition-colors w-full text-left group-data-[collapsible=icon]:justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                    <Avatar className="h-9 w-9 border shrink-0">
-                      <AvatarFallback className="text-xs font-medium">
+                  <button className="flex items-center gap-3 rounded-lg px-2 py-2 hover:bg-sidebar-accent/50 transition-colors w-full text-left group-data-[collapsible=icon]:justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring">
+                    <Avatar className="h-9 w-9 border border-sidebar-border shrink-0 bg-sidebar-primary/20">
+                      <AvatarFallback className="text-xs font-bold text-sidebar-primary bg-transparent">
                         {user?.name?.charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0 group-data-[collapsible=icon]:hidden">
-                      <p className="text-sm font-medium truncate leading-none">
+                      <p className="text-sm font-medium truncate leading-none text-sidebar-foreground">
                         {user?.name || "-"}
                       </p>
-                      <p className="text-xs text-muted-foreground truncate mt-1.5">
+                      <p className="text-xs text-sidebar-foreground/50 truncate mt-1">
                         {user?.email || "-"}
                       </p>
                     </div>
@@ -325,8 +340,7 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
                 onClick={() => {
                   window.location.href = getLoginUrl();
                 }}
-                variant="outline"
-                className="w-full justify-start group-data-[collapsible=icon]:justify-center"
+                className="w-full justify-start group-data-[collapsible=icon]:justify-center bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary/90 font-semibold"
               >
                 <LogIn className="h-4 w-4 mr-2 group-data-[collapsible=icon]:mr-0" />
                 <span className="group-data-[collapsible=icon]:hidden">Sign In</span>
@@ -335,7 +349,7 @@ function AppLayoutContent({ children, setSidebarWidth }: AppLayoutContentProps) 
           </SidebarFooter>
         </Sidebar>
         <div
-          className={`absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-primary/20 transition-colors ${isCollapsed ? "hidden" : ""}`}
+          className={`absolute top-0 right-0 w-1 h-full cursor-col-resize hover:bg-sidebar-primary/40 transition-colors ${isCollapsed ? "hidden" : ""}`}
           onMouseDown={() => {
             if (isCollapsed) return;
             setIsResizing(true);

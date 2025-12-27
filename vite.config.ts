@@ -3,22 +3,25 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { defineConfig, type PluginOption } from "vite";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(async ({ command }) => {
   // Only include Manus runtime in serve mode (development), not in build mode (production)
   const isServe = command === 'serve';
 
-  // Conditionally load Manus plugin only in development
-  let manusPlugin: PluginOption | undefined;
-  if (isServe) {
-    try {
-      const { vitePluginManusRuntime } = await import("vite-plugin-manus-runtime");
-      manusPlugin = vitePluginManusRuntime();
-    } catch (e) {
-      // Plugin not available, skip
-    }
-  }
+  // Manus plugin disabled for local testing
+  let manusPlugin: PluginOption | undefined = undefined;
+  // if (isServe) {
+  //   try {
+  //     const { vitePluginManusRuntime } = await import("vite-plugin-manus-runtime");
+  //     manusPlugin = vitePluginManusRuntime();
+  //   } catch (e) {
+  //     // Plugin not available, skip
+  //   }
+  // }
 
   const plugins: PluginOption[] = [
     react(),
@@ -32,16 +35,16 @@ export default defineConfig(async ({ command }) => {
     plugins,
     resolve: {
       alias: {
-        "@": path.resolve(import.meta.dirname, "client", "src"),
-        "@shared": path.resolve(import.meta.dirname, "shared"),
-        "@assets": path.resolve(import.meta.dirname, "attached_assets"),
+        "@": path.resolve(__dirname, "client", "src"),
+        "@shared": path.resolve(__dirname, "shared"),
+        "@assets": path.resolve(__dirname, "attached_assets"),
       },
     },
-    envDir: path.resolve(import.meta.dirname),
-    root: path.resolve(import.meta.dirname, "client"),
-    publicDir: path.resolve(import.meta.dirname, "client", "public"),
+    envDir: path.resolve(__dirname),
+    root: path.resolve(__dirname, "client"),
+    publicDir: path.resolve(__dirname, "client", "public"),
     build: {
-      outDir: path.resolve(import.meta.dirname, "dist/public"),
+      outDir: path.resolve(__dirname, "dist/public"),
       emptyOutDir: true,
       rollupOptions: {
         output: {

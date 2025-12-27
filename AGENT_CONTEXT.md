@@ -169,7 +169,14 @@ Webhook ID: `DNwWhJF2F7SMJ6Ka3Zr2hJ`
 - **Fix needed**: Update A record to `76.76.21.21` OR change nameservers to Vercel
 - Vercel deployments work correctly, but domain serves cached Cloudflare content
 
-**6. Commits**
+**6. Dev Server Fix (server/_core/vite.ts)**
+- Fixed async viteConfig resolution issue
+- `vite.config.ts` exports an async function from `defineConfig(async ...)`
+- `server/_core/vite.ts` was spreading the function directly instead of awaiting it
+- Fix: Call `viteConfigFn({ command: 'serve', mode: 'development', ... })` and await result
+- Dev server now properly loads `/src/main.tsx`
+
+**7. Commits**
 - `9d6d8b2` - fix: exclude Manus runtime from production builds + update meta URLs
 
 #### Pending Action

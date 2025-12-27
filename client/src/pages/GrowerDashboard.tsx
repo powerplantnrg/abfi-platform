@@ -49,7 +49,8 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import { MapView } from "@/components/Map";
+import { SimpleLeafletMap, type MapMarker } from "@/components/SimpleLeafletMap";
+import type L from "leaflet";
 
 // Onboarding checklist items
 const ONBOARDING_CHECKLIST = [
@@ -130,42 +131,25 @@ const QUICK_STATS = [
 ];
 
 export default function GrowerDashboard() {
-  const mapRef = useRef<google.maps.Map | null>(null);
+  const mapRef = useRef<L.Map | null>(null);
   const [selectedListing, setSelectedListing] = useState<string | null>(null);
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const completedSteps = ONBOARDING_CHECKLIST.filter((item) => item.completed).length;
   const totalSteps = ONBOARDING_CHECKLIST.length;
   const progressPercent = (completedSteps / totalSteps) * 100;
 
-  const handleMapReady = useCallback((map: google.maps.Map) => {
+  // Create markers for Leaflet map
+  const mapMarkers: MapMarker[] = MY_LISTINGS.map((listing) => ({
+    id: listing.id,
+    lat: listing.location.lat,
+    lng: listing.location.lng,
+    title: listing.name,
+    color: listing.status === "active" ? "#10b981" : "#f59e0b", // emerald for active, amber for pending
+    onClick: () => setSelectedListing(listing.id),
+  }));
+
+  const handleMapReady = useCallback((map: L.Map) => {
     mapRef.current = map;
-
-    // Add markers for each listing
-    MY_LISTINGS.forEach((listing) => {
-      if (listing.location && window.google) {
-        const marker = new window.google.maps.marker.AdvancedMarkerElement({
-          map,
-          position: { lat: listing.location.lat, lng: listing.location.lng },
-          title: listing.name,
-        });
-
-        marker.addListener("click", () => {
-          setSelectedListing(listing.id);
-          map.panTo({ lat: listing.location.lat, lng: listing.location.lng });
-        });
-      }
-    });
-
-    // Fit bounds to show all markers
-    if (MY_LISTINGS.length > 0) {
-      const bounds = new window.google.maps.LatLngBounds();
-      MY_LISTINGS.forEach((listing) => {
-        if (listing.location) {
-          bounds.extend({ lat: listing.location.lat, lng: listing.location.lng });
-        }
-      });
-      map.fitBounds(bounds, { padding: 50 });
-    }
   }, []);
 
   const toggleCardExpanded = (id: string) => {
@@ -183,8 +167,7 @@ export default function GrowerDashboard() {
   const focusOnListing = (listing: (typeof MY_LISTINGS)[0]) => {
     setSelectedListing(listing.id);
     if (mapRef.current && listing.location) {
-      mapRef.current.panTo({ lat: listing.location.lat, lng: listing.location.lng });
-      mapRef.current.setZoom(12);
+      mapRef.current.setView([listing.location.lat, listing.location.lng], 12);
     }
   };
 
@@ -491,10 +474,11 @@ export default function GrowerDashboard() {
 
         {/* Map Area */}
         <div className="flex-1 relative min-h-[400px] lg:min-h-0">
-          <MapView
+          <SimpleLeafletMap
             className="w-full h-full"
-            initialCenter={{ lat: -33.8688, lng: 151.2093 }}
-            initialZoom={6}
+            center={{ lat: -33.8688, lng: 151.2093 }}
+            zoom={6}
+            markers={mapMarkers}
             onMapReady={handleMapReady}
           />
 
