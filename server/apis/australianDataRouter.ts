@@ -52,11 +52,15 @@ australianDataRouter.get("/climate", async (req, res) => {
   try {
     const { lat, lon, start, end } = req.query;
 
-    // Default to last 30 days if no dates provided
-    const endDate = end ? String(end) : new Date().toISOString().split("T")[0].replace(/-/g, "");
+    // Default to 30 days ending 7 days ago (SILO data has ~1 week lag)
+    const endDate = end ? String(end) : (() => {
+      const d = new Date();
+      d.setDate(d.getDate() - 7);  // SILO data lags by about a week
+      return d.toISOString().split("T")[0].replace(/-/g, "");
+    })();
     const startDate = start ? String(start) : (() => {
       const d = new Date();
-      d.setDate(d.getDate() - 30);
+      d.setDate(d.getDate() - 37);  // 30 days before end date
       return d.toISOString().split("T")[0].replace(/-/g, "");
     })();
 
@@ -70,43 +74,45 @@ australianDataRouter.get("/climate", async (req, res) => {
       return res.json(cached);
     }
 
-    // SILO Data Drill API - Patched Point Dataset
-    // Documentation: https://www.longpaddock.qld.gov.au/silo/about/access-data/
-    const url = `https://www.longpaddock.qld.gov.au/cgi-bin/silo/PatchedPointDataset.php`;
+    // SILO Data Drill API
+    // Documentation: https://www.longpaddock.qld.gov.au/silo/api-documentation/
+    const url = `https://www.longpaddock.qld.gov.au/cgi-bin/silo/DataDrillDataset.php`;
 
     const response = await axios.get(url, {
       params: {
-        format: "csv",
-        station: "nearest",
+        format: "alldata",
         lat: latitude,
         lon: longitude,
         start: startDate,
         finish: endDate,
-        username: "guest",
-        password: "guest"
+        username: "abfi@example.com",
+        password: "apirequest"
       },
       timeout: 15000
     });
 
-    // Parse CSV response
+    // Parse space-delimited response from SILO
+    // Format: Date Day Date2 T.Max Smx T.Min Smn Rain Srn Evap Sev Radn Ssl ...
+    // Index:  0    1   2     3     4   5     6   7    8   9    10  11   12
     const lines = response.data.split("\n");
     const climateData: SILODataPoint[] = [];
 
     for (const line of lines) {
-      // Skip comments and empty lines
-      if (line.startsWith("!") || line.startsWith("Date") || !line.trim()) continue;
+      // Skip header lines, comments, and empty lines
+      if (line.startsWith('"') || line.startsWith("Date") || line.startsWith("(") || !line.trim()) continue;
 
-      const parts = line.split(",");
-      if (parts.length >= 6) {
+      // Split by whitespace
+      const parts = line.trim().split(/\s+/);
+      if (parts.length >= 12) {
         const dateStr = parts[0]?.trim();
         if (dateStr && dateStr.match(/^\d{8}$/)) {
           climateData.push({
             date: `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`,
-            rainfall: parseFloat(parts[1]) || 0,
-            maxTemp: parseFloat(parts[2]) || 0,
-            minTemp: parseFloat(parts[3]) || 0,
-            radiation: parseFloat(parts[4]) || 0,
-            evaporation: parseFloat(parts[5]) || 0,
+            rainfall: parseFloat(parts[7]) || 0,      // Rain column
+            maxTemp: parseFloat(parts[3]) || 0,       // T.Max column
+            minTemp: parseFloat(parts[5]) || 0,       // T.Min column
+            radiation: parseFloat(parts[11]) || 0,    // Radn column
+            evaporation: parseFloat(parts[9]) || 0,   // Evap column
           });
         }
       }
