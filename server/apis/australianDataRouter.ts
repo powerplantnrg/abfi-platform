@@ -184,6 +184,19 @@ australianDataRouter.get("/climate/regions", async (_req, res) => {
 // https://esoil.io/TERNLandscapes/Public/Pages/SLGA/
 // ============================================================================
 
+interface SoilLayer {
+  depth: string;
+  value: number | null;
+}
+
+interface SoilProperty {
+  name: string;
+  code: string;
+  unit: string;
+  description: string;
+  layers: SoilLayer[];
+}
+
 australianDataRouter.get("/soil", async (req, res) => {
   try {
     const { lat, lon } = req.query;
@@ -197,65 +210,81 @@ australianDataRouter.get("/soil", async (req, res) => {
       return res.json(cached);
     }
 
-    // SLGA WCS GetCoverage request for Soil Organic Carbon
-    // Layer: SOC_000_005 (Organic Carbon 0-5cm depth)
-    const wcsBaseUrl = "https://esoil.io/TERNLandscapes/Public/ows/SLGA";
+    // SLGA Raster Products API - extractSLGAdata endpoint
+    // Documentation: https://esoil.io/TERNLandscapes/RasterProductsAPI/__docs__/
+    const apiUrl = "https://esoil.io/TERNLandscapes/RasterProductsAPI/extractSLGAdata";
 
-    // Fetch multiple soil properties in parallel
-    const properties = ["SOC", "CLY", "SND", "PHW", "BDW", "AWC"];
-    const depths = ["000_005", "005_015", "015_030"];
+    const response = await axios.get(apiUrl, {
+      params: {
+        latitude,
+        longitude,
+        attributes: "SOC;CLY;SND;PHW;BDW;AWC",  // Organic Carbon, Clay, Sand, pH, Bulk Density, Available Water
+        summarise: false
+      },
+      timeout: 15000
+    });
 
-    // For now, fetch just the top layer organic carbon as a test
-    const socUrl = `${wcsBaseUrl}/SOC_000_005/wcs?service=WCS&version=2.0.1&request=GetCoverage&CoverageId=SOC_000_005&subset=X(${longitude})&subset=Y(${latitude})&format=application/json`;
-
-    let socValue = null;
-    try {
-      const socResponse = await axios.get(socUrl, { timeout: 10000 });
-      if (socResponse.data && typeof socResponse.data === "object") {
-        // Extract value from WCS response
-        socValue = socResponse.data.value || socResponse.data;
-      }
-    } catch (socError: any) {
-      console.warn("[SLGA] SOC fetch failed:", socError.message);
-    }
-
-    // If WCS doesn't work, try the TERN Data Discovery API
-    const ternApiUrl = `https://esoil.io/TERNLandscapes/SoilDataSearch/api/search`;
-
-    let ternData = null;
-    try {
-      const ternResponse = await axios.post(ternApiUrl, {
-        lat: latitude,
-        lon: longitude,
-        radius: 10000, // 10km radius
-        properties: ["organic_carbon", "clay", "sand", "ph", "bulk_density"]
-      }, { timeout: 10000 });
-      ternData = ternResponse.data;
-    } catch (ternError: any) {
-      console.warn("[TERN] API fetch failed:", ternError.message);
-    }
-
-    if (!socValue && !ternData) {
+    const data = response.data;
+    if (!data || !data[0]?.soilData?.[0]?.SoilAttributes) {
       return res.status(503).json({
         error: "Soil data service unavailable",
-        message: "Could not retrieve soil data from SLGA or TERN services",
+        message: "No soil data returned from SLGA API",
         location: { latitude, longitude },
         source: "Soil and Landscape Grid of Australia (SLGA)",
         sourceUrl: "https://esoil.io/TERNLandscapes/Public/Pages/SLGA/",
-        alternativeSource: "Visit https://portal.tern.org.au for manual data access",
       });
     }
 
+    const soilData = data[0].soilData[0];
+    const attributes = soilData.SoilAttributes;
+
+    // Process soil attributes into a cleaner format
+    const properties: SoilProperty[] = attributes.map((attr: any) => {
+      const layers: SoilLayer[] = attr.SoilLayers
+        .filter((layer: any) => layer.UpperDepth_m !== null && layer.LowerDepth_m !== null)
+        .map((layer: any) => ({
+          depth: `${parseFloat(layer.UpperDepth_m) * 100}-${parseFloat(layer.LowerDepth_m) * 100}cm`,
+          value: layer.Value === "NaN" || layer.Value === "NA" || layer.LayerNum === 1
+            ? null
+            : parseFloat(layer.Value)
+        }))
+        .filter((layer: SoilLayer) => layer.value !== null);
+
+      return {
+        name: attr["Attribute.1"] || attr.Attribute,
+        code: attr.Attribute,
+        unit: attr.units,
+        description: attr.Description,
+        layers
+      };
+    }).filter((prop: SoilProperty) => prop.layers.length > 0);
+
+    // Calculate summary values (average of top 30cm)
+    const getSummaryValue = (code: string): number | null => {
+      const prop = properties.find((p: SoilProperty) => p.code === code);
+      if (!prop || prop.layers.length === 0) return null;
+      const topLayers = prop.layers.slice(0, 3);  // Top 3 layers (~30cm)
+      const validValues = topLayers.map(l => l.value).filter((v): v is number => v !== null);
+      if (validValues.length === 0) return null;
+      return parseFloat((validValues.reduce((a, b) => a + b, 0) / validValues.length).toFixed(2));
+    };
+
     const result = {
       location: { latitude, longitude },
-      properties: ternData?.properties || {
-        organicCarbon: socValue ? {
-          value: socValue,
-          unit: "%",
-          depth: "0-5cm",
-          description: "Soil Organic Carbon content",
-        } : null,
+      queryInfo: {
+        resolution: soilData.SpatialResolution,
+        estimateType: soilData.EstimateType,
+        queryDate: soilData.QueryDate,
       },
+      summary: {
+        organicCarbon: { value: getSummaryValue("SOC"), unit: "%", depth: "0-30cm avg" },
+        clay: { value: getSummaryValue("CLY"), unit: "%", depth: "0-30cm avg" },
+        sand: { value: getSummaryValue("SND"), unit: "%", depth: "0-30cm avg" },
+        pH: { value: getSummaryValue("PHW"), unit: "", depth: "0-30cm avg" },
+        bulkDensity: { value: getSummaryValue("BDW"), unit: "g/cm³", depth: "0-30cm avg" },
+        availableWater: { value: getSummaryValue("AWC"), unit: "%", depth: "0-30cm avg" },
+      },
+      properties,
       source: "Soil and Landscape Grid of Australia (SLGA)",
       sourceUrl: "https://esoil.io/TERNLandscapes/Public/Pages/SLGA/",
       attribution: "TERN, CSIRO, and contributing organizations",
