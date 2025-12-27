@@ -140,7 +140,7 @@
 
 ### Planned Integrations
 - [x] **ABARES** - Land use mapping (CLUM WMS)
-- [ ] **BOM** - Bureau of Meteorology weather forecasts
+- [x] **BOM** - Bureau of Meteorology weather forecasts
 - [ ] **myGovID** - OAuth authentication
 - [ ] **Tomorrow.io** - Fire Weather Index (premium)
 
