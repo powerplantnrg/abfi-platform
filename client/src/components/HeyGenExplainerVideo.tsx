@@ -39,10 +39,9 @@ export function HeyGenExplainerVideo({
   const [completedScenes, setCompletedScenes] = useState<Set<number>>(new Set());
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // HeyGen video URL - multiple CDN patterns to try
-  // Primary: files2.heygen.ai, Fallback: resource.heygen.ai
-  const videoUrl = `https://resource.heygen.ai/video/v1/${videoId}/video.mp4`;
-  const thumbnailUrl = `https://resource.heygen.ai/video/v1/${videoId}/thumbnail.webp`;
+  // Use local video file from public folder
+  const videoUrl = `/videos/sam_australian_001.mp4`;
+  const thumbnailUrl = undefined; // Video will show first frame as poster
 
   useEffect(() => {
     // Determine which scene is currently active based on playback time
