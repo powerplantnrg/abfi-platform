@@ -9,71 +9,70 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-interface TypographyProps {
+interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
-  className?: string;
 }
 
 // ===========================================
 // DISPLAY & HEADING COMPONENTS
 // ===========================================
 
-export const H1: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const H1: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h1 className={cn(
     'text-4xl md:text-5xl font-bold tracking-tight',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h1>
 );
 
-export const H2: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const H2: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h2 className={cn(
     'text-3xl md:text-4xl font-bold tracking-tight',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h2>
 );
 
-export const H3: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const H3: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h3 className={cn(
     'text-2xl md:text-3xl font-semibold tracking-tight',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h3>
 );
 
-export const H4: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const H4: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h4 className={cn(
     'text-xl md:text-2xl font-semibold tracking-tight',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h4>
 );
 
-export const H5: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const H5: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h5 className={cn(
     'text-lg font-semibold',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h5>
 );
 
-export const H6: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const H6: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h6 className={cn(
     'text-base font-semibold',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h6>
 );
@@ -89,7 +88,8 @@ interface BodyProps extends TypographyProps {
 export const Body: React.FC<BodyProps> = ({
   children,
   className = '',
-  size = 'base'
+  size = 'base',
+  ...props
 }) => {
   const sizes = {
     sm: 'text-sm',
@@ -102,36 +102,36 @@ export const Body: React.FC<BodyProps> = ({
       'font-[var(--font-body)]',
       sizes[size],
       className
-    )}>
+    )} {...props}>
       {children}
     </p>
   );
 };
 
-export const Lead: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const Lead: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <p className={cn(
     'text-xl text-muted-foreground',
     'font-[var(--font-body)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </p>
 );
 
-export const Small: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const Small: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <small className={cn(
     'text-sm font-medium leading-none',
     className
-  )}>
+  )} {...props}>
     {children}
   </small>
 );
 
-export const Muted: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const Muted: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <p className={cn(
     'text-sm text-muted-foreground',
     className
-  )}>
+  )} {...props}>
     {children}
   </p>
 );
@@ -151,7 +151,8 @@ export const Currency: React.FC<CurrencyProps> = ({
   value,
   currency = 'AUD',
   showSign = false,
-  className = ''
+  className = '',
+  ...props
 }) => {
   const displayValue = value !== undefined
     ? new Intl.NumberFormat('en-AU', {
@@ -165,7 +166,7 @@ export const Currency: React.FC<CurrencyProps> = ({
     <span className={cn(
       'font-[var(--font-numeric)] font-semibold tabular-nums',
       className
-    )}>
+    )} {...props}>
       {displayValue}
     </span>
   );
@@ -180,7 +181,8 @@ export const Percentage: React.FC<PercentageProps> = ({
   children,
   value,
   showSign = true,
-  className = ''
+  className = '',
+  ...props
 }) => {
   let displayValue = children;
   let colorClass = '';
@@ -196,7 +198,7 @@ export const Percentage: React.FC<PercentageProps> = ({
       'font-[var(--font-numeric)] font-bold tabular-nums',
       colorClass,
       className
-    )}>
+    )} {...props}>
       {displayValue}
     </span>
   );
@@ -211,7 +213,8 @@ export const MetricValue: React.FC<MetricValueProps> = ({
   children,
   className = '',
   positive,
-  size = 'lg'
+  size = 'lg',
+  ...props
 }) => {
   const sizes = {
     sm: 'text-lg',
@@ -227,18 +230,18 @@ export const MetricValue: React.FC<MetricValueProps> = ({
       positive === true && 'text-green-600',
       positive === false && 'text-red-600',
       className
-    )}>
+    )} {...props}>
       {children}
     </div>
   );
 };
 
-export const DataLabel: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const DataLabel: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <span className={cn(
     'text-sm font-medium text-muted-foreground uppercase tracking-wide',
     'font-[var(--font-body)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </span>
 );
@@ -294,22 +297,22 @@ export const TableCellNumeric: React.FC<TypographyProps & React.TdHTMLAttributes
 // CARD COMPONENTS
 // ===========================================
 
-export const CardTitle: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const CardTitle: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <h3 className={cn(
     'text-lg font-semibold text-gray-900',
     'font-[var(--font-display)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </h3>
 );
 
-export const CardDescription: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const CardDescription: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <p className={cn(
     'text-sm text-muted-foreground',
     'font-[var(--font-body)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </p>
 );
@@ -318,22 +321,22 @@ export const CardDescription: React.FC<TypographyProps> = ({ children, className
 // CODE COMPONENTS
 // ===========================================
 
-export const Code: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const Code: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <code className={cn(
     'font-[var(--font-mono)] text-sm',
     'bg-muted px-1.5 py-0.5 rounded',
     className
-  )}>
+  )} {...props}>
     {children}
   </code>
 );
 
-export const Pre: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const Pre: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <pre className={cn(
     'font-[var(--font-mono)] text-sm',
     'bg-muted p-4 rounded-lg overflow-x-auto',
     className
-  )}>
+  )} {...props}>
     {children}
   </pre>
 );
@@ -342,12 +345,12 @@ export const Pre: React.FC<TypographyProps> = ({ children, className = '' }) => 
 // UTILITY COMPONENTS
 // ===========================================
 
-export const Blockquote: React.FC<TypographyProps> = ({ children, className = '' }) => (
+export const Blockquote: React.FC<TypographyProps> = ({ children, className = '', ...props }) => (
   <blockquote className={cn(
     'border-l-4 border-primary pl-4 italic',
     'font-[var(--font-body)]',
     className
-  )}>
+  )} {...props}>
     {children}
   </blockquote>
 );
@@ -355,7 +358,8 @@ export const Blockquote: React.FC<TypographyProps> = ({ children, className = ''
 export const List: React.FC<TypographyProps & { ordered?: boolean }> = ({
   children,
   className = '',
-  ordered = false
+  ordered = false,
+  ...props
 }) => {
   const Tag = ordered ? 'ol' : 'ul';
   return (
@@ -364,7 +368,7 @@ export const List: React.FC<TypographyProps & { ordered?: boolean }> = ({
       ordered ? 'list-decimal' : 'list-disc',
       'pl-6 space-y-1',
       className
-    )}>
+    )} {...props}>
       {children}
     </Tag>
   );

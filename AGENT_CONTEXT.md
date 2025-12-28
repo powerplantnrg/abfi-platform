@@ -135,53 +135,43 @@ Webhook ID: `DNwWhJF2F7SMJ6Ka3Zr2hJ`
 
 ## Handoff Notes
 
-### From Claude Code (Latest Session - 2025-12-28)
+### From Claude Code (Latest Session - 2025-12-29)
 
-#### Session Summary: Vercel tRPC Endpoint Debugging
+#### Session Summary: Vercel tRPC Endpoint Fixed
 
-**1. tRPC Router Context Fix**
-- Issue: All tRPC endpoints returning FUNCTION_INVOCATION_FAILED
-- Root cause: Context type mismatch between server tRPC (Express) and API tRPC (Fetch)
-- Solution: Created `createServerRouterHandler` in `api/_lib/middleware.ts`
-- Updated all 15 router files in `api/trpc/routers/` to use server's tRPC instance
+**Problem Solved:** tRPC endpoints returning FUNCTION_INVOCATION_FAILED
 
-**2. SDK Authentication Fix**
-- Issue: `sdk.authenticateRequest` expected Express-style request
-- Fix: Created Express-compatible request wrapper in middleware
-- Updated both `api/_lib/middleware.ts` and `api/trpc/[trpc].ts`
+**Root Cause Identified via Vercel Logs:**
+- ESM module resolution failures: `Cannot find module '/var/task/api/_lib/middleware'`
+- Then: `Cannot find module '/var/task/server/_core/sdk'`
+- Vercel's serverless bundler doesn't include files outside the `api/` directory in ESM mode
 
-**3. Current Status**
+**Solution: Self-Contained tRPC Handler**
+- Created fully self-contained `api/trpc/[trpc].ts` with no external imports
+- Inlined middleware (CORS, security headers, logging, error handling)
+- Inlined tRPC setup using `initTRPC` directly
+- Created minimal `apiRouter` for public endpoints (system.health)
+
+**Current Status:**
 - `/api/health` - WORKING
-- `/api/trpc/test` - Returns proper tRPC "procedure not found" error (tRPC is loading)
-- `/api/trpc/system.health` - Still returning FUNCTION_INVOCATION_FAILED
+- `/api/trpc/system.health` - WORKING (returns proper tRPC response)
+- Full server routers not yet available in Vercel (need further work)
 
-**4. Debugging Findings**
-- The `[trpc].ts` catch-all handler IS loading successfully for some paths
-- When procedure path is invalid (like "test"), returns proper tRPC error
-- When procedure path is valid (like "system.health"), crashes
-- This suggests the appRouter imports work, but specific router modules crash
+**Commits:**
+- `9e2c082` - fix: add includeFiles to bundle _lib and server directories
+- `60d6206` - fix: inline middleware to avoid ESM module resolution issues
+- `8bdb4e5` - fix: create self-contained tRPC handler with no external server dependencies
 
-**5. Likely Root Cause (needs Vercel logs)**
-- Some module in `server/routers.ts` import tree crashes in serverless
-- Possibly database connection issue or missing env var
-- Need Vercel function logs to identify specific error
-
-**6. Files Modified**
-- `api/_lib/middleware.ts` - Added createServerRouterHandler
-- `api/trpc/[trpc].ts` - Fixed SDK auth
-- All files in `api/trpc/routers/*.ts` - Updated to use server tRPC
-
-**7. Commits**
-- `621fae3` - fix: use server tRPC instance for all API routers
-- `54a9749` - fix: update system.ts to use server tRPC instance
-- `ff70b31` - fix: pass Express-compatible request to sdk.authenticateRequest
-- `d149f54` - fix: authentication and router structure for tRPC endpoints
-- `430e556` - debug: super minimal test endpoint
+**Key Learning:**
+Vercel serverless functions with ESM require either:
+1. All dependencies within the `api/` directory tree
+2. Explicit `includeFiles` patterns in vercel.json (but ESM resolution still fails)
+3. Self-contained handlers with inlined code (the working solution)
 
 #### Next Steps
-1. Check Vercel function logs for actual error message
-2. Check if DATABASE_URL and other env vars are set in Vercel
-3. Consider lazy-loading router modules to isolate crashes
+1. Expand self-contained tRPC router with more public endpoints
+2. For authenticated endpoints, will need to inline auth logic or use edge functions
+3. Consider migrating to edge runtime for better module resolution
 
 ---
 
