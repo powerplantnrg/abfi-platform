@@ -30,7 +30,7 @@ const VIDEO_SCENES = [
     title: "Platform Overview",
     description: "Introduction to the ABFI platform and its core capabilities for bioenergy supply chain management.",
     startTime: 0,
-    endTime: 30, // Adjust based on actual video timestamps
+    endTime: 46,
     icon: <Sprout className="w-5 h-5" />,
     color: "#22c55e",
   },
@@ -38,8 +38,8 @@ const VIDEO_SCENES = [
     id: 1,
     title: "Data Integrity",
     description: "How SHA-256 hashing and blockchain technology ensure tamper-proof evidence storage.",
-    startTime: 30,
-    endTime: 60, // Adjust based on actual video timestamps
+    startTime: 47,
+    endTime: 77, // 1:17
     icon: <Shield className="w-5 h-5" />,
     color: "#D4AF37",
   },
@@ -47,8 +47,8 @@ const VIDEO_SCENES = [
     id: 2,
     title: "Risk Intelligence",
     description: "Real-time supply chain monitoring, weather alerts, and supply shock detection systems.",
-    startTime: 60,
-    endTime: 90, // Adjust based on actual video timestamps
+    startTime: 78, // 1:18
+    endTime: 98, // 1:38
     icon: <BarChart3 className="w-5 h-5" />,
     color: "#3b82f6",
   },
@@ -56,8 +56,8 @@ const VIDEO_SCENES = [
     id: 3,
     title: "Bankability Scoring",
     description: "How the ABFI rating framework assesses and rates feedstock suppliers for lender confidence.",
-    startTime: 90,
-    endTime: 120, // Adjust based on actual video timestamps
+    startTime: 99, // 1:39
+    endTime: 125, // 2:05
     icon: <Zap className="w-5 h-5" />,
     color: "#8b5cf6",
   },

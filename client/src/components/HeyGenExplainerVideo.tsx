@@ -39,9 +39,10 @@ export function HeyGenExplainerVideo({
   const [completedScenes, setCompletedScenes] = useState<Set<number>>(new Set());
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // HeyGen video URL - adjust if needed based on actual CDN structure
-  const videoUrl = `https://files2.heygen.ai/video/v1/${videoId}/video.mp4`;
-  const thumbnailUrl = `https://files2.heygen.ai/video/v1/${videoId}/thumbnail.jpg`;
+  // HeyGen video URL - multiple CDN patterns to try
+  // Primary: files2.heygen.ai, Fallback: resource.heygen.ai
+  const videoUrl = `https://resource.heygen.ai/video/v1/${videoId}/video.mp4`;
+  const thumbnailUrl = `https://resource.heygen.ai/video/v1/${videoId}/thumbnail.webp`;
 
   useEffect(() => {
     // Determine which scene is currently active based on playback time
