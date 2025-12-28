@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,10 +16,12 @@ import {
   Calculator,
   FileSearch,
   ArrowRight,
+  PlayCircle,
 } from "lucide-react";
 import { Link } from "wouter";
 import { PageLayout, PageContainer } from "@/components/layout";
 import { AvatarAssistant } from "@/components/AIHelper/AvatarAssistant";
+import { TourProvider, useTour, StepType } from "@reactour/tour";
 
 // Animation variants
 const containerVariants = {
@@ -36,12 +39,147 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
+// Welcome page tour steps
+const welcomeTourSteps: StepType[] = [
+  {
+    selector: '[data-tour="welcome-hero"]',
+    content: (
+      <div className="p-4">
+        <h3 className="font-bold text-lg mb-2">Welcome to ABFI!</h3>
+        <p className="text-gray-600">Australia's premier bioenergy feedstock trading platform. Let me show you around!</p>
+      </div>
+    ),
+  },
+  {
+    selector: '[data-tour="live-price"]',
+    content: (
+      <div className="p-4">
+        <h3 className="font-bold text-lg mb-2">Live Market Prices</h3>
+        <p className="text-gray-600">Track real-time ethanol and feedstock prices updated every 15 minutes.</p>
+      </div>
+    ),
+  },
+  {
+    selector: '[data-tour="suppliers"]',
+    content: (
+      <div className="p-4">
+        <h3 className="font-bold text-lg mb-2">Verified Suppliers</h3>
+        <p className="text-gray-600">Browse 47+ verified Australian bioenergy suppliers with sustainability certifications.</p>
+      </div>
+    ),
+  },
+  {
+    selector: '[data-tour="carbon"]',
+    content: (
+      <div className="p-4">
+        <h3 className="font-bold text-lg mb-2">Carbon Tracking</h3>
+        <p className="text-gray-600">Monitor your carbon savings and generate reports for ESG compliance.</p>
+      </div>
+    ),
+  },
+  {
+    selector: '[data-tour="quick-start"]',
+    content: (
+      <div className="p-4">
+        <h3 className="font-bold text-lg mb-2">Get Started Quickly</h3>
+        <p className="text-gray-600">Request quotes, explore the feedstock map, or calculate your carbon intensity in just a few clicks.</p>
+      </div>
+    ),
+  },
+  {
+    selector: '[data-tour="sam-assistant"]',
+    content: (
+      <div className="p-4">
+        <h3 className="font-bold text-lg mb-2">Meet Sam - Your AI Guide</h3>
+        <p className="text-gray-600">Click the chat bubble anytime to ask Sam questions about the platform, pricing, or sustainability.</p>
+      </div>
+    ),
+  },
+];
+
+// Tour controller component that uses the useTour hook
+function TourController() {
+  const { setIsOpen, setCurrentStep } = useTour();
+
+  useEffect(() => {
+    // Auto-start tour for first-time visitors
+    const hasSeenWelcomeTour = localStorage.getItem('abfi-welcome-tour-seen');
+    if (!hasSeenWelcomeTour) {
+      const timer = setTimeout(() => {
+        setCurrentStep(0);
+        setIsOpen(true);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [setIsOpen, setCurrentStep]);
+
+  return null;
+}
+
+// Tour start button component
+function TourStartButton() {
+  const { setIsOpen, setCurrentStep } = useTour();
+
+  const startTour = () => {
+    setCurrentStep(0);
+    setIsOpen(true);
+  };
+
+  return (
+    <Button
+      size="lg"
+      variant="ghost"
+      className="text-white hover:bg-white/10 min-h-[52px] text-lg"
+      onClick={startTour}
+    >
+      <PlayCircle className="mr-2 h-5 w-5" />
+      Take a Tour
+    </Button>
+  );
+}
+
 export function SimplifiedDashboard() {
   // Default values - real data loaded lazily after initial render
   const ethanolPrice = 1.42;
   const supplierCount = 47;
 
   return (
+    <TourProvider
+      steps={welcomeTourSteps}
+      onClickClose={({ setIsOpen }) => {
+        localStorage.setItem('abfi-welcome-tour-seen', 'true');
+        setIsOpen(false);
+      }}
+      styles={{
+        popover: (base) => ({
+          ...base,
+          borderRadius: '16px',
+          padding: '0',
+          maxWidth: '360px',
+          background: '#ffffff',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
+        }),
+        maskArea: (base) => ({
+          ...base,
+          rx: 12,
+        }),
+        badge: (base) => ({
+          ...base,
+          background: '#D4AF37',
+          color: '#000000',
+          fontWeight: '600',
+        }),
+        dot: (base, state) => ({
+          ...base,
+          background: state?.current ? '#D4AF37' : '#e5e7eb',
+        }),
+        controls: (base) => ({
+          ...base,
+          marginTop: '16px',
+        }),
+      }}
+    >
+      <TourController />
     <PageLayout>
       <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 text-white py-16 md:py-24">
         <PageContainer>
@@ -49,6 +187,7 @@ export function SimplifiedDashboard() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center max-w-4xl mx-auto"
+            data-tour="welcome-hero"
           >
             <motion.div
               initial={{ scale: 0.8 }}
@@ -93,6 +232,7 @@ export function SimplifiedDashboard() {
                   View Live Prices
                 </Link>
               </Button>
+              <TourStartButton />
             </div>
           </motion.div>
         </PageContainer>
@@ -106,7 +246,7 @@ export function SimplifiedDashboard() {
         >
           {/* Quick Stats Row */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} data-tour="live-price">
               <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-[#D4AF37]">
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
@@ -134,7 +274,7 @@ export function SimplifiedDashboard() {
               </Card>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} data-tour="suppliers">
               <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-emerald-500">
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
@@ -162,7 +302,7 @@ export function SimplifiedDashboard() {
               </Card>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
+            <motion.div variants={itemVariants} data-tour="carbon">
               <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-purple-500">
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-3">
@@ -190,7 +330,7 @@ export function SimplifiedDashboard() {
           </div>
 
           {/* Quick Start Section */}
-          <motion.div variants={itemVariants} className="mb-12">
+          <motion.div variants={itemVariants} className="mb-12" data-tour="quick-start">
             <div className="bg-gradient-to-r from-slate-50 to-emerald-50 rounded-2xl p-8 border border-gray-200">
               <h2 className="text-2xl font-bold text-slate-900 mb-2">
                 Quick Start
@@ -331,8 +471,11 @@ export function SimplifiedDashboard() {
       </PageContainer>
 
       {/* Sam AI Assistant */}
-      <AvatarAssistant />
+      <div data-tour="sam-assistant">
+        <AvatarAssistant />
+      </div>
     </PageLayout>
+  </TourProvider>
   );
 }
 
