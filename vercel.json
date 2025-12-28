@@ -4,6 +4,18 @@
   "outputDirectory": "dist/public",
   "installCommand": "pnpm install",
   "functions": {
+    "api/health.ts": {
+      "maxDuration": 5,
+      "memory": 128
+    },
+    "api/trpc/routers/*.ts": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "api/trpc/[trpc].ts": {
+      "maxDuration": 60,
+      "memory": 1024
+    },
     "api/**/*.ts": {
       "maxDuration": 30
     }
