@@ -23,6 +23,7 @@ import {
   Globe,
 } from "lucide-react";
 import { Link } from "wouter";
+import { H1, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 
 // Dummy supplier data
 const suppliers = [
@@ -133,11 +134,11 @@ function SupplierCard({
           )}
           <div className="flex items-center gap-1">
             <Star className="h-4 w-4 fill-[#D4AF37] text-[#D4AF37]" />
-            <span className="font-medium">{supplier.rating}</span>
-            <span className="text-gray-500 text-sm">({supplier.reviews})</span>
+            <span className="font-mono font-semibold tabular-nums">{supplier.rating}</span>
+            <span className="text-muted-foreground text-sm">({supplier.reviews})</span>
           </div>
         </div>
-        <CardTitle className="text-xl mt-2">{supplier.name}</CardTitle>
+        <H4 className="mt-2">{supplier.name}</H4>
         <CardDescription className="flex items-center gap-1">
           <MapPin className="h-4 w-4" />
           {supplier.location}
@@ -146,12 +147,13 @@ function SupplierCard({
       <CardContent>
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-sm">
-            <Package className="h-4 w-4 text-gray-500" />
+            <Package className="h-4 w-4 text-muted-foreground" />
             <span>{supplier.feedstocks.join(" • ")}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
-            <Zap className="h-4 w-4 text-gray-500" />
-            <span>{supplier.capacity} capacity</span>
+            <Zap className="h-4 w-4 text-muted-foreground" />
+            <span className="font-mono tabular-nums font-medium">{supplier.capacity}</span>
+            <span className="text-muted-foreground">capacity</span>
           </div>
           <div className="flex flex-wrap gap-1 mt-3">
             {supplier.certifications.slice(0, 2).map((cert) => (
@@ -214,8 +216,8 @@ function SupplierDetailModal({
             )}
             <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-[#D4AF37] text-[#D4AF37]" />
-              <span className="font-medium">{supplier.rating}</span>
-              <span className="text-gray-500 text-sm">({supplier.reviews} reviews)</span>
+              <span className="font-mono font-semibold tabular-nums">{supplier.rating}</span>
+              <span className="text-muted-foreground text-sm">({supplier.reviews} reviews)</span>
             </div>
           </div>
           <DialogTitle className="text-2xl">{supplier.name}</DialogTitle>
@@ -227,13 +229,13 @@ function SupplierDetailModal({
 
         <div className="space-y-6">
           <div>
-            <h4 className="font-semibold mb-2">About</h4>
-            <p className="text-gray-600">{supplier.description}</p>
+            <DataLabel className="mb-2 block">About</DataLabel>
+            <Body className="text-muted-foreground">{supplier.description}</Body>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <h4 className="font-semibold mb-2">Feedstocks</h4>
+              <DataLabel className="mb-2 block">Feedstocks</DataLabel>
               <div className="flex flex-wrap gap-2">
                 {supplier.feedstocks.map((f) => (
                   <Badge key={f} variant="secondary">
@@ -243,13 +245,13 @@ function SupplierDetailModal({
               </div>
             </div>
             <div>
-              <h4 className="font-semibold mb-2">Capacity</h4>
-              <p className="text-lg font-medium">{supplier.capacity}</p>
+              <DataLabel className="mb-2 block">Capacity</DataLabel>
+              <MetricValue size="md">{supplier.capacity}</MetricValue>
             </div>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2">Certifications</h4>
+            <DataLabel className="mb-2 block">Certifications</DataLabel>
             <div className="flex flex-wrap gap-2">
               {supplier.certifications.map((cert) => (
                 <Badge key={cert} variant="outline">
@@ -260,18 +262,18 @@ function SupplierDetailModal({
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2">Contact Information</h4>
+            <DataLabel className="mb-2 block">Contact Information</DataLabel>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-gray-500" />
-                <span>{supplier.contact.phone}</span>
+                <Phone className="h-4 w-4 text-muted-foreground" />
+                <span className="font-mono">{supplier.contact.phone}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-gray-500" />
+                <Mail className="h-4 w-4 text-muted-foreground" />
                 <span>{supplier.contact.email}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4 text-gray-500" />
+                <Globe className="h-4 w-4 text-muted-foreground" />
                 <span>{supplier.contact.website}</span>
               </div>
             </div>
@@ -312,10 +314,10 @@ export default function SupplierDirectory() {
       <div className="container py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Supplier Directory</h1>
-          <p className="text-gray-600">
+          <H1 className="mb-2">Supplier Directory</H1>
+          <Body className="text-muted-foreground">
             Browse certified suppliers and request quotes for biofuel feedstocks.
-          </p>
+          </Body>
         </div>
 
         {/* Search */}
@@ -330,9 +332,9 @@ export default function SupplierDirectory() {
         </div>
 
         {/* Results count */}
-        <p className="text-sm text-gray-600 mb-4">
-          Showing {filteredSuppliers.length} of {suppliers.length} suppliers
-        </p>
+        <Body size="sm" className="text-muted-foreground mb-4">
+          Showing <span className="font-mono tabular-nums font-medium">{filteredSuppliers.length}</span> of <span className="font-mono tabular-nums font-medium">{suppliers.length}</span> suppliers
+        </Body>
 
         {/* Supplier Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -348,11 +350,11 @@ export default function SupplierDirectory() {
         {/* Empty state */}
         {filteredSuppliers.length === 0 && (
           <div className="text-center py-12">
-            <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No suppliers found</h3>
-            <p className="text-gray-600">
+            <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <H3 className="mb-2">No suppliers found</H3>
+            <Body className="text-muted-foreground">
               Try adjusting your search terms or browse all suppliers.
-            </p>
+            </Body>
             <Button variant="outline" className="mt-4" onClick={() => setSearchQuery("")}>
               Clear Search
             </Button>
