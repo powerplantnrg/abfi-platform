@@ -50,6 +50,7 @@ import {
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { SimpleLeafletMap, type MapMarker } from "@/components/SimpleLeafletMap";
+import { H3, Body, MetricValue } from "@/components/Typography";
 import type L from "leaflet";
 import { OnboardingModal } from "@/components/OnboardingModal";
 
@@ -202,8 +203,8 @@ export default function GrowerDashboard() {
                   <stat.icon className={cn("h-5 w-5", stat.color)} />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{stat.value}</p>
-                  <p className="text-xs text-gray-600">{stat.label}</p>
+                  <MetricValue size="md">{stat.value}</MetricValue>
+                  <Body size="sm" className="text-gray-600">{stat.label}</Body>
                 </div>
               </div>
             ))}

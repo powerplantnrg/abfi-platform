@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/motion";
 import DashboardLayout from "@/components/DashboardLayout";
 import { StatsCardPremium, GlassCard, ProgressRing, StatusIndicator } from "@/components/ui/premium-cards";
+import { H1, H3, Body, MetricValue } from "@/components/Typography";
 
 // Australian feedstock types with bamboo focus
 const FEEDSTOCK_TYPES = [
@@ -364,12 +365,12 @@ export default function Dashboard() {
                     {user?.name?.charAt(0) || "U" || "U"}
                   </div>
                   <div>
-                    <h1 className="text-2xl font-bold text-slate-900">
+                    <H1 className="text-2xl text-slate-900">
                       Welcome back, {user?.name || "User"}
-                    </h1>
-                    <p className="text-gray-600 text-sm">
+                    </H1>
+                    <Body size="sm" className="text-gray-600">
                       Here's what's happening with your Australian biomass portfolio today.
-                    </p>
+                    </Body>
                   </div>
                 </div>
               </div>

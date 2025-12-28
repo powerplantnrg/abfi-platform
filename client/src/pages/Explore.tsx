@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
+import { H2, H3, Body } from "@/components/Typography";
 
 // Profiler questions
 const PROFILER_QUESTIONS = [
@@ -137,13 +138,13 @@ export default function Explore() {
             <div className="h-16 w-16 rounded-full bg-[#D4AF37]/10 flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="h-8 w-8 text-[#D4AF37]" />
             </div>
-            <CardTitle className="text-2xl">Your Recommended Path</CardTitle>
-            <CardDescription>Based on your responses, we recommend starting here</CardDescription>
+            <H2 className="text-2xl">Your Recommended Path</H2>
+            <Body className="text-muted-foreground">Based on your responses, we recommend starting here</Body>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="p-4 rounded-lg border-2 border-emerald-200 bg-emerald-50/50">
-              <h3 className="font-semibold text-lg mb-1">{recommendation.title}</h3>
-              <p className="text-sm text-gray-600">{recommendation.description}</p>
+              <H3 className="text-lg mb-1">{recommendation.title}</H3>
+              <Body size="sm" className="text-gray-600">{recommendation.description}</Body>
             </div>
 
             <div className="space-y-3">
@@ -215,8 +216,8 @@ export default function Explore() {
             <div className="h-12 w-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center mx-auto mb-4">
               <Compass className="h-6 w-6 text-[#D4AF37]" />
             </div>
-            <CardTitle className="text-xl">{currentQuestion.question}</CardTitle>
-            <CardDescription>Select the option that best fits your situation</CardDescription>
+            <H3 className="text-xl">{currentQuestion.question}</H3>
+            <Body className="text-muted-foreground">Select the option that best fits your situation</Body>
           </CardHeader>
           <CardContent className="space-y-3">
             {currentQuestion.options.map((option) => (

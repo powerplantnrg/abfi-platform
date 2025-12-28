@@ -10,6 +10,7 @@ import {
   Clock,
   XCircle,
 } from 'lucide-react';
+import { H1, H2, H3, Body, MetricValue } from '@/components/Typography';
 
 // --- Design System Colors and Constants ---
 const GOLD = '#D4AF37';
@@ -180,9 +181,9 @@ const LenderDashboard: React.FC = () => {
     <div className="p-8 bg-gray-50 min-h-screen" style={{ fontSize: '18px' }}>
       {/* Header */}
       <header className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-semibold" style={{ color: BLACK }}>
+        <H1 className="text-3xl" style={{ color: BLACK }}>
           Lender Dashboard
-        </h1>
+        </H1>
         {/* One primary gold CTA per screen */}
         <Button variant="primary">
           <span className="flex items-center">
@@ -202,9 +203,9 @@ const LenderDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Covenant Monitoring */}
         <section className="lg:col-span-2">
-          <h2 className="text-2xl font-semibold mb-4" style={{ color: BLACK }}>
+          <H2 className="text-2xl mb-4" style={{ color: BLACK }}>
             Covenant Monitoring
-          </h2>
+          </H2>
           {/* Cards-first design over tables */}
           <div className="space-y-4">
             {covenants.map((covenant) => (
@@ -239,9 +240,9 @@ const LenderDashboard: React.FC = () => {
             className="bg-white border border-gray-200 shadow-sm p-6 rounded-lg"
             style={{ borderRadius: '12px' }}
           >
-            <h2 className="text-2xl font-semibold mb-4" style={{ color: BLACK }}>
+            <H2 className="text-2xl mb-4" style={{ color: BLACK }}>
               Bankability Assessment
-            </h2>
+            </H2>
             <p className="text-gray-600 mb-4" style={{ fontSize: '18px' }}>
               Initiate a new assessment for a potential or existing borrower.
             </p>
@@ -258,9 +259,9 @@ const LenderDashboard: React.FC = () => {
             className="bg-white border border-gray-200 shadow-sm p-6 rounded-lg"
             style={{ borderRadius: '12px' }}
           >
-            <h2 className="text-2xl font-semibold mb-4" style={{ color: BLACK }}>
+            <H2 className="text-2xl mb-4" style={{ color: BLACK }}>
               Risk Matrix Overview
-            </h2>
+            </H2>
             <div className="space-y-3">
               {riskMatrixData.map((item) => (
                 <div key={item.risk} className="flex justify-between items-center">
@@ -288,9 +289,9 @@ const LenderDashboard: React.FC = () => {
 
       {/* Breach Alerts and Audit Trail Access */}
       <section className="mt-10">
-        <h2 className="text-2xl font-semibold mb-4" style={{ color: BLACK }}>
+        <H2 className="text-2xl mb-4" style={{ color: BLACK }}>
           Breach Alerts & Audit Trail
-        </h2>
+        </H2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Breach Alerts */}
           <div

@@ -46,6 +46,7 @@ import {
   AnimatedCounter,
   motion,
 } from "@/components/ui/motion";
+import { H1, H2, H3, Body, MetricValue } from "@/components/Typography";
 
 // Evidence Chain Visual
 function EvidenceChainDemo() {

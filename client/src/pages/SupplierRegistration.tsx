@@ -34,6 +34,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { H1, H3, Body } from "@/components/Typography";
 
 type Step = 1 | 2 | 3;
 
@@ -106,10 +107,10 @@ export default function SupplierRegistration() {
             <div className="p-3 rounded-xl bg-[#D4AF37]/10 w-fit mx-auto mb-4">
               <Building2 className="h-8 w-8 text-[#D4AF37]" />
             </div>
-            <CardTitle className="heading-3">Authentication Required</CardTitle>
-            <CardDescription className="body-lg">
+            <H3>Authentication Required</H3>
+            <Body className="text-muted-foreground">
               Please sign in to register as a supplier
-            </CardDescription>
+            </Body>
           </CardHeader>
         </Card>
       </div>
@@ -147,13 +148,13 @@ export default function SupplierRegistration() {
             <Building2 className="h-3.5 w-3.5 mr-1.5" />
             Supplier Registration
           </Badge>
-          <h1 className="heading-1 text-foreground mb-2">
+          <H1 className="text-foreground mb-2">
             Register as a Bamboo Supplier
-          </h1>
-          <p className="text-gray-600 body-lg max-w-xl mx-auto">
+          </H1>
+          <Body size="lg" className="text-gray-600 max-w-xl mx-auto">
             Join Australia's leading bamboo and biomass feedstock marketplace.
             Connect with verified buyers seeking sustainable Australian feedstocks.
-          </p>
+          </Body>
         </div>
 
         {/* Progress Steps */}

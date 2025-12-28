@@ -41,6 +41,7 @@ import {
 import { useState } from "react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import { H1, H3, Body, MetricValue } from "@/components/Typography";
 
 // Mock data for demonstration - Bamboo featured first
 const MOCK_FEEDSTOCKS = [
@@ -340,14 +341,14 @@ export default function Browse() {
               )}
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
+            <H1 className="text-4xl lg:text-5xl mb-4">
               Browse Feedstocks
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+            </H1>
+            <Body size="lg" className="text-xl text-gray-600 mb-8 leading-relaxed">
               Discover verified biofuel feedstock sources across Australia.
               Compare ABFI scores, carbon intensity, and availability from
               qualified suppliers.
-            </p>
+            </Body>
 
             <div className="flex flex-wrap gap-3">
               <Badge className="bg-white/10 text-black border-white/20 py-2 px-4">
@@ -368,28 +369,28 @@ export default function Browse() {
           {/* Stats Row */}
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-black">
+              <MetricValue size="lg" className="text-black">
                 {feedstocks.length}
-              </div>
-              <div className="text-sm text-gray-500 mt-1">Listings</div>
+              </MetricValue>
+              <Body size="sm" className="text-gray-500 mt-1">Listings</Body>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-green-400">
+              <MetricValue size="lg" className="text-green-400">
                 {(totalVolume / 1000).toFixed(0)}k
-              </div>
-              <div className="text-sm text-gray-500 mt-1">
+              </MetricValue>
+              <Body size="sm" className="text-gray-500 mt-1">
                 Tonnes Available
-              </div>
+              </Body>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-black">
+              <MetricValue size="lg" className="text-black">
                 {avgScore.toFixed(0)}
-              </div>
-              <div className="text-sm text-gray-500 mt-1">Avg ABFI Score</div>
+              </MetricValue>
+              <Body size="sm" className="text-gray-500 mt-1">Avg ABFI Score</Body>
             </div>
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center">
-              <div className="text-3xl font-bold font-mono text-black">6</div>
-              <div className="text-sm text-gray-500 mt-1">States</div>
+              <MetricValue size="lg" className="text-black">6</MetricValue>
+              <Body size="sm" className="text-gray-500 mt-1">States</Body>
             </div>
           </div>
         </PageContainer>
@@ -707,9 +708,9 @@ export default function Browse() {
               <Card>
                 <CardContent className="py-16 text-center">
                   <TrendingUp className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">
+                  <H3 className="text-lg mb-2">
                     No feedstocks found
-                  </h3>
+                  </H3>
                   <p className="text-gray-600 mb-4">
                     Try adjusting your filters or check back later for new
                     listings
@@ -773,9 +774,9 @@ export default function Browse() {
                 <CardContent className="py-8">
                   <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">
+                      <H3 className="text-xl mb-2">
                         Want to list your feedstock?
-                      </h3>
+                      </H3>
                       <p className="text-gray-600">
                         Register as a supplier and list your biomass feedstock
                         to reach verified buyers.

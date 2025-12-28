@@ -40,6 +40,7 @@ import {
   AnimatedCounter,
   motion,
 } from "@/components/ui/motion";
+import { H1, H2, H3, Body, MetricValue } from "@/components/Typography";
 
 // Grower Qualification Tier Component
 function GQTierCard({
