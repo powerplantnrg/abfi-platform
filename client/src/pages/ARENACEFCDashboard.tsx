@@ -56,21 +56,7 @@ import {
   Factory,
 } from "lucide-react";
 import { format } from "date-fns";
-import {
-  PieChart as RechartsPie,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  AreaChart,
-  Area,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 // Types
 interface ARENAProject {
@@ -672,24 +658,28 @@ export default function ARENACEFCDashboard() {
               </CardHeader>
               <CardContent>
                 {arenaStats?.byTechnology ? (
-                  <ResponsiveContainer width="100%" height={300}>
-                    <RechartsPie>
-                      <Pie
-                        data={arenaStats.byTechnology}
-                        dataKey="funding"
-                        nameKey="technology"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={100}
-                        label={({ technology, percentage }) => `${technology}: ${percentage}%`}
-                      >
-                        {arenaStats.byTechnology.map((_: any, index: number) => (
-                          <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value: number) => formatCurrency(value)} />
-                    </RechartsPie>
-                  </ResponsiveContainer>
+                  <LazyChart height={300}>
+                    {({ ResponsiveContainer, PieChart, Pie, Cell, Tooltip }) => (
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie
+                            data={arenaStats.byTechnology}
+                            dataKey="funding"
+                            nameKey="technology"
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={100}
+                            label={({ technology, percentage }) => `${technology}: ${percentage}%`}
+                          >
+                            {arenaStats.byTechnology.map((_: any, index: number) => (
+                              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 ) : (
                   <p className="text-gray-500">Loading chart...</p>
                 )}
@@ -706,15 +696,19 @@ export default function ARENACEFCDashboard() {
               </CardHeader>
               <CardContent>
                 {cefcStats?.bySector ? (
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={cefcStats.bySector} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
-                      <YAxis dataKey="sector" type="category" width={120} />
-                      <Tooltip formatter={(value: number) => formatCurrency(value)} />
-                      <Bar dataKey="commitments" fill="#3b82f6" />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <LazyChart height={300}>
+                    {({ ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar }) => (
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={cefcStats.bySector} layout="vertical">
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} />
+                          <YAxis dataKey="sector" type="category" width={120} />
+                          <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                          <Bar dataKey="commitments" fill="#3b82f6" />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 ) : (
                   <p className="text-gray-500">Loading chart...</p>
                 )}
@@ -731,39 +725,43 @@ export default function ARENACEFCDashboard() {
               </CardHeader>
               <CardContent>
                 {arenaStats?.yearlyFunding && cefcStats?.yearlyActivity ? (
-                  <ResponsiveContainer width="100%" height={300}>
-                    <AreaChart
-                      data={arenaStats.yearlyFunding.map((a: any, i: number) => ({
-                        year: a.year,
-                        arena: a.committed,
-                        cefc: cefcStats.yearlyActivity[i]?.commitments || 0,
-                      }))}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="year" />
-                      <YAxis tickFormatter={(v) => formatCurrency(v)} />
-                      <Tooltip formatter={(value: number) => formatCurrency(value)} />
-                      <Legend />
-                      <Area
-                        type="monotone"
-                        dataKey="arena"
-                        name="ARENA"
-                        stackId="1"
-                        stroke="#10b981"
-                        fill="#10b981"
-                        fillOpacity={0.6}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="cefc"
-                        name="CEFC"
-                        stackId="1"
-                        stroke="#3b82f6"
-                        fill="#3b82f6"
-                        fillOpacity={0.6}
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
+                  <LazyChart height={300}>
+                    {({ ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Area }) => (
+                      <ResponsiveContainer width="100%" height={300}>
+                        <AreaChart
+                          data={arenaStats.yearlyFunding.map((a: any, i: number) => ({
+                            year: a.year,
+                            arena: a.committed,
+                            cefc: cefcStats.yearlyActivity[i]?.commitments || 0,
+                          }))}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis tickFormatter={(v) => formatCurrency(v)} />
+                          <Tooltip formatter={(value: number) => formatCurrency(value)} />
+                          <Legend />
+                          <Area
+                            type="monotone"
+                            dataKey="arena"
+                            name="ARENA"
+                            stackId="1"
+                            stroke="#10b981"
+                            fill="#10b981"
+                            fillOpacity={0.6}
+                          />
+                          <Area
+                            type="monotone"
+                            dataKey="cefc"
+                            name="CEFC"
+                            stackId="1"
+                            stroke="#3b82f6"
+                            fill="#3b82f6"
+                            fillOpacity={0.6}
+                          />
+                        </AreaChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 ) : (
                   <p className="text-gray-500">Loading chart...</p>
                 )}

@@ -19,21 +19,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Cell,
-  Legend,
-  LineChart,
-  Line,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 const FEAR_COLORS: Record<string, string> = {
   regulatory_risk: "#ef4444",
@@ -289,41 +275,45 @@ export default function LendingSentimentDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={300}>
-                  <AreaChart data={sentimentTrend.slice(-90)}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      dataKey="date"
-                      tickFormatter={formatDate}
-                      tick={{ fontSize: 12 }}
-                    />
-                    <YAxis tick={{ fontSize: 12 }} />
-                    <Tooltip
-                      labelFormatter={(value) =>
-                        new Date(value).toLocaleDateString("en-AU")
-                      }
-                    />
-                    <Legend />
-                    <Area
-                      type="monotone"
-                      dataKey="bullish"
-                      stackId="1"
-                      stroke="#22c55e"
-                      fill="#22c55e"
-                      fillOpacity={0.6}
-                      name="Bullish"
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="bearish"
-                      stackId="1"
-                      stroke="#ef4444"
-                      fill="#ef4444"
-                      fillOpacity={0.6}
-                      name="Bearish"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
+                <LazyChart height={300}>
+                  {({ ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Area }) => (
+                    <ResponsiveContainer width="100%" height={300}>
+                      <AreaChart data={sentimentTrend.slice(-90)}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis
+                          dataKey="date"
+                          tickFormatter={formatDate}
+                          tick={{ fontSize: 12 }}
+                        />
+                        <YAxis tick={{ fontSize: 12 }} />
+                        <Tooltip
+                          labelFormatter={(value) =>
+                            new Date(value as string).toLocaleDateString("en-AU")
+                          }
+                        />
+                        <Legend />
+                        <Area
+                          type="monotone"
+                          dataKey="bullish"
+                          stackId="1"
+                          stroke="#22c55e"
+                          fill="#22c55e"
+                          fillOpacity={0.6}
+                          name="Bullish"
+                        />
+                        <Area
+                          type="monotone"
+                          dataKey="bearish"
+                          stackId="1"
+                          stroke="#ef4444"
+                          fill="#ef4444"
+                          fillOpacity={0.6}
+                          name="Bearish"
+                        />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  )}
+                </LazyChart>
               </CardContent>
             </Card>
 
@@ -336,19 +326,23 @@ export default function LendingSentimentDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={250}>
-                  <BarChart data={fearComponentsData} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis type="number" domain={[0, 100]} />
-                    <YAxis dataKey="name" type="category" width={100} />
-                    <Tooltip formatter={(value) => `${value}%`} />
-                    <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                      {fearComponentsData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                <LazyChart height={250}>
+                  {({ ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar, Cell }) => (
+                    <ResponsiveContainer width="100%" height={250}>
+                      <BarChart data={fearComponentsData} layout="vertical">
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis type="number" domain={[0, 100]} />
+                        <YAxis dataKey="name" type="category" width={100} />
+                        <Tooltip formatter={(value) => `${value}%`} />
+                        <Bar dataKey="value" radius={[0, 4, 4, 0]}>
+                          {fearComponentsData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
+                </LazyChart>
               </CardContent>
             </Card>
 
@@ -377,17 +371,21 @@ export default function LendingSentimentDashboard() {
                         </div>
                       </div>
                       <div className="w-24 h-8">
-                        <ResponsiveContainer width="100%" height="100%">
-                          <LineChart data={lender.trend.map((v, i) => ({ value: v }))}>
-                            <Line
-                              type="monotone"
-                              dataKey="value"
-                              stroke={lender.sentiment >= 0 ? "#22c55e" : "#ef4444"}
-                              strokeWidth={2}
-                              dot={false}
-                            />
-                          </LineChart>
-                        </ResponsiveContainer>
+                        <LazyChart height={32}>
+                          {({ ResponsiveContainer, LineChart, Line }) => (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <LineChart data={lender.trend.map((v) => ({ value: v }))}>
+                                <Line
+                                  type="monotone"
+                                  dataKey="value"
+                                  stroke={lender.sentiment >= 0 ? "#22c55e" : "#ef4444"}
+                                  strokeWidth={2}
+                                  dot={false}
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          )}
+                        </LazyChart>
                       </div>
                       <div className="text-right w-20">
                         <div

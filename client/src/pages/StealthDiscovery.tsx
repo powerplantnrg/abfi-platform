@@ -42,18 +42,7 @@ import {
   type Signal,
   type DashboardStats,
 } from "@/lib/stealthDiscoveryApi";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-  PieChart,
-  Pie,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 // Icon mapping for signal types
 const SIGNAL_ICONS: Record<string, React.ElementType> = {
@@ -499,25 +488,29 @@ export default function StealthDiscovery() {
               <CardContent>
                 <div className="flex items-center gap-8">
                   <div className="w-48 h-48">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={signalTypesChartData}
-                          dataKey="value"
-                          nameKey="name"
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={40}
-                          outerRadius={70}
-                          paddingAngle={2}
-                        >
-                          {signalTypesChartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
+                    <LazyChart height={192}>
+                      {({ ResponsiveContainer, PieChart, Pie, Cell, Tooltip }) => (
+                        <ResponsiveContainer width="100%" height="100%">
+                          <PieChart>
+                            <Pie
+                              data={signalTypesChartData}
+                              dataKey="value"
+                              nameKey="name"
+                              cx="50%"
+                              cy="50%"
+                              innerRadius={40}
+                              outerRadius={70}
+                              paddingAngle={2}
+                            >
+                              {signalTypesChartData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={entry.color} />
+                              ))}
+                            </Pie>
+                            <Tooltip />
+                          </PieChart>
+                        </ResponsiveContainer>
+                      )}
+                    </LazyChart>
                   </div>
                   <div className="flex-1 space-y-2">
                     {signalTypesChartData.map((item, index) => {

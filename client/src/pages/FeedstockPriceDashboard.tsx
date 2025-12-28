@@ -19,22 +19,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  Cell,
-  Legend,
-  LineChart,
-  Line,
-  ComposedChart,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 const COMMODITY_COLORS: Record<string, string> = {
   UCO: "#22c55e",
@@ -310,72 +295,76 @@ export default function FeedstockPriceDashboard() {
                 </div>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={350}>
-                  <ComposedChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis
-                      dataKey="date"
-                      tickFormatter={formatDate}
-                      tick={{ fontSize: 11 }}
-                    />
-                    <YAxis
-                      yAxisId="price"
-                      domain={["auto", "auto"]}
-                      tick={{ fontSize: 11 }}
-                      tickFormatter={(v) => `$${v}`}
-                    />
-                    <YAxis
-                      yAxisId="volume"
-                      orientation="right"
-                      tick={{ fontSize: 11 }}
-                      tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
-                    />
-                    <Tooltip
-                      labelFormatter={(value) =>
-                        new Date(value).toLocaleDateString("en-AU")
-                      }
-                      formatter={(value: any, name: string) => {
-                        if (name === "volume") return [`${(value / 1000).toFixed(1)}k MT`, "Volume"];
-                        return [`$${value.toFixed(2)}`, name];
-                      }}
-                    />
-                    <Legend />
-                    <Bar
-                      yAxisId="volume"
-                      dataKey="volume"
-                      fill="#e5e7eb"
-                      opacity={0.5}
-                      name="Volume"
-                    />
-                    <Line
-                      yAxisId="price"
-                      type="monotone"
-                      dataKey="high"
-                      stroke="#22c55e"
-                      strokeWidth={1}
-                      dot={false}
-                      name="High"
-                    />
-                    <Line
-                      yAxisId="price"
-                      type="monotone"
-                      dataKey="low"
-                      stroke="#ef4444"
-                      strokeWidth={1}
-                      dot={false}
-                      name="Low"
-                    />
-                    <Line
-                      yAxisId="price"
-                      type="monotone"
-                      dataKey="close"
-                      stroke="#3b82f6"
-                      strokeWidth={2}
-                      dot={false}
-                      name="Close"
-                    />
-                  </ComposedChart>
-                </ResponsiveContainer>
+                <LazyChart height={350}>
+                  {({ ResponsiveContainer, ComposedChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, Line }) => (
+                    <ResponsiveContainer width="100%" height={350}>
+                      <ComposedChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis
+                          dataKey="date"
+                          tickFormatter={formatDate}
+                          tick={{ fontSize: 11 }}
+                        />
+                        <YAxis
+                          yAxisId="price"
+                          domain={["auto", "auto"]}
+                          tick={{ fontSize: 11 }}
+                          tickFormatter={(v) => `$${v}`}
+                        />
+                        <YAxis
+                          yAxisId="volume"
+                          orientation="right"
+                          tick={{ fontSize: 11 }}
+                          tickFormatter={(v) => `${(v / 1000).toFixed(0)}k`}
+                        />
+                        <Tooltip
+                          labelFormatter={(value) =>
+                            new Date(value).toLocaleDateString("en-AU")
+                          }
+                          formatter={(value: any, name: string) => {
+                            if (name === "volume") return [`${(value / 1000).toFixed(1)}k MT`, "Volume"];
+                            return [`$${value.toFixed(2)}`, name];
+                          }}
+                        />
+                        <Legend />
+                        <Bar
+                          yAxisId="volume"
+                          dataKey="volume"
+                          fill="#e5e7eb"
+                          opacity={0.5}
+                          name="Volume"
+                        />
+                        <Line
+                          yAxisId="price"
+                          type="monotone"
+                          dataKey="high"
+                          stroke="#22c55e"
+                          strokeWidth={1}
+                          dot={false}
+                          name="High"
+                        />
+                        <Line
+                          yAxisId="price"
+                          type="monotone"
+                          dataKey="low"
+                          stroke="#ef4444"
+                          strokeWidth={1}
+                          dot={false}
+                          name="Low"
+                        />
+                        <Line
+                          yAxisId="price"
+                          type="monotone"
+                          dataKey="close"
+                          stroke="#3b82f6"
+                          strokeWidth={2}
+                          dot={false}
+                          name="Close"
+                        />
+                      </ComposedChart>
+                    </ResponsiveContainer>
+                  )}
+                </LazyChart>
               </CardContent>
             </Card>
 
@@ -393,28 +382,32 @@ export default function FeedstockPriceDashboard() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ResponsiveContainer width="100%" height={200}>
-                  <BarChart data={forwardCurve?.points || []}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="tenor" />
-                    <YAxis tickFormatter={(v) => `$${v}`} />
-                    <Tooltip formatter={(value) => [`$${value}`, "Price"]} />
-                    <Bar dataKey="price" radius={[4, 4, 0, 0]}>
-                      {forwardCurve?.points.map((entry, index) => (
-                        <Cell
-                          key={`cell-${index}`}
-                          fill={
-                            entry.change_from_spot > 0
-                              ? "#22c55e"
-                              : entry.change_from_spot < 0
-                                ? "#ef4444"
-                                : "#3b82f6"
-                          }
-                        />
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
+                <LazyChart height={200}>
+                  {({ ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar, Cell }) => (
+                    <ResponsiveContainer width="100%" height={200}>
+                      <BarChart data={forwardCurve?.points || []}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="tenor" />
+                        <YAxis tickFormatter={(v) => `$${v}`} />
+                        <Tooltip formatter={(value) => [`$${value}`, "Price"]} />
+                        <Bar dataKey="price" radius={[4, 4, 0, 0]}>
+                          {forwardCurve?.points.map((entry, index) => (
+                            <Cell
+                              key={`cell-${index}`}
+                              fill={
+                                entry.change_from_spot > 0
+                                  ? "#22c55e"
+                                  : entry.change_from_spot < 0
+                                    ? "#ef4444"
+                                    : "#3b82f6"
+                              }
+                            />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  )}
+                </LazyChart>
                 {forwardCurve && (
                   <div className="mt-4 flex items-center justify-center gap-6 text-sm">
                     <div className="flex items-center gap-2">

@@ -51,24 +51,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Link } from "wouter";
-import {
-  ResponsiveContainer,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Cell,
-  ScatterChart,
-  Scatter,
-  ZAxis,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 // Mock data
 const concentrationMetrics = {
@@ -261,28 +244,32 @@ export default function LenderRiskAnalytics() {
               </CardHeader>
               <CardContent>
                 <div className="h-[300px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={supplierConcentration} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                      <XAxis type="number" unit="%" fontSize={12} />
-                      <YAxis dataKey="name" type="category" fontSize={12} width={120} />
-                      <Tooltip formatter={(value: number) => [`${value}%`, "Share"]} />
-                      <Bar dataKey="share" radius={[0, 4, 4, 0]}>
-                        {supplierConcentration.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={
-                              entry.risk === "low"
-                                ? "#22c55e"
-                                : entry.risk === "medium"
-                                  ? "#f59e0b"
-                                  : "#ef4444"
-                            }
-                          />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
+                  <LazyChart height={300}>
+                    {({ ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar, Cell }) => (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={supplierConcentration} layout="vertical">
+                          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                          <XAxis type="number" unit="%" fontSize={12} />
+                          <YAxis dataKey="name" type="category" fontSize={12} width={120} />
+                          <Tooltip formatter={(value: number) => [`${value}%`, "Share"]} />
+                          <Bar dataKey="share" radius={[0, 4, 4, 0]}>
+                            {supplierConcentration.map((entry, index) => (
+                              <Cell
+                                key={`cell-${index}`}
+                                fill={
+                                  entry.risk === "low"
+                                    ? "#22c55e"
+                                    : entry.risk === "medium"
+                                      ? "#f59e0b"
+                                      : "#ef4444"
+                                }
+                              />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 </div>
               </CardContent>
             </Card>
@@ -376,22 +363,26 @@ export default function LenderRiskAnalytics() {
               </CardHeader>
               <CardContent>
                 <div className="h-[400px]">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={riskFactors}>
-                      <PolarGrid stroke="#e5e7eb" />
-                      <PolarAngleAxis dataKey="factor" fontSize={12} />
-                      <PolarRadiusAxis angle={30} domain={[0, 100]} fontSize={10} />
-                      <Radar
-                        name="Risk Score"
-                        dataKey="score"
-                        stroke="#3b82f6"
-                        fill="#3b82f6"
-                        fillOpacity={0.3}
-                        strokeWidth={2}
-                      />
-                      <Tooltip formatter={(value: number) => [`${value}/100`, "Score"]} />
-                    </RadarChart>
-                  </ResponsiveContainer>
+                  <LazyChart height={400}>
+                    {({ ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip }) => (
+                      <ResponsiveContainer width="100%" height="100%">
+                        <RadarChart data={riskFactors}>
+                          <PolarGrid stroke="#e5e7eb" />
+                          <PolarAngleAxis dataKey="factor" fontSize={12} />
+                          <PolarRadiusAxis angle={30} domain={[0, 100]} fontSize={10} />
+                          <Radar
+                            name="Risk Score"
+                            dataKey="score"
+                            stroke="#3b82f6"
+                            fill="#3b82f6"
+                            fillOpacity={0.3}
+                            strokeWidth={2}
+                          />
+                          <Tooltip formatter={(value: number) => [`${value}/100`, "Score"]} />
+                        </RadarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 </div>
               </CardContent>
             </Card>

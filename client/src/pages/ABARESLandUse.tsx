@@ -50,19 +50,7 @@ import {
   BarChart3,
   TrendingUp,
 } from "lucide-react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 // Types
 interface LandUseClass {
@@ -515,29 +503,33 @@ export default function ABARESLandUse() {
               </CardHeader>
               <CardContent>
                 {statistics?.national?.byPrimaryClass ? (
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={statistics.national.byPrimaryClass}
-                        dataKey="area"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={100}
-                        label={({ name, percentage }) =>
-                          percentage > 5 ? `${percentage.toFixed(0)}%` : ""
-                        }
-                      >
-                        {statistics.national.byPrimaryClass.map((_: any, index: number) => (
-                          <Cell key={index} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                      </Pie>
-                      <Tooltip
-                        formatter={(value: number) => formatArea(value)}
-                      />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
+                  <LazyChart height={300}>
+                    {({ ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend }) => (
+                      <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                          <Pie
+                            data={statistics.national.byPrimaryClass}
+                            dataKey="area"
+                            nameKey="name"
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={100}
+                            label={({ name, percentage }) =>
+                              percentage > 5 ? `${percentage.toFixed(0)}%` : ""
+                            }
+                          >
+                            {statistics.national.byPrimaryClass.map((_: any, index: number) => (
+                              <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip
+                            formatter={(value: number) => formatArea(value)}
+                          />
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 ) : (
                   <p className="text-gray-500">Loading...</p>
                 )}

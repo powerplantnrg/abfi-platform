@@ -51,21 +51,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { Link } from "wouter";
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  PieChart as RechartsPieChart,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  Legend,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 // Mock data
 const portfolioSummary = {
@@ -307,42 +293,44 @@ export default function LenderPortfolioOverview() {
               </div>
             </CardHeader>
             <CardContent>
-              <div className="h-[300px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={performanceTrend}>
-                    <defs>
-                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
-                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
-                    <YAxis stroke="#9ca3af" fontSize={12} tickFormatter={(v) => `$${v}M`} />
-                    <Tooltip
-                      formatter={(value: number) => [`$${value}M`, ""]}
-                      contentStyle={{ borderRadius: "8px" }}
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#3b82f6"
-                      strokeWidth={2}
-                      fill="url(#colorValue)"
-                      name="Actual"
-                    />
-                    <Area
-                      type="monotone"
-                      dataKey="target"
-                      stroke="#9ca3af"
-                      strokeWidth={2}
-                      strokeDasharray="5 5"
-                      fill="none"
-                      name="Target"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
+              <LazyChart height={300}>
+                {({ ResponsiveContainer, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip, Area }) => (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <AreaChart data={performanceTrend}>
+                      <defs>
+                        <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.2} />
+                          <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                      <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
+                      <YAxis stroke="#9ca3af" fontSize={12} tickFormatter={(v) => `$${v}M`} />
+                      <Tooltip
+                        formatter={(value: number) => [`$${value}M`, ""]}
+                        contentStyle={{ borderRadius: "8px" }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="value"
+                        stroke="#3b82f6"
+                        strokeWidth={2}
+                        fill="url(#colorValue)"
+                        name="Actual"
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="target"
+                        stroke="#9ca3af"
+                        strokeWidth={2}
+                        strokeDasharray="5 5"
+                        fill="none"
+                        name="Target"
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                )}
+              </LazyChart>
             </CardContent>
           </Card>
 
@@ -355,24 +343,28 @@ export default function LenderPortfolioOverview() {
             <CardContent>
               <div className="h-[300px] flex items-center">
                 <div className="w-1/2">
-                  <ResponsiveContainer width="100%" height={250}>
-                    <RechartsPieChart>
-                      <Pie
-                        data={allocationData}
-                        cx="50%"
-                        cy="50%"
-                        innerRadius={60}
-                        outerRadius={100}
-                        paddingAngle={2}
-                        dataKey="value"
-                      >
-                        {allocationData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value: number) => [`${value}%`, ""]} />
-                    </RechartsPieChart>
-                  </ResponsiveContainer>
+                  <LazyChart height={250}>
+                    {({ ResponsiveContainer, PieChart, Pie, Cell, Tooltip }) => (
+                      <ResponsiveContainer width="100%" height={250}>
+                        <PieChart>
+                          <Pie
+                            data={allocationData}
+                            cx="50%"
+                            cy="50%"
+                            innerRadius={60}
+                            outerRadius={100}
+                            paddingAngle={2}
+                            dataKey="value"
+                          >
+                            {allocationData.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                          </Pie>
+                          <Tooltip formatter={(value: number) => [`${value}%`, ""]} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 </div>
                 <div className="w-1/2 space-y-3">
                   {allocationData.map((item) => (
@@ -405,17 +397,19 @@ export default function LenderPortfolioOverview() {
             <CardDescription>Projects by ABFI bankability rating</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={riskDistribution} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} fontSize={12} />
-                  <YAxis dataKey="rating" type="category" fontSize={12} width={50} />
-                  <Tooltip formatter={(value: number) => [formatCurrency(value), "Amount"]} />
-                  <Bar dataKey="amount" fill="#3b82f6" radius={[0, 4, 4, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <LazyChart height={200}>
+              {({ ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar }) => (
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={riskDistribution} layout="vertical">
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} fontSize={12} />
+                    <YAxis dataKey="rating" type="category" fontSize={12} width={50} />
+                    <Tooltip formatter={(value: number) => [formatCurrency(value), "Amount"]} />
+                    <Bar dataKey="amount" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </LazyChart>
           </CardContent>
         </Card>
 

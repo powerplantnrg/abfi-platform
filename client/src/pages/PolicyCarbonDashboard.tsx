@@ -24,16 +24,7 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { trpc } from "@/lib/trpc";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 
 const JURISDICTION_COLORS: Record<string, string> = {
   Federal: "#3b82f6",
@@ -584,38 +575,42 @@ export default function PolicyCarbonDashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={mandateScenarios} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis
-                        type="number"
-                        tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`}
-                      />
-                      <YAxis dataKey="name" type="category" width={100} />
-                      <Tooltip
-                        formatter={(value: number) => [
-                          formatCurrency(value),
-                          "Revenue Impact",
-                        ]}
-                      />
-                      <Bar dataKey="revenue_impact" radius={[0, 4, 4, 0]}>
-                        {mandateScenarios.map((entry, index) => (
-                          <Cell
-                            key={`cell-${index}`}
-                            fill={
-                              entry.mandate_level === "B20"
-                                ? "#22c55e"
-                                : entry.mandate_level === "B10"
-                                  ? "#3b82f6"
-                                  : entry.mandate_level === "B5"
-                                    ? "#f97316"
-                                    : "#888"
-                            }
+                  <LazyChart height={300}>
+                    {({ ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Bar, Cell }) => (
+                      <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={mandateScenarios} layout="vertical">
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis
+                            type="number"
+                            tickFormatter={(v) => `$${(v / 1000000).toFixed(1)}M`}
                           />
-                        ))}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
+                          <YAxis dataKey="name" type="category" width={100} />
+                          <Tooltip
+                            formatter={(value: number) => [
+                              formatCurrency(value),
+                              "Revenue Impact",
+                            ]}
+                          />
+                          <Bar dataKey="revenue_impact" radius={[0, 4, 4, 0]}>
+                            {mandateScenarios.map((entry, index) => (
+                              <Cell
+                                key={`cell-${index}`}
+                                fill={
+                                  entry.mandate_level === "B20"
+                                    ? "#22c55e"
+                                    : entry.mandate_level === "B10"
+                                      ? "#3b82f6"
+                                      : entry.mandate_level === "B5"
+                                        ? "#f97316"
+                                        : "#888"
+                                }
+                              />
+                            ))}
+                          </Bar>
+                        </BarChart>
+                      </ResponsiveContainer>
+                    )}
+                  </LazyChart>
                 </CardContent>
               </Card>
 

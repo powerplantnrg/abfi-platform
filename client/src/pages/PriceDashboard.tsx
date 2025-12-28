@@ -12,16 +12,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { Link } from "wouter";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+import { LazyChart } from "@/components/ui/lazy-charts";
 import { H1, H3, Body, Currency, Percentage, MetricValue, DataLabel } from "@/components/Typography";
 
 // Mock data for 30-day price trends
@@ -190,83 +181,87 @@ export default function PriceDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={400}>
-              <LineChart data={feedstockPrices}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={formatDate}
-                  tick={{ fontSize: 12 }}
-                  stroke="#6b7280"
-                />
-                <YAxis
-                  yAxisId="price"
-                  tick={{ fontSize: 12 }}
-                  tickFormatter={(v) => `$${v}`}
-                  stroke="#6b7280"
-                  domain={[1.3, 1.8]}
-                />
-                <YAxis
-                  yAxisId="woodchip"
-                  orientation="right"
-                  tick={{ fontSize: 12 }}
-                  tickFormatter={(v) => `$${v}`}
-                  stroke="#6b7280"
-                  domain={[80, 115]}
-                />
-                <Tooltip
-                  labelFormatter={(value) =>
-                    new Date(value).toLocaleDateString("en-AU", {
-                      weekday: "short",
-                      day: "numeric",
-                      month: "short",
-                    })
-                  }
-                  formatter={(value: number, name: string) => {
-                    if (name === "woodchip") return [`$${value}/t`, "Woodchip"];
-                    return [`$${value.toFixed(2)}/L`, name.charAt(0).toUpperCase() + name.slice(1)];
-                  }}
-                  contentStyle={{
-                    backgroundColor: "white",
-                    border: "1px solid #e5e7eb",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                    fontFamily: "var(--font-numeric)",
-                    fontVariantNumeric: "tabular-nums",
-                  }}
-                />
-                <Legend
-                  formatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)}
-                />
-                <Line
-                  yAxisId="price"
-                  type="monotone"
-                  dataKey="ethanol"
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 6, fill: "#10b981" }}
-                />
-                <Line
-                  yAxisId="price"
-                  type="monotone"
-                  dataKey="biodiesel"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 6, fill: "#3b82f6" }}
-                />
-                <Line
-                  yAxisId="woodchip"
-                  type="monotone"
-                  dataKey="woodchip"
-                  stroke="#f59e0b"
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 6, fill: "#f59e0b" }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <LazyChart height={400}>
+              {({ ResponsiveContainer, LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line }) => (
+                <ResponsiveContainer width="100%" height={400}>
+                  <LineChart data={feedstockPrices}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis
+                      dataKey="date"
+                      tickFormatter={formatDate}
+                      tick={{ fontSize: 12 }}
+                      stroke="#6b7280"
+                    />
+                    <YAxis
+                      yAxisId="price"
+                      tick={{ fontSize: 12 }}
+                      tickFormatter={(v) => `$${v}`}
+                      stroke="#6b7280"
+                      domain={[1.3, 1.8]}
+                    />
+                    <YAxis
+                      yAxisId="woodchip"
+                      orientation="right"
+                      tick={{ fontSize: 12 }}
+                      tickFormatter={(v) => `$${v}`}
+                      stroke="#6b7280"
+                      domain={[80, 115]}
+                    />
+                    <Tooltip
+                      labelFormatter={(value) =>
+                        new Date(value).toLocaleDateString("en-AU", {
+                          weekday: "short",
+                          day: "numeric",
+                          month: "short",
+                        })
+                      }
+                      formatter={(value: number, name: string) => {
+                        if (name === "woodchip") return [`$${value}/t`, "Woodchip"];
+                        return [`$${value.toFixed(2)}/L`, name.charAt(0).toUpperCase() + name.slice(1)];
+                      }}
+                      contentStyle={{
+                        backgroundColor: "white",
+                        border: "1px solid #e5e7eb",
+                        borderRadius: "8px",
+                        boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                        fontFamily: "var(--font-numeric)",
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    />
+                    <Legend
+                      formatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)}
+                    />
+                    <Line
+                      yAxisId="price"
+                      type="monotone"
+                      dataKey="ethanol"
+                      stroke="#10b981"
+                      strokeWidth={2}
+                      dot={false}
+                      activeDot={{ r: 6, fill: "#10b981" }}
+                    />
+                    <Line
+                      yAxisId="price"
+                      type="monotone"
+                      dataKey="biodiesel"
+                      stroke="#3b82f6"
+                      strokeWidth={2}
+                      dot={false}
+                      activeDot={{ r: 6, fill: "#3b82f6" }}
+                    />
+                    <Line
+                      yAxisId="woodchip"
+                      type="monotone"
+                      dataKey="woodchip"
+                      stroke="#f59e0b"
+                      strokeWidth={2}
+                      dot={false}
+                      activeDot={{ r: 6, fill: "#f59e0b" }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+            </LazyChart>
           </CardContent>
         </Card>
 
