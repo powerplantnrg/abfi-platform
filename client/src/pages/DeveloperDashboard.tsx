@@ -191,7 +191,7 @@ export default function DeveloperDashboard() {
     <div className="min-h-screen bg-background">
       {/* Quick Stats Bar */}
       <div className="border-b bg-card/50">
-        <div className="container mx-auto px-4 py-3">
+        <div className="container mx-auto px-4 py-2">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {QUICK_STATS.map((stat, index) => (
               <div key={index} className="flex items-center gap-3">
@@ -209,7 +209,7 @@ export default function DeveloperDashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col lg:flex-row h-[calc(100vh-120px)]">
+      <div className="flex flex-col lg:flex-row h-[calc(100vh-160px)]">
         {/* Left Sidebar - Search & Pipeline */}
         <div className="w-full lg:w-[420px] border-r bg-card/50 flex flex-col">
           {/* Search Bar */}
