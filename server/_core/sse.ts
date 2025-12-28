@@ -5,18 +5,13 @@
  * This avoids polling overhead and enables instant notification delivery.
  */
 
-import type { Request as ExpressRequest, Response as ExpressResponse, Router } from "express";
-import { Router as ExpressRouter } from "express";
-
-// Use explicit type aliases to avoid confusion with Fetch API types
-type Request = ExpressRequest;
-type Response = ExpressResponse;
+import express from "express";
 import { getNotificationsByUserId } from "../db";
 
 interface SSEClient {
   id: string;
   userId: number;
-  response: Response;
+  response: express.Response;
   connectedAt: Date;
 }
 
@@ -110,7 +105,7 @@ export function broadcastNotification(notification: {
 /**
  * SSE connection endpoint handler
  */
-async function handleSSEConnection(req: Request, res: Response) {
+async function handleSSEConnection(req: express.Request, res: express.Response) {
   // Extract user ID from query parameter (in real app, use session/JWT)
   const userId = parseInt(req.query.userId as string);
 
@@ -200,14 +195,14 @@ async function handleSSEConnection(req: Request, res: Response) {
 /**
  * Create the SSE router
  */
-export function createSSERouter(): Router {
-  const router = ExpressRouter();
+export function createSSERouter(): express.Router {
+  const router = express.Router();
 
   // SSE endpoint for notifications
   router.get("/notifications", handleSSEConnection);
 
   // Debug endpoint to check active connections (admin only in production)
-  router.get("/status", (_req: Request, res: Response) => {
+  router.get("/status", (_req: express.Request, res: express.Response) => {
     const connections: { userId: number; connectedAt: string }[] = [];
     for (const client of clients.values()) {
       connections.push({
@@ -222,7 +217,7 @@ export function createSSERouter(): Router {
   });
 
   // Test endpoint to send a notification (development only)
-  router.post("/test", (req: Request, res: Response) => {
+  router.post("/test", (req: express.Request, res: express.Response) => {
     if (process.env.NODE_ENV === "production") {
       res.status(403).json({ error: "Not available in production" });
       return;

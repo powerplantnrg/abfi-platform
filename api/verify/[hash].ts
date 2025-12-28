@@ -83,7 +83,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Get the certificate record
-    const certificate = await db.getCertificate(snapshot.certificateId);
+    const certificate = await db.getCertificateById(snapshot.certificateId);
 
     if (!certificate) {
       res.status(404).json({
@@ -94,6 +94,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
+    // Extract data from frozen snapshot
+    const scoreData = snapshot.frozenScoreData || {};
+    const evidenceSet = snapshot.frozenEvidenceSet || [];
+
     // Return verification result
     res.json({
       valid: true,
@@ -102,9 +106,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         certificateType: certificate.certificateType,
         entityName: certificate.entityName,
         entityType: certificate.entityType,
-        rating: snapshot.ratingGrade,
-        score: snapshot.score,
-        evidenceCount: snapshot.evidenceCount,
+        rating: scoreData.rating,
+        score: scoreData.abfiScore,
+        evidenceCount: evidenceSet.length,
         issuer: {
           name: "ABFI Registry",
           platform: "Australian Biofuels Framework Initiative",
