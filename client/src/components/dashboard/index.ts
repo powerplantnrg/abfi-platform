@@ -1,0 +1,1 @@
+export { SimplifiedDashboard } from "./SimplifiedDashboard";
