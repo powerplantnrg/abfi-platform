@@ -8,10 +8,12 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { UserRoleProvider } from "./contexts/UserRoleContext";
 import { Analytics } from "@vercel/analytics/react";
 import AppLayout from "./components/AppLayout";
-import { HeyGenTour } from "./components/Onboarding/HeyGenTour";
-import { AvatarAssistant } from "./components/AIHelper/AvatarAssistant";
 import { NotificationProvider } from "./components/NotificationProvider";
-import { HelpWidget } from "./components/HelpDesk/HelpWidget";
+
+// Lazy load non-critical UI components that aren't needed for initial render
+const HeyGenTour = lazy(() => import("./components/Onboarding/HeyGenTour").then(m => ({ default: m.HeyGenTour })));
+const AvatarAssistant = lazy(() => import("./components/AIHelper/AvatarAssistant").then(m => ({ default: m.AvatarAssistant })));
+const HelpWidget = lazy(() => import("./components/HelpDesk/HelpWidget").then(m => ({ default: m.HelpWidget })));
 
 // Lazy load all pages for code splitting
 const Home = lazy(() => import("./pages/Home"));
@@ -370,9 +372,12 @@ function App() {
             <Toaster />
             <NotificationProvider />
             <Router />
-            <HeyGenTour />
-            <AvatarAssistant />
-            <HelpWidget />
+            {/* Lazy load non-critical overlays - they load after main content */}
+            <Suspense fallback={null}>
+              <HeyGenTour />
+              <AvatarAssistant />
+              <HelpWidget />
+            </Suspense>
             <Analytics />
           </TooltipProvider>
         </UserRoleProvider>
