@@ -17,19 +17,12 @@ L.Icon.Default.mergeOptions({
 const AUSTRALIA_CENTER: L.LatLngTuple = [-25.2744, 133.7751];
 const DEFAULT_ZOOM = 4;
 
-// WMS Layer configurations from Digital Atlas of Australia, Terria/NationalMap, and ABBA
-// Reference: https://nationalmap.gov.au/ (now Terria Map)
+// WMS Layer configurations from Australian government sources
+// Reference: https://www.agriculture.gov.au/abares/data/web-mapping-services
 // ABBA data: https://www.dpi.nsw.gov.au/forestry/science/forest-carbon/abba
+// Note: National Map decommissioned June 2025; using available endpoints
 const WMS_LAYERS = {
-  // Digital Atlas of Australia / ABARES Layers
-  landUse: {
-    name: "Land Use (CLUM)",
-    url: "https://www.asris.csiro.au/arcgis/services/abares/clum_50m_2020/MapServer/WMSServer",
-    layers: "0",
-    attribution: "© ABARES CLUM, CC BY 4.0",
-    opacity: 0.5,
-    category: "infrastructure",
-  },
+  // Geoscience Australia Layers (VERIFIED WORKING)
   electricity: {
     name: "Electricity Grid",
     url: "https://services.ga.gov.au/gis/services/Foundation_Electricity_Infrastructure/MapServer/WMSServer",
@@ -37,62 +30,55 @@ const WMS_LAYERS = {
     attribution: "© Geoscience Australia, CC BY 4.0",
     opacity: 0.7,
     category: "infrastructure",
+    status: "active",
   },
-  // ABBA (Australian Biomass for Bioenergy Assessment) Layers
-  // Now hosted on Terria Map platform (replaced National Map June 2025)
-  // Data navigation: Explore Data > Australia > National Datasets > Energy > Renewable Energy > Bioenergy
-  // Source: Queensland CKAN API - https://www.data.qld.gov.au/dataset/australian-biomass-for-bioenergy-assessment
-  // License: CC BY 4.0
-  bagasse: {
-    name: "Sugarcane Bagasse (ABBA)",
-    url: "https://geoserver.nationalmap.nicta.com.au/abba/wms",
-    layers: "abba:sugarcane_bagasse_2020",
-    attribution: "© ABBA Project (ARENA), CC BY 4.0",
-    opacity: 0.6,
-    category: "biomass",
-  },
-  grainStubble: {
-    name: "Grain Stubble (ABBA)",
-    url: "https://geoserver.nationalmap.nicta.com.au/abba/wms",
-    layers: "abba:grain_stubble_2020",
-    attribution: "© ABBA Project (ARENA), CC BY 4.0",
-    opacity: 0.6,
-    category: "biomass",
-  },
-  forestryResidues: {
-    name: "Forestry Residues (ABBA)",
-    url: "https://geoserver.nationalmap.nicta.com.au/abba/wms",
-    layers: "abba:forestry_residues_2024",
-    attribution: "© ABBA Project (ARENA), CC BY 4.0",
-    opacity: 0.6,
-    category: "biomass",
-  },
-  cottonGinTrash: {
-    name: "Cotton Gin Trash (ABBA)",
-    url: "https://geoserver.nationalmap.nicta.com.au/abba/wms",
-    layers: "abba:cotton_gin_trash_2020",
-    attribution: "© ABBA Project (ARENA), CC BY 4.0",
-    opacity: 0.6,
-    category: "biomass",
-  },
-  urbanOrganicWaste: {
-    name: "Urban Organic Waste (ABBA)",
-    url: "https://geoserver.nationalmap.nicta.com.au/abba/wms",
-    layers: "abba:urban_organic_waste_2020",
-    attribution: "© ABBA Project (ARENA), CC BY 4.0",
-    opacity: 0.6,
-    category: "biomass",
-  },
-  // Additional BOM weather radar (if available)
-  bomRainfall: {
-    name: "BOM Rainfall Analysis",
-    url: "https://services.ga.gov.au/gis/services/Rainfall_Gridded_Analysis/MapServer/WMSServer",
+  // Environment.gov.au Layers
+  landHealthySoils: {
+    name: "Healthy Soils Fund",
+    url: "https://gis.environment.gov.au/gispubmap/rest/services/land/healthy_soils_fund/MapServer/WMSServer",
     layers: "0",
-    attribution: "© Bureau of Meteorology, CC BY 4.0",
+    attribution: "© DCCEEW, CC BY 4.0",
     opacity: 0.5,
-    category: "weather",
+    category: "soil",
+    status: "active",
   },
+  habitatAssessment: {
+    name: "Habitat Condition Assessment",
+    url: "https://gis.environment.gov.au/gispubmap/rest/services/land/hcas/MapServer/WMSServer",
+    layers: "0",
+    attribution: "© DCCEEW, CC BY 4.0",
+    opacity: 0.5,
+    category: "environment",
+    status: "active",
+  },
+  // ABBA biomass data is now served via AREMI CSV endpoints with real-time generation data
+  // Live bioenergy generation from AREMI: http://services.aremi.nicta.com.au/aemo/v3/csv/bio
+  // ABBA spatial datasets available for download from:
+  // - Queensland: https://www.data.qld.gov.au/dataset/australian-biomass-for-bioenergy-assessment
+  // - NSW BioSMART: https://www.dpi.nsw.gov.au/forestry/science/forest-carbon/biomass-for-bioenergy/nsw-biosmart
+  // - Terria Map: Data accessible via Explore Data > Energy > Renewable Energy > Bioenergy
 };
+
+// AREMI Live Bioenergy Generation Data endpoint
+// Returns real-time power generation from biomass, bagasse, landfill gas, etc.
+export const AREMI_BIOENERGY_URL = "http://services.aremi.nicta.com.au/aemo/v3/csv/bio";
+
+// Interface for AREMI bioenergy generator data
+export interface AremiBioenergyGenerator {
+  stationName: string;
+  currentOutputMW: number;
+  region: string;
+  maxCapMW: number;
+  regCapMW: number;
+  fuelSource: string;
+  fuelDescriptor: string;
+  technologyType: string;
+  participant: string;
+  duid: string;
+  lat: number;
+  lon: number;
+  percentOfMaxCap: number;
+}
 
 // Biofuel project locations with metadata and bankability ratings
 export interface BiofuelProject {

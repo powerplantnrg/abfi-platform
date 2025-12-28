@@ -2414,3 +2414,265 @@ australianDataRouter.get("/bom/agriculture-summary", async (_req, res) => {
     });
   }
 });
+
+// ============================================================================
+// AREMI BIOENERGY DATA - Live Power Generation from Biomass Sources
+// https://services.aremi.nicta.com.au/
+// Data from AEMO (Australian Energy Market Operator)
+// ============================================================================
+
+interface AremiBioenergyGenerator {
+  stationName: string;
+  currentOutputMW: number | null;
+  region: string;
+  mostRecentOutputTime: string | null;
+  percentOfMaxCap: number | null;
+  percentOfRegCap: number | null;
+  maxCapMW: number;
+  regCapMW: number;
+  participant: string;
+  category: string;
+  classification: string;
+  fuelSourcePrimary: string;
+  fuelSourceDescriptor: string;
+  technologyTypePrimary: string;
+  technologyTypeDescriptor: string;
+  duid: string;
+  lat: number;
+  lon: number;
+}
+
+// Get live bioenergy generation data from AREMI/AEMO
+australianDataRouter.get("/aremi/bioenergy", async (_req, res) => {
+  try {
+    const cacheKey = "aremi-bioenergy";
+    const cached = getCached(cacheKey);
+    if (cached) {
+      return res.json(cached);
+    }
+
+    // AREMI Bioenergy CSV endpoint - real-time data from AEMO
+    // Includes: biomass, bagasse, landfill gas, sewerage/biogas generators
+    const url = "http://services.aremi.nicta.com.au/aemo/v3/csv/bio";
+
+    const response = await axios.get(url, {
+      timeout: 15000,
+      headers: {
+        "Accept": "text/csv",
+      },
+    });
+
+    // Parse CSV response
+    const lines = response.data.split("\n");
+    const headers = lines[0].split(",").map((h: string) => h.replace(/"/g, "").trim());
+
+    const generators: AremiBioenergyGenerator[] = [];
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line.trim()) continue;
+
+      // Parse CSV line (handles quoted fields)
+      const values: string[] = [];
+      let current = "";
+      let inQuotes = false;
+
+      for (const char of line) {
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+          values.push(current.trim());
+          current = "";
+        } else {
+          current += char;
+        }
+      }
+      values.push(current.trim());
+
+      // Map to object
+      const row: Record<string, string> = {};
+      headers.forEach((header: string, idx: number) => {
+        row[header] = values[idx] || "";
+      });
+
+      // Only include if we have coordinates
+      const lat = parseFloat(row["Lat"]);
+      const lon = parseFloat(row["Lon"]);
+      if (isNaN(lat) || isNaN(lon)) continue;
+
+      generators.push({
+        stationName: row["Station Name"] || "Unknown",
+        currentOutputMW: row["Current Output (MW)"] ? parseFloat(row["Current Output (MW)"]) : null,
+        region: row["Region"] || "",
+        mostRecentOutputTime: row["Most Recent Output Time (AEST)"] || null,
+        percentOfMaxCap: row["Current % of Max Cap"] ? parseFloat(row["Current % of Max Cap"]) : null,
+        percentOfRegCap: row["Current % of Reg Cap"] ? parseFloat(row["Current % of Reg Cap"]) : null,
+        maxCapMW: parseFloat(row["Max Cap (MW)"]) || 0,
+        regCapMW: parseFloat(row["Reg Cap (MW)"]) || 0,
+        participant: row["Participant"] || "",
+        category: row["Category"] || "",
+        classification: row["Classification"] || "",
+        fuelSourcePrimary: row["Fuel Source - Primary"] || "",
+        fuelSourceDescriptor: row["Fuel Source - Descriptor"] || "",
+        technologyTypePrimary: row["Technology Type - Primary"] || "",
+        technologyTypeDescriptor: row["Technology Type - Descriptor"] || "",
+        duid: row["DUID"] || "",
+        lat,
+        lon,
+      });
+    }
+
+    // Calculate summary stats
+    const totalCapacityMW = generators.reduce((sum, g) => sum + g.maxCapMW, 0);
+    const activeGenerators = generators.filter((g) => g.currentOutputMW !== null && g.currentOutputMW > 0);
+    const currentOutputMW = activeGenerators.reduce((sum, g) => sum + (g.currentOutputMW || 0), 0);
+
+    // Group by fuel type
+    const byFuelType = generators.reduce((acc, g) => {
+      const fuel = g.fuelSourceDescriptor || g.fuelSourcePrimary || "Unknown";
+      if (!acc[fuel]) {
+        acc[fuel] = { count: 0, capacityMW: 0, currentOutputMW: 0 };
+      }
+      acc[fuel].count++;
+      acc[fuel].capacityMW += g.maxCapMW;
+      acc[fuel].currentOutputMW += g.currentOutputMW || 0;
+      return acc;
+    }, {} as Record<string, { count: number; capacityMW: number; currentOutputMW: number }>);
+
+    // Group by region
+    const byRegion = generators.reduce((acc, g) => {
+      const region = g.region || "Unknown";
+      if (!acc[region]) {
+        acc[region] = { count: 0, capacityMW: 0, currentOutputMW: 0 };
+      }
+      acc[region].count++;
+      acc[region].capacityMW += g.maxCapMW;
+      acc[region].currentOutputMW += g.currentOutputMW || 0;
+      return acc;
+    }, {} as Record<string, { count: number; capacityMW: number; currentOutputMW: number }>);
+
+    const result = {
+      generators,
+      summary: {
+        totalGenerators: generators.length,
+        activeGenerators: activeGenerators.length,
+        totalCapacityMW: Math.round(totalCapacityMW * 10) / 10,
+        currentOutputMW: Math.round(currentOutputMW * 10) / 10,
+        capacityUtilization: totalCapacityMW > 0 ? Math.round((currentOutputMW / totalCapacityMW) * 1000) / 10 : 0,
+      },
+      byFuelType,
+      byRegion,
+      source: "AREMI/AEMO - Australian Renewable Energy Mapping Infrastructure",
+      sourceUrl: "http://services.aremi.nicta.com.au/",
+      dataSource: "real",
+      lastUpdated: new Date().toISOString(),
+      updateFrequency: "5 minutes (AEMO dispatch data)",
+    };
+
+    setCache(cacheKey, result);
+    res.json(result);
+  } catch (error: any) {
+    console.error("[Australian Data] AREMI bioenergy error:", error.message);
+    res.status(503).json({
+      error: "AREMI bioenergy data unavailable",
+      message: error.message,
+      fallbackUrl: "http://services.aremi.nicta.com.au/aemo/v3/csv/bio",
+    });
+  }
+});
+
+// Get renewable energy generation summary (all types)
+australianDataRouter.get("/aremi/renewables", async (_req, res) => {
+  try {
+    const cacheKey = "aremi-renewables";
+    const cached = getCached(cacheKey);
+    if (cached) {
+      return res.json(cached);
+    }
+
+    // AREMI Renewables CSV endpoint
+    const url = "http://services.aremi.nicta.com.au/aemo/v3/csv/renewables";
+
+    const response = await axios.get(url, {
+      timeout: 15000,
+      headers: {
+        "Accept": "text/csv",
+      },
+    });
+
+    // Parse CSV response
+    const lines = response.data.split("\n");
+    const headers = lines[0].split(",").map((h: string) => h.replace(/"/g, "").trim());
+
+    // Group by fuel type for summary
+    const byFuelType: Record<string, { count: number; capacityMW: number; currentOutputMW: number }> = {};
+    let totalCount = 0;
+    let totalCapacity = 0;
+    let totalOutput = 0;
+
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i];
+      if (!line.trim()) continue;
+
+      // Parse CSV line
+      const values: string[] = [];
+      let current = "";
+      let inQuotes = false;
+
+      for (const char of line) {
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === "," && !inQuotes) {
+          values.push(current.trim());
+          current = "";
+        } else {
+          current += char;
+        }
+      }
+      values.push(current.trim());
+
+      const row: Record<string, string> = {};
+      headers.forEach((header: string, idx: number) => {
+        row[header] = values[idx] || "";
+      });
+
+      const fuelType = row["Fuel Source - Descriptor"] || row["Fuel Source - Primary"] || "Unknown";
+      const maxCap = parseFloat(row["Max Cap (MW)"]) || 0;
+      const currentOutput = parseFloat(row["Current Output (MW)"]) || 0;
+
+      if (!byFuelType[fuelType]) {
+        byFuelType[fuelType] = { count: 0, capacityMW: 0, currentOutputMW: 0 };
+      }
+      byFuelType[fuelType].count++;
+      byFuelType[fuelType].capacityMW += maxCap;
+      byFuelType[fuelType].currentOutputMW += currentOutput;
+
+      totalCount++;
+      totalCapacity += maxCap;
+      totalOutput += currentOutput;
+    }
+
+    const result = {
+      summary: {
+        totalGenerators: totalCount,
+        totalCapacityMW: Math.round(totalCapacity * 10) / 10,
+        currentOutputMW: Math.round(totalOutput * 10) / 10,
+        capacityUtilization: totalCapacity > 0 ? Math.round((totalOutput / totalCapacity) * 1000) / 10 : 0,
+      },
+      byFuelType,
+      source: "AREMI/AEMO",
+      sourceUrl: "http://services.aremi.nicta.com.au/",
+      dataSource: "real",
+      lastUpdated: new Date().toISOString(),
+    };
+
+    setCache(cacheKey, result);
+    res.json(result);
+  } catch (error: any) {
+    console.error("[Australian Data] AREMI renewables error:", error.message);
+    res.status(503).json({
+      error: "AREMI renewables data unavailable",
+      message: error.message,
+    });
+  }
+});
