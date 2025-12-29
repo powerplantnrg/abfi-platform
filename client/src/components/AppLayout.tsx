@@ -33,6 +33,7 @@ import {
   BarChart3,
   Clock,
   Map,
+  Globe,
   ShieldCheck,
   Truck,
   Calculator,
@@ -71,6 +72,7 @@ const marketplaceMenuItems = [
 ];
 
 const intelligenceMenuItems = [
+  { icon: Globe, label: "Market Intelligence", path: "/market-intelligence" },
   { icon: Shield, label: "Bankability Ratings", path: "/ratings" },
   { icon: Eye, label: "Stealth Discovery", path: "/stealth-discovery" },
   { icon: TrendingUp, label: "Lending Sentiment", path: "/lending-sentiment" },
