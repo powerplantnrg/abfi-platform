@@ -1,13 +1,14 @@
 /**
  * tRPC API Route Handler for Vercel Serverless
  * Self-contained with mock data for demo deployments
- * Version: 2.1.0 - added superjson transformer for client compatibility
+ * Version: 2.2.0 - added auth router for dev login
  */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { z } from "zod";
 import superjson from "superjson";
+import { jwtVerify } from "jose";
 
 // =============================================================================
 // Middleware
@@ -183,10 +184,50 @@ function getMockTechnicals(commodity: string) {
 }
 
 // =============================================================================
+// Auth helpers
+// =============================================================================
+
+const COOKIE_NAME = "abfi_session";
+const SESSION_SECRET = process.env.SESSION_SECRET || "dev-secret-key-change-in-production";
+
+interface DevUser {
+  openId: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+async function getUserFromCookie(cookieHeader: string | null): Promise<DevUser | null> {
+  if (!cookieHeader) return null;
+
+  const cookies = cookieHeader.split(";").reduce((acc, cookie) => {
+    const [key, value] = cookie.trim().split("=");
+    acc[key] = value;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const token = cookies[COOKIE_NAME];
+  if (!token) return null;
+
+  try {
+    const secret = new TextEncoder().encode(SESSION_SECRET);
+    const { payload } = await jwtVerify(token, secret);
+    return {
+      openId: payload.sub as string,
+      name: payload.name as string,
+      email: payload.email as string,
+      role: payload.role as string,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// =============================================================================
 // Self-contained tRPC setup
 // =============================================================================
 
-type Context = { user: null };
+type Context = { user: DevUser | null; cookieHeader: string | null };
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
@@ -235,6 +276,22 @@ const pricesRouter = router({
   })),
 });
 
+// Auth router for dev login
+const authRouter = router({
+  me: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.user) {
+      return null;
+    }
+    return ctx.user;
+  }),
+
+  logout: publicProcedure.mutation(async ({ ctx }) => {
+    // The actual cookie clearing happens in the response headers
+    // For now, just return success
+    return { success: true };
+  }),
+});
+
 // API router for Vercel
 const apiRouter = router({
   system: router({
@@ -242,13 +299,14 @@ const apiRouter = router({
       .input(z.object({ timestamp: z.number().min(0).optional() }).optional())
       .query(() => ({
         ok: true,
-        version: "2.1.0",
+        version: "2.2.0",
         timestamp: new Date().toISOString(),
         environment: process.env.NODE_ENV || "production",
-        hasRouter: { prices: true },
+        hasRouter: { prices: true, auth: true },
       })),
   }),
   prices: pricesRouter,
+  auth: authRouter,
 });
 
 export const config = {
@@ -280,12 +338,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const request = new Request(url, { method: req.method, headers, body });
 
-    // Use self-contained router with simple context (no auth needed for public endpoints)
+    // Get cookie header for auth
+    const cookieHeader = req.headers.cookie || null;
+    const user = await getUserFromCookie(cookieHeader);
+
+    // Use self-contained router with context including user from cookie
     const response = await fetchRequestHandler({
       endpoint: "/api/trpc",
       req: request,
       router: apiRouter,
-      createContext: async () => ({ user: null }),
+      createContext: async () => ({ user, cookieHeader }),
     });
 
     response.headers.forEach((value, key) => res.setHeader(key, value));
