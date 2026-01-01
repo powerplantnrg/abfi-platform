@@ -647,8 +647,31 @@ input[type="radio"]:focus-visible {
 .bg-error { background-color: hsl(var(--destructive)); }
 
 /* ============================================
-   BUTTON STYLES
+   BUTTON STYLES - DESIGN SYSTEM CONSISTENCY
+   Standardized: rounded-lg (8px) + font-semibold (600)
+   Maximum 5 button variants for design system compliance
    ============================================ */
+
+/* Global button style normalization for design system consistency */
+button,
+[role="button"] {
+  border-radius: 0.5rem !important; /* 8px = rounded-lg */
+  font-weight: 600 !important; /* semibold */
+}
+
+/* Exception: Fully rounded buttons (avatar, close buttons) */
+button[class*="rounded-full"],
+[role="button"][class*="rounded-full"] {
+  border-radius: 9999px !important;
+}
+
+/* Exception: Pill-shaped badges and chips */
+.badge,
+[class*="badge"],
+[class*="chip"] {
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+}
 
 .btn-primary {
   @apply inline-flex items-center justify-center gap-2;

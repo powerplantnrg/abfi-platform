@@ -212,9 +212,12 @@ export function TopNavigation({ className }: TopNavigationProps) {
           </div>
         </div>
 
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <nav className="flex items-center gap-1 ml-8" role="navigation" aria-label="Main navigation">
+        {/* Desktop Navigation - Always render nav element but hide content on mobile */}
+        <nav
+          className={cn("flex items-center gap-1 ml-8", isMobile && "hidden")}
+          role="navigation"
+          aria-label="Main navigation"
+        >
             {/* Main items */}
             {menuGroups.main.map((item) => (
               <button
@@ -261,8 +264,7 @@ export function TopNavigation({ className }: TopNavigationProps) {
             {user?.role === 'admin' && (
               <NavDropdown label="Admin" items={adminMenuItems} />
             )}
-          </nav>
-        )}
+        </nav>
 
         {/* Right side actions */}
         <div className="ml-auto flex items-center gap-2">
@@ -376,7 +378,11 @@ export function TopNavigation({ className }: TopNavigationProps) {
 
       {/* Mobile menu dropdown */}
       {isMobile && mobileMenuOpen && (
-        <div className="border-t border-gray-200 bg-white px-4 py-3 space-y-1 max-h-[70vh] overflow-y-auto">
+        <nav
+          className="border-t border-gray-200 bg-white px-4 py-3 space-y-1 max-h-[70vh] overflow-y-auto"
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
           {/* Main items */}
           {menuGroups.main.map((item) => (
             <button
@@ -528,7 +534,7 @@ export function TopNavigation({ className }: TopNavigationProps) {
               </button>
             ))}
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );
