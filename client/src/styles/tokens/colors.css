@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Color Tokens
+   Atlassian Design System + Government/Fintech Standards
+   ========================================================================== */
+
+:root {
+  /* Neutral Palette - Atlassian B Series */
+  --color-background: #F7F8F9; /* B50 */
+  --color-background-hover: #EBECF0; /* B75 */
+  --color-background-selected: #DEEBFF; /* B100 */
+  --color-background-inverse: #091E42; /* B500 */
+
+  --color-surface: #FFFFFF;
+  --color-surface-overlay: #FFFFFF;
+  --color-surface-raised: #F7F8F9;
+
+  /* Primary - Government Blue */
+  --color-primary-50: #E9F2FF;
+  --color-primary-100: #C7E0FF;
+  --color-primary-200: #A5CFFF;
+  --color-primary-300: #6BA4FF;
+  --color-primary-400: #0052CC; /* Primary action */
+  --color-primary-500: #0047B3;
+
+  /* Semantic Colors - Fintech Standards */
+  --color-success-50: #E3FCEF;
+  --color-success-400: #00875A; /* Positive balances, success states */
+  --color-warning-50: #FFFAE6;
+  --color-warning-400: #FF991F; /* Caution, pending states */
+  --color-error-50: #FFEBE6;
+  --color-error-400: #DE350B; /* Negative balances, errors */
+  --color-info-50: #E9F2FF;
+  --color-info-400: #0052CC;
+
+  /* Security & Trust - Fintech Specific */
+  --color-security-50: #F3F0FF;
+  --color-security-400: #6554C0; /* Encryption indicators */
+  --color-trust-500: #0C4A0C; /* Government compliance badges */
+
+  /* Text Colors with WCAG 2.1 AA Compliance */
+  --color-text-primary: #091E42; /* B500 - 4.5:1 on B50 */
+  --color-text-secondary: #5E6C84; /* B400 - 4.5:1 on B50 */
+
+  /* Status Colors */
+  --color-status-online: #00875A;
+  --color-status-away: #FF991F;
+  --color-status-busy: #DE350B;
+  --color-status-offline: #5E6C84;
+}

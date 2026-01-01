@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Spacing & Layout Tokens
+   8px Base Unit - Atlassian + Government Standards
+   ========================================================================== */
+
+:root {
+  /* Base Unit = 8px */
+  --spacing-unit: 8px;
+
+  /* Spacing Scale */
+  --spacing-xs: calc(var(--spacing-unit) * 0.5);   /* 4px */
+  --spacing-sm: var(--spacing-unit);               /* 8px */
+  --spacing-md: calc(var(--spacing-unit) * 2);     /* 16px */
+  --spacing-lg: calc(var(--spacing-unit) * 3);     /* 24px */
+  --spacing-xl: calc(var(--spacing-unit) * 4);     /* 32px */
+  --spacing-xxl: calc(var(--spacing-unit) * 6);    /* 48px */
+  --spacing-xxxl: calc(var(--spacing-unit) * 8);   /* 64px */
+
+  /* Layout Grid */
+  --grid-columns: 12;
+  --grid-gap: var(--spacing-lg); /* 24px */
+  --grid-margin: var(--spacing-xl); /* 32px */
+  --grid-max-width: 1440px;
+
+  /* Component Spacing */
+  --spacing-nav-height: 64px;
+  --spacing-footer-height: 120px;
+
+  /* Card Spacing */
+  --spacing-card-padding: var(--spacing-lg); /* 24px */
+  --spacing-card-gap: var(--spacing-md); /* 16px */
+
+  /* Government Form Spacing */
+  --spacing-form-field-gap: var(--spacing-md); /* 16px */
+  --spacing-form-section-gap: var(--spacing-xl); /* 32px */
+}
+
+/* Container Utilities */
+.container {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--grid-margin);
+}

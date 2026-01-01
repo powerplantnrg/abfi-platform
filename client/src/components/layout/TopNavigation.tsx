@@ -1,8 +1,9 @@
 /**
  * TopNavigation - Horizontal navigation bar with ABFI branding
  * Based on ABFI design system navigation patterns
+ * Enhanced with trust indicators, portal switcher, and accessibility features
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { useIsMobile } from '@/hooks/useMobile';
@@ -47,7 +48,20 @@ import {
   ChevronDown,
   X,
   Bell,
+  Lock,
+  Wifi,
+  WifiOff,
+  Building2,
+  Landmark,
+  Tractor,
 } from 'lucide-react';
+
+// Portal definitions with color themes
+const PORTALS = [
+  { id: 'grower', name: 'For Growers', icon: Tractor, color: 'green', path: '/for-growers' },
+  { id: 'developer', name: 'For Developers', icon: Building2, color: 'blue', path: '/for-developers' },
+  { id: 'lender', name: 'For Lenders', icon: Landmark, color: 'purple', path: '/for-lenders' },
+];
 
 // Menu structure grouped by category
 const menuGroups = {
@@ -55,6 +69,10 @@ const menuGroups = {
     { icon: Home, label: 'Dashboard', path: '/' },
     { icon: Compass, label: 'Explore', path: '/explore' },
   ],
+  portals: {
+    label: 'Portals',
+    items: PORTALS.map(p => ({ icon: p.icon, label: p.name, path: p.path })),
+  },
   marketplace: {
     label: 'Marketplace',
     items: [
@@ -214,6 +232,12 @@ export function TopNavigation({ className }: TopNavigationProps) {
               </button>
             ))}
 
+            {/* Portal Switcher - Color coded dropdown */}
+            <NavDropdown
+              label={menuGroups.portals.label}
+              items={menuGroups.portals.items}
+            />
+
             {/* Dropdown menus */}
             <NavDropdown
               label={menuGroups.marketplace.label}
@@ -241,6 +265,22 @@ export function TopNavigation({ className }: TopNavigationProps) {
 
         {/* Right side actions */}
         <div className="ml-auto flex items-center gap-2">
+          {/* Trust Indicators - SSL Badge */}
+          {!isMobile && (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-xs font-medium text-emerald-800 dark:text-emerald-300">
+              <Lock className="h-3 w-3" />
+              <span>Secure</span>
+            </div>
+          )}
+
+          {/* Data Residency Badge */}
+          {!isMobile && (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-xs font-medium text-blue-800 dark:text-blue-300" title="Data stored in Australia">
+              <Globe className="h-3 w-3" />
+              <span>AU</span>
+            </div>
+          )}
+
           {/* Notifications (placeholder) */}
           {!isMobile && user && (
             <Button variant="ghost" size="icon" className="h-9 w-9">
@@ -348,6 +388,38 @@ export function TopNavigation({ className }: TopNavigationProps) {
               {item.label}
             </button>
           ))}
+
+          {/* Portals - Color coded */}
+          <div className="pt-2">
+            <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              {menuGroups.portals.label}
+            </p>
+            {PORTALS.map((portal) => (
+              <button
+                key={portal.path}
+                onClick={() => {
+                  setLocation(portal.path);
+                  setMobileMenuOpen(false);
+                }}
+                className={cn(
+                  'flex items-center gap-2 w-full px-3 py-2.5 text-sm font-medium rounded-md',
+                  isActive(portal.path)
+                    ? portal.color === 'green' ? 'bg-green-100 text-green-800'
+                    : portal.color === 'blue' ? 'bg-blue-100 text-blue-800'
+                    : 'bg-purple-100 text-purple-800'
+                    : 'text-gray-700 hover:bg-gray-100'
+                )}
+              >
+                <portal.icon className={cn(
+                  "h-4 w-4",
+                  portal.color === 'green' ? 'text-green-600'
+                  : portal.color === 'blue' ? 'text-blue-600'
+                  : 'text-purple-600'
+                )} />
+                {portal.name}
+              </button>
+            ))}
+          </div>
 
           {/* Marketplace */}
           <div className="pt-2">
