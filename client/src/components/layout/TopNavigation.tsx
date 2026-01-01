@@ -189,6 +189,7 @@ export function TopNavigation({ className }: TopNavigationProps) {
         'sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm',
         className
       )}
+      role="banner"
     >
       <div className="flex h-14 items-center px-4 lg:px-6">
         {/* Logo & Brand */}
@@ -213,7 +214,7 @@ export function TopNavigation({ className }: TopNavigationProps) {
 
         {/* Desktop Navigation */}
         {!isMobile && (
-          <nav className="flex items-center gap-1 ml-8">
+          <nav className="flex items-center gap-1 ml-8" role="navigation" aria-label="Main navigation">
             {/* Main items */}
             {menuGroups.main.map((item) => (
               <button

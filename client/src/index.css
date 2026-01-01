@@ -426,6 +426,51 @@ nav button,
   padding-inline: 1rem;
 }
 
+/* Ensure ALL clickable elements meet touch target - comprehensive fix */
+[data-radix-collection-item],
+[data-state],
+[role="checkbox"],
+[role="radio"],
+[role="switch"],
+[role="slider"],
+.cursor-pointer {
+  min-height: 44px;
+}
+
+/* Small interactive elements - use padding to achieve touch target */
+.badge,
+.tag,
+.chip,
+[class*="badge"],
+[class*="chip"] {
+  min-height: 32px; /* Badges can be smaller if not primary interactive */
+}
+
+/* Trust badges - ensure adequate touch area */
+.security-badge,
+.trust-badge,
+.data-residency-badge,
+.ssl-badge {
+  min-height: 36px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Avatar buttons */
+[class*="avatar"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Close/dismiss buttons - common small targets */
+button[aria-label*="close" i],
+button[aria-label*="dismiss" i],
+button[aria-label*="remove" i],
+[class*="close"],
+[class*="dismiss"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
 .skip-to-main {
   position: fixed;
   top: -100%;
