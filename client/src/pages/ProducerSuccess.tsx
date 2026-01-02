@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
 import { CheckCircle2, Home, LayoutDashboard, Search } from "lucide-react";
 import { Link } from "wouter";
 import { H1, H2, Body } from "@/components/Typography";

@@ -8,8 +8,8 @@
 import { useState, useEffect } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { useLocation } from "wouter";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import { User, Shield, ShoppingCart, BarChart3, Loader2, Building2, ExternalLink } from "lucide-react";
 import { Separator } from "@/components/ui/separator";

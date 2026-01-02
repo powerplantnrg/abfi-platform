@@ -9,7 +9,7 @@ import { useAuth } from '@/_core/hooks/useAuth';
 import { useIsMobile } from '@/hooks/useMobile';
 import { getLoginUrl } from '@/const';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   DropdownMenu,

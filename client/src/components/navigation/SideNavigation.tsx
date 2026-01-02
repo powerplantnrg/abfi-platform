@@ -1,6 +1,6 @@
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { usePortal } from "@/contexts/PortalContext";
 import { NavItem, NavSection, NavSeparator } from "./NavItem";

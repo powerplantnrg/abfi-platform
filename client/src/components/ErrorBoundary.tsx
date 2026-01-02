@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { captureException } from "@/lib/sentry";
 import { AlertTriangle, RotateCcw, Home, RefreshCw } from "lucide-react";
 import { Component, type ReactNode } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 interface ErrorBoundaryProps {
   children: ReactNode;

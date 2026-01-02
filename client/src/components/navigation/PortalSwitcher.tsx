@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { usePortal } from "@/contexts/PortalContext";
 import { PORTAL_CONFIGS, type Portal } from "@/config/navigation";
 

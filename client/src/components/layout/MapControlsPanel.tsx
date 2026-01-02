@@ -4,7 +4,7 @@
  */
 import { useMapControls, MAP_VIEW_LAYERS } from '@/contexts/MapControlsContext';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
