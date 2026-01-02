@@ -267,7 +267,7 @@ const lenderPortal: PortalConfig = {
     {
       id: "lender-stealth",
       label: "Stealth Discovery",
-      href: "/finance/stealth",
+      href: "/lender-portal",
       icon: Eye,
       roles: ["buyer", "admin"],
       description: "Private market signals",
@@ -276,7 +276,7 @@ const lenderPortal: PortalConfig = {
     {
       id: "lender-risk",
       label: "Risk Analysis",
-      href: "/finance/risk",
+      href: "/lender/risk-analytics",
       icon: AlertTriangle,
       roles: ["buyer", "admin"],
       description: "Project risk scoring",
@@ -284,7 +284,7 @@ const lenderPortal: PortalConfig = {
     {
       id: "lender-portfolio",
       label: "Portfolio",
-      href: "/finance/portfolio",
+      href: "/lender/portfolio",
       icon: Briefcase,
       roles: ["buyer", "admin"],
       description: "Track investments",
@@ -302,14 +302,14 @@ const lenderPortal: PortalConfig = {
     {
       id: "lender-reports",
       label: "Reports",
-      href: "/finance/reports",
+      href: "/stress-testing",
       icon: FileBarChart,
       roles: ["buyer", "admin"],
     },
     {
       id: "lender-settings",
       label: "Settings",
-      href: "/finance/settings",
+      href: "/buyer/profile",
       icon: Settings,
       roles: ["buyer", "admin"],
     },
@@ -318,7 +318,7 @@ const lenderPortal: PortalConfig = {
     {
       id: "lender-quick-stealth",
       label: "Stealth",
-      href: "/finance/stealth",
+      href: "/lender-portal",
       icon: Eye,
       roles: ["buyer", "admin"],
     },
