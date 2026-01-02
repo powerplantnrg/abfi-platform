@@ -1065,3 +1065,248 @@ button[class*="rounded-full"],
     hsl(var(--portal-accent) / 0.5) 100%
   );
 }
+
+/* ============================================
+   NEW NAVIGATION SYSTEM (nav-v2)
+   Portal-based collapsible sidebar with
+   WCAG 2.2 AA accessibility compliance
+   ============================================ */
+
+/* Sidebar Variables */
+:root {
+  --sidebar-width: 16rem; /* 256px */
+  --sidebar-collapsed-width: 4rem; /* 64px */
+  --topbar-height: 4rem; /* 64px */
+}
+
+/* Sidebar Container */
+.nav-v2-sidebar {
+  @apply flex flex-col h-full bg-[hsl(var(--sidebar))];
+  @apply border-r border-[hsl(var(--sidebar-border))];
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.nav-v2-sidebar[data-collapsed="true"] {
+  width: var(--sidebar-collapsed-width);
+}
+
+.nav-v2-sidebar[data-collapsed="false"] {
+  width: var(--sidebar-width);
+}
+
+/* Sidebar Navigation Item */
+.nav-v2-item {
+  @apply flex items-center gap-3 rounded-lg;
+  @apply px-3 min-h-[44px]; /* WCAG touch target */
+  @apply text-[hsl(var(--sidebar-foreground))];
+  @apply hover:bg-[hsl(var(--sidebar-accent))];
+  @apply transition-colors duration-150;
+}
+
+.nav-v2-item[data-active="true"] {
+  @apply bg-[hsl(var(--sidebar-primary)/0.1)];
+  @apply text-[hsl(var(--sidebar-primary))];
+  @apply font-medium;
+}
+
+.nav-v2-item:focus-visible {
+  @apply outline-none ring-2 ring-[hsl(var(--sidebar-ring))];
+  @apply ring-offset-2 ring-offset-[hsl(var(--sidebar))];
+}
+
+/* Collapsed state - icon only */
+.nav-v2-item[data-collapsed="true"] {
+  @apply justify-center px-2;
+}
+
+/* Navigation Icon */
+.nav-v2-icon {
+  @apply h-5 w-5 shrink-0;
+}
+
+/* Navigation Label - hidden when collapsed */
+.nav-v2-label {
+  @apply truncate transition-opacity duration-200;
+}
+
+.nav-v2-item[data-collapsed="true"] .nav-v2-label {
+  @apply hidden;
+}
+
+/* Portal Switcher Dropdown */
+.portal-switcher-trigger {
+  @apply flex items-center gap-2 min-h-[44px];
+  @apply hover:bg-[hsl(var(--accent)/0.1)] rounded-lg;
+  @apply transition-colors duration-150;
+}
+
+.portal-switcher-dropdown {
+  @apply absolute z-50 mt-2 w-72;
+  @apply bg-[hsl(var(--popover))] text-[hsl(var(--popover-foreground))];
+  @apply border border-[hsl(var(--border))] rounded-lg shadow-lg;
+}
+
+.portal-switcher-option {
+  @apply flex items-center gap-3 px-3 py-2 min-h-[44px];
+  @apply rounded-md cursor-pointer;
+  @apply hover:bg-[hsl(var(--accent))];
+  @apply transition-colors duration-150;
+}
+
+.portal-switcher-option[data-selected="true"] {
+  @apply bg-[hsl(var(--primary)/0.1)];
+}
+
+.portal-switcher-option:focus-visible {
+  @apply outline-none ring-2 ring-[hsl(var(--ring))] ring-inset;
+}
+
+/* Top Bar */
+.nav-v2-topbar {
+  @apply sticky top-0 z-30;
+  @apply flex items-center gap-4 h-16;
+  @apply border-b border-[hsl(var(--border))];
+  @apply bg-[hsl(var(--background))];
+  @apply px-4 lg:px-6;
+}
+
+/* Mobile Menu Overlay */
+.mobile-nav-overlay {
+  @apply fixed inset-0 z-40 bg-black/50;
+  @apply lg:hidden;
+}
+
+.mobile-nav-panel {
+  @apply fixed inset-y-0 left-0 z-50 w-72;
+  @apply bg-[hsl(var(--background))] shadow-xl;
+  @apply lg:hidden;
+}
+
+/* Quick Actions (Mobile) */
+.quick-actions-bar {
+  @apply fixed bottom-4 left-1/2 -translate-x-1/2 z-40;
+  @apply flex items-center gap-1 p-1.5 rounded-full;
+  @apply bg-[hsl(var(--background)/0.95)] backdrop-blur-sm;
+  @apply border border-[hsl(var(--border))] shadow-lg;
+  @apply lg:hidden;
+  @apply transition-all duration-300;
+}
+
+.quick-actions-bar[data-visible="false"] {
+  @apply translate-y-20 opacity-0 pointer-events-none;
+}
+
+.quick-action-item {
+  @apply flex flex-col items-center justify-center;
+  @apply min-h-[56px] min-w-[64px] px-3 py-2;
+  @apply rounded-full;
+  @apply hover:bg-[hsl(var(--accent))];
+  @apply transition-colors duration-150;
+}
+
+.quick-action-icon {
+  @apply h-5 w-5 mb-0.5;
+}
+
+.quick-action-label {
+  @apply text-[10px] font-medium text-[hsl(var(--muted-foreground))];
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  @apply flex items-center justify-center;
+  @apply min-h-[44px] min-w-[44px];
+  @apply text-[hsl(var(--muted-foreground))];
+  @apply hover:text-[hsl(var(--foreground))];
+  @apply hover:bg-[hsl(var(--accent))];
+  @apply rounded-lg transition-colors duration-150;
+}
+
+/* Section Separator */
+.nav-v2-separator {
+  @apply h-px bg-[hsl(var(--border))] my-3;
+}
+
+/* Section Header (collapsed hidden) */
+.nav-v2-section-header {
+  @apply px-3 py-2;
+  @apply text-xs font-semibold text-[hsl(var(--muted-foreground))];
+  @apply uppercase tracking-wider;
+}
+
+/* Badge for nav items */
+.nav-v2-badge {
+  @apply ml-auto text-xs px-2 py-0.5 rounded-full;
+  @apply bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))];
+}
+
+.nav-v2-badge-new {
+  @apply bg-[#D4AF37] text-black;
+}
+
+/* Notification Badge */
+.notification-badge {
+  @apply absolute -top-1 -right-1 h-5 w-5;
+  @apply flex items-center justify-center;
+  @apply text-xs font-semibold;
+  @apply bg-[#D4AF37] text-black rounded-full;
+}
+
+/* Portal-specific nav theming */
+.grower-portal .nav-v2-item[data-active="true"] {
+  @apply bg-emerald-50 text-emerald-700;
+}
+
+.developer-portal .nav-v2-item[data-active="true"] {
+  @apply bg-blue-50 text-blue-700;
+}
+
+.lender-portal .nav-v2-item[data-active="true"] {
+  @apply bg-amber-50 text-amber-700;
+}
+
+.government-portal .nav-v2-item[data-active="true"] {
+  @apply bg-purple-50 text-purple-700;
+}
+
+/* Animations */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 300ms var(--ease-out);
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 150ms var(--ease-out);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-v2-sidebar,
+  .mobile-nav-panel,
+  .quick-actions-bar,
+  .portal-switcher-dropdown {
+    transition: none !important;
+    animation: none !important;
+  }
+}

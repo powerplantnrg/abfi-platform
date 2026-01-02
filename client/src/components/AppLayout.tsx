@@ -2,6 +2,9 @@
  * AppLayout - Main application layout with top navigation and map controls panel
  * New layout structure: TopNav + MapControlsPanel + Main Content
  * Enhanced with trust indicators, offline support, and accessibility features
+ *
+ * Feature Flag: nav-v2
+ * Set localStorage.setItem('nav-v2', 'true') to enable new portal-based navigation
  */
 import { useState, useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -12,12 +15,19 @@ import { useIsMobile } from "@/hooks/useMobile";
 import { FloatingSecurityIndicator, TrustFooter } from "@/components/Trust";
 import { OfflineToast, ConnectionStatus } from "@/components/Offline";
 import { useLocation } from "wouter";
+import { PortalLayout } from "@/components/layout/PortalLayout";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
   const userRole = user?.role || 'buyer';
   const isMobile = useIsMobile();
   const [location] = useLocation();
+
+  // Feature flag for new navigation (nav-v2)
+  const [useNewNav, setUseNewNav] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('nav-v2') === 'true';
+  });
 
   // Online/offline status tracking
   const [isOnline, setIsOnline] = useState(
@@ -56,6 +66,25 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     return '';
   };
 
+  // Use new portal-based navigation when feature flag is enabled
+  if (useNewNav) {
+    return (
+      <PortalLayout>
+        {children}
+        {/* Trust Footer - visible on all pages */}
+        <TrustFooter />
+        {/* Floating Security Indicator */}
+        <FloatingSecurityIndicator />
+        {/* Offline Toast Notification */}
+        <OfflineToast
+          isVisible={showOfflineToast}
+          onDismiss={() => setShowOfflineToast(false)}
+        />
+      </PortalLayout>
+    );
+  }
+
+  // Legacy navigation layout
   return (
     <MapControlsProvider userRole={userRole}>
       <div className={`flex flex-col h-screen bg-gray-50 dark:bg-gray-950 overflow-hidden ${getPortalTheme()}`}>

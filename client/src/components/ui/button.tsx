@@ -26,15 +26,14 @@ const buttonVariants = cva(
           "bg-gradient-to-r from-[#D4AF37] to-amber-600 text-black shadow-md hover:shadow-lg hover:from-amber-400 hover:to-amber-500 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] btn-glow transition-[transform,box-shadow] duration-150",
         success:
           "bg-success text-success-foreground shadow-sm hover:bg-success/90 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-[transform,box-shadow,background-color] duration-150",
-        cta: "btn-cta text-black hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
+        cta: "btn-cta text-black font-semibold hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]",
       },
       size: {
-        // All sizes use consistent rounded-lg (8px) for design system compliance
-        // All sizes meet WCAG 2.2 AA 44px minimum touch target
+        // All sizes now meet WCAG 2.2 AA 44px minimum touch target
         default: "h-11 px-4 py-2.5",
-        sm: "h-11 gap-1.5 px-3 text-xs",
-        lg: "h-12 px-6 text-base",
-        xl: "h-14 px-8 text-lg",
+        sm: "h-11 rounded-md gap-1.5 px-3 text-xs",
+        lg: "h-12 rounded-lg px-6 text-base",
+        xl: "h-14 rounded-xl px-8 text-lg",
         icon: "size-11",
         "icon-sm": "size-11",
         "icon-lg": "size-12",
