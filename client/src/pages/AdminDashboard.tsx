@@ -300,7 +300,7 @@ export default function AdminDashboard() {
                   <div className="p-3 rounded-full bg-success/10 w-fit mx-auto mb-4">
                     <CheckCircle2 className="h-8 w-8 text-success" />
                   </div>
-                  <H3 className="mb-2">All Caught Up!</H3>
+                  <H3 className="mb-2 !text-lg">All Caught Up!</H3>
                   <p className="text-gray-600">
                     No pending supplier verifications
                   </p>
@@ -420,7 +420,7 @@ export default function AdminDashboard() {
                   <div className="p-3 rounded-full bg-success/10 w-fit mx-auto mb-4">
                     <CheckCircle2 className="h-8 w-8 text-success" />
                   </div>
-                  <H3 className="mb-2">All Caught Up!</H3>
+                  <H3 className="mb-2 !text-lg">All Caught Up!</H3>
                   <p className="text-gray-600">
                     No pending feedstock verifications
                   </p>

@@ -309,7 +309,7 @@ export default function GrowerSettings() {
                     className="flex items-center justify-between py-2"
                   >
                     <div>
-                      <H3 className="font-medium">{item.label}</H3>
+                      <H3 className="font-medium !text-sm">{item.label}</H3>
                       <Body className="text-sm text-muted-foreground">
                         {item.description}
                       </Body>
@@ -358,7 +358,7 @@ export default function GrowerSettings() {
                     className="flex items-center justify-between py-2"
                   >
                     <div>
-                      <H3 className="font-medium">{item.label}</H3>
+                      <H3 className="font-medium !text-sm">{item.label}</H3>
                       <Body className="text-sm text-muted-foreground">
                         {item.description}
                       </Body>
@@ -415,7 +415,7 @@ export default function GrowerSettings() {
                     className="flex items-center justify-between py-2"
                   >
                     <div>
-                      <H3 className="font-medium">{item.label}</H3>
+                      <H3 className="font-medium !text-sm">{item.label}</H3>
                       <Body className="text-sm text-muted-foreground">
                         {item.description}
                       </Body>

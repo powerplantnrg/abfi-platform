@@ -430,7 +430,7 @@ export default function BankabilityDashboard() {
                     {/* Supply Position */}
                     <div className="p-4 rounded-xl bg-muted/30 border space-y-4">
                       <div className="flex justify-between items-center">
-                        <H3 className="font-semibold flex items-center gap-2">
+                        <H3 className="font-semibold flex items-center gap-2 !text-sm">
                           <Activity className="h-4 w-4 text-[#D4AF37]" />
                           Supply Position
                         </H3>
@@ -491,7 +491,7 @@ export default function BankabilityDashboard() {
                     {/* 5-Pillar Assessment */}
                     {project.bankabilityScore && (
                       <div className="p-4 rounded-xl border space-y-4">
-                        <H3 className="font-semibold flex items-center gap-2">
+                        <H3 className="font-semibold flex items-center gap-2 !text-sm">
                           <Shield className="h-4 w-4 text-[#D4AF37]" />
                           5-Pillar Bankability Assessment
                         </H3>
