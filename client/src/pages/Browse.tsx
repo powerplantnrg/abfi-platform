@@ -1,3 +1,15 @@
+/**
+ * Browse Feedstocks - Nextgen Design
+ *
+ * Features:
+ * - Searchable feedstock marketplace grid
+ * - Category, state, and verification filters
+ * - ABFI score badges with grade indicators
+ * - Price visibility and volume metrics
+ * - Featured listings with carbon intensity data
+ * - Typography components for consistent styling
+ */
+
 import { Button } from "@/components/ui/Button";
 import {
   Card,

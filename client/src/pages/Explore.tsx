@@ -1,3 +1,14 @@
+/**
+ * Explore Page - Nextgen Design
+ *
+ * Features:
+ * - User profiler wizard with role/scale/interest questions
+ * - Dynamic path recommendations based on answers
+ * - Role-based dashboard routing (grower, developer, finance)
+ * - Timeline preference capture
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
