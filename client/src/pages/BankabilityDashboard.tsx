@@ -1,3 +1,13 @@
+/**
+ * Bankability Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Project bankability scoring and ratings
+ * - Score gauges with 5-pillar breakdown
+ * - Project cards with key metrics
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
 import {

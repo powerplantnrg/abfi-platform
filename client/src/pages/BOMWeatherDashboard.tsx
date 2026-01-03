@@ -1,3 +1,13 @@
+/**
+ * BOM Weather Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Real-time weather data from Bureau of Meteorology
+ * - Fire danger and drought status indicators
+ * - Regional weather forecasts with icons
+ * - Typography components for consistent styling
+ */
+
 import { useState, useEffect } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import {

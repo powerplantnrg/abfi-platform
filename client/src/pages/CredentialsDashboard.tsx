@@ -1,3 +1,13 @@
+/**
+ * Credentials Dashboard - Nextgen Design
+ *
+ * Features:
+ * - API key management and generation
+ * - Credential status indicators
+ * - Stats cards with usage metrics
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { Button } from "@/components/ui/Button";

@@ -1,3 +1,14 @@
+/**
+ * Supply Chain Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Shipment tracking and logistics
+ * - Transport mode indicators (truck, ship, train)
+ * - Status badges and timeline
+ * - Stats cards with delivery metrics
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
 import {
