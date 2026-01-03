@@ -1,3 +1,14 @@
+/**
+ * Price Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Real-time feedstock pricing (ethanol, biodiesel, woodchip)
+ * - 30-day price trend charts with multi-axis display
+ * - Interactive price cards with volume metrics
+ * - Request quote CTA integration
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";

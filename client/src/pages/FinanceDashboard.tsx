@@ -1,13 +1,13 @@
 /**
- * Finance/Lender Dashboard - Redesigned
+ * Finance Dashboard - Nextgen Design
  *
  * Features:
- * - Risk alerts with severity indicators
- * - Portfolio tracking with entity monitoring
- * - Real-time sentiment and price feeds
- * - Stress testing access
- * - Report generation
- * - API access panel
+ * - Risk alerts with severity indicators (high/medium/low)
+ * - Portfolio tracking with entity scoring
+ * - Intelligence tools integration (stealth, sentiment, prices)
+ * - Stress testing and report generation
+ * - Risk scoring API preview
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";

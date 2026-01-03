@@ -1,3 +1,15 @@
+/**
+ * Policy & Carbon Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Australian bioenergy policy timeline by jurisdiction
+ * - Policy status kanban (proposed, review, enacted)
+ * - ACCU carbon revenue calculator with sensitivity analysis
+ * - Mandate scenario comparison charts
+ * - Carbon standards news feed (Verra, Gold Standard, CFI)
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
