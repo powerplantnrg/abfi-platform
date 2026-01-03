@@ -351,7 +351,7 @@ export default function ARENACEFCDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-2">
-                    <img src="https://arena.gov.au/assets/favicons/favicon-32x32.png" alt="ARENA" className="h-6 w-6" onError={(e) => e.currentTarget.style.display = 'none'} />
+                    <img loading="lazy" src="https://arena.gov.au/assets/favicons/favicon-32x32.png" alt="ARENA" className="h-6 w-6" onError={(e) => e.currentTarget.style.display = 'none'} />
                     ARENA Projects
                   </CardTitle>
                   <CardDescription>Australian Renewable Energy Agency funded projects</CardDescription>
