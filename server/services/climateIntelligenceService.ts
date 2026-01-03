@@ -504,32 +504,80 @@ export class ClimateIntelligenceService {
   }
 
   /**
-   * Get historical climate data from database
+   * Get historical climate data - fetches from SILO API directly
+   * (Database storage is optional for caching)
    */
   async getHistoricalClimateData(
     latitude: number,
     longitude: number,
     startDate: string,
     endDate: string
-  ): Promise<typeof siloClimateData.$inferSelect[]> {
-    const db = await getDb();
-    if (!db) throw new Error("Database not available");
+  ): Promise<Array<{
+    date: string;
+    latitude: string;
+    longitude: string;
+    dailyRain: number | null;
+    maxTemp: number | null;
+    minTemp: number | null;
+    radiation: number | null;
+    evaporation: number | null;
+    vpDeficit: number | null;
+  }>> {
+    // Fetch directly from SILO API
+    try {
+      const siloData = await this.bomConnector.fetchSILOData(
+        latitude,
+        longitude,
+        startDate,
+        endDate,
+        ["daily_rain", "max_temp", "min_temp", "radiation", "evap_pan", "vp_deficit"]
+      );
 
-    // Query with a small tolerance for coordinate matching
-    const tolerance = 0.05; // ~5km
+      // Transform SILO response to a simple format
+      return siloData.data.map(point => ({
+        date: point.date,
+        latitude: latitude.toString(),
+        longitude: longitude.toString(),
+        dailyRain: point.variables.daily_rain ?? null,
+        maxTemp: point.variables.max_temp ?? null,
+        minTemp: point.variables.min_temp ?? null,
+        radiation: point.variables.radiation ?? null,
+        evaporation: point.variables.evap_pan ?? null,
+        vpDeficit: point.variables.vp_deficit ?? null,
+      }));
+    } catch (error) {
+      console.error("[ClimateService] Failed to fetch SILO data:", error);
 
-    return db
-      .select()
-      .from(siloClimateData)
-      .where(and(
-        gte(siloClimateData.latitude, (latitude - tolerance).toString()),
-        lte(siloClimateData.latitude, (latitude + tolerance).toString()),
-        gte(siloClimateData.longitude, (longitude - tolerance).toString()),
-        lte(siloClimateData.longitude, (longitude + tolerance).toString()),
-        gte(siloClimateData.date, startDate),
-        lte(siloClimateData.date, endDate)
-      ))
-      .orderBy(siloClimateData.date);
+      // Fallback: try database if API fails
+      const db = await getDb();
+      if (!db) return [];
+
+      const tolerance = 0.05; // ~5km
+      const dbData = await db
+        .select()
+        .from(siloClimateData)
+        .where(and(
+          gte(siloClimateData.latitude, (latitude - tolerance).toString()),
+          lte(siloClimateData.latitude, (latitude + tolerance).toString()),
+          gte(siloClimateData.longitude, (longitude - tolerance).toString()),
+          lte(siloClimateData.longitude, (longitude + tolerance).toString()),
+          gte(siloClimateData.date, startDate),
+          lte(siloClimateData.date, endDate)
+        ))
+        .orderBy(siloClimateData.date);
+
+      return dbData.map(row => ({
+        date: row.date,
+        latitude: row.latitude,
+        longitude: row.longitude,
+        dailyRain: row.dailyRain ? parseFloat(row.dailyRain) : null,
+        maxTemp: row.maxTemp ? parseFloat(row.maxTemp) : null,
+        minTemp: row.minTemp ? parseFloat(row.minTemp) : null,
+        radiation: row.radiation ? parseFloat(row.radiation) : null,
+        evaporation: row.evaporation ? parseFloat(row.evaporation) : null,
+        vpDeficit: row.vpDeficit ? parseFloat(row.vpDeficit) : null,
+      }));
+    }
   }
 
   // Private helper methods

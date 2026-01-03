@@ -315,38 +315,63 @@ export class BOMConnector extends BaseConnector {
       };
     }
 
+    // Build the comment code from requested variables
+    // SILO comment codes: https://www.longpaddock.qld.gov.au/silo/about/climate-variables/
+    const variableToCode: Record<string, string> = {
+      daily_rain: "R",
+      min_temp: "N",
+      max_temp: "X",
+      radiation: "J",      // Solar radiation
+      evap_pan: "E",       // Class A pan evaporation
+      evap_syn: "S",       // Synthetic evaporation
+      evap_comb: "C",      // Combined evaporation
+      vp: "V",             // Vapour pressure
+      vp_deficit: "D",     // Vapour pressure deficit
+      rh_tmax: "H",        // Relative humidity at max temp
+      rh_tmin: "G",        // Relative humidity at min temp
+      et_short_crop: "F",  // FAO56 short crop ET
+      et_tall_crop: "T",   // ASCE tall crop ET
+      et_morton_actual: "A",
+      et_morton_potential: "P",
+      et_morton_wet: "W",
+      evap_morton_lake: "L",
+      mslp: "M",           // Mean sea level pressure
+    };
+
+    const commentCodes = variables
+      .map(v => variableToCode[v] || "")
+      .filter(Boolean)
+      .join("");
+
     const params = new URLSearchParams({
       lat: latitude.toFixed(4),
       lon: longitude.toFixed(4),
       start: startDate.replace(/-/g, ""),
       finish: endDate.replace(/-/g, ""),
       format: "json",
-      username: this.siloEmail,  // Email address is the username
-      password: "apirequest",    // Required password for grid/DataDrill API
+      comment: commentCodes || "RNXM",  // Default: R=rain, N=min temp, X=max temp, M=radiation
+      username: this.siloEmail,  // Email address is the only auth required
     });
 
-    // Add requested climate variables
-    for (const v of variables) {
-      params.append("variable", v);
-    }
+    const url = `${this.siloApiBaseUrl}/DataDrillDataset.php?${params.toString()}`;
+    console.log(`[BOMConnector] SILO request URL: ${url}`);
 
     try {
-      const response = await this.fetchWithRateLimit(
-        `${this.siloApiBaseUrl}/DataDrillDataset.php?${params.toString()}`
-      );
+      const response = await this.fetchWithRateLimit(url);
 
       if (!response.ok) {
         throw new Error(`SILO API error: ${response.status} ${response.statusText}`);
       }
 
       const contentType = response.headers.get("content-type") || "";
-      if (!contentType.includes("application/json")) {
-        // SILO returns HTML error pages for invalid credentials
+      // SILO returns JSON as text/plain, not application/json
+      if (contentType.includes("text/html")) {
+        // SILO returns HTML error pages for invalid credentials or errors
         const text = await response.text();
-        if (text.includes("Invalid") || text.includes("error")) {
-          throw new Error("SILO API authentication failed. Check your SILO_EMAIL is registered.");
+        if (text.includes("Invalid") || text.includes("error") || text.includes("Request Rejected")) {
+          throw new Error("SILO API authentication failed or request blocked. Check your SILO_EMAIL is registered.");
         }
-        throw new Error(`SILO API returned non-JSON response: ${contentType}`);
+        throw new Error(`SILO API returned HTML error page`);
       }
 
       const data = await response.json();
@@ -663,32 +688,42 @@ export class BOMConnector extends BaseConnector {
     longitude: number,
     variables: SILOVariable[]
   ): SILOTimeSeries {
-    // SILO returns data in a specific JSON format
-    // This parses it into our standardized structure
+    // SILO returns data in format:
+    // { location: {...}, data: [{ date: "2024-01-01", variables: [{variable_code, value, source}] }] }
     const dataPoints: SILODataPoint[] = [];
 
-    if (Array.isArray(data)) {
-      for (const record of data) {
-        const point: SILODataPoint = {
-          date: record.date || record.YYYYMMDD,
-          latitude,
-          longitude,
-          variables: {},
-          quality: {},
-        };
+    // Handle nested data structure from SILO API
+    const records = Array.isArray(data) ? data : (data?.data || []);
 
+    for (const record of records) {
+      const point: SILODataPoint = {
+        date: record.date || record.YYYYMMDD,
+        latitude,
+        longitude,
+        variables: {},
+        quality: {},
+      };
+
+      // Parse variables from nested array format
+      if (Array.isArray(record.variables)) {
+        for (const varData of record.variables) {
+          const varCode = varData.variable_code as SILOVariable;
+          point.variables[varCode] = varData.value;
+          point.quality[varCode] = varData.source; // source indicates data quality
+        }
+      } else {
+        // Fallback for flat format (legacy)
         for (const variable of variables) {
           if (record[variable] !== undefined) {
             point.variables[variable] = record[variable];
           }
-          // Quality codes are typically suffixed with _code
           if (record[`${variable}_code`] !== undefined) {
             point.quality[variable] = record[`${variable}_code`];
           }
         }
-
-        dataPoints.push(point);
       }
+
+      dataPoints.push(point);
     }
 
     return {
