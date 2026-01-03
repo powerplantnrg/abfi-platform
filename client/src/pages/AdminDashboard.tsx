@@ -1,3 +1,13 @@
+/**
+ * Admin Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Pending supplier and feedstock approvals
+ * - Quick action cards for admin tasks
+ * - Stats overview with key metrics
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/Button";
