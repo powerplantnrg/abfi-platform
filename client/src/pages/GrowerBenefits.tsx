@@ -1,3 +1,17 @@
+/**
+ * Grower Benefits - Nextgen Design
+ *
+ * @deprecated This component is merged into ForGrowers.tsx
+ * The /grower-benefits route now redirects to /for-growers.
+ *
+ * Features:
+ * - Problem/solution comparison layout
+ * - Grower protection highlights
+ * - Earnings calculator integration
+ * - Price comparison with traditional brokers
+ * - Typography components for consistent styling
+ */
+
 import {
   Shield,
   TrendingUp,

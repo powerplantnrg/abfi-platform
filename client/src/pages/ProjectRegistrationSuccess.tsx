@@ -1,8 +1,18 @@
+/**
+ * Project Registration Success - Nextgen Design
+ *
+ * Features:
+ * - Success confirmation with animated icon
+ * - Application reference display
+ * - Next steps guidance
+ * - Typography components for consistent styling
+ */
+
 import { Link } from "wouter";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { Check, ArrowRight, FileText, Clock, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
 
 export default function ProjectRegistrationSuccess() {
   return (

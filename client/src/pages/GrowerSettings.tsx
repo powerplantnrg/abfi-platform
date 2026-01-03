@@ -1,8 +1,12 @@
 /**
- * Grower Settings Page
+ * Grower Settings - Nextgen Design
  *
- * Allows growers to manage their account settings, preferences,
- * notifications, and privacy options.
+ * Features:
+ * - Profile and business information management
+ * - Notification preferences (email and push)
+ * - Privacy and visibility controls
+ * - Account actions (export data, delete account)
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";
@@ -12,8 +16,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -309,7 +313,7 @@ export default function GrowerSettings() {
                     className="flex items-center justify-between py-2"
                   >
                     <div>
-                      <H3 className="font-medium">{item.label}</H3>
+                      <H3 className="font-medium !text-sm">{item.label}</H3>
                       <Body className="text-sm text-muted-foreground">
                         {item.description}
                       </Body>
@@ -358,7 +362,7 @@ export default function GrowerSettings() {
                     className="flex items-center justify-between py-2"
                   >
                     <div>
-                      <H3 className="font-medium">{item.label}</H3>
+                      <H3 className="font-medium !text-sm">{item.label}</H3>
                       <Body className="text-sm text-muted-foreground">
                         {item.description}
                       </Body>
@@ -415,7 +419,7 @@ export default function GrowerSettings() {
                     className="flex items-center justify-between py-2"
                   >
                     <div>
-                      <H3 className="font-medium">{item.label}</H3>
+                      <H3 className="font-medium !text-sm">{item.label}</H3>
                       <Body className="text-sm text-muted-foreground">
                         {item.description}
                       </Body>

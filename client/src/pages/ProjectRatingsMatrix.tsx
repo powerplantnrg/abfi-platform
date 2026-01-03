@@ -1,15 +1,20 @@
 /**
- * ABFI Project Ratings Matrix
+ * Project Ratings Matrix - Nextgen Design
  *
- * Comprehensive view of all Australian biofuels projects with bankability ratings
+ * Features:
+ * - All projects bankability matrix view
+ * - Searchable and filterable table
+ * - Rating badges with tooltips
+ * - Export and download options
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { useLocation } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {

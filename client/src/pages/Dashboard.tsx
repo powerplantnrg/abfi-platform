@@ -1,12 +1,23 @@
+/**
+ * Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Role-based dashboard views (buyer, supplier, grower)
+ * - Premium stats cards with animations
+ * - Activity feed with real-time updates
+ * - Quick actions for common tasks
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { getLoginUrl } from "@/const";

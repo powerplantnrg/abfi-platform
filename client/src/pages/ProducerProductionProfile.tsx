@@ -1,13 +1,24 @@
+/**
+ * Producer Production Profile - Nextgen Design
+ *
+ * Features:
+ * - Feedstock type selection with icons
+ * - Current season planting details
+ * - Historical yield records tracking
+ * - Weather impact documentation
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {

@@ -1,8 +1,20 @@
+/**
+ * Stealth Discovery - Nextgen Design
+ *
+ * Features:
+ * - AI-powered entity discovery from public data sources
+ * - Signal type categorization (patents, permits, grants)
+ * - Entity scoring with confidence indicators
+ * - Dashboard stats and signal distribution charts
+ * - Entity tracking and watchlist management
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

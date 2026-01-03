@@ -1,11 +1,22 @@
-import { Button } from "@/components/ui/button";
+/**
+ * For Growers Landing Page - Nextgen Design
+ *
+ * Features:
+ * - GQ (Grower Qualification) tier system explanation
+ * - Platform benefits for feedstock producers
+ * - Animated counters and hover cards
+ * - CTA for grower registration
+ * - Typography components for consistent styling
+ */
+
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
 import {
   ArrowRight,

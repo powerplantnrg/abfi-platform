@@ -1,6 +1,17 @@
+/**
+ * Explore Page - Nextgen Design
+ *
+ * Features:
+ * - User profiler wizard with role/scale/interest questions
+ * - Dynamic path recommendations based on answers
+ * - Role-based dashboard routing (grower, developer, finance)
+ * - Timeline preference capture
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -16,13 +27,16 @@ import {
   Banknote,
   Users,
   Globe,
+  Search,
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { H2, H3, Body } from "@/components/Typography";
+interface ProfilerOption {  id: string;  label: string;  description: string;  icon: React.FC<any>;  path?: string | null;}interface ProfilerQuestion {  id: string;  question: string;  options: ProfilerOption[];}
 
 // Profiler questions
-const PROFILER_QUESTIONS = [
+const PROFILER_QUESTIONS: ProfilerQuestion[] = [
   {
     id: "role",
     question: "What best describes your role?",
@@ -98,6 +112,7 @@ export default function Explore() {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [showResults, setShowResults] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const currentQuestion = PROFILER_QUESTIONS[currentStep];
   const progress = ((currentStep + 1) / PROFILER_QUESTIONS.length) * 100;
@@ -196,6 +211,20 @@ export default function Explore() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
+        {/* Search bar for quick navigation */}
+        <div className="mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="search"
+              placeholder="Search dashboards, features, or documentation..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 search-input"
+            />
+          </div>
+        </div>
+
         {/* Progress indicator */}
         <div className="flex justify-end mb-4">
           <Badge variant="outline">

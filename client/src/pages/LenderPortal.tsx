@@ -1,3 +1,14 @@
+/**
+ * Lender Portal - Nextgen Design
+ *
+ * Features:
+ * - Project access and permissions management
+ * - Stress test results visualization
+ * - Rating badges with color coding
+ * - Score breakdown components
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import {
@@ -6,9 +17,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
@@ -106,7 +117,7 @@ export default function LenderPortal() {
   ): { status: "compliant" | "warning" | "breach"; message: string } => {
     // Check Tier 1 covenant (typically 80% minimum)
     const tier1Target = project.tier1Target || 80;
-    const tier1Actual = 0; // TODO: Calculate from agreements
+    const tier1Actual = project.supplyPosition?.tier1Coverage ?? 0;
 
     if (tier1Actual < tier1Target * 0.9) {
       return {
@@ -334,19 +345,19 @@ export default function LenderPortal() {
                                   Tier 1 Coverage
                                 </DataLabel>
                                 <MetricValue className="font-medium">
-                                  0% / {project.tier1Target || 80}%
+                                  {project.supplyPosition?.tier1Coverage ?? 0}% / {project.tier1Target || 80}%
                                 </MetricValue>
                               </div>
-                              <Progress value={0} className="h-2" />
+                              <Progress value={Math.min(100, (project.supplyPosition?.tier1Coverage ?? 0) / (project.tier1Target || 80) * 100)} className="h-2" />
                             </div>
                             <div>
                               <div className="flex justify-between text-sm mb-1">
                                 <DataLabel className="text-gray-600">
                                   Total Primary Coverage
                                 </DataLabel>
-                                <MetricValue className="font-medium">0%</MetricValue>
+                                <MetricValue className="font-medium">{project.supplyPosition?.primaryCoverage ?? 0}%</MetricValue>
                               </div>
-                              <Progress value={0} className="h-2" />
+                              <Progress value={Math.min(100, project.supplyPosition?.primaryCoverage ?? 0)} className="h-2" />
                             </div>
                           </div>
                         </CardContent>
@@ -365,22 +376,22 @@ export default function LenderPortal() {
                             scores={[
                               {
                                 label: "Tier 1 (Core)",
-                                value: 0,
+                                value: project.supplyPosition?.tier1Coverage ?? 0,
                                 maxValue: 100,
                               },
                               {
                                 label: "Tier 2 (Supplementary)",
-                                value: 0,
+                                value: project.supplyPosition?.tier2Coverage ?? 0,
                                 maxValue: 100,
                               },
                               {
                                 label: "Options",
-                                value: 0,
+                                value: Math.round(((project.supplyPosition?.optionsVolume ?? 0) / (project.annualFeedstockVolume || 1)) * 100),
                                 maxValue: 100,
                               },
                               {
                                 label: "ROFR",
-                                value: 0,
+                                value: Math.round(((project.supplyPosition?.rofrVolume ?? 0) / (project.annualFeedstockVolume || 1)) * 100),
                                 maxValue: 100,
                               },
                             ]}
@@ -429,7 +440,7 @@ export default function LenderPortal() {
                                     "text-sm",
                                     latestStressTest.passesStressTest ? "text-green-700" : "text-red-700"
                                   )}>
-                                    Rating impact: {latestStressTest.baseRating} → {latestStressTest.stressRating} ({latestStressTest.ratingDelta >= 0 ? "+" : ""}{latestStressTest.ratingDelta} notches)
+                                    Rating impact: {latestStressTest.baseRating} → {latestStressTest.stressRating} ({latestStressTest.ratingDelta ?? 0 >= 0 ? "+" : ""}{latestStressTest.ratingDelta ?? 0} notches)
                                   </p>
                                 </div>
                               </div>
@@ -440,7 +451,7 @@ export default function LenderPortal() {
                                 </div>
                                 <div className="p-2 rounded bg-muted/50">
                                   <div className="text-xs text-gray-600">HHI Delta</div>
-                                  <div className="font-mono font-semibold">{latestStressTest.hhiDelta > 0 ? "+" : ""}{latestStressTest.hhiDelta}</div>
+                                  <div className="font-mono font-semibold">{latestStressTest.hhiDelta ?? 0 > 0 ? "+" : ""}{latestStressTest.hhiDelta ?? 0}</div>
                                 </div>
                                 <div className="p-2 rounded bg-muted/50">
                                   <div className="text-xs text-gray-600">Inv. Grade</div>

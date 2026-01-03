@@ -1,8 +1,20 @@
+/**
+ * Lending Sentiment Dashboard - Nextgen Design
+ *
+ * Features:
+ * - AI-powered sentiment analysis from 47+ data sources
+ * - Bullish/bearish signal tracking and trends
+ * - Fear component breakdown by risk category
+ * - Lender-by-lender sentiment matrix
+ * - Real-time document feed with sentiment tagging
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {

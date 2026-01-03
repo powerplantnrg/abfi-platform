@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Design Tokens - Central Import
+   Australian Bioenergy Feedstock Infrastructure Platform
+   World-Class Design System
+   ========================================================================== */
+
+@import './colors.css';
+@import './typography.css';
+@import './spacing.css';
+@import './shadows.css';
+
+/* CSS Custom Properties for JavaScript access */
+:root {
+  /* Animation */
+  --animation-duration: 150ms;
+  --animation-duration-medium: 300ms;
+  --animation-timing: cubic-bezier(0.15, 1, 0.3, 1);
+
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-pill: 9999px;
+
+  /* Transitions */
+  --transition-fast: var(--animation-duration) var(--animation-timing);
+  --transition-medium: var(--animation-duration-medium) var(--animation-timing);
+}

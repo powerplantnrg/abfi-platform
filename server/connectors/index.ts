@@ -29,6 +29,7 @@ export type {
   BOMWarning,
   ClimateIntelligence,
 } from "./bomConnector";
+export { CarbonStandardsConnector, carbonStandardsConnector, type CarbonStandardArticle } from "./carbonStandardsConnector";
 
 import { ConnectorConfig, ConnectorResult, RawSignal } from "./baseConnector";
 import { NSWPlanningConnector } from "./nswPlanningConnector";
@@ -38,6 +39,7 @@ import { QldEpaConnector } from "./qldEpaConnector";
 import { IPAustraliaConnector } from "./ipAustraliaConnector";
 import { ABARESConnector } from "./abaresConnector";
 import { BOMConnector } from "./bomConnector";
+import { CarbonStandardsConnector } from "./carbonStandardsConnector";
 
 // Default connector configurations
 export const CONNECTOR_CONFIGS: Record<string, ConnectorConfig> = {
@@ -76,6 +78,11 @@ export const CONNECTOR_CONFIGS: Record<string, ConnectorConfig> = {
     enabled: true,
     rateLimit: 30,
   },
+  carbon_standards: {
+    name: "Carbon Standards (Verra, Gold Standard, CFI)",
+    enabled: true,
+    rateLimit: 10,
+  },
 };
 
 /**
@@ -113,6 +120,10 @@ export async function runAllConnectors(
     {
       key: "bom",
       connector: new BOMConnector(CONNECTOR_CONFIGS.bom),
+    },
+    {
+      key: "carbon_standards",
+      connector: new CarbonStandardsConnector(CONNECTOR_CONFIGS.carbon_standards),
     },
   ];
 
@@ -169,6 +180,7 @@ export async function runConnector(
     ip_australia: IPAustraliaConnector,
     abares: ABARESConnector,
     bom: BOMConnector,
+    carbon_standards: CarbonStandardsConnector,
   };
 
   const ConnectorClass = connectorMap[connectorName];

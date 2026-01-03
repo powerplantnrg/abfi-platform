@@ -1,3 +1,17 @@
+/**
+ * Home Page - Nextgen Design
+ *
+ * @deprecated This component is superseded by Landing.tsx
+ * The /home route now redirects to / (Landing page).
+ * This file can be removed once migration is verified.
+ * @see client/src/pages/Landing.tsx
+ *
+ * Features:
+ * - Role-based pathway selection
+ * - Platform statistics overview
+ * - Design system constants
+ * - Typography components for consistent styling
+ */
 import React from 'react';
 import { Leaf, Factory, TrendingUp, CheckCircle, Zap, BarChart, Shield, Users, Globe, ChevronRight } from 'lucide-react';
 import { H1, H2, H3, Body, MetricValue } from '@/components/Typography';

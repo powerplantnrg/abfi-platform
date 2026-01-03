@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -110,7 +110,6 @@ export default function QuoteRequest() {
   const onSubmit = async (data: QuoteRequestFormData) => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Quote request submitted:", data);
     setIsSubmitted(true);
   };
 

@@ -3,7 +3,7 @@
  * Use this for all public-facing pages.
  */
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { getLoginUrl } from "@/const";
 import {
   ArrowRight,

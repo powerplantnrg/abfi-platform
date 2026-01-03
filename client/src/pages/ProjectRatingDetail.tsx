@@ -1,14 +1,19 @@
 /**
- * ABFI Project Rating Detail Page
+ * Project Rating Detail - Nextgen Design
  *
- * Detailed assessment view for individual Australian biofuels projects
+ * Features:
+ * - Detailed project bankability assessment
+ * - Rating breakdown by category
+ * - Trend signals (bullish/bearish)
+ * - Risk factor indicators
+ * - Typography components for consistent styling
  */
 
 import { useRoute, useLocation } from "wouter";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import {

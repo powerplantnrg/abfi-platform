@@ -1,14 +1,25 @@
+/**
+ * Grower Qualification - Nextgen Design
+ *
+ * Features:
+ * - Qualification scoring with interactive sliders
+ * - Six-factor assessment (history, financial, land, capacity, credit, insurance)
+ * - Assessment notes and validity period
+ * - tRPC mutation for qualification creation
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { useParams, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -454,7 +465,7 @@ export default function GrowerQualification() {
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <div>
-                  <H3 className="font-semibold text-green-600">
+                  <H3 className="font-semibold text-green-600 !text-sm">
                     GQ1 - Premier (85-100)
                   </H3>
                   <Body className="text-gray-600">
@@ -463,7 +474,7 @@ export default function GrowerQualification() {
                   </Body>
                 </div>
                 <div>
-                  <H3 className="font-semibold text-blue-600">
+                  <H3 className="font-semibold text-blue-600 !text-sm">
                     GQ2 - Qualified (70-84)
                   </H3>
                   <Body className="text-gray-600">
@@ -472,7 +483,7 @@ export default function GrowerQualification() {
                   </Body>
                 </div>
                 <div>
-                  <H3 className="font-semibold text-yellow-600">
+                  <H3 className="font-semibold text-yellow-600 !text-sm">
                     GQ3 - Developing (55-69)
                   </H3>
                   <Body className="text-gray-600">
@@ -481,7 +492,7 @@ export default function GrowerQualification() {
                   </Body>
                 </div>
                 <div>
-                  <H3 className="font-semibold text-orange-600">
+                  <H3 className="font-semibold text-orange-600 !text-sm">
                     GQ4 - Provisional (&lt;55)
                   </H3>
                   <Body className="text-gray-600">

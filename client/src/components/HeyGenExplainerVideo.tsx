@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, ChevronRight, CheckCircle2 } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 
@@ -53,7 +53,7 @@ export function HeyGenExplainerVideo({
 
       // Mark scene as completed when we reach near the end
       if (currentTime >= scene.endTime - 0.5) {
-        setCompletedScenes((prev) => new Set([...prev, scene.id]));
+        setCompletedScenes((prev) => new Set([...Array.from(prev), scene.id]));
       }
     }
   }, [currentTime, scenes]);

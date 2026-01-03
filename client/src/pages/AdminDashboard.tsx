@@ -1,6 +1,16 @@
+/**
+ * Admin Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Pending supplier and feedstock approvals
+ * - Quick action cards for admin tasks
+ * - Stats overview with key metrics
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
@@ -8,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
   StatsCard,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -300,7 +310,7 @@ export default function AdminDashboard() {
                   <div className="p-3 rounded-full bg-success/10 w-fit mx-auto mb-4">
                     <CheckCircle2 className="h-8 w-8 text-success" />
                   </div>
-                  <H3 className="mb-2">All Caught Up!</H3>
+                  <H3 className="mb-2 !text-lg">All Caught Up!</H3>
                   <p className="text-gray-600">
                     No pending supplier verifications
                   </p>
@@ -341,7 +351,7 @@ export default function AdminDashboard() {
                         </div>
                         <Badge variant="pending" className="shrink-0">
                           <Clock className="h-3 w-3 mr-1" />
-                          {formatDate(feedstock.createdAt)}
+                          {formatDate((feedstock as any).createdAt || (feedstock as any).updatedAt)}
                         </Badge>
                       </div>
                     </CardHeader>
@@ -420,7 +430,7 @@ export default function AdminDashboard() {
                   <div className="p-3 rounded-full bg-success/10 w-fit mx-auto mb-4">
                     <CheckCircle2 className="h-8 w-8 text-success" />
                   </div>
-                  <H3 className="mb-2">All Caught Up!</H3>
+                  <H3 className="mb-2 !text-lg">All Caught Up!</H3>
                   <p className="text-gray-600">
                     No pending feedstock verifications
                   </p>

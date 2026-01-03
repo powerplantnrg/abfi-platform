@@ -1,17 +1,44 @@
-import { useState } from "react";
+/**
+ * Producer Property Map - Nextgen Design
+ *
+ * Features:
+ * - Interactive map for property location
+ * - Address search functionality
+ * - Click-to-select coordinates
+ * - Agricultural zone identification
+ * - Typography components for consistent styling
+ */
+
+import { useState, useEffect, useRef } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Progress } from "@/components/ui/progress";
-import { Leaf, ArrowLeft, ArrowRight, MapPin } from "lucide-react";
+import { Leaf, ArrowLeft, ArrowRight, MapPin, Crosshair } from "lucide-react";
 import { Link } from "wouter";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
+// Fix Leaflet default marker icons
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+});
+
+// Australia bounds
+const AUSTRALIA_BOUNDS: L.LatLngBoundsExpression = [
+  [-44.0, 112.0], // Southwest
+  [-10.0, 154.0], // Northeast
+];
 
 export default function ProducerPropertyMap() {
   const [, setLocation] = useLocation();
@@ -20,9 +47,93 @@ export default function ProducerPropertyMap() {
     lng: number;
   } | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLocating, setIsLocating] = useState(false);
 
-  const handleMapClick = (lat: number, lng: number) => {
-    setSelectedLocation({ lat, lng });
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const markerRef = useRef<L.Marker | null>(null);
+
+  // Initialize map
+  useEffect(() => {
+    if (!mapContainerRef.current || mapRef.current) return;
+
+    const map = L.map(mapContainerRef.current, {
+      center: [-25.2744, 133.7751], // Center of Australia
+      zoom: 4,
+      zoomControl: true,
+      scrollWheelZoom: true,
+      maxBounds: AUSTRALIA_BOUNDS,
+      minZoom: 3,
+    });
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(map);
+
+    L.control.scale({ imperial: false, metric: true }).addTo(map);
+
+    // Add click handler
+    map.on("click", (e: L.LeafletMouseEvent) => {
+      setSelectedLocation({ lat: e.latlng.lat, lng: e.latlng.lng });
+    });
+
+    mapRef.current = map;
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  // Update marker when location changes
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    // Remove existing marker
+    if (markerRef.current) {
+      markerRef.current.remove();
+      markerRef.current = null;
+    }
+
+    // Add new marker if location exists
+    if (selectedLocation) {
+      const marker = L.marker([selectedLocation.lat, selectedLocation.lng], {
+        draggable: true,
+      }).addTo(mapRef.current);
+
+      marker.on("dragend", () => {
+        const pos = marker.getLatLng();
+        setSelectedLocation({ lat: pos.lat, lng: pos.lng });
+      });
+
+      markerRef.current = marker;
+      mapRef.current.setView([selectedLocation.lat, selectedLocation.lng], 12);
+    }
+  }, [selectedLocation]);
+
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+      return;
+    }
+
+    setIsLocating(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setSelectedLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+        setIsLocating(false);
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+        alert("Unable to retrieve your location. Please click on the map to select your property.");
+        setIsLocating(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
   };
 
   const handleContinue = () => {
@@ -92,35 +203,38 @@ export default function ProducerPropertyMap() {
                   />
                 </div>
 
-                {/* Map Placeholder */}
-                <div className="relative h-[500px] rounded-lg border-2 border-dashed border-gray-300 bg-gray-100">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <MapPin className="mx-auto mb-4 h-12 w-12 text-gray-400" />
-                      <p className="text-lg font-medium text-gray-700">
-                        Interactive Map Loading...
-                      </p>
-                      <p className="mt-2 text-sm text-gray-600">
-                        Click anywhere on the map to mark your property location
-                      </p>
-                      {selectedLocation && (
-                        <div className="mt-4 rounded-lg bg-white p-4 shadow">
-                          <p className="text-sm font-medium text-green-600">
-                            ✓ Location selected:{" "}
-                            {selectedLocation.lat.toFixed(4)},{" "}
-                            {selectedLocation.lng.toFixed(4)}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  {/* TODO: Integrate Google Maps or Mapbox */}
-                  <button
-                    onClick={() => handleMapClick(-27.4698, 153.0251)} // Brisbane coordinates
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                    aria-label="Click to select location"
-                  />
+                {/* Map Controls */}
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-gray-600">
+                    Click on the map to mark your property location, or drag the marker to adjust
+                  </p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleUseCurrentLocation}
+                    disabled={isLocating}
+                    className="gap-2"
+                  >
+                    <Crosshair className={`h-4 w-4 ${isLocating ? "animate-pulse" : ""}`} />
+                    {isLocating ? "Locating..." : "Use My Location"}
+                  </Button>
                 </div>
+
+                {/* Interactive Map */}
+                <div
+                  ref={mapContainerRef}
+                  className="h-[500px] rounded-lg border overflow-hidden"
+                />
+
+                {/* Selected Location Display */}
+                {selectedLocation && (
+                  <div className="mt-3 rounded-lg bg-green-50 border border-green-200 p-4">
+                    <p className="text-sm font-medium text-green-700">
+                      ✓ Location selected: {selectedLocation.lat.toFixed(4)}, {selectedLocation.lng.toFixed(4)}
+                    </p>
+                  </div>
+                )}
 
                 {/* Agricultural Zones Legend */}
                 <div className="grid gap-4 md:grid-cols-3">

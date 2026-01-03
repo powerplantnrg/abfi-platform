@@ -7,9 +7,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
@@ -139,15 +139,15 @@ export default function StressTesting() {
     );
 
   // Mutations
-  const runComprehensiveTest = trpc.stressTesting.runComprehensive.useMutation({
+  const runComprehensiveTest = trpc.stressTesting.runComprehensiveTest.useMutation({
     onSuccess: () => {
       refetchResults();
       setActiveTab("history");
     },
   });
 
-  const runPriceAnalysis = trpc.stressTesting.runPriceAnalysis.useMutation();
-  const runRegionalAnalysis = trpc.stressTesting.runRegionalAnalysis.useMutation();
+  // Note: runPriceShockAnalysis and runRegionalAnalysis are queries used within comprehensive test
+  
 
   const selectedProjectData = projects?.find((p: any) => p.id === selectedProject);
 
@@ -180,8 +180,8 @@ export default function StressTesting() {
       projectId: selectedProject,
       scenarioType: selectedScenario as any,
       scenarioParams,
-      baseScore: selectedProjectData?.bankabilityScore || 75,
-      baseRating: selectedProjectData?.bankabilityRating || "A",
+      baseScore: 75,
+      baseRating: "A",
       projectEconomics: selectedScenario === "price_spike" ? {
         baseRevenue: 50000000,
         baseCost: 35000000,

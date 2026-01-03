@@ -1,0 +1,53 @@
+/* ==========================================================================
+   Typography Tokens
+   Charlie Display/Text (Atlassian) + Government Accessibility
+   ========================================================================== */
+
+:root {
+  /* Font Families */
+  --font-family-heading: 'Charlie Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-body: 'Charlie Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+
+  /* Font Sizes - Atlassian Scale with Government Clarity */
+  --font-size-h900: 42px; /* Page titles */
+  --font-size-h800: 35px; /* Section headers */
+  --font-size-h700: 29px; /* Card titles */
+  --font-size-h600: 24px; /* Subsections */
+  --font-size-h500: 20px; /* Form sections */
+  --font-size-h400: 16px; /* UI labels */
+  --font-size-h300: 14px; /* Captions */
+  --font-size-h200: 12px; /* Legal text - WCAG AA compliant */
+
+  --font-size-body-lg: 18px;
+  --font-size-body-md: 16px; /* Standard body */
+  --font-size-body-sm: 14px;
+
+  /* Line Heights for Readability */
+  --line-height-heading: 1.2;
+  --line-height-body: 1.5; /* WCAG recommended */
+  --line-height-ui: 1.3;
+  --line-height-legal: 1.6;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Financial Data Typography */
+  --font-size-financial-lg: 32px; /* Account balances */
+  --font-size-financial-md: 16px; /* Transaction amounts */
+  --font-variant-financial: tabular-nums;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  :root {
+    --font-size-h900: 32px;
+    --font-size-h800: 28px;
+    --font-size-h700: 24px;
+    --font-size-h600: 20px;
+    --font-size-financial-lg: 24px;
+  }
+}

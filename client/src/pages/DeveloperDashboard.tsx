@@ -1,5 +1,5 @@
 /**
- * Developer Dashboard - Redesigned
+ * Developer Dashboard - Nextgen Design
  *
  * Features:
  * - Split layout with GIS map for supplier sourcing
@@ -7,6 +7,7 @@
  * - Supply confidence tools
  * - Risk scoring integration
  * - Real-time price and policy feeds
+ * - Typography components for consistent styling
  */
 
 import { useState, useRef, useCallback } from "react";
@@ -16,8 +17,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -56,7 +57,9 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
-import { SimpleLeafletMap, type MapMarker } from "@/components/SimpleLeafletMap";
+import { UnifiedMap } from "@/components/maps/UnifiedMap";
+import { MapControlsProvider } from "@/contexts/MapControlsContext";
+import { MapControlsPanel } from "@/components/layout/MapControlsPanel";
 import { H1, H2, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
 
 // Pipeline stages
@@ -153,36 +156,6 @@ export default function DeveloperDashboard() {
   const [selectedDeal, setSelectedDeal] = useState<string | null>(null);
   const [activeView, setActiveView] = useState<"map" | "pipeline">("map");
 
-  // Convert suppliers and deals to map markers
-  const mapMarkers: MapMarker[] = [
-    // Registry suppliers (gray markers)
-    ...REGISTRY_SUPPLIERS.map((supplier) => ({
-      id: supplier.id,
-      lat: supplier.location.lat,
-      lng: supplier.location.lng,
-      title: supplier.name,
-      color: "#94a3b8", // slate-400
-      onClick: () => setSelectedDeal(supplier.id),
-    })),
-    // Pipeline deals (colored by stage)
-    ...DEAL_PIPELINE.filter(deal => deal.location).map((deal) => {
-      const stageColors: Record<string, string> = {
-        discovery: "#64748b", // slate-500
-        outreach: "#3b82f6", // blue-500
-        negotiation: "#f59e0b", // amber-500
-        contracted: "#22c55e", // emerald-500
-      };
-      return {
-        id: deal.id,
-        lat: deal.location.lat,
-        lng: deal.location.lng,
-        title: deal.name,
-        color: stageColors[deal.stage] || "#3b82f6",
-        onClick: () => setSelectedDeal(deal.id),
-      };
-    }),
-  ];
-
   const getDealsForStage = (stageId: string) => {
     return DEAL_PIPELINE.filter((deal) => deal.stage === stageId);
   };
@@ -211,7 +184,7 @@ export default function DeveloperDashboard() {
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row flex-1 min-h-0">
         {/* Left Sidebar - Search & Pipeline */}
-        <div className="w-full lg:w-[420px] border-r bg-card/50 flex flex-col">
+        <div className="w-full lg:w-[420px] border-r bg-card/50 flex flex-col shrink-0 relative z-10">
           {/* Search Bar */}
           <div className="p-4 border-b">
             <div className="flex gap-2">
@@ -265,7 +238,7 @@ export default function DeveloperDashboard() {
               {/* Deal Pipeline */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <H3 className="flex items-center gap-2">
+                  <H3 className="flex items-center gap-2 !text-sm">
                     <Target className="h-4 w-4 text-blue-600" />
                     Deal Pipeline
                   </H3>
@@ -346,7 +319,7 @@ export default function DeveloperDashboard() {
 
               {/* Intelligence Feeds */}
               <div>
-                <H3 className="mb-3 flex items-center gap-2">
+                <H3 className="mb-3 flex items-center gap-2 !text-sm">
                   <BarChart3 className="h-4 w-4 text-purple-600" />
                   Intelligence Feeds
                 </H3>
@@ -371,7 +344,7 @@ export default function DeveloperDashboard() {
 
               {/* Quick Actions */}
               <div>
-                <H3 className="mb-3">Quick Actions</H3>
+                <H3 className="mb-3 !text-sm">Quick Actions</H3>
                 <div className="grid grid-cols-2 gap-2">
                   <Link href="/browse">
                     <Button variant="outline" size="sm" className="w-full justify-start">
@@ -410,39 +383,31 @@ export default function DeveloperDashboard() {
         </div>
 
         {/* Map/Pipeline Area */}
-        <div className="flex-1 relative min-h-[400px] lg:min-h-0">
+        <div className="flex-1 relative min-h-[400px] lg:min-h-0 overflow-hidden">
           {activeView === "map" ? (
-            <>
-              <SimpleLeafletMap
-                className="w-full h-full"
-                center={{ lat: -25.2744, lng: 133.7751 }}
-                zoom={4}
-                markers={mapMarkers}
-              />
+            <MapControlsProvider userRole="buyer">
+              <div className="flex h-full">
+                {/* Map Controls Panel */}
+                <MapControlsPanel className="hidden lg:flex" />
 
-              {/* Map Legend */}
-              <div className="absolute bottom-4 left-4 bg-card/95 backdrop-blur p-3 rounded-lg shadow-lg border">
-                <H3 className="mb-2">Supplier Network</H3>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-xs">
-                    <div className="h-3 w-3 rounded-full bg-blue-500" />
-                    <span>In Pipeline ({DEAL_PIPELINE.length})</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <div className="h-3 w-3 rounded-full bg-slate-400" />
-                    <span>Registry ({REGISTRY_SUPPLIERS.length})</span>
-                  </div>
+                {/* Map Area */}
+                <div className="flex-1 relative">
+                  <UnifiedMap
+                    className="w-full h-full"
+                    onEntitySelect={(entity) => {
+                      }}
+                  />
+
+                  {/* Search Registry Button */}
+                  <Link href="/browse">
+                    <Button className="absolute bottom-4 right-4 shadow-lg z-10" size="lg">
+                      <Search className="h-5 w-5 mr-2" />
+                      Search Registry
+                    </Button>
+                  </Link>
                 </div>
               </div>
-
-              {/* Search Registry Button */}
-              <Link href="/browse">
-                <Button className="absolute bottom-4 right-4 shadow-lg" size="lg">
-                  <Search className="h-5 w-5 mr-2" />
-                  Search Registry
-                </Button>
-              </Link>
-            </>
+            </MapControlsProvider>
           ) : (
             /* Pipeline Kanban View */
             <div className="h-full p-4 overflow-x-auto">
@@ -455,7 +420,7 @@ export default function DeveloperDashboard() {
                     <div className="p-3 border-b">
                       <div className="flex items-center gap-2">
                         <div className={cn("h-3 w-3 rounded-full", stage.color)} />
-                        <H3>{stage.label}</H3>
+                        <H3 className="!text-sm">{stage.label}</H3>
                         <Badge variant="secondary" className="ml-auto">
                           {getDealsForStage(stage.id).length}
                         </Badge>

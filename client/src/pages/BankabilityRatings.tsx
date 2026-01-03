@@ -1,14 +1,19 @@
 /**
- * ABFI Bankability Rating Framework v3.0
+ * Bankability Ratings - Nextgen Design
  *
- * Comprehensive rating taxonomy for Australian biofuels project assessment
+ * Features:
+ * - ABFI rating framework v3.0 taxonomy
+ * - Multi-tier rating scales (AAA to D)
+ * - Grower, technology, carbon, offtake ratings
+ * - Color-coded rating badges
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {

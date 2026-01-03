@@ -7,9 +7,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -85,7 +85,7 @@ export default function AuditLogs() {
   const [limit, setLimit] = useState<number>(100);
   const [selectedLog, setSelectedLog] = useState<any>(null);
 
-  const { data: logs, isLoading: logsLoading, refetch } = trpc.audit.getLogs.useQuery(
+  const { data: auditLogsData, isLoading: logsLoading, refetch } = trpc.audit.getLogs.useQuery(
     {
       entityType: entityType || undefined,
       entityId: entityId ? parseInt(entityId) : undefined,
@@ -93,6 +93,7 @@ export default function AuditLogs() {
     },
     { enabled: !!user && user.role === "admin" }
   );
+  const logs = auditLogsData?.logs;
 
   const { data: stats, isLoading: statsLoading } = trpc.audit.getStats.useQuery(
     undefined,

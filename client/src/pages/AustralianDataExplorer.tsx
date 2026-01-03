@@ -1,14 +1,24 @@
 /**
- * Australian Data Explorer Page
+ * Australian Data Explorer - Nextgen Design
  *
- * Explore Australian environmental data including climate,
- * soil, and carbon credit information with live data feeds.
+ * @deprecated This component is superseded by UnifiedMapPage.tsx
+ * The /australian-data route now redirects to /map (UnifiedMap).
+ * This file can be removed once migration is verified.
+ * @see client/src/pages/UnifiedMapPage.tsx
+ *
+ * Features:
+ * - Climate data visualization (rainfall, temperature, radiation)
+ * - Soil and carbon credit information
+ * - Live data feeds from Australian sources
+ * - Regional data filtering and comparison
+ * - Typography components for consistent styling
  */
+
 
 import { useState, useEffect } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";

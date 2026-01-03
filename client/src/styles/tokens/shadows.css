@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Shadows & Elevation
+   Atlassian Elevation + Government Trust Aesthetics
+   ========================================================================== */
+
+:root {
+  /* Elevation 0: Flat surfaces */
+  --shadow-0: none;
+
+  /* Elevation 1: Cards, dropdowns */
+  --shadow-100: 0 1px 1px rgba(9, 30, 66, 0.25),
+                0 0 1px rgba(9, 30, 66, 0.31);
+
+  /* Elevation 2: Modals, overlays */
+  --shadow-200: 0 4px 8px rgba(9, 30, 66, 0.25),
+                0 0 1px rgba(9, 30, 66, 0.31);
+
+  /* Elevation 3: Floating elements */
+  --shadow-300: 0 8px 16px rgba(9, 30, 66, 0.25),
+                0 0 1px rgba(9, 30, 66, 0.31);
+
+  /* Security-focused shadows for financial data */
+  --shadow-card-secure: 0 2px 4px rgba(9, 30, 66, 0.15),
+                       0 0 0 1px var(--color-security-400);
+}
+
+/* Focus Rings (WCAG 2.4.7) */
+:root {
+  --focus-ring-width: 2px;
+  --focus-ring-color: var(--color-primary-400);
+  --focus-ring-offset: 2px;
+
+  --focus-ring: 0 0 0 var(--focus-ring-width) var(--focus-ring-color),
+                0 0 0 calc(var(--focus-ring-width) + var(--focus-ring-offset)) var(--color-surface);
+}

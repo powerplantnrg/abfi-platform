@@ -1,6 +1,14 @@
 /**
- * CreateDemandSignal - Multi-step form for creating feedstock demand signals.
+ * Create Demand Signal - Nextgen Design
+ *
+ * Features:
+ * - 7-step wizard (Basics, Volume, Quality, Delivery, Pricing, Timeline, Review)
+ * - Progressive form validation
+ * - Quality specifications input
+ * - Pricing mechanism selection
+ * - Typography components for consistent styling
  */
+
 import { useState } from "react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -11,8 +19,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";

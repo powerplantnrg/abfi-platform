@@ -366,16 +366,116 @@ code, pre {
 }
 
 /* ============================================
-   WCAG 2.2 AA - FOCUS INDICATORS
-   Minimum touch target: 44x44px
-   Focus ring: 2px offset with primary color
+   WCAG 2.2 AA - ACCESSIBILITY ESSENTIALS
+   Minimum touch target: 44x44px (WCAG 2.5.5)
+   Focus ring: 3px solid blue with offset
    ============================================ */
+
+/* Global Touch Targets - WCAG 2.5.5 AAA Target Size */
+button,
+[role="button"],
+a,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+select,
+.clickable,
+[tabindex="0"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Inline links within text can be smaller but need adequate padding */
+p a,
+li a,
+span a,
+td a {
+  min-height: auto;
+  min-width: auto;
+  padding-block: 0.25rem;
+  display: inline-block;
+}
+
+/* Icon buttons - ensure adequate touch area */
+button:has(svg:only-child),
+[role="button"]:has(svg:only-child),
+a:has(svg:only-child) {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Navigation items */
+nav a,
+nav button,
+[role="navigation"] a,
+[role="navigation"] button,
+[role="menuitem"],
+[role="tab"] {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Dropdown menu items */
+[role="menu"] [role="menuitem"],
+[role="listbox"] [role="option"] {
+  min-height: 44px;
+  padding-inline: 1rem;
+}
+
+/* Ensure ALL clickable elements meet touch target - comprehensive fix */
+[data-radix-collection-item],
+[data-state],
+[role="checkbox"],
+[role="radio"],
+[role="switch"],
+[role="slider"],
+.cursor-pointer {
+  min-height: 44px;
+}
+
+/* Small interactive elements - use padding to achieve touch target */
+.badge,
+.tag,
+.chip,
+[class*="badge"],
+[class*="chip"] {
+  min-height: 32px; /* Badges can be smaller if not primary interactive */
+}
+
+/* Trust badges - ensure adequate touch area */
+.security-badge,
+.trust-badge,
+.data-residency-badge,
+.ssl-badge {
+  min-height: 36px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Avatar buttons */
+[class*="avatar"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Close/dismiss buttons - common small targets */
+button[aria-label*="close" i],
+button[aria-label*="dismiss" i],
+button[aria-label*="remove" i],
+[class*="close"],
+[class*="dismiss"] {
+  min-height: 44px;
+  min-width: 44px;
+}
 
 .skip-to-main {
   position: fixed;
   top: -100%;
   left: 1rem;
-  z-index: 50;
+  z-index: 9999;
   background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
   padding: 0.75rem 1.5rem;
@@ -387,35 +487,60 @@ code, pre {
 
 .skip-to-main:focus {
   top: 1rem;
-  outline: none;
+  outline: 3px solid hsl(221 83% 53%);
+  outline-offset: 2px;
 }
 
-:focus-visible {
-  outline: none;
+/* Universal focus styles - NEVER remove focus indicators */
+*:focus {
+  outline: 2px solid transparent;
 }
 
+*:focus-visible {
+  outline: 3px solid hsl(221 83% 53%) !important;
+  outline-offset: 2px !important;
+  border-radius: 2px;
+}
+
+/* Interactive elements - enhanced focus ring */
 button:focus-visible,
 [role="button"]:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible,
-[tabindex]:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+[tabindex]:focus-visible,
+[tabindex="0"]:focus-visible {
+  outline: 3px solid hsl(221 83% 53%) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 1px hsl(var(--background)), 0 0 8px hsl(221 83% 53% / 0.4);
 }
 
+/* Checkbox and radio - ring style */
 input[type="checkbox"]:focus-visible,
 input[type="radio"]:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+  outline: 3px solid hsl(221 83% 53%) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 1px hsl(var(--background)), 0 0 8px hsl(221 83% 53% / 0.4);
 }
 
+/* Menu items - inset focus */
 [role="menuitem"]:focus-visible,
 [role="option"]:focus-visible,
-[role="tab"]:focus-visible {
-  outline: none;
-  box-shadow: inset 0 0 0 2px hsl(var(--ring));
+[role="tab"]:focus-visible,
+[role="listbox"]:focus-visible,
+[role="combobox"]:focus-visible {
+  outline: 3px solid hsl(221 83% 53%) !important;
+  outline-offset: -2px !important;
+  background-color: hsl(221 83% 53% / 0.1);
+}
+
+/* Cards and interactive panels */
+.card:focus-visible,
+[role="article"]:focus-visible,
+[role="region"]:focus-visible {
+  outline: 3px solid hsl(221 83% 53%) !important;
+  outline-offset: 2px !important;
 }
 
 /* High contrast mode */
@@ -522,8 +647,31 @@ input[type="radio"]:focus-visible {
 .bg-error { background-color: hsl(var(--destructive)); }
 
 /* ============================================
-   BUTTON STYLES
+   BUTTON STYLES - DESIGN SYSTEM CONSISTENCY
+   Standardized: rounded-lg (8px) + font-semibold (600)
+   Maximum 5 button variants for design system compliance
    ============================================ */
+
+/* Global button style normalization for design system consistency */
+button,
+[role="button"] {
+  border-radius: 0.5rem !important; /* 8px = rounded-lg */
+  font-weight: 600 !important; /* semibold */
+}
+
+/* Exception: Fully rounded buttons (avatar, close buttons) */
+button[class*="rounded-full"],
+[role="button"][class*="rounded-full"] {
+  border-radius: 9999px !important;
+}
+
+/* Exception: Pill-shaped badges and chips */
+.badge,
+[class*="badge"],
+[class*="chip"] {
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+}
 
 .btn-primary {
   @apply inline-flex items-center justify-center gap-2;
@@ -803,4 +951,362 @@ input[type="radio"]:focus-visible {
 
 .generator-popup .leaflet-popup-content {
   margin: 12px;
+}
+
+/* ============================================
+   TRUST & SECURITY INDICATORS
+   Government/Fintech Standards
+   ============================================ */
+
+/* Security Badge - Fixed Position Indicator */
+.security-badge {
+  @apply fixed bottom-4 right-4 z-50;
+  @apply bg-[hsl(var(--card))] rounded-lg shadow-lg;
+  @apply p-3 border-2 border-violet-500;
+  @apply flex items-center gap-2;
+  @apply text-xs font-medium;
+}
+
+.security-badge-icon {
+  @apply w-4 h-4 text-violet-600;
+}
+
+/* Trust Indicators */
+.trust-badge {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5;
+  @apply bg-emerald-50 border border-emerald-200 rounded-full;
+  @apply text-xs font-semibold text-emerald-800;
+}
+
+.trust-badge-government {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5;
+  @apply bg-blue-50 border border-blue-200 rounded-full;
+  @apply text-xs font-semibold text-blue-800;
+}
+
+.trust-badge-secure {
+  @apply inline-flex items-center gap-1.5 px-3 py-1.5;
+  @apply bg-violet-50 border border-violet-200 rounded-full;
+  @apply text-xs font-semibold text-violet-800;
+}
+
+/* Data Residency Indicator */
+.data-residency-badge {
+  @apply inline-flex items-center gap-2 px-4 py-2;
+  @apply bg-gradient-to-r from-green-50 to-emerald-50;
+  @apply border border-green-200 rounded-lg;
+  @apply text-sm font-medium text-green-800;
+}
+
+/* Security Status Card */
+.security-status-card {
+  @apply bg-gradient-to-br from-violet-50 to-indigo-50;
+  @apply border border-violet-200 rounded-xl p-6;
+  @apply shadow-sm;
+}
+
+/* Compliance Checklist */
+.compliance-item {
+  @apply flex items-center gap-3 py-2;
+}
+
+.compliance-item-check {
+  @apply w-5 h-5 text-green-600;
+}
+
+.compliance-item-pending {
+  @apply w-5 h-5 text-amber-500;
+}
+
+/* Session Warning Toast */
+.session-warning {
+  @apply bg-amber-50 border-l-4 border-amber-400;
+  @apply p-4 rounded-r-lg;
+}
+
+/* MFA Enforcement Banner */
+.mfa-banner {
+  @apply bg-gradient-to-r from-violet-600 to-indigo-600;
+  @apply text-white px-4 py-3 rounded-lg;
+  @apply flex items-center justify-between gap-4;
+}
+
+/* Audit Trail Indicator */
+.audit-indicator {
+  @apply inline-flex items-center gap-1.5;
+  @apply text-xs text-[hsl(var(--muted-foreground))];
+}
+
+.audit-indicator-icon {
+  @apply w-3 h-3;
+}
+
+/* Portal Theme Indicators */
+.portal-grower {
+  --portal-accent: 142 76% 36%; /* Green */
+}
+
+.portal-developer {
+  --portal-accent: 221 83% 53%; /* Blue */
+}
+
+.portal-lender {
+  --portal-accent: 271 81% 56%; /* Purple */
+}
+
+.portal-government {
+  --portal-accent: 199 89% 48%; /* Cyan */
+}
+
+.portal-indicator {
+  @apply h-1 w-full bg-gradient-to-r;
+  background: linear-gradient(90deg,
+    hsl(var(--portal-accent)) 0%,
+    hsl(var(--portal-accent) / 0.5) 100%
+  );
+}
+
+/* ============================================
+   NEW NAVIGATION SYSTEM (nav-v2)
+   Portal-based collapsible sidebar with
+   WCAG 2.2 AA accessibility compliance
+   ============================================ */
+
+/* Sidebar Variables */
+:root {
+  --sidebar-width: 16rem; /* 256px */
+  --sidebar-collapsed-width: 4rem; /* 64px */
+  --topbar-height: 4rem; /* 64px */
+}
+
+/* Sidebar Container */
+.nav-v2-sidebar {
+  @apply flex flex-col h-full bg-[hsl(var(--sidebar))];
+  @apply border-r border-[hsl(var(--sidebar-border))];
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.nav-v2-sidebar[data-collapsed="true"] {
+  width: var(--sidebar-collapsed-width);
+}
+
+.nav-v2-sidebar[data-collapsed="false"] {
+  width: var(--sidebar-width);
+}
+
+/* Sidebar Navigation Item */
+.nav-v2-item {
+  @apply flex items-center gap-3 rounded-lg;
+  @apply px-3 min-h-[44px]; /* WCAG touch target */
+  @apply text-[hsl(var(--sidebar-foreground))];
+  @apply hover:bg-[hsl(var(--sidebar-accent))];
+  @apply transition-colors duration-150;
+}
+
+.nav-v2-item[data-active="true"] {
+  @apply bg-[hsl(var(--sidebar-primary)/0.1)];
+  @apply text-[hsl(var(--sidebar-primary))];
+  @apply font-medium;
+}
+
+.nav-v2-item:focus-visible {
+  @apply outline-none ring-2 ring-[hsl(var(--sidebar-ring))];
+  @apply ring-offset-2 ring-offset-[hsl(var(--sidebar))];
+}
+
+/* Collapsed state - icon only */
+.nav-v2-item[data-collapsed="true"] {
+  @apply justify-center px-2;
+}
+
+/* Navigation Icon */
+.nav-v2-icon {
+  @apply h-5 w-5 shrink-0;
+}
+
+/* Navigation Label - hidden when collapsed */
+.nav-v2-label {
+  @apply truncate transition-opacity duration-200;
+}
+
+.nav-v2-item[data-collapsed="true"] .nav-v2-label {
+  @apply hidden;
+}
+
+/* Portal Switcher Dropdown */
+.portal-switcher-trigger {
+  @apply flex items-center gap-2 min-h-[44px];
+  @apply hover:bg-[hsl(var(--accent)/0.1)] rounded-lg;
+  @apply transition-colors duration-150;
+}
+
+.portal-switcher-dropdown {
+  @apply absolute z-50 mt-2 w-72;
+  @apply bg-[hsl(var(--popover))] text-[hsl(var(--popover-foreground))];
+  @apply border border-[hsl(var(--border))] rounded-lg shadow-lg;
+}
+
+.portal-switcher-option {
+  @apply flex items-center gap-3 px-3 py-2 min-h-[44px];
+  @apply rounded-md cursor-pointer;
+  @apply hover:bg-[hsl(var(--accent))];
+  @apply transition-colors duration-150;
+}
+
+.portal-switcher-option[data-selected="true"] {
+  @apply bg-[hsl(var(--primary)/0.1)];
+}
+
+.portal-switcher-option:focus-visible {
+  @apply outline-none ring-2 ring-[hsl(var(--ring))] ring-inset;
+}
+
+/* Top Bar */
+.nav-v2-topbar {
+  @apply sticky top-0 z-30;
+  @apply flex items-center gap-4 h-16;
+  @apply border-b border-[hsl(var(--border))];
+  @apply bg-[hsl(var(--background))];
+  @apply px-4 lg:px-6;
+}
+
+/* Mobile Menu Overlay */
+.mobile-nav-overlay {
+  @apply fixed inset-0 z-40 bg-black/50;
+  @apply lg:hidden;
+}
+
+.mobile-nav-panel {
+  @apply fixed inset-y-0 left-0 z-50 w-72;
+  @apply bg-white dark:bg-gray-950 shadow-xl; /* Solid background for legibility */
+  @apply lg:hidden;
+}
+
+/* Quick Actions (Mobile) */
+.quick-actions-bar {
+  @apply fixed bottom-4 left-1/2 -translate-x-1/2 z-40;
+  @apply flex items-center gap-1 p-1.5 rounded-full;
+  @apply bg-white dark:bg-gray-900; /* Solid background for legibility */
+  @apply border border-[hsl(var(--border))] shadow-lg;
+  @apply lg:hidden;
+  @apply transition-all duration-300;
+}
+
+.quick-actions-bar[data-visible="false"] {
+  @apply translate-y-20 opacity-0 pointer-events-none;
+}
+
+.quick-action-item {
+  @apply flex flex-col items-center justify-center;
+  @apply min-h-[56px] min-w-[64px] px-3 py-2;
+  @apply rounded-full;
+  @apply hover:bg-[hsl(var(--accent))];
+  @apply transition-colors duration-150;
+}
+
+.quick-action-icon {
+  @apply h-5 w-5 mb-0.5;
+}
+
+.quick-action-label {
+  @apply text-[10px] font-medium text-[hsl(var(--muted-foreground))];
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  @apply flex items-center justify-center;
+  @apply min-h-[44px] min-w-[44px];
+  @apply text-[hsl(var(--muted-foreground))];
+  @apply hover:text-[hsl(var(--foreground))];
+  @apply hover:bg-[hsl(var(--accent))];
+  @apply rounded-lg transition-colors duration-150;
+}
+
+/* Section Separator */
+.nav-v2-separator {
+  @apply h-px bg-[hsl(var(--border))] my-3;
+}
+
+/* Section Header (collapsed hidden) */
+.nav-v2-section-header {
+  @apply px-3 py-2;
+  @apply text-xs font-semibold text-[hsl(var(--muted-foreground))];
+  @apply uppercase tracking-wider;
+}
+
+/* Badge for nav items */
+.nav-v2-badge {
+  @apply ml-auto text-xs px-2 py-0.5 rounded-full;
+  @apply bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))];
+}
+
+.nav-v2-badge-new {
+  @apply bg-[#D4AF37] text-black;
+}
+
+/* Notification Badge */
+.notification-badge {
+  @apply absolute -top-1 -right-1 h-5 w-5;
+  @apply flex items-center justify-center;
+  @apply text-xs font-semibold;
+  @apply bg-[#D4AF37] text-black rounded-full;
+}
+
+/* Portal-specific nav theming */
+.grower-portal .nav-v2-item[data-active="true"] {
+  @apply bg-emerald-50 text-emerald-700;
+}
+
+.developer-portal .nav-v2-item[data-active="true"] {
+  @apply bg-blue-50 text-blue-700;
+}
+
+.lender-portal .nav-v2-item[data-active="true"] {
+  @apply bg-amber-50 text-amber-700;
+}
+
+.government-portal .nav-v2-item[data-active="true"] {
+  @apply bg-purple-50 text-purple-700;
+}
+
+/* Animations */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 300ms var(--ease-out);
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale 150ms var(--ease-out);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .nav-v2-sidebar,
+  .mobile-nav-panel,
+  .quick-actions-bar,
+  .portal-switcher-dropdown {
+    transition: none !important;
+    animation: none !important;
+  }
 }
