@@ -361,7 +361,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-compliance",
       label: "Compliance Monitor",
-      href: "/government/compliance",
+      href: "/compliance-dashboard",
       icon: Shield,
       roles: ["admin"],
       description: "Track compliance status",
@@ -369,7 +369,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-audit",
       label: "Registry Audit",
-      href: "/government/audit",
+      href: "/admin/audit-logs",
       icon: FileCheck,
       roles: ["admin"],
       description: "Audit trail explorer",
@@ -377,7 +377,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-reports",
       label: "Reports",
-      href: "/government/reports",
+      href: "/stress-testing",
       icon: FileBarChart,
       roles: ["admin"],
       description: "Generate compliance reports",
@@ -385,7 +385,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-policy",
       label: "Policy Tools",
-      href: "/government/policy",
+      href: "/policy-carbon",
       icon: Scale,
       roles: ["admin"],
       description: "Policy modeling",
@@ -395,7 +395,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-settings",
       label: "Settings",
-      href: "/government/settings",
+      href: "/grower/settings",
       icon: Settings,
       roles: ["admin"],
     },
@@ -404,7 +404,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-quick-compliance",
       label: "Compliance",
-      href: "/government/compliance",
+      href: "/compliance-dashboard",
       icon: Shield,
       roles: ["admin"],
     },
@@ -418,7 +418,7 @@ const governmentPortal: PortalConfig = {
     {
       id: "gov-quick-reports",
       label: "Reports",
-      href: "/government/reports",
+      href: "/stress-testing",
       icon: FileBarChart,
       roles: ["admin"],
     },
