@@ -1637,6 +1637,7 @@ export const bankabilityAssessments = mysqlTable(
     // Temporal Versioning (in addition to validFrom/validUntil)
     versionNumber: int("versionNumber").default(1).notNull(),
     supersededById: int("supersededById"), // References bankabilityAssessments.id (self-reference)
+    reassessmentRequired: boolean("reassessmentRequired").default(false).notNull(), // Flag for pending reassessment
     reassessmentReason: text("reassessmentReason"), // Why reassessment was triggered
     isCurrent: boolean("isCurrent").default(true).notNull(),
 
