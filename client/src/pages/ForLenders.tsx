@@ -1,3 +1,14 @@
+/**
+ * For Lenders Landing Page - Nextgen Design
+ *
+ * Features:
+ * - Evidence chain blockchain visualization
+ * - Intelligence tools showcase (stealth, sentiment, prices)
+ * - Risk analysis and stress testing highlights
+ * - CTA for lender registration
+ * - Typography components for consistent styling
+ */
+
 import { Button } from "@/components/ui/Button";
 import {
   Card,

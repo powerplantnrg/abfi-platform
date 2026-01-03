@@ -1,3 +1,14 @@
+/**
+ * Landing Page - Nextgen Design
+ *
+ * Features:
+ * - Intent pathway cards (grower, developer, finance)
+ * - Animated platform statistics
+ * - Role-based dashboard routing
+ * - Trust indicators and platform highlights
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
