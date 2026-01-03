@@ -8,6 +8,8 @@ import {
   covenantBreachEvents,
   lenderReports,
   lenderAccess,
+  projects,
+  supplyAgreements,
   type InsertCovenantBreachEvent,
   type InsertLenderReport,
 } from "../drizzle/schema.js";
@@ -259,12 +261,50 @@ export async function generateMonthlyReport(params: {
     warnings: breaches.filter(b => b.severity === "warning").length,
   };
 
-  // Placeholder for supply position summary (would come from actual project data)
+  // Fetch actual project data for supply position
+  const [project] = await db
+    .select()
+    .from(projects)
+    .where(eq(projects.id, params.projectId));
+
+  const agreements = await db
+    .select()
+    .from(supplyAgreements)
+    .where(
+      and(
+        eq(supplyAgreements.projectId, params.projectId),
+        eq(supplyAgreements.status, "active")
+      )
+    );
+
+  // Calculate supply position from actual data
+  const annualDemand = project?.annualFeedstockVolume || 1; // Avoid division by zero
+  const tier1Volume = agreements
+    .filter(a => a.tier === "tier1")
+    .reduce((sum, a) => sum + (a.annualVolume || 0), 0);
+  const tier2Volume = agreements
+    .filter(a => a.tier === "tier2")
+    .reduce((sum, a) => sum + (a.annualVolume || 0), 0);
+
+  // Calculate HHI (Herfindahl-Hirschman Index) for supplier concentration
+  const totalVolume = agreements.reduce((sum, a) => sum + (a.annualVolume || 0), 0);
+  const hhi = totalVolume > 0
+    ? Math.round(
+        agreements.reduce((sum, a) => {
+          const share = ((a.annualVolume || 0) / totalVolume) * 100;
+          return sum + share * share;
+        }, 0)
+      )
+    : 0;
+
+  // Get unique supplier count
+  const uniqueSuppliers = new Set(agreements.map(a => a.supplierId)).size;
+
   const supplyPositionSummary = {
-    tier1Coverage: 0,
-    tier2Coverage: 0,
-    totalSuppliers: 0,
-    hhi: 0,
+    tier1Coverage: Math.round((tier1Volume / annualDemand) * 100),
+    tier2Coverage: Math.round((tier2Volume / annualDemand) * 100),
+    totalSuppliers: uniqueSuppliers,
+    hhi,
   };
 
   const result = await db.insert(lenderReports).values({
