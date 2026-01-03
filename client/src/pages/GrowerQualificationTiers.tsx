@@ -1,6 +1,14 @@
 /**
- * GrowerQualificationTiers - Dedicated page explaining the GQ tier system
+ * Grower Qualification Tiers - Nextgen Design
+ *
+ * Features:
+ * - GQ tier system explanation (Bronze, Silver, Gold, Platinum)
+ * - Requirements and benefits per tier
+ * - Color-coded tier cards with featured highlights
+ * - Navigation to qualification process
+ * - Typography components for consistent styling
  */
+
 import { Button } from "@/components/ui/Button";
 import {
   Card,

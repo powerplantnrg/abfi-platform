@@ -1,3 +1,14 @@
+/**
+ * Grower Qualification - Nextgen Design
+ *
+ * Features:
+ * - Qualification scoring with interactive sliders
+ * - Six-factor assessment (history, financial, land, capacity, credit, insurance)
+ * - Assessment notes and validity period
+ * - tRPC mutation for qualification creation
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { useParams, useLocation } from "wouter";
 import { useAuth } from "@/_core/hooks/useAuth";

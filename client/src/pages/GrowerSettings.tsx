@@ -1,8 +1,12 @@
 /**
- * Grower Settings Page
+ * Grower Settings - Nextgen Design
  *
- * Allows growers to manage their account settings, preferences,
- * notifications, and privacy options.
+ * Features:
+ * - Profile and business information management
+ * - Notification preferences (email and push)
+ * - Privacy and visibility controls
+ * - Account actions (export data, delete account)
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";
