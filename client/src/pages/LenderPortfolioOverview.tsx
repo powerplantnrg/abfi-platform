@@ -9,26 +9,26 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Progress } from"@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -36,7 +36,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   BarChart2,
   TrendingUp,
@@ -50,92 +50,92 @@ import {
   Download,
   Filter,
   RefreshCw,
-} from "lucide-react";
-import { Link } from "wouter";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"lucide-react";
+import { Link } from"wouter";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 // Mock data
 const portfolioSummary = {
   totalValue: 1250000000,
   activeProjects: 45,
-  averageRating: "B+",
+  averageRating:"B+",
   ytdReturn: 8.2,
   covenantBreaches: 2,
   upcomingRenewals: 5,
 };
 
 const allocationData = [
-  { name: "Ethanol", value: 35, amount: 437500000, color: "#3b82f6" },
-  { name: "Biodiesel", value: 28, amount: 350000000, color: "#22c55e" },
-  { name: "Biogas", value: 20, amount: 250000000, color: "#f59e0b" },
-  { name: "Woodchips", value: 12, amount: 150000000, color: "#8b5cf6" },
-  { name: "Other", value: 5, amount: 62500000, color: "#6b7280" },
+  { name:"Ethanol", value: 35, amount: 437500000, color:"#3b82f6" },
+  { name:"Biodiesel", value: 28, amount: 350000000, color:"#22c55e" },
+  { name:"Biogas", value: 20, amount: 250000000, color:"#f59e0b" },
+  { name:"Woodchips", value: 12, amount: 150000000, color:"#8b5cf6" },
+  { name:"Other", value: 5, amount: 62500000, color:"#6b7280" },
 ];
 
 const riskDistribution = [
-  { rating: "AAA", count: 5, amount: 180000000 },
-  { rating: "AA", count: 8, amount: 250000000 },
-  { rating: "A", count: 12, amount: 320000000 },
-  { rating: "BBB", count: 10, amount: 280000000 },
-  { rating: "BB", count: 6, amount: 150000000 },
-  { rating: "B", count: 3, amount: 50000000 },
-  { rating: "CCC", count: 1, amount: 20000000 },
+  { rating:"AAA", count: 5, amount: 180000000 },
+  { rating:"AA", count: 8, amount: 250000000 },
+  { rating:"A", count: 12, amount: 320000000 },
+  { rating:"BBB", count: 10, amount: 280000000 },
+  { rating:"BB", count: 6, amount: 150000000 },
+  { rating:"B", count: 3, amount: 50000000 },
+  { rating:"CCC", count: 1, amount: 20000000 },
 ];
 
 const performanceTrend = [
-  { month: "Jul", value: 1180, target: 1150 },
-  { month: "Aug", value: 1195, target: 1170 },
-  { month: "Sep", value: 1210, target: 1190 },
-  { month: "Oct", value: 1225, target: 1210 },
-  { month: "Nov", value: 1240, target: 1230 },
-  { month: "Dec", value: 1250, target: 1250 },
+  { month:"Jul", value: 1180, target: 1150 },
+  { month:"Aug", value: 1195, target: 1170 },
+  { month:"Sep", value: 1210, target: 1190 },
+  { month:"Oct", value: 1225, target: 1210 },
+  { month:"Nov", value: 1240, target: 1230 },
+  { month:"Dec", value: 1250, target: 1250 },
 ];
 
 const topProjects = [
   {
     id: 1,
-    name: "Murray Valley Biorefinery",
-    type: "Ethanol",
+    name:"Murray Valley Biorefinery",
+    type:"Ethanol",
     investment: 85000000,
-    rating: "AA",
-    status: "performing",
-    covenantStatus: "compliant",
+    rating:"AA",
+    status:"performing",
+    covenantStatus:"compliant",
   },
   {
     id: 2,
-    name: "Gippsland Green Energy",
-    type: "Biodiesel",
+    name:"Gippsland Green Energy",
+    type:"Biodiesel",
     investment: 62000000,
-    rating: "A",
-    status: "performing",
-    covenantStatus: "compliant",
+    rating:"A",
+    status:"performing",
+    covenantStatus:"compliant",
   },
   {
     id: 3,
-    name: "Darling Downs Biomass",
-    type: "Woodchips",
+    name:"Darling Downs Biomass",
+    type:"Woodchips",
     investment: 45000000,
-    rating: "BBB",
-    status: "watch",
-    covenantStatus: "warning",
+    rating:"BBB",
+    status:"watch",
+    covenantStatus:"warning",
   },
   {
     id: 4,
-    name: "Riverina Renewable Fuels",
-    type: "Ethanol",
+    name:"Riverina Renewable Fuels",
+    type:"Ethanol",
     investment: 78000000,
-    rating: "AA",
-    status: "performing",
-    covenantStatus: "compliant",
+    rating:"AA",
+    status:"performing",
+    covenantStatus:"compliant",
   },
   {
     id: 5,
-    name: "Pilbara Power Generation",
-    type: "Biogas",
+    name:"Pilbara Power Generation",
+    type:"Biogas",
     investment: 95000000,
-    rating: "A",
-    status: "performing",
-    covenantStatus: "compliant",
+    rating:"A",
+    status:"performing",
+    covenantStatus:"compliant",
   },
 ];
 
@@ -150,11 +150,11 @@ const formatCurrency = (value: number) => {
 };
 
 const getRatingColor = (rating: string) => {
-  if (rating.startsWith("AA")) return "bg-green-100 text-green-800";
-  if (rating.startsWith("A")) return "bg-blue-100 text-blue-800";
-  if (rating.startsWith("BBB")) return "bg-yellow-100 text-yellow-800";
-  if (rating.startsWith("BB")) return "bg-orange-100 text-orange-800";
-  return "bg-red-100 text-red-800";
+  if (rating.startsWith("AA")) return"bg-green-100 text-green-800";
+  if (rating.startsWith("A")) return"bg-blue-100 text-blue-800";
+  if (rating.startsWith("BBB")) return"bg-yellow-100 text-yellow-800";
+  if (rating.startsWith("BB")) return"bg-orange-100 text-orange-800";
+  return"bg-red-100 text-red-800";
 };
 
 export default function LenderPortfolioOverview() {
@@ -174,7 +174,7 @@ export default function LenderPortfolioOverview() {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-2xl font-bold">Portfolio Overview</h1>
+                <H1 className="text-2xl">Portfolio Overview</H1>
                 <p className="text-muted-foreground text-sm">
                   Comprehensive view of your bioenergy investments
                 </p>
@@ -308,8 +308,8 @@ export default function LenderPortfolioOverview() {
                       <XAxis dataKey="month" stroke="#9ca3af" fontSize={12} />
                       <YAxis stroke="#9ca3af" fontSize={12} tickFormatter={(v) => `$${v}M`} />
                       <Tooltip
-                        formatter={(value: number) => [`$${value}M`, ""]}
-                        contentStyle={{ borderRadius: "8px" }}
+                        formatter={(value: number) => [`$${value}M`,""]}
+                        contentStyle={{ borderRadius:"8px" }}
                       />
                       <Area
                         type="monotone"
@@ -361,7 +361,7 @@ export default function LenderPortfolioOverview() {
                               <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
                           </Pie>
-                          <Tooltip formatter={(value: number) => [`${value}%`, ""]} />
+                          <Tooltip formatter={(value: number) => [`${value}%`,""]} />
                         </PieChart>
                       </ResponsiveContainer>
                     )}
@@ -405,7 +405,7 @@ export default function LenderPortfolioOverview() {
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                     <XAxis type="number" tickFormatter={(v) => formatCurrency(v)} fontSize={12} />
                     <YAxis dataKey="rating" type="category" fontSize={12} width={50} />
-                    <Tooltip formatter={(value: number) => [formatCurrency(value), "Amount"]} />
+                    <Tooltip formatter={(value: number) => [formatCurrency(value),"Amount"]} />
                     <Bar dataKey="amount" fill="#3b82f6" radius={[0, 4, 4, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
@@ -453,14 +453,14 @@ export default function LenderPortfolioOverview() {
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={project.covenantStatus === "compliant" ? "default" : "secondary"}
+                        variant={project.covenantStatus ==="compliant" ?"default" :"secondary"}
                         className={
-                          project.covenantStatus === "compliant"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-amber-100 text-amber-800"
+                          project.covenantStatus ==="compliant"
+                            ?"bg-green-100 text-green-800"
+                            :"bg-amber-100 text-amber-800"
                         }
                       >
-                        {project.covenantStatus === "compliant" ? "Compliant" : "Warning"}
+                        {project.covenantStatus ==="compliant" ?"Compliant" :"Warning"}
                       </Badge>
                     </TableCell>
                   </TableRow>

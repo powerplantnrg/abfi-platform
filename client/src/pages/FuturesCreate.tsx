@@ -9,31 +9,31 @@
  * - Draft/Publish workflow
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { PageLayout } from "@/components/layout";
-import { AUSTRALIAN_STATES } from "@/const";
-import { trpc } from "@/lib/trpc";
-import { H1, H2, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
+import { Skeleton } from"@/components/ui/skeleton";
+import { PageLayout } from"@/components/layout";
+import { AUSTRALIAN_STATES } from"@/const";
+import { trpc } from"@/lib/trpc";
+import { H1, H2, H3, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   ArrowLeft,
   ArrowRight,
@@ -51,44 +51,44 @@ import {
   Save,
   Send,
   Sparkles,
-} from "lucide-react";
-import { useState, useMemo, useEffect } from "react";
-import { Link, useLocation, useSearch } from "wouter";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { useState, useMemo, useEffect } from"react";
+import { Link, useLocation, useSearch } from"wouter";
+import { toast } from"sonner";
+import { cn } from"@/lib/utils";
 
 type Step = 1 | 2 | 3 | 4 | 5 | 6;
 
 const CROP_TYPE_OPTIONS = [
-  { value: "bamboo", label: "Bamboo", icon: Sprout },
+  { value:"bamboo", label:"Bamboo", icon: Sprout },
   {
-    value: "rotation_forestry",
-    label: "Rotation Forestry",
+    value:"rotation_forestry",
+    label:"Rotation Forestry",
     icon: TreeDeciduous,
   },
-  { value: "eucalyptus", label: "Eucalyptus", icon: TreeDeciduous },
-  { value: "poplar", label: "Poplar", icon: TreeDeciduous },
-  { value: "willow", label: "Willow", icon: TreeDeciduous },
-  { value: "miscanthus", label: "Miscanthus", icon: Leaf },
-  { value: "switchgrass", label: "Switchgrass", icon: Leaf },
-  { value: "arundo_donax", label: "Arundo Donax", icon: Leaf },
-  { value: "hemp", label: "Industrial Hemp", icon: Leaf },
-  { value: "other_perennial", label: "Other Perennial", icon: Sprout },
+  { value:"eucalyptus", label:"Eucalyptus", icon: TreeDeciduous },
+  { value:"poplar", label:"Poplar", icon: TreeDeciduous },
+  { value:"willow", label:"Willow", icon: TreeDeciduous },
+  { value:"miscanthus", label:"Miscanthus", icon: Leaf },
+  { value:"switchgrass", label:"Switchgrass", icon: Leaf },
+  { value:"arundo_donax", label:"Arundo Donax", icon: Leaf },
+  { value:"hemp", label:"Industrial Hemp", icon: Leaf },
+  { value:"other_perennial", label:"Other Perennial", icon: Sprout },
 ];
 
 const LAND_STATUS_OPTIONS = [
-  { value: "owned", label: "Owned" },
-  { value: "leased", label: "Leased" },
-  { value: "under_negotiation", label: "Under Negotiation" },
-  { value: "planned_acquisition", label: "Planned Acquisition" },
+  { value:"owned", label:"Owned" },
+  { value:"leased", label:"Leased" },
+  { value:"under_negotiation", label:"Under Negotiation" },
+  { value:"planned_acquisition", label:"Planned Acquisition" },
 ];
 
 const HARVEST_SEASON_OPTIONS = [
-  { value: "summer", label: "Summer (Dec-Feb)" },
-  { value: "autumn", label: "Autumn (Mar-May)" },
-  { value: "winter", label: "Winter (Jun-Aug)" },
-  { value: "spring", label: "Spring (Sep-Nov)" },
-  { value: "year_round", label: "Year-round" },
+  { value:"summer", label:"Summer (Dec-Feb)" },
+  { value:"autumn", label:"Autumn (Mar-May)" },
+  { value:"winter", label:"Winter (Jun-Aug)" },
+  { value:"spring", label:"Spring (Sep-Nov)" },
+  { value:"year_round", label:"Year-round" },
 ];
 
 interface YieldProjection {
@@ -145,7 +145,7 @@ export default function FuturesCreate() {
   // Fetch existing futures if editing
   const { data: existingFutures, isLoading: loadingExisting } =
     trpc.futures.getById.useQuery(
-      { id: parseInt(editId || "0") },
+      { id: parseInt(editId ||"0") },
       { enabled: !!editId }
     );
 
@@ -154,31 +154,31 @@ export default function FuturesCreate() {
     if (existingFutures) {
       const { futures, projections: existingProjections } = existingFutures;
       setCropType(futures.cropType);
-      setCropVariety(futures.cropVariety || "");
+      setCropVariety(futures.cropVariety ||"");
       setTitle(futures.title);
-      setDescription(futures.description || "");
+      setDescription(futures.description ||"");
       setState(futures.state);
-      setRegion(futures.region || "");
+      setRegion(futures.region ||"");
       setLandAreaHectares(futures.landAreaHectares);
-      setLandStatus(futures.landStatus || "owned");
+      setLandStatus(futures.landStatus ||"owned");
       setProjectionStartYear(futures.projectionStartYear.toString());
       setProjectionEndYear(futures.projectionEndYear.toString());
-      setFirstHarvestYear(futures.firstHarvestYear?.toString() || "");
-      setIndicativePricePerTonne(futures.indicativePricePerTonne || "");
-      setPriceEscalationPercent(futures.priceEscalationPercent || "2.5");
-      setPricingNotes(futures.pricingNotes || "");
-      setExpectedCarbonIntensity(futures.expectedCarbonIntensity || "");
-      setExpectedMoistureContent(futures.expectedMoistureContent || "");
-      setExpectedEnergyContent(futures.expectedEnergyContent || "");
+      setFirstHarvestYear(futures.firstHarvestYear?.toString() ||"");
+      setIndicativePricePerTonne(futures.indicativePricePerTonne ||"");
+      setPriceEscalationPercent(futures.priceEscalationPercent ||"2.5");
+      setPricingNotes(futures.pricingNotes ||"");
+      setExpectedCarbonIntensity(futures.expectedCarbonIntensity ||"");
+      setExpectedMoistureContent(futures.expectedMoistureContent ||"");
+      setExpectedEnergyContent(futures.expectedEnergyContent ||"");
 
       if (existingProjections) {
         setProjections(
           existingProjections.map((p: any) => ({
             projectionYear: p.projectionYear,
-            projectedTonnes: p.projectedTonnes || "",
-            confidencePercent: p.confidencePercent?.toString() || "80",
-            harvestSeason: p.harvestSeason || "",
-            notes: p.notes || "",
+            projectedTonnes: p.projectedTonnes ||"",
+            confidencePercent: p.confidencePercent?.toString() ||"80",
+            harvestSeason: p.harvestSeason ||"",
+            notes: p.notes ||"",
           }))
         );
       }
@@ -197,10 +197,10 @@ export default function FuturesCreate() {
       newProjections.push(
         existing || {
           projectionYear: year,
-          projectedTonnes: "",
-          confidencePercent: "80",
-          harvestSeason: "",
-          notes: "",
+          projectedTonnes:"",
+          confidencePercent:"80",
+          harvestSeason:"",
+          notes:"",
         }
       );
     }
@@ -221,7 +221,7 @@ export default function FuturesCreate() {
       setLocation(`/supplier/futures/${data.id}`);
     },
     onError: error => {
-      toast.error(error.message || "Failed to create futures listing");
+      toast.error(error.message ||"Failed to create futures listing");
       setIsSubmitting(false);
     },
   });
@@ -232,7 +232,7 @@ export default function FuturesCreate() {
       setLocation(`/supplier/futures/${editId}`);
     },
     onError: error => {
-      toast.error(error.message || "Failed to update futures listing");
+      toast.error(error.message ||"Failed to update futures listing");
       setIsSubmitting(false);
     },
   });
@@ -332,12 +332,12 @@ export default function FuturesCreate() {
 
   const stepIcons = [Leaf, MapPin, Calendar, TrendingUp, DollarSign, FileText];
   const stepLabels = [
-    "Crop Details",
-    "Location",
-    "Timeline",
-    "Projections",
-    "Pricing",
-    "Review",
+"Crop Details",
+"Location",
+"Timeline",
+"Projections",
+"Pricing",
+"Review",
   ];
 
   if (authLoading || !user) {
@@ -388,11 +388,11 @@ export default function FuturesCreate() {
           <div className="max-w-3xl">
             <Badge className="bg-white/20 text-black border-white/30 backdrop-blur-sm mb-4">
               <TreeDeciduous className="h-3.5 w-3.5 mr-1.5" />
-              {editId ? "Edit Listing" : "New Listing"}
+              {editId ?"Edit Listing" :"New Listing"}
             </Badge>
 
             <H1 className="mb-4 tracking-tight">
-              {editId ? "Edit Futures" : "Create Futures"}
+              {editId ?"Edit Futures" :"Create Futures"}
               <span className="block text-emerald-200">Listing</span>
             </H1>
 
@@ -417,11 +417,11 @@ export default function FuturesCreate() {
                       step < currentStep && setCurrentStep(step as Step)
                     }
                     className={cn(
-                      "flex items-center justify-center w-12 h-12 rounded-xl border-2 transition-all",
+"flex items-center justify-center w-12 h-12 rounded-xl border-2 transition-all",
                       currentStep >= step
-                        ? "bg-[#D4AF37] border-[#D4AF37] text-black shadow-lg shadow-teal-600/25"
-                        : "bg-card border-border text-gray-600",
-                      step < currentStep && "cursor-pointer hover:opacity-80"
+                        ?"bg-[#D4AF37] border-[#D4AF37] text-black shadow-lg shadow-teal-600/25"
+                        :"bg-card border-border text-gray-600",
+                      step < currentStep &&"cursor-pointer hover:opacity-80"
                     )}
                     disabled={step >= currentStep}
                   >
@@ -434,8 +434,8 @@ export default function FuturesCreate() {
                   {step < 6 && (
                     <div
                       className={cn(
-                        "flex-1 h-1 mx-2 rounded-full transition-colors",
-                        currentStep > step ? "bg-[#D4AF37]" : "bg-border"
+"flex-1 h-1 mx-2 rounded-full transition-colors",
+                        currentStep > step ?"bg-[#D4AF37]" :"bg-border"
                       )}
                     />
                   )}
@@ -448,10 +448,10 @@ export default function FuturesCreate() {
               <span
                 key={label}
                 className={cn(
-                  "text-xs font-medium transition-colors text-center w-16",
+"text-xs font-medium transition-colors text-center w-16",
                   currentStep >= i + 1
-                    ? "text-[#D4AF37] font-semibold"
-                    : "text-gray-600"
+                    ?"text-[#D4AF37] font-semibold"
+                    :"text-gray-600"
                 )}
               >
                 {label}
@@ -740,7 +740,7 @@ export default function FuturesCreate() {
                       <SelectContent>
                         {Array.from(
                           { length: 30 },
-                          (_, i) => parseInt(projectionStartYear || "2025") + i
+                          (_, i) => parseInt(projectionStartYear ||"2025") + i
                         ).map(year => (
                           <SelectItem key={year} value={year.toString()}>
                             {year}
@@ -785,7 +785,7 @@ export default function FuturesCreate() {
                       <SelectContent>
                         {Array.from(
                           { length: 30 },
-                          (_, i) => parseInt(projectionStartYear || "2025") + i
+                          (_, i) => parseInt(projectionStartYear ||"2025") + i
                         ).map(year => (
                           <SelectItem key={year} value={year.toString()}>
                             {year}
@@ -798,13 +798,13 @@ export default function FuturesCreate() {
 
                 <div className="bg-teal-50 border border-teal-100 rounded-xl p-5">
                   <p className="text-sm text-teal-700">
-                    Projection period:{" "}
+                    Projection period:{""}
                     <strong className="text-teal-800">
                       {parseInt(projectionEndYear) -
                         parseInt(projectionStartYear) +
-                        1}{" "}
+                        1}{""}
                       years
-                    </strong>{" "}
+                    </strong>{""}
                     ({projectionStartYear} - {projectionEndYear})
                   </p>
                 </div>
@@ -903,7 +903,7 @@ export default function FuturesCreate() {
                             onChange={e =>
                               updateProjection(
                                 index,
-                                "projectedTonnes",
+"projectedTonnes",
                                 e.target.value
                               )
                             }
@@ -923,7 +923,7 @@ export default function FuturesCreate() {
                             onChange={e =>
                               updateProjection(
                                 index,
-                                "confidencePercent",
+"confidencePercent",
                                 e.target.value
                               )
                             }
@@ -937,7 +937,7 @@ export default function FuturesCreate() {
                           <Select
                             value={projection.harvestSeason}
                             onValueChange={v =>
-                              updateProjection(index, "harvestSeason", v)
+                              updateProjection(index,"harvestSeason", v)
                             }
                           >
                             <SelectTrigger className="h-10">
@@ -963,7 +963,7 @@ export default function FuturesCreate() {
                             placeholder="Optional notes"
                             value={projection.notes}
                             onChange={e =>
-                              updateProjection(index, "notes", e.target.value)
+                              updateProjection(index,"notes", e.target.value)
                             }
                             className="h-10"
                           />
@@ -1032,7 +1032,7 @@ export default function FuturesCreate() {
                       className="h-12 font-mono"
                     />
                     <p className="text-xs text-gray-600">
-                      Leave blank for "negotiable"
+                      Leave blank for"negotiable"
                     </p>
                   </div>
 
@@ -1073,9 +1073,9 @@ export default function FuturesCreate() {
                 </div>
 
                 <div className="pt-6 border-t">
-                  <h4 className="text-base font-semibold mb-4">
+                  <H4 className="text-base  mb-4">
                     Expected Quality Parameters
-                  </h4>
+                  </H4>
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="expectedCarbonIntensity">
@@ -1205,7 +1205,7 @@ export default function FuturesCreate() {
                     <Body className="text-sm text-gray-600">
                       {parseInt(projectionEndYear) -
                         parseInt(projectionStartYear) +
-                        1}{" "}
+                        1}{""}
                       years
                       {firstHarvestYear &&
                         `, first harvest ${firstHarvestYear}`}
@@ -1226,7 +1226,7 @@ export default function FuturesCreate() {
                           (parseInt(projectionEndYear) -
                             parseInt(projectionStartYear) +
                             1)
-                      ).toLocaleString()}{" "}
+                      ).toLocaleString()}{""}
                       tonnes/year average
                     </Body>
                   </div>
@@ -1234,9 +1234,9 @@ export default function FuturesCreate() {
 
                 {/* Pricing Summary */}
                 <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-5">
-                  <h4 className="font-semibold mb-2 text-emerald-800">
+                  <H4 className="mb-2 text-emerald-800">
                     Pricing
-                  </h4>
+                  </H4>
                   <p className="text-lg font-mono">
                     {indicativePricePerTonne ? (
                       <span className="font-bold text-emerald-700">
@@ -1263,7 +1263,7 @@ export default function FuturesCreate() {
                   expectedMoistureContent ||
                   expectedEnergyContent) && (
                   <div className="border rounded-xl p-5">
-                    <h4 className="font-semibold mb-3">Expected Quality</h4>
+                    <H4 className="mb-3">Expected Quality</H4>
                     <div className="flex flex-wrap gap-6">
                       {expectedCarbonIntensity && (
                         <div className="text-center">
@@ -1317,7 +1317,7 @@ export default function FuturesCreate() {
                       className="border-teal-200 text-teal-700 hover:bg-teal-50"
                     >
                       <Save className="h-4 w-4 mr-2" />
-                      {isSubmitting ? "Saving..." : "Save as Draft"}
+                      {isSubmitting ?"Saving..." :"Save as Draft"}
                     </Button>
                     <Button
                       onClick={() => handleSubmit(true)}
@@ -1326,7 +1326,7 @@ export default function FuturesCreate() {
                       className="bg-[#D4AF37] hover:bg-teal-700"
                     >
                       <Send className="h-4 w-4 mr-2" />
-                      {isSubmitting ? "Publishing..." : "Publish Now"}
+                      {isSubmitting ?"Publishing..." :"Publish Now"}
                     </Button>
                   </div>
                 </div>

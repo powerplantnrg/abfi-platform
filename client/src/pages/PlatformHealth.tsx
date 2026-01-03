@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Progress } from "@/components/ui/progress";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Progress } from"@/components/ui/progress";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   Activity,
   CheckCircle2,
@@ -28,47 +28,47 @@ import {
   Lock,
   FileCheck,
   Users,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { cn } from"@/lib/utils";
 
 // Simulated health data - in production, this would come from monitoring APIs
 const SYSTEM_COMPONENTS = [
   {
-    id: "api",
-    name: "API Server",
-    status: "operational",
+    id:"api",
+    name:"API Server",
+    status:"operational",
     uptime: 99.98,
     responseTime: 45,
     icon: Server,
   },
   {
-    id: "database",
-    name: "Database",
-    status: "operational",
+    id:"database",
+    name:"Database",
+    status:"operational",
     uptime: 99.99,
     responseTime: 12,
     icon: Database,
   },
   {
-    id: "storage",
-    name: "File Storage",
-    status: "operational",
+    id:"storage",
+    name:"File Storage",
+    status:"operational",
     uptime: 99.95,
     responseTime: 85,
     icon: Cloud,
   },
   {
-    id: "auth",
-    name: "Authentication",
-    status: "operational",
+    id:"auth",
+    name:"Authentication",
+    status:"operational",
     uptime: 100,
     responseTime: 23,
     icon: Lock,
   },
   {
-    id: "scoring",
-    name: "Scoring Engine",
-    status: "operational",
+    id:"scoring",
+    name:"Scoring Engine",
+    status:"operational",
     uptime: 99.97,
     responseTime: 156,
     icon: Zap,
@@ -77,62 +77,62 @@ const SYSTEM_COMPONENTS = [
 
 const TRUST_BADGES = [
   {
-    id: "iso27001",
-    name: "ISO 27001",
-    description: "Information Security Management",
-    status: "certified",
-    validUntil: "2026-03-15",
+    id:"iso27001",
+    name:"ISO 27001",
+    description:"Information Security Management",
+    status:"certified",
+    validUntil:"2026-03-15",
     icon: Shield,
   },
   {
-    id: "soc2",
-    name: "SOC 2 Type II",
-    description: "Service Organization Controls",
-    status: "certified",
-    validUntil: "2025-08-20",
+    id:"soc2",
+    name:"SOC 2 Type II",
+    description:"Service Organization Controls",
+    status:"certified",
+    validUntil:"2025-08-20",
     icon: FileCheck,
   },
   {
-    id: "gdpr",
-    name: "GDPR Compliant",
-    description: "EU Data Protection",
-    status: "compliant",
+    id:"gdpr",
+    name:"GDPR Compliant",
+    description:"EU Data Protection",
+    status:"compliant",
     validUntil: null,
     icon: Lock,
   },
   {
-    id: "iosco",
-    name: "IOSCO Principles",
-    description: "Price Index Methodology",
-    status: "aligned",
+    id:"iosco",
+    name:"IOSCO Principles",
+    description:"Price Index Methodology",
+    status:"aligned",
     validUntil: null,
     icon: Award,
   },
 ];
 
 const SLA_METRICS = [
-  { name: "Platform Availability", target: 99.9, actual: 99.97, unit: "%" },
-  { name: "API Response Time", target: 200, actual: 45, unit: "ms", inverted: true },
-  { name: "Data Freshness", target: 60, actual: 15, unit: "min", inverted: true },
-  { name: "Support Response", target: 4, actual: 1.5, unit: "hrs", inverted: true },
+  { name:"Platform Availability", target: 99.9, actual: 99.97, unit:"%" },
+  { name:"API Response Time", target: 200, actual: 45, unit:"ms", inverted: true },
+  { name:"Data Freshness", target: 60, actual: 15, unit:"min", inverted: true },
+  { name:"Support Response", target: 4, actual: 1.5, unit:"hrs", inverted: true },
 ];
 
 const RECENT_INCIDENTS = [
   {
     id: 1,
-    date: "2025-01-08",
-    title: "Scheduled Maintenance",
-    status: "resolved",
-    duration: "45 min",
-    impact: "minor",
+    date:"2025-01-08",
+    title:"Scheduled Maintenance",
+    status:"resolved",
+    duration:"45 min",
+    impact:"minor",
   },
   {
     id: 2,
-    date: "2024-12-15",
-    title: "API Rate Limiting Issue",
-    status: "resolved",
-    duration: "12 min",
-    impact: "minor",
+    date:"2024-12-15",
+    title:"API Rate Limiting Issue",
+    status:"resolved",
+    duration:"12 min",
+    impact:"minor",
   },
 ];
 
@@ -150,35 +150,35 @@ export default function PlatformHealth() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "operational":
-        return "bg-green-500";
-      case "degraded":
-        return "bg-yellow-500";
-      case "outage":
-        return "bg-red-500";
+      case"operational":
+        return"bg-green-500";
+      case"degraded":
+        return"bg-yellow-500";
+      case"outage":
+        return"bg-red-500";
       default:
-        return "bg-gray-500";
+        return"bg-gray-500";
     }
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "operational":
+      case"operational":
         return <CheckCircle2 className="h-4 w-4 text-green-600" />;
-      case "degraded":
+      case"degraded":
         return <AlertTriangle className="h-4 w-4 text-yellow-600" />;
-      case "outage":
+      case"outage":
         return <XCircle className="h-4 w-4 text-red-600" />;
       default:
         return null;
     }
   };
 
-  const overallStatus = SYSTEM_COMPONENTS.every(c => c.status === "operational")
-    ? "operational"
-    : SYSTEM_COMPONENTS.some(c => c.status === "outage")
-      ? "outage"
-      : "degraded";
+  const overallStatus = SYSTEM_COMPONENTS.every(c => c.status ==="operational")
+    ?"operational"
+    : SYSTEM_COMPONENTS.some(c => c.status ==="outage")
+      ?"outage"
+      :"degraded";
 
   return (
     <PageLayout>
@@ -195,23 +195,23 @@ export default function PlatformHealth() {
                 <Badge
                   variant="outline"
                   className={cn(
-                    "border-emerald-400/50 text-emerald-300 bg-[#D4AF37]/10",
-                    overallStatus === "operational" && "border-emerald-400/50",
-                    overallStatus === "degraded" && "border-yellow-400/50 text-yellow-300 bg-yellow-500/10",
-                    overallStatus === "outage" && "border-red-400/50 text-red-300 bg-red-500/10"
+"border-emerald-400/50 text-emerald-300 bg-[#D4AF37]/10",
+                    overallStatus ==="operational" &&"border-emerald-400/50",
+                    overallStatus ==="degraded" &&"border-yellow-400/50 text-yellow-300 bg-yellow-500/10",
+                    overallStatus ==="outage" &&"border-red-400/50 text-red-300 bg-red-500/10"
                   )}
                 >
-                  {overallStatus === "operational" && <CheckCircle2 className="h-3 w-3 mr-1" />}
-                  {overallStatus === "degraded" && <AlertTriangle className="h-3 w-3 mr-1" />}
-                  {overallStatus === "outage" && <XCircle className="h-3 w-3 mr-1" />}
-                  {overallStatus === "operational" ? "All Systems Operational" :
-                    overallStatus === "degraded" ? "Degraded Performance" : "Service Disruption"}
+                  {overallStatus ==="operational" && <CheckCircle2 className="h-3 w-3 mr-1" />}
+                  {overallStatus ==="degraded" && <AlertTriangle className="h-3 w-3 mr-1" />}
+                  {overallStatus ==="outage" && <XCircle className="h-3 w-3 mr-1" />}
+                  {overallStatus ==="operational" ?"All Systems Operational" :
+                    overallStatus ==="degraded" ?"Degraded Performance" :"Service Disruption"}
                 </Badge>
               </div>
 
-              <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
+              <H1 className="text-4xl lg:text-5xl font-display  mb-4">
                 Platform Status
-              </h1>
+              </H1>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Real-time monitoring, uptime tracking, and trust certifications
                 for the ABFI platform.
@@ -225,7 +225,7 @@ export default function PlatformHealth() {
                 variant="outline"
                 className="border-white/20 text-black hover:bg-white/10"
               >
-                <RefreshCw className={cn("h-4 w-4 mr-2", isRefreshing && "animate-spin")} />
+                <RefreshCw className={cn("h-4 w-4 mr-2", isRefreshing &&"animate-spin")} />
                 Refresh
               </Button>
             </div>
@@ -276,7 +276,7 @@ export default function PlatformHealth() {
                       </div>
                       <div
                         className={cn(
-                          "w-2 h-2 rounded-full",
+"w-2 h-2 rounded-full",
                           getStatusColor(component.status)
                         )}
                       />
@@ -311,8 +311,8 @@ export default function PlatformHealth() {
                       <div className="flex justify-between text-sm">
                         <span>{metric.name}</span>
                         <span className={cn(
-                          "font-mono font-medium",
-                          isExceeding ? "text-green-600" : "text-red-600"
+"font-mono font-medium",
+                          isExceeding ?"text-green-600" :"text-red-600"
                         )}>
                           {metric.actual}{metric.unit}
                           <span className="text-gray-600 ml-1">
@@ -323,8 +323,8 @@ export default function PlatformHealth() {
                       <Progress
                         value={progress}
                         className={cn(
-                          "h-2",
-                          isExceeding ? "[&>div]:bg-green-500" : "[&>div]:bg-red-500"
+"h-2",
+                          isExceeding ?"[&>div]:bg-green-500" :"[&>div]:bg-red-500"
                         )}
                       />
                     </div>
@@ -362,13 +362,13 @@ export default function PlatformHealth() {
                       >
                         <div
                           className={cn(
-                            "p-1.5 rounded-full mt-0.5",
-                            incident.status === "resolved"
-                              ? "bg-green-100"
-                              : "bg-yellow-100"
+"p-1.5 rounded-full mt-0.5",
+                            incident.status ==="resolved"
+                              ?"bg-green-100"
+                              :"bg-yellow-100"
                           )}
                         >
-                          {incident.status === "resolved" ? (
+                          {incident.status ==="resolved" ? (
                             <CheckCircle2 className="h-3 w-3 text-green-600" />
                           ) : (
                             <AlertTriangle className="h-3 w-3 text-yellow-600" />
@@ -382,12 +382,12 @@ export default function PlatformHealth() {
                             <Badge
                               variant="outline"
                               className={cn(
-                                "text-xs",
-                                incident.impact === "minor"
-                                  ? "border-yellow-300 text-yellow-700"
-                                  : incident.impact === "major"
-                                    ? "border-red-300 text-red-700"
-                                    : "border-gray-300"
+"text-xs",
+                                incident.impact ==="minor"
+                                  ?"border-yellow-300 text-yellow-700"
+                                  : incident.impact ==="major"
+                                    ?"border-red-300 text-red-700"
+                                    :"border-gray-300"
                               )}
                             >
                               {incident.impact}
@@ -436,15 +436,15 @@ export default function PlatformHealth() {
                           </div>
                           <Badge
                             className={cn(
-                              "text-xs",
-                              badge.status === "certified"
-                                ? "bg-green-100 text-green-800"
-                                : badge.status === "compliant"
-                                  ? "bg-blue-100 text-blue-800"
-                                  : "bg-purple-100 text-purple-800"
+"text-xs",
+                              badge.status ==="certified"
+                                ?"bg-green-100 text-green-800"
+                                : badge.status ==="compliant"
+                                  ?"bg-blue-100 text-blue-800"
+                                  :"bg-purple-100 text-purple-800"
                             )}
                           >
-                            {badge.status ? badge.status.charAt(0).toUpperCase() + badge.status.slice(1) : ""}
+                            {badge.status ? badge.status.charAt(0).toUpperCase() + badge.status.slice(1) :""}
                           </Badge>
                           {badge.validUntil && (
                             <div className="text-xs text-gray-600 mt-2">

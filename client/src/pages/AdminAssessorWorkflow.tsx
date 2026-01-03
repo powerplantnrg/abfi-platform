@@ -9,32 +9,32 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useAuth } from "@/_core/hooks/useAuth";
-import DashboardLayout from "@/components/DashboardLayout";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useAuth } from"@/_core/hooks/useAuth";
+import DashboardLayout from"@/components/DashboardLayout";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Textarea } from"@/components/ui/textarea";
+import { Skeleton } from"@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { trpc } from"@/lib/trpc";
 import {
   CheckCircle,
   XCircle,
@@ -45,8 +45,8 @@ import {
   TrendingUp,
   Shield,
   Download,
-} from "lucide-react";
-import { RatingBadge, ScoreBreakdown } from "@/components/ScoreCard";
+} from"lucide-react";
+import { RatingBadge, ScoreBreakdown } from"@/components/ScoreCard";
 
 export default function AdminAssessorWorkflow() {
   const { user, loading: authLoading } = useAuth();
@@ -57,7 +57,7 @@ export default function AdminAssessorWorkflow() {
     {}
   );
   const [overrideReason, setOverrideReason] = useState("");
-  const [decision, setDecision] = useState<"approve" | "reject" | null>(null);
+  const [decision, setDecision] = useState<"approve" |"reject" | null>(null);
 
   // Fetch pending assessments
   const {
@@ -124,14 +124,14 @@ export default function AdminAssessorWorkflow() {
   }
 
   // Check admin permissions
-  if (user.role !== "admin") {
+  if (user.role !=="admin") {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center min-h-[60vh]">
           <Card className="max-w-md">
             <CardContent className="py-12 text-center">
               <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
+              <H3 className="text-lg  mb-2">Access Denied</H3>
               <p className="text-sm text-gray-600">
                 You don't have permission to access the assessor workflow.
               </p>
@@ -157,11 +157,11 @@ export default function AdminAssessorWorkflow() {
   }
 
   const pendingAssessments =
-    assessments?.filter((a: any) => a.status === "under_review") || [];
+    assessments?.filter((a: any) => a.status ==="under_review") || [];
   const approvedAssessments =
-    assessments?.filter((a: any) => a.status === "approved") || [];
+    assessments?.filter((a: any) => a.status ==="approved") || [];
   const rejectedAssessments =
-    assessments?.filter((a: any) => a.status === "rejected") || [];
+    assessments?.filter((a: any) => a.status ==="rejected") || [];
 
   const selectedAssessmentData = assessments?.find(
     (a: any) => a.id === selectedAssessment
@@ -190,7 +190,7 @@ export default function AdminAssessorWorkflow() {
     await approveAssessment.mutateAsync({
       assessmentId: selectedAssessment,
       approverNotes:
-        overrideReason || "Assessment approved without modifications",
+        overrideReason ||"Assessment approved without modifications",
     });
   };
 
@@ -204,21 +204,21 @@ export default function AdminAssessorWorkflow() {
   };
 
   const formatDate = (date: Date | null) => {
-    if (!date) return "N/A";
+    if (!date) return"N/A";
     return new Date(date).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+      day:"numeric",
+      month:"short",
+      year:"numeric",
     });
   };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "approved":
+      case"approved":
         return <CheckCircle className="h-5 w-5 text-green-600" />;
-      case "rejected":
+      case"rejected":
         return <XCircle className="h-5 w-5 text-red-600" />;
-      case "pending_review":
+      case"pending_review":
         return <Clock className="h-5 w-5 text-yellow-600" />;
       default:
         return <AlertTriangle className="h-5 w-5 text-gray-600" />;
@@ -227,14 +227,14 @@ export default function AdminAssessorWorkflow() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "approved":
-        return "bg-green-100 text-green-800";
-      case "rejected":
-        return "bg-red-100 text-red-800";
-      case "pending_review":
-        return "bg-yellow-100 text-yellow-800";
+      case"approved":
+        return"bg-green-100 text-green-800";
+      case"rejected":
+        return"bg-red-100 text-red-800";
+      case"pending_review":
+        return"bg-yellow-100 text-yellow-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
@@ -244,7 +244,7 @@ export default function AdminAssessorWorkflow() {
         <div className="flex items-center gap-3">
           <Shield className="h-7 w-7 text-[#D4AF37]" />
           <div>
-            <h1 className="text-2xl font-bold">Assessor Workflow</h1>
+            <H1 className="text-2xl">Assessor Workflow</H1>
             <p className="text-gray-600">
               Review and approve bankability assessments for bioenergy projects
             </p>
@@ -269,7 +269,7 @@ export default function AdminAssessorWorkflow() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <CheckCircle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">All Caught Up!</h3>
+                  <H3 className="text-lg  mb-2">All Caught Up!</H3>
                   <p className="text-sm text-gray-600">
                     No pending assessments to review at this time.
                   </p>
@@ -289,14 +289,14 @@ export default function AdminAssessorWorkflow() {
                             Assessment #{assessment.assessmentNumber}
                           </CardTitle>
                           <CardDescription>
-                            Project ID: {assessment.projectId} • Assessed on{" "}
+                            Project ID: {assessment.projectId} • Assessed on{""}
                             {formatDate(assessment.assessmentDate)}
                           </CardDescription>
                         </div>
                         <div className="flex items-center gap-2">
                           {getStatusIcon(assessment.status)}
                           <Badge className={getStatusColor(assessment.status)}>
-                            {assessment.status.replace("_", " ")}
+                            {assessment.status.replace("_","")}
                           </Badge>
                         </div>
                       </div>
@@ -312,7 +312,7 @@ export default function AdminAssessorWorkflow() {
                             <RatingBadge
                               rating={assessment.rating}
                               size="lg"
-                            />{" "}
+                            />{""}
                           </div>
                           <div>
                             <p className="text-sm text-gray-600 mb-1">
@@ -402,9 +402,9 @@ export default function AdminAssessorWorkflow() {
                         {/* Review Panel */}
                         {selectedAssessment === assessment.id && (
                           <div className="mt-6 p-6 border rounded-lg bg-muted/50 space-y-6">
-                            <h4 className="font-semibold text-lg">
+                            <H4 className="text-lg">
                               Assessment Review
-                            </h4>
+                            </H4>
 
                             {/* Score Adjustments */}
                             <div className="space-y-4">
@@ -412,29 +412,29 @@ export default function AdminAssessorWorkflow() {
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {[
                                   {
-                                    key: "volumeSecurity",
-                                    label: "Volume Security",
+                                    key:"volumeSecurity",
+                                    label:"Volume Security",
                                     current: assessment.volumeSecurityScore,
                                   },
                                   {
-                                    key: "counterpartyQuality",
-                                    label: "Counterparty Quality",
+                                    key:"counterpartyQuality",
+                                    label:"Counterparty Quality",
                                     current:
                                       assessment.counterpartyQualityScore,
                                   },
                                   {
-                                    key: "contractStructure",
-                                    label: "Contract Structure",
+                                    key:"contractStructure",
+                                    label:"Contract Structure",
                                     current: assessment.contractStructureScore,
                                   },
                                   {
-                                    key: "concentrationRisk",
-                                    label: "Concentration Risk",
+                                    key:"concentrationRisk",
+                                    label:"Concentration Risk",
                                     current: assessment.concentrationRiskScore,
                                   },
                                   {
-                                    key: "operationalReadiness",
-                                    label: "Operational Readiness",
+                                    key:"operationalReadiness",
+                                    label:"Operational Readiness",
                                     current:
                                       assessment.operationalReadinessScore,
                                   },
@@ -469,8 +469,8 @@ export default function AdminAssessorWorkflow() {
                             {/* Override Reason */}
                             <div className="space-y-2">
                               <Label>
-                                Notes / Override Reason{" "}
-                                {decision === "reject" && (
+                                Notes / Override Reason{""}
+                                {decision ==="reject" && (
                                   <span className="text-red-600">*</span>
                                 )}
                               </Label>
@@ -516,7 +516,7 @@ export default function AdminAssessorWorkflow() {
                             </div>
 
                             {/* Rejection Confirmation */}
-                            {decision === "reject" && (
+                            {decision ==="reject" && (
                               <div className="p-4 border border-red-200 rounded-lg bg-red-50">
                                 <p className="text-sm font-semibold text-red-900 mb-2">
                                   Are you sure you want to reject this
@@ -594,8 +594,8 @@ export default function AdminAssessorWorkflow() {
                           >
                             <Download className="h-4 w-4 mr-2" />
                             {downloadCertificate.isPending
-                              ? "Generating..."
-                              : "Download Certificate"}
+                              ?"Generating..."
+                              :"Download Certificate"}
                           </Button>
                         </div>
                       </div>
@@ -636,7 +636,7 @@ export default function AdminAssessorWorkflow() {
                     {assessment.reassessmentReason && (
                       <CardContent>
                         <p className="text-sm text-gray-600">
-                          <strong>Reason:</strong>{" "}
+                          <strong>Reason:</strong>{""}
                           {assessment.reassessmentReason}
                         </p>
                       </CardContent>

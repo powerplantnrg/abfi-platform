@@ -7,22 +7,22 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, Body } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, Body } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { trpc } from "@/lib/trpc";
-import { Send, MessageSquare, Calendar, Package, ArrowLeft } from "lucide-react";
-import { Link } from "wouter";
-import { formatDate } from "@/const";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { trpc } from"@/lib/trpc";
+import { Send, MessageSquare, Calendar, Package, ArrowLeft } from"lucide-react";
+import { Link } from"wouter";
+import { formatDate } from"@/const";
 
 export default function BuyerInquiries() {
   const { user, loading: authLoading } = useAuth();
@@ -45,18 +45,18 @@ export default function BuyerInquiries() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "responded":
-        return "bg-blue-100 text-blue-800";
-      case "accepted":
-        return "bg-green-100 text-green-800";
-      case "declined":
-        return "bg-red-100 text-red-800";
-      case "closed":
-        return "bg-gray-100 text-gray-800";
+      case"pending":
+        return"bg-yellow-100 text-yellow-800";
+      case"responded":
+        return"bg-blue-100 text-blue-800";
+      case"accepted":
+        return"bg-green-100 text-green-800";
+      case"declined":
+        return"bg-red-100 text-red-800";
+      case"closed":
+        return"bg-gray-100 text-gray-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
@@ -110,7 +110,7 @@ export default function BuyerInquiries() {
                         {inquiry.subject}
                       </CardTitle>
                       <CardDescription className="mt-2">
-                        To: {inquiry.supplierName || "Supplier"} • Sent{" "}
+                        To: {inquiry.supplierName ||"Supplier"} • Sent{""}
                         {formatDate(inquiry.createdAt)}
                       </CardDescription>
                     </div>
@@ -128,7 +128,7 @@ export default function BuyerInquiries() {
                         <div className="font-medium">
                           {inquiry.feedstockId
                             ? `ABFI-${inquiry.feedstockId}`
-                            : "General"}
+                            :"General"}
                         </div>
                       </div>
                     </div>
@@ -207,9 +207,9 @@ export default function BuyerInquiries() {
           <Card>
             <CardContent className="py-12 text-center">
               <Send className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
+              <H3 className="text-lg  mb-2">
                 No inquiries sent yet
-              </h3>
+              </H3>
               <p className="text-gray-600 mb-4">
                 Browse feedstocks and send inquiries to suppliers
               </p>

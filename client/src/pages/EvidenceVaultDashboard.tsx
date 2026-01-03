@@ -9,28 +9,28 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { blockchainConfig } from "@/config/env";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { blockchainConfig } from"@/config/env";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -38,7 +38,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from"@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -46,8 +46,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/table";
+import { trpc } from"@/lib/trpc";
 import {
   Shield,
   FileCheck,
@@ -63,48 +63,48 @@ import {
   AlertCircle,
   Copy,
   ExternalLink,
-} from "lucide-react";
-import { Redirect } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Redirect } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   PageWrapper,
   FadeInUp,
   StaggerContainer,
   StaggerItem,
-} from "@/components/ui/motion";
-import DashboardLayout from "@/components/DashboardLayout";
-import { StatsCardPremium, GlassCard, StatusIndicator, ProgressRing } from "@/components/ui/premium-cards";
-import { useState, useCallback } from "react";
-import { toast } from "sonner";
+} from"@/components/ui/motion";
+import DashboardLayout from"@/components/DashboardLayout";
+import { StatsCardPremium, GlassCard, StatusIndicator, ProgressRing } from"@/components/ui/premium-cards";
+import { useState, useCallback } from"react";
+import { toast } from"sonner";
 
 // Stats card component
 function StatsCard({
   title,
   value,
   icon: Icon,
-  variant = "default",
+  variant ="default",
   description,
 }: {
   title: string;
   value: string | number;
   icon: React.ElementType;
-  variant?: "default" | "success" | "warning" | "info" | "pending";
+  variant?:"default" |"success" |"warning" |"info" |"pending";
   description?: string;
 }) {
   const variantStyles = {
-    default: "bg-white",
-    success: "bg-emerald-50 border-emerald-200",
-    warning: "bg-amber-50 border-amber-200",
-    info: "bg-blue-50 border-blue-200",
-    pending: "bg-orange-50 border-orange-200",
+    default:"bg-white",
+    success:"bg-emerald-50 border-emerald-200",
+    warning:"bg-amber-50 border-amber-200",
+    info:"bg-blue-50 border-blue-200",
+    pending:"bg-orange-50 border-orange-200",
   };
 
   const iconStyles = {
-    default: "text-slate-600",
-    success: "text-[#D4AF37]",
-    warning: "text-[#D4AF37]",
-    info: "text-blue-600",
-    pending: "text-orange-600",
+    default:"text-slate-600",
+    success:"text-[#D4AF37]",
+    warning:"text-[#D4AF37]",
+    info:"text-blue-600",
+    pending:"text-orange-600",
   };
 
   return (
@@ -120,8 +120,8 @@ function StatsCard({
           </div>
           <div
             className={cn(
-              "p-2 rounded-lg bg-slate-100",
-              variant !== "default" && "bg-white/50"
+"p-2 rounded-lg bg-slate-100",
+              variant !=="default" &&"bg-white/50"
             )}
           >
             <Icon className={cn("h-5 w-5", iconStyles[variant])} />
@@ -134,20 +134,20 @@ function StatsCard({
 
 // Status badge component
 function StatusBadge({ status }: { status: string }) {
-  const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline" }> = {
-    pending: { label: "Pending", variant: "secondary" },
-    batched: { label: "Batched", variant: "outline" },
-    anchored: { label: "Anchored", variant: "default" },
-    confirmed: { label: "Confirmed", variant: "default" },
+  const statusConfig: Record<string, { label: string; variant:"default" |"secondary" |"destructive" |"outline" }> = {
+    pending: { label:"Pending", variant:"secondary" },
+    batched: { label:"Batched", variant:"outline" },
+    anchored: { label:"Anchored", variant:"default" },
+    confirmed: { label:"Confirmed", variant:"default" },
   };
 
-  const config = statusConfig[status] || { label: status, variant: "secondary" };
+  const config = statusConfig[status] || { label: status, variant:"secondary" };
 
   return (
     <Badge variant={config.variant} className={cn(
-      status === "anchored" && "bg-[#D4AF37] hover:bg-[#D4AF37]",
-      status === "pending" && "bg-amber-100 text-amber-800 hover:bg-amber-200",
-      status === "batched" && "bg-blue-100 text-blue-800 hover:bg-blue-200"
+      status ==="anchored" &&"bg-[#D4AF37] hover:bg-[#D4AF37]",
+      status ==="pending" &&"bg-amber-100 text-amber-800 hover:bg-amber-200",
+      status ==="batched" &&"bg-blue-100 text-blue-800 hover:bg-blue-200"
     )}>
       {config.label}
     </Badge>
@@ -324,7 +324,7 @@ function CreateManifestDialog({ onSuccess }: { onSuccess: () => void }) {
   const [fileSize, setFileSize] = useState("");
   const [mimeType, setMimeType] = useState("application/pdf");
   const [docHash, setDocHash] = useState("");
-  const [classification, setClassification] = useState<"public" | "internal" | "confidential" | "restricted">("internal");
+  const [classification, setClassification] = useState<"public" |"internal" |"confidential" |"restricted">("internal");
 
   const createMutation = trpc.evidenceVault.createManifest.useMutation({
     onSuccess: () => {
@@ -445,7 +445,7 @@ function CreateManifestDialog({ onSuccess }: { onSuccess: () => void }) {
               Cancel
             </Button>
             <Button type="submit" disabled={createMutation.isPending}>
-              {createMutation.isPending ? "Creating..." : "Create Manifest"}
+              {createMutation.isPending ?"Creating..." :"Create Manifest"}
             </Button>
           </div>
         </form>
@@ -516,13 +516,13 @@ export default function EvidenceVaultDashboard() {
 
     // Get contract address from blockchain health check or use environment default
     const contractAddress = blockchainHealth?.walletAddress
-      ? blockchainConfig.evidenceContract || "0x0000000000000000000000000000000000000000"
-      : "0x0000000000000000000000000000000000000000";
+      ? blockchainConfig.evidenceContract ||"0x0000000000000000000000000000000000000000"
+      :"0x0000000000000000000000000000000000000000";
 
     batchAnchorMutation.mutate({
       manifestIds: selectedManifests,
       chainId: blockchainHealth?.chainId || 1,
-      chainName: blockchainHealth?.chainId === 11155111 ? "sepolia" : "ethereum",
+      chainName: blockchainHealth?.chainId === 11155111 ?"sepolia" :"ethereum",
       contractAddress,
       batchPeriodStart: periodStart,
       batchPeriodEnd: now,
@@ -561,9 +561,9 @@ export default function EvidenceVaultDashboard() {
                   <Shield className="h-7 w-7 text-black" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-slate-900">
+                  <H1 className="text-2xl  text-slate-900">
                     Evidence Vault
-                  </h1>
+                  </H1>
                   <p className="text-gray-600 text-sm">
                     Blockchain-anchored document integrity verification
                   </p>
@@ -575,7 +575,7 @@ export default function EvidenceVaultDashboard() {
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-600">Blockchain:</span>
                     <StatusIndicator
-                      status={blockchainHealth?.configured ? (blockchainHealth.connected ? "active" : "error") : "pending"}
+                      status={blockchainHealth?.configured ? (blockchainHealth.connected ?"active" :"error") :"pending"}
                       size="sm"
                     />
                   </div>
@@ -583,7 +583,7 @@ export default function EvidenceVaultDashboard() {
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-600">IPFS:</span>
                     <StatusIndicator
-                      status={ipfsHealth?.configured ? (ipfsHealth.connected ? "active" : "error") : "pending"}
+                      status={ipfsHealth?.configured ? (ipfsHealth.connected ?"active" :"error") :"pending"}
                       size="sm"
                     />
                   </div>
@@ -655,7 +655,7 @@ export default function EvidenceVaultDashboard() {
                 <Link2 className="h-4 w-4 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold">Chain Anchors</h3>
+                <H3 className="">Chain Anchors</H3>
                 <p className="text-xs text-gray-600">Blockchain transaction batches</p>
               </div>
             </div>
@@ -677,7 +677,7 @@ export default function EvidenceVaultDashboard() {
                 <Hash className="h-4 w-4 text-purple-600" />
               </div>
               <div>
-                <h3 className="font-semibold">Hash Algorithm</h3>
+                <H3 className="">Hash Algorithm</H3>
                 <p className="text-xs text-gray-600">Cryptographic standards used</p>
               </div>
             </div>
@@ -820,7 +820,7 @@ export default function EvidenceVaultDashboard() {
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mx-auto mb-3">
                   <Hash className="h-6 w-6 text-blue-600" />
                 </div>
-                <h4 className="font-semibold mb-2">1. Hash Documents</h4>
+                <H4 className="mb-2">1. Hash Documents</H4>
                 <p className="text-sm text-gray-600">
                   Documents are hashed using SHA-256, creating a unique fingerprint without storing the actual content.
                 </p>
@@ -829,7 +829,7 @@ export default function EvidenceVaultDashboard() {
                 <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mx-auto mb-3">
                   <GitBranch className="h-6 w-6 text-purple-600" />
                 </div>
-                <h4 className="font-semibold mb-2">2. Merkle Batching</h4>
+                <H4 className="mb-2">2. Merkle Batching</H4>
                 <p className="text-sm text-gray-600">
                   Multiple hashes are combined into a Merkle tree, generating a single root hash for efficient verification.
                 </p>
@@ -838,7 +838,7 @@ export default function EvidenceVaultDashboard() {
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
                   <Link2 className="h-6 w-6 text-[#D4AF37]" />
                 </div>
-                <h4 className="font-semibold mb-2">3. Blockchain Anchor</h4>
+                <H4 className="mb-2">3. Blockchain Anchor</H4>
                 <p className="text-sm text-gray-600">
                   The Merkle root is anchored to Ethereum, providing immutable proof of document existence at a point in time.
                 </p>

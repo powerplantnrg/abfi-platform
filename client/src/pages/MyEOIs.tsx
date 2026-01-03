@@ -1,15 +1,15 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,10 +20,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import DashboardLayout from "@/components/DashboardLayout";
-import { trpc } from "@/lib/trpc";
-import { formatDate } from "@/const";
+} from"@/components/ui/alert-dialog";
+import DashboardLayout from"@/components/DashboardLayout";
+import { trpc } from"@/lib/trpc";
+import { formatDate } from"@/const";
 import {
   FileText,
   Calendar,
@@ -42,126 +42,126 @@ import {
   Building2,
   ArrowRight,
   Sparkles,
-} from "lucide-react";
-import { Link } from "wouter";
-import { toast } from "sonner";
+} from"lucide-react";
+import { Link } from"wouter";
+import { toast } from"sonner";
 
 // Mock data for demonstration
 const MOCK_EOIS = [
   {
     id: 1,
-    eoiReference: "EOI-2025-0001",
-    status: "pending",
+    eoiReference:"EOI-2025-0001",
+    status:"pending",
     interestStartYear: 2026,
     interestEndYear: 2030,
-    annualVolumeTonnes: "5000",
-    totalVolumeTonnes: "25000",
-    offeredPricePerTonne: "135.00",
-    deliveryLocation: "Port of Brisbane",
-    additionalTerms: "Quarterly delivery preferred, flexible on timing",
+    annualVolumeTonnes:"5000",
+    totalVolumeTonnes:"25000",
+    offeredPricePerTonne:"135.00",
+    deliveryLocation:"Port of Brisbane",
+    additionalTerms:"Quarterly delivery preferred, flexible on timing",
     createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
     futures: {
       id: 1,
-      futuresId: "FUT-2025-0012",
-      title: "Premium Eucalyptus Plantation - Hunter Valley",
-      cropType: "eucalyptus",
-      state: "NSW",
-      region: "Hunter Valley",
+      futuresId:"FUT-2025-0012",
+      title:"Premium Eucalyptus Plantation - Hunter Valley",
+      cropType:"eucalyptus",
+      state:"NSW",
+      region:"Hunter Valley",
       projectionStartYear: 2025,
       projectionEndYear: 2040,
     },
   },
   {
     id: 2,
-    eoiReference: "EOI-2025-0002",
-    status: "under_review",
+    eoiReference:"EOI-2025-0002",
+    status:"under_review",
     interestStartYear: 2027,
     interestEndYear: 2035,
-    annualVolumeTonnes: "8000",
-    totalVolumeTonnes: "72000",
-    offeredPricePerTonne: "142.50",
-    deliveryLocation: "Melbourne Processing Hub",
-    additionalTerms: "Long-term partnership interest",
+    annualVolumeTonnes:"8000",
+    totalVolumeTonnes:"72000",
+    offeredPricePerTonne:"142.50",
+    deliveryLocation:"Melbourne Processing Hub",
+    additionalTerms:"Long-term partnership interest",
     createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
     futures: {
       id: 2,
-      futuresId: "FUT-2025-0008",
-      title: "Miscanthus Giganteus - Sustainable Biomass",
-      cropType: "miscanthus",
-      state: "VIC",
-      region: "Gippsland",
+      futuresId:"FUT-2025-0008",
+      title:"Miscanthus Giganteus - Sustainable Biomass",
+      cropType:"miscanthus",
+      state:"VIC",
+      region:"Gippsland",
       projectionStartYear: 2026,
       projectionEndYear: 2045,
     },
   },
   {
     id: 3,
-    eoiReference: "EOI-2024-0089",
-    status: "accepted",
+    eoiReference:"EOI-2024-0089",
+    status:"accepted",
     interestStartYear: 2025,
     interestEndYear: 2030,
-    annualVolumeTonnes: "3500",
-    totalVolumeTonnes: "21000",
-    offeredPricePerTonne: "128.00",
-    deliveryLocation: "Port of Newcastle",
+    annualVolumeTonnes:"3500",
+    totalVolumeTonnes:"21000",
+    offeredPricePerTonne:"128.00",
+    deliveryLocation:"Port of Newcastle",
     supplierResponse:
-      "Thank you for your interest. We are pleased to accept your EOI and look forward to finalizing the contract terms.",
+"Thank you for your interest. We are pleased to accept your EOI and look forward to finalizing the contract terms.",
     respondedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
     futures: {
       id: 3,
-      futuresId: "FUT-2024-0045",
-      title: "Bamboo Biomass Operation - Northern QLD",
-      cropType: "bamboo",
-      state: "QLD",
-      region: "Atherton Tablelands",
+      futuresId:"FUT-2024-0045",
+      title:"Bamboo Biomass Operation - Northern QLD",
+      cropType:"bamboo",
+      state:"QLD",
+      region:"Atherton Tablelands",
       projectionStartYear: 2024,
       projectionEndYear: 2039,
     },
   },
   {
     id: 4,
-    eoiReference: "EOI-2024-0076",
-    status: "declined",
+    eoiReference:"EOI-2024-0076",
+    status:"declined",
     interestStartYear: 2025,
     interestEndYear: 2028,
-    annualVolumeTonnes: "2000",
-    totalVolumeTonnes: "8000",
-    offeredPricePerTonne: "105.00",
-    deliveryLocation: "Adelaide",
+    annualVolumeTonnes:"2000",
+    totalVolumeTonnes:"8000",
+    offeredPricePerTonne:"105.00",
+    deliveryLocation:"Adelaide",
     supplierResponse:
-      "Thank you for your interest. Unfortunately, we have committed this volume to another buyer. We encourage you to browse our other listings.",
+"Thank you for your interest. Unfortunately, we have committed this volume to another buyer. We encourage you to browse our other listings.",
     respondedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     futures: {
       id: 4,
-      futuresId: "FUT-2024-0038",
-      title: "Willow Coppice System - Murray River",
-      cropType: "willow",
-      state: "SA",
-      region: "Riverland",
+      futuresId:"FUT-2024-0038",
+      title:"Willow Coppice System - Murray River",
+      cropType:"willow",
+      state:"SA",
+      region:"Riverland",
       projectionStartYear: 2024,
       projectionEndYear: 2034,
     },
   },
   {
     id: 5,
-    eoiReference: "EOI-2024-0065",
-    status: "withdrawn",
+    eoiReference:"EOI-2024-0065",
+    status:"withdrawn",
     interestStartYear: 2025,
     interestEndYear: 2027,
-    annualVolumeTonnes: "1500",
-    totalVolumeTonnes: "4500",
+    annualVolumeTonnes:"1500",
+    totalVolumeTonnes:"4500",
     offeredPricePerTonne: null,
-    deliveryLocation: "Perth",
+    deliveryLocation:"Perth",
     createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
     futures: {
       id: 5,
-      futuresId: "FUT-2024-0029",
-      title: "Industrial Hemp Farm - Margaret River",
-      cropType: "hemp",
-      state: "WA",
-      region: "South West",
+      futuresId:"FUT-2024-0029",
+      title:"Industrial Hemp Farm - Margaret River",
+      cropType:"hemp",
+      state:"WA",
+      region:"South West",
       projectionStartYear: 2024,
       projectionEndYear: 2034,
     },
@@ -169,16 +169,16 @@ const MOCK_EOIS = [
 ];
 
 const CROP_TYPE_LABELS: Record<string, string> = {
-  bamboo: "Bamboo",
-  rotation_forestry: "Rotation Forestry",
-  eucalyptus: "Eucalyptus",
-  poplar: "Poplar",
-  willow: "Willow",
-  miscanthus: "Miscanthus",
-  switchgrass: "Switchgrass",
-  arundo_donax: "Arundo Donax",
-  hemp: "Industrial Hemp",
-  other_perennial: "Other Perennial",
+  bamboo:"Bamboo",
+  rotation_forestry:"Rotation Forestry",
+  eucalyptus:"Eucalyptus",
+  poplar:"Poplar",
+  willow:"Willow",
+  miscanthus:"Miscanthus",
+  switchgrass:"Switchgrass",
+  arundo_donax:"Arundo Donax",
+  hemp:"Industrial Hemp",
+  other_perennial:"Other Perennial",
 };
 
 const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -195,43 +195,43 @@ const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
 };
 
 const EOI_STATUS_LABELS: Record<string, string> = {
-  pending: "Pending Review",
-  under_review: "Under Review",
-  accepted: "Accepted",
-  declined: "Declined",
-  expired: "Expired",
-  withdrawn: "Withdrawn",
+  pending:"Pending Review",
+  under_review:"Under Review",
+  accepted:"Accepted",
+  declined:"Declined",
+  expired:"Expired",
+  withdrawn:"Withdrawn",
 };
 
 const getEOIStatusColor = (status: string) => {
   switch (status) {
-    case "pending":
-      return "bg-yellow-100 text-yellow-800 border-yellow-200";
-    case "under_review":
-      return "bg-blue-100 text-blue-800 border-blue-200";
-    case "accepted":
-      return "bg-emerald-100 text-emerald-800 border-emerald-200";
-    case "declined":
-      return "bg-red-100 text-red-800 border-red-200";
-    case "expired":
-    case "withdrawn":
-      return "bg-gray-100 text-gray-600 border-gray-200";
+    case"pending":
+      return"bg-yellow-100 text-yellow-800 border-yellow-200";
+    case"under_review":
+      return"bg-blue-100 text-blue-800 border-blue-200";
+    case"accepted":
+      return"bg-emerald-100 text-emerald-800 border-emerald-200";
+    case"declined":
+      return"bg-red-100 text-red-800 border-red-200";
+    case"expired":
+    case"withdrawn":
+      return"bg-gray-100 text-gray-600 border-gray-200";
     default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
+      return"bg-gray-100 text-gray-800 border-gray-200";
   }
 };
 
 const getEOIStatusIcon = (status: string) => {
   switch (status) {
-    case "pending":
+    case"pending":
       return <Clock className="h-5 w-5 text-yellow-600" />;
-    case "under_review":
+    case"under_review":
       return <AlertCircle className="h-5 w-5 text-blue-600" />;
-    case "accepted":
+    case"accepted":
       return <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />;
-    case "declined":
+    case"declined":
       return <XCircle className="h-5 w-5 text-red-600" />;
-    case "withdrawn":
+    case"withdrawn":
       return <X className="h-5 w-5 text-gray-600" />;
     default:
       return <Clock className="h-5 w-5 text-gray-600" />;
@@ -273,12 +273,12 @@ export default function MyEOIs() {
 
   // Group EOIs by status
   const pendingEOIs =
-    eois?.filter((e: any) => ["pending", "under_review"].includes(e.status)) ||
+    eois?.filter((e: any) => ["pending","under_review"].includes(e.status)) ||
     [];
-  const activeEOIs = eois?.filter((e: any) => e.status === "accepted") || [];
+  const activeEOIs = eois?.filter((e: any) => e.status ==="accepted") || [];
   const closedEOIs =
     eois?.filter((e: any) =>
-      ["declined", "expired", "withdrawn"].includes(e.status)
+      ["declined","expired","withdrawn"].includes(e.status)
     ) || [];
 
   // Stats
@@ -288,11 +288,11 @@ export default function MyEOIs() {
     accepted: activeEOIs.length,
     totalVolume:
       eois?.reduce(
-        (sum: number, e: any) => sum + parseFloat(e.totalVolumeTonnes || "0"),
+        (sum: number, e: any) => sum + parseFloat(e.totalVolumeTonnes ||"0"),
         0
       ) || 0,
     acceptedVolume: activeEOIs.reduce(
-      (sum: number, e: any) => sum + parseFloat(e.totalVolumeTonnes || "0"),
+      (sum: number, e: any) => sum + parseFloat(e.totalVolumeTonnes ||"0"),
       0
     ),
   };
@@ -304,7 +304,7 @@ export default function MyEOIs() {
         <div>
           <div className="flex items-center gap-3 mb-2">
             <FileText className="h-7 w-7 text-[#D4AF37]" />
-            <h1 className="text-2xl font-bold">My Expressions of Interest</h1>
+            <H1 className="text-2xl">My Expressions of Interest</H1>
             {isUsingMockData && (
               <Badge className="bg-amber-100 text-amber-800">
                 <Sparkles className="h-3.5 w-3.5 mr-1.5" />
@@ -406,10 +406,10 @@ export default function MyEOIs() {
                       <Clock className="h-5 w-5 text-yellow-600" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold">Pending Response</h2>
+                      <H2 className="text-xl">Pending Response</H2>
                       <p className="text-sm text-gray-600">
                         {pendingEOIs.length} EOI
-                        {pendingEOIs.length !== 1 ? "s" : ""} awaiting supplier
+                        {pendingEOIs.length !== 1 ?"s" :""} awaiting supplier
                         review
                       </p>
                     </div>
@@ -438,10 +438,10 @@ export default function MyEOIs() {
                       <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold">Accepted</h2>
+                      <H2 className="text-xl">Accepted</H2>
                       <p className="text-sm text-gray-600">
                         {activeEOIs.length} EOI
-                        {activeEOIs.length !== 1 ? "s" : ""} ready for
+                        {activeEOIs.length !== 1 ?"s" :""} ready for
                         contracting
                       </p>
                     </div>
@@ -462,12 +462,12 @@ export default function MyEOIs() {
                       <XCircle className="h-5 w-5 text-gray-500" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-gray-600">
+                      <H2 className="text-xl  text-gray-600">
                         Closed
-                      </h2>
+                      </H2>
                       <p className="text-sm text-gray-600">
                         {closedEOIs.length} EOI
-                        {closedEOIs.length !== 1 ? "s" : ""} declined, expired,
+                        {closedEOIs.length !== 1 ?"s" :""} declined, expired,
                         or withdrawn
                       </p>
                     </div>
@@ -486,7 +486,7 @@ export default function MyEOIs() {
                 <div className="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <FileText className="h-10 w-10 text-[#D4AF37]" />
                 </div>
-                <h3 className="text-2xl font-bold mb-3">No EOIs Yet</h3>
+                <H3 className="text-2xl font-bold mb-3">No EOIs Yet</H3>
                 <p className="text-gray-600 mb-6 max-w-md mx-auto">
                   You haven't submitted any expressions of interest yet. Browse
                   the marketplace to find futures listings and secure your
@@ -579,7 +579,7 @@ function EOICard({
                 <p className="font-semibold font-mono">
                   {eoi.offeredPricePerTonne
                     ? `$${parseFloat(eoi.offeredPricePerTonne).toFixed(2)}/t`
-                    : "Negotiable"}
+                    :"Negotiable"}
                 </p>
               </div>
             </div>
@@ -633,7 +633,7 @@ function EOICard({
                 </Button>
               </Link>
             )}
-            {["pending", "under_review"].includes(eoi.status) && onWithdraw && (
+            {["pending","under_review"].includes(eoi.status) && onWithdraw && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button

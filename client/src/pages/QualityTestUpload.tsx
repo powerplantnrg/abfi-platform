@@ -1,28 +1,28 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
+} from"@/components/ui/Card";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Skeleton } from"@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { trpc } from "@/lib/trpc";
-import { FileUp, Upload } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useLocation } from "wouter";
+} from"@/components/ui/select";
+import { trpc } from"@/lib/trpc";
+import { FileUp, Upload } from"lucide-react";
+import { useState } from"react";
+import { toast } from"sonner";
+import { useLocation } from"wouter";
 
 export default function QualityTestUpload() {
   const { user, loading: authLoading } = useAuth();
@@ -47,7 +47,7 @@ export default function QualityTestUpload() {
       setLocation("/supplier/feedstocks");
     },
     onError: error => {
-      toast.error(error.message || "Failed to upload quality test");
+      toast.error(error.message ||"Failed to upload quality test");
     },
   });
 
@@ -91,10 +91,10 @@ export default function QualityTestUpload() {
     <div className="min-h-screen bg-background">
       <div className="container py-8 max-w-2xl">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+          <H1 className="text-4xl  mb-2 flex items-center gap-3">
             <FileUp className="h-10 w-10" />
             Upload Quality Test
-          </h1>
+          </H1>
           <p className="text-gray-600">
             Add laboratory test results for your feedstock
           </p>
@@ -167,7 +167,7 @@ export default function QualityTestUpload() {
 
               {/* Test Parameters */}
               <div className="space-y-4">
-                <h3 className="font-semibold">Test Parameters</h3>
+                <H3 className="">Test Parameters</H3>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -251,7 +251,7 @@ export default function QualityTestUpload() {
                   className="flex-1"
                 >
                   {createMutation.isPending ? (
-                    "Uploading..."
+"Uploading..."
                   ) : (
                     <>
                       <Upload className="h-4 w-4 mr-2" />
@@ -267,7 +267,7 @@ export default function QualityTestUpload() {
         {/* Info Card */}
         <Card className="mt-6 bg-blue-50 border-blue-200">
           <CardContent className="pt-6">
-            <h3 className="font-semibold mb-2">Why upload quality tests?</h3>
+            <H3 className="mb-2">Why upload quality tests?</H3>
             <ul className="text-sm text-gray-600 space-y-1">
               <li>• Improves your ABFI quality score (25% of total rating)</li>
               <li>• Builds buyer confidence with verified data</li>

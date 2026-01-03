@@ -8,28 +8,28 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { AUSTRALIAN_STATES } from "@/const";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
+import { AUSTRALIAN_STATES } from"@/const";
+import { trpc } from"@/lib/trpc";
 import {
   ArrowLeft,
   ArrowRight,
@@ -39,12 +39,12 @@ import {
   MapPin,
   Settings,
   Info,
-} from "lucide-react";
-import { useState } from "react";
-import { Link, useLocation } from "wouter";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { H1, H3, Body } from "@/components/Typography";
+} from"lucide-react";
+import { useState } from"react";
+import { Link, useLocation } from"wouter";
+import { toast } from"sonner";
+import { cn } from"@/lib/utils";
+import { H1, H3, Body } from"@/components/Typography";
 
 type Step = 1 | 2 | 3;
 
@@ -56,7 +56,7 @@ export default function SupplierRegistration() {
   // Form state
   const [abn, setAbn] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const [contactEmail, setContactEmail] = useState(user?.email || "");
+  const [contactEmail, setContactEmail] = useState(user?.email ||"");
   const [contactPhone, setContactPhone] = useState("");
   const [addressLine1, setAddressLine1] = useState("");
   const [addressLine2, setAddressLine2] = useState("");
@@ -74,7 +74,7 @@ export default function SupplierRegistration() {
       setLocation("/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.message || "Registration failed");
+      toast.error(error.message ||"Registration failed");
     },
   });
 
@@ -88,14 +88,14 @@ export default function SupplierRegistration() {
       addressLine2: addressLine2 || undefined,
       city: city || undefined,
       state: state as
-        | "NSW"
-        | "VIC"
-        | "QLD"
-        | "SA"
-        | "WA"
-        | "TAS"
-        | "NT"
-        | "ACT"
+        |"NSW"
+        |"VIC"
+        |"QLD"
+        |"SA"
+        |"WA"
+        |"TAS"
+        |"NT"
+        |"ACT"
         | undefined,
       postcode: postcode || undefined,
       website: website || undefined,
@@ -107,7 +107,7 @@ export default function SupplierRegistration() {
   const canProceedStep2 = addressLine1 && city && state && postcode;
 
   const stepIcons = [Building2, MapPin, Settings];
-  const stepLabels = ["Company Info", "Address", "Operations"];
+  const stepLabels = ["Company Info","Address","Operations"];
 
   if (!isAuthenticated) {
     return (
@@ -176,10 +176,10 @@ export default function SupplierRegistration() {
                 <div key={step} className="flex items-center flex-1">
                   <div
                     className={cn(
-                      "flex items-center justify-center w-12 h-12 rounded-xl border-2 transition-all",
+"flex items-center justify-center w-12 h-12 rounded-xl border-2 transition-all",
                       currentStep >= step
-                        ? "bg-primary border-primary text-[#D4AF37]-foreground shadow-md"
-                        : "bg-card border-border text-gray-600"
+                        ?"bg-primary border-primary text-[#D4AF37]-foreground shadow-md"
+                        :"bg-card border-border text-gray-600"
                     )}
                   >
                     {currentStep > step ? (
@@ -191,8 +191,8 @@ export default function SupplierRegistration() {
                   {step < 3 && (
                     <div
                       className={cn(
-                        "flex-1 h-1 mx-3 rounded-full transition-colors",
-                        currentStep > step ? "bg-primary" : "bg-border"
+"flex-1 h-1 mx-3 rounded-full transition-colors",
+                        currentStep > step ?"bg-primary" :"bg-border"
                       )}
                     />
                   )}
@@ -205,10 +205,10 @@ export default function SupplierRegistration() {
               <span
                 key={label}
                 className={cn(
-                  "text-sm font-medium transition-colors",
+"text-sm font-medium transition-colors",
                   currentStep >= i + 1
-                    ? "text-foreground"
-                    : "text-gray-600"
+                    ?"text-foreground"
+                    :"text-gray-600"
                 )}
               >
                 {label}
@@ -241,7 +241,7 @@ export default function SupplierRegistration() {
                   placeholder="12 345 678 901"
                   value={abn}
                   onChange={e =>
-                    setAbn(e.target.value.replace(/\D/g, "").slice(0, 11))
+                    setAbn(e.target.value.replace(/\D/g,"").slice(0, 11))
                   }
                   maxLength={11}
                   className="font-mono"
@@ -481,9 +481,9 @@ export default function SupplierRegistration() {
                     <Info className="h-4 w-4 text-info" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">
+                    <H4 className="text-foreground mb-2">
                       Next Steps After Registration
-                    </h4>
+                    </H4>
                     <ul className="text-sm text-gray-600 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />
@@ -529,7 +529,7 @@ export default function SupplierRegistration() {
                   disabled={registerMutation.isPending}
                   className="btn-gold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {registerMutation.isPending ? "Submitting..." : "Submit Registration"}
+                  {registerMutation.isPending ?"Submitting..." :"Submit Registration"}
                   <CheckCircle2 className="h-4 w-4 ml-2" />
                 </button>
               </div>

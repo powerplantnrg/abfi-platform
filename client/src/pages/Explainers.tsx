@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { ExplainerCarousel, EXPLAINER_SETS } from "@/components/ExplainerCarousel";
-import DashboardLayout from "@/components/DashboardLayout";
-import { HeyGenExplainerVideo } from "@/components/HeyGenExplainerVideo";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { ExplainerCarousel, EXPLAINER_SETS } from"@/components/ExplainerCarousel";
+import DashboardLayout from"@/components/DashboardLayout";
+import { HeyGenExplainerVideo } from"@/components/HeyGenExplainerVideo";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Hash,
   Cloud,
@@ -17,114 +17,114 @@ import {
   Shield,
   BarChart3,
   Zap,
-} from "lucide-react";
+} from"lucide-react";
 
 type ExplainerKey = keyof typeof EXPLAINER_SETS;
 
 // HeyGen Video Scenes Configuration
 // Video ID: 5f5f9ed9fafe40e2b35e061bda01a8b4
-const HEYGEN_VIDEO_ID = "5f5f9ed9fafe40e2b35e061bda01a8b4";
+const HEYGEN_VIDEO_ID ="5f5f9ed9fafe40e2b35e061bda01a8b4";
 
 const VIDEO_SCENES = [
   {
     id: 0,
-    title: "Platform Overview",
-    description: "Introduction to the ABFI platform and its core capabilities for bioenergy supply chain management.",
+    title:"Platform Overview",
+    description:"Introduction to the ABFI platform and its core capabilities for bioenergy supply chain management.",
     startTime: 0,
     endTime: 46,
     icon: <Sprout className="w-5 h-5" />,
-    color: "#22c55e",
+    color:"#22c55e",
   },
   {
     id: 1,
-    title: "Data Integrity",
-    description: "How SHA-256 hashing and blockchain technology ensure tamper-proof evidence storage.",
+    title:"Data Integrity",
+    description:"How SHA-256 hashing and blockchain technology ensure tamper-proof evidence storage.",
     startTime: 47,
     endTime: 77, // 1:17
     icon: <Shield className="w-5 h-5" />,
-    color: "#D4AF37",
+    color:"#D4AF37",
   },
   {
     id: 2,
-    title: "Risk Intelligence",
-    description: "Real-time supply chain monitoring, weather alerts, and supply shock detection systems.",
+    title:"Risk Intelligence",
+    description:"Real-time supply chain monitoring, weather alerts, and supply shock detection systems.",
     startTime: 78, // 1:18
     endTime: 98, // 1:38
     icon: <BarChart3 className="w-5 h-5" />,
-    color: "#3b82f6",
+    color:"#3b82f6",
   },
   {
     id: 3,
-    title: "Bankability Scoring",
-    description: "How the ABFI rating framework assesses and rates feedstock suppliers for lender confidence.",
+    title:"Bankability Scoring",
+    description:"How the ABFI rating framework assesses and rates feedstock suppliers for lender confidence.",
     startTime: 99, // 1:39
     endTime: 125, // 2:05
     icon: <Zap className="w-5 h-5" />,
-    color: "#8b5cf6",
+    color:"#8b5cf6",
   },
 ];
 
 const EXPLAINER_CATEGORIES = [
   {
-    key: "sha256" as ExplainerKey,
+    key:"sha256" as ExplainerKey,
     icon: Hash,
-    color: "#D4AF37",
-    bgColor: "rgba(212, 175, 55, 0.1)",
+    color:"#D4AF37",
+    bgColor:"rgba(212, 175, 55, 0.1)",
   },
   {
-    key: "weather" as ExplainerKey,
+    key:"weather" as ExplainerKey,
     icon: Cloud,
-    color: "#3b82f6",
-    bgColor: "rgba(59, 130, 246, 0.1)",
+    color:"#3b82f6",
+    bgColor:"rgba(59, 130, 246, 0.1)",
   },
   {
-    key: "supplyShock" as ExplainerKey,
+    key:"supplyShock" as ExplainerKey,
     icon: AlertTriangle,
-    color: "#ef4444",
-    bgColor: "rgba(239, 68, 68, 0.1)",
+    color:"#ef4444",
+    bgColor:"rgba(239, 68, 68, 0.1)",
   },
   {
-    key: "futuresMarketplace" as ExplainerKey,
+    key:"futuresMarketplace" as ExplainerKey,
     icon: TrendingUp,
-    color: "#22c55e",
-    bgColor: "rgba(34, 197, 94, 0.1)",
+    color:"#22c55e",
+    bgColor:"rgba(34, 197, 94, 0.1)",
   },
   {
-    key: "rsieArchitecture" as ExplainerKey,
+    key:"rsieArchitecture" as ExplainerKey,
     icon: Database,
-    color: "#8b5cf6",
-    bgColor: "rgba(139, 92, 246, 0.1)",
+    color:"#8b5cf6",
+    bgColor:"rgba(139, 92, 246, 0.1)",
   },
 ];
 
 export default function Explainers() {
   const [activeExplainer, setActiveExplainer] = useState<ExplainerKey>("sha256");
-  const [activeTab, setActiveTab] = useState<"video" | "panels">("video");
+  const [activeTab, setActiveTab] = useState<"video" |"panels">("video");
   const activeSet = EXPLAINER_SETS[activeExplainer];
 
   return (
     <DashboardLayout>
-      <div style={{ background: "var(--bg-primary)" }}>
+      <div style={{ background:"var(--bg-primary)" }}>
         {/* Header */}
-      <div className="py-12 px-8" style={{ background: "var(--bg-secondary)", borderBottom: "1px solid var(--border-subtle)" }}>
+      <div className="py-12 px-8" style={{ background:"var(--bg-secondary)", borderBottom:"1px solid var(--border-subtle)" }}>
         <div className="max-w-6xl mx-auto">
-          <h1
+          <H1
             className="text-4xl mb-3"
             style={{
-              fontFamily: "'DM Serif Display', serif",
-              color: "var(--text-[#D4AF37])"
+              fontFamily:"'DM Serif Display', serif",
+              color:"var(--text-[#D4AF37])"
             }}
           >
             Platform Explainers
-          </h1>
-          <p className="text-lg" style={{ color: "var(--text-secondary)", maxWidth: "700px" }}>
+          </H1>
+          <p className="text-lg" style={{ color:"var(--text-secondary)", maxWidth:"700px" }}>
             Visual guides explaining how ABFI's technology protects your bioenergy investments
             through data integrity, weather intelligence, and supply chain monitoring.
           </p>
 
           {/* Tab Selector */}
           <div className="mt-6">
-            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "video" | "panels")}>
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as"video" |"panels")}>
               <TabsList className="bg-white/50">
                 <TabsTrigger value="video" className="flex items-center gap-2">
                   <Video className="w-4 h-4" />
@@ -142,7 +142,7 @@ export default function Explainers() {
 
       <div className="max-w-6xl mx-auto py-10 px-8">
         {/* Video Explainer Tab */}
-        {activeTab === "video" && (
+        {activeTab ==="video" && (
           <HeyGenExplainerVideo
             videoId={HEYGEN_VIDEO_ID}
             title="ABFI Platform Overview"
@@ -152,17 +152,17 @@ export default function Explainers() {
         )}
 
         {/* Interactive Panels Tab */}
-        {activeTab === "panels" && (
+        {activeTab ==="panels" && (
         <div className="grid grid-cols-12 gap-8">
           {/* Sidebar Navigation */}
           <div className="col-span-4">
             <div
               className="sticky top-8 rounded-2xl p-5"
-              style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-subtle)" }}
+              style={{ background:"var(--bg-secondary)", border:"1px solid var(--border-subtle)" }}
             >
-              <h2 className="text-sm font-semibold uppercase tracking-wide mb-4" style={{ color: "var(--text-tertiary)" }}>
+              <H2 className="text-sm font-semibold uppercase tracking-wide mb-4" style={{ color:"var(--text-tertiary)" }}>
                 Select Topic
-              </h2>
+              </H2>
               <nav className="space-y-2">
                 {EXPLAINER_CATEGORIES.map((category) => {
                   const Icon = category.icon;
@@ -174,14 +174,14 @@ export default function Explainers() {
                       key={category.key}
                       onClick={() => setActiveExplainer(category.key)}
                       className={`w-full text-left p-4 rounded-xl transition-all flex items-start gap-3 ${
-                        isActive ? "ring-2" : "hover:bg-opacity-50"
+                        isActive ?"ring-2" :"hover:bg-opacity-50"
                       }`}
                       style={{
-                        background: isActive ? category.bgColor : "transparent",
+                        background: isActive ? category.bgColor :"transparent",
                         outlineColor: category.color,
-                        borderColor: isActive ? category.color : "transparent",
+                        borderColor: isActive ? category.color :"transparent",
                         // @ts-expect-error CSS custom property for ring color
-                        "--tw-ring-color": category.color,
+"--tw-ring-color": category.color,
                       }}
                     >
                       <div
@@ -192,15 +192,15 @@ export default function Explainers() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <h3
+                          <H3
                             className="font-semibold text-sm truncate"
-                            style={{ color: isActive ? category.color : "var(--text-[#D4AF37])" }}
+                            style={{ color: isActive ? category.color :"var(--text-[#D4AF37])" }}
                           >
                             {set.title}
-                          </h3>
+                          </H3>
                           {isActive && <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: category.color }} />}
                         </div>
-                        <p className="text-xs mt-1 line-clamp-2" style={{ color: "var(--text-tertiary)" }}>
+                        <p className="text-xs mt-1 line-clamp-2" style={{ color:"var(--text-tertiary)" }}>
                           {set.panels.length} panels
                         </p>
                       </div>
@@ -210,15 +210,15 @@ export default function Explainers() {
               </nav>
 
               {/* Quick Stats */}
-              <div className="mt-6 pt-6" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+              <div className="mt-6 pt-6" style={{ borderTop:"1px solid var(--border-subtle)" }}>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: "var(--accent-gold)" }}>5</div>
-                    <div className="text-xs" style={{ color: "var(--text-tertiary)" }}>Topics</div>
+                    <div className="text-2xl font-bold" style={{ color:"var(--accent-gold)" }}>5</div>
+                    <div className="text-xs" style={{ color:"var(--text-tertiary)" }}>Topics</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold" style={{ color: "var(--accent-gold)" }}>30</div>
-                    <div className="text-xs" style={{ color: "var(--text-tertiary)" }}>Panels</div>
+                    <div className="text-2xl font-bold" style={{ color:"var(--accent-gold)" }}>30</div>
+                    <div className="text-xs" style={{ color:"var(--text-tertiary)" }}>Panels</div>
                   </div>
                 </div>
               </div>
@@ -236,13 +236,13 @@ export default function Explainers() {
             {/* Additional Context */}
             <div
               className="mt-6 p-6 rounded-xl"
-              style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-subtle)" }}
+              style={{ background:"var(--bg-secondary)", border:"1px solid var(--border-subtle)" }}
             >
-              <h3 className="font-semibold mb-3" style={{ color: "var(--text-[#D4AF37])" }}>
+              <H3 className="mb-3" style={{ color:"var(--text-[#D4AF37])" }}>
                 About This Topic
-              </h3>
-              <div className="prose prose-sm" style={{ color: "var(--text-secondary)" }}>
-                {activeExplainer === "sha256" && (
+              </H3>
+              <div className="prose prose-sm" style={{ color:"var(--text-secondary)" }}>
+                {activeExplainer ==="sha256" && (
                   <p>
                     SHA-256 cryptographic hashing creates unique digital fingerprints for all evidence uploaded
                     to the platform. Any modification to the original file—even a single bit—produces a completely
@@ -250,7 +250,7 @@ export default function Explainers() {
                     documents haven't been altered since upload.
                   </p>
                 )}
-                {activeExplainer === "weather" && (
+                {activeExplainer ==="weather" && (
                   <p>
                     Our weather intelligence system integrates real-time data from the Bureau of Meteorology,
                     satellite imagery, and forecast models to assess crop-specific risk windows. When conditions
@@ -258,21 +258,21 @@ export default function Explainers() {
                     impact contracts.
                   </p>
                 )}
-                {activeExplainer === "supplyShock" && (
+                {activeExplainer ==="supplyShock" && (
                   <p>
                     Supply shock detection continuously monitors for threats including bushfires (via FIRMS satellite data),
                     disease outbreaks, labor disruptions, and logistics failures. The system calculates exposure at the
                     contract level and proactively matches affected buyers with alternative suppliers.
                   </p>
                 )}
-                {activeExplainer === "futuresMarketplace" && (
+                {activeExplainer ==="futuresMarketplace" && (
                   <p>
                     The Futures Marketplace enables long-term contracting for perennial crops like bamboo, with yield
                     projections spanning up to 25 years. Suppliers create listings with year-by-year production estimates,
                     while buyers submit Expressions of Interest (EOI) to signal demand and negotiate terms.
                   </p>
                 )}
-                {activeExplainer === "rsieArchitecture" && (
+                {activeExplainer ==="rsieArchitecture" && (
                   <p>
                     The Real-time Supply Intelligence Engine (RSIE) aggregates data from 15+ sources including government
                     registries, satellite feeds, weather APIs, and news monitoring. Every data point is tagged with

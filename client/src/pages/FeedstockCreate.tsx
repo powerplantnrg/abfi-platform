@@ -7,32 +7,32 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { AUSTRALIAN_STATES, FEEDSTOCK_CATEGORIES } from "@/const";
-import { trpc } from "@/lib/trpc";
-import { ArrowLeft, Package } from "lucide-react";
-import { useState } from "react";
-import { Link, Redirect, useLocation } from "wouter";
-import { toast } from "sonner";
-import { H1, H3, Body } from "@/components/Typography";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
+import { AUSTRALIAN_STATES, FEEDSTOCK_CATEGORIES } from"@/const";
+import { trpc } from"@/lib/trpc";
+import { ArrowLeft, Package } from"lucide-react";
+import { useState } from"react";
+import { Link, Redirect, useLocation } from"wouter";
+import { toast } from"sonner";
+import { H1, H3, Body } from"@/components/Typography";
 
 export default function FeedstockCreate() {
   const { user, isAuthenticated } = useAuth();
@@ -59,12 +59,12 @@ export default function FeedstockCreate() {
   const createMutation = trpc.feedstocks.create.useMutation({
     onSuccess: () => {
       toast.success(
-        "Feedstock created successfully! Pending admin verification."
+"Feedstock created successfully! Pending admin verification."
       );
       setLocation("/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to create feedstock");
+      toast.error(error.message ||"Failed to create feedstock");
     },
   });
 
@@ -93,10 +93,10 @@ export default function FeedstockCreate() {
 
     if (productionMethod) {
       payload.productionMethod = productionMethod as
-        | "crop"
-        | "waste"
-        | "residue"
-        | "processing_byproduct";
+        |"crop"
+        |"waste"
+        |"residue"
+        |"processing_byproduct";
     }
 
     createMutation.mutate(payload);
@@ -358,9 +358,9 @@ export default function FeedstockCreate() {
 
             {/* Info Box */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-900 mb-2">
+              <H4 className="text-blue-900 mb-2">
                 After Submission
-              </h4>
+              </H4>
               <ul className="text-sm text-blue-800 space-y-1">
                 <li>
                   • Your feedstock will be reviewed by ABFI administrators
@@ -386,7 +386,7 @@ export default function FeedstockCreate() {
                 onClick={handleSubmit}
                 disabled={!canSubmit || createMutation.isPending}
               >
-                {createMutation.isPending ? "Creating..." : "Create Feedstock"}
+                {createMutation.isPending ?"Creating..." :"Create Feedstock"}
               </Button>
             </div>
           </CardContent>

@@ -8,28 +8,28 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { AUSTRALIAN_STATES } from "@/const";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
+import { AUSTRALIAN_STATES } from"@/const";
+import { trpc } from"@/lib/trpc";
 import {
   ArrowLeft,
   ShoppingCart,
@@ -37,12 +37,12 @@ import {
   CheckCircle2,
   Info,
   ArrowRight,
-} from "lucide-react";
-import { useState } from "react";
-import { Link, useLocation } from "wouter";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { H1, H3, Body } from "@/components/Typography";
+} from"lucide-react";
+import { useState } from"react";
+import { Link, useLocation } from"wouter";
+import { toast } from"sonner";
+import { cn } from"@/lib/utils";
+import { H1, H3, Body } from"@/components/Typography";
 
 export default function BuyerRegistration() {
   const { user, isAuthenticated } = useAuth();
@@ -50,7 +50,7 @@ export default function BuyerRegistration() {
 
   const [abn, setAbn] = useState("");
   const [companyName, setCompanyName] = useState("");
-  const [contactEmail, setContactEmail] = useState(user?.email || "");
+  const [contactEmail, setContactEmail] = useState(user?.email ||"");
   const [contactPhone, setContactPhone] = useState("");
   const [facilityName, setFacilityName] = useState("");
   const [facilityAddress, setFacilityAddress] = useState("");
@@ -66,7 +66,7 @@ export default function BuyerRegistration() {
       setLocation("/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.message || "Registration failed");
+      toast.error(error.message ||"Registration failed");
     },
   });
 
@@ -79,14 +79,14 @@ export default function BuyerRegistration() {
       facilityName: facilityName || undefined,
       facilityAddress: facilityAddress || undefined,
       facilityState: state as
-        | "NSW"
-        | "VIC"
-        | "QLD"
-        | "SA"
-        | "WA"
-        | "TAS"
-        | "NT"
-        | "ACT"
+        |"NSW"
+        |"VIC"
+        |"QLD"
+        |"SA"
+        |"WA"
+        |"TAS"
+        |"NT"
+        |"ACT"
         | undefined,
     });
   };
@@ -173,7 +173,7 @@ export default function BuyerRegistration() {
                 placeholder="12 345 678 901"
                 value={abn}
                 onChange={e =>
-                  setAbn(e.target.value.replace(/\D/g, "").slice(0, 11))
+                  setAbn(e.target.value.replace(/\D/g,"").slice(0, 11))
                 }
                 maxLength={11}
                 className="font-mono"
@@ -306,9 +306,9 @@ export default function BuyerRegistration() {
                   <Info className="h-4 w-4 text-info" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">
+                  <H4 className="text-foreground mb-2">
                     What You'll Get
-                  </h4>
+                  </H4>
                   <ul className="text-sm text-gray-600 space-y-1.5">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-info shrink-0 mt-0.5" />

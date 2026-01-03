@@ -8,27 +8,27 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -36,7 +36,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from"@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -44,14 +44,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/tabs";
+import { trpc } from"@/lib/trpc";
 import {
   BadgeCheck,
   Key,
@@ -69,43 +69,43 @@ import {
   AlertCircle,
   Copy,
   ExternalLink,
-} from "lucide-react";
-import { Redirect } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Redirect } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   PageWrapper,
   FadeInUp,
-} from "@/components/ui/motion";
-import DashboardLayout from "@/components/DashboardLayout";
-import { useState, useCallback } from "react";
-import { toast } from "sonner";
+} from"@/components/ui/motion";
+import DashboardLayout from"@/components/DashboardLayout";
+import { useState, useCallback } from"react";
+import { toast } from"sonner";
 
 // Stats card component
 function StatsCard({
   title,
   value,
   icon: Icon,
-  variant = "default",
+  variant ="default",
   description,
 }: {
   title: string;
   value: string | number;
   icon: React.ElementType;
-  variant?: "default" | "success" | "warning" | "info";
+  variant?:"default" |"success" |"warning" |"info";
   description?: string;
 }) {
   const variantStyles = {
-    default: "bg-white",
-    success: "bg-emerald-50 border-emerald-200",
-    warning: "bg-amber-50 border-amber-200",
-    info: "bg-blue-50 border-blue-200",
+    default:"bg-white",
+    success:"bg-emerald-50 border-emerald-200",
+    warning:"bg-amber-50 border-amber-200",
+    info:"bg-blue-50 border-blue-200",
   };
 
   const iconStyles = {
-    default: "text-slate-600",
-    success: "text-[#D4AF37]",
-    warning: "text-[#D4AF37]",
-    info: "text-blue-600",
+    default:"text-slate-600",
+    success:"text-[#D4AF37]",
+    warning:"text-[#D4AF37]",
+    info:"text-blue-600",
   };
 
   return (
@@ -121,8 +121,8 @@ function StatsCard({
           </div>
           <div
             className={cn(
-              "p-2 rounded-lg bg-slate-100",
-              variant !== "default" && "bg-white/50"
+"p-2 rounded-lg bg-slate-100",
+              variant !=="default" &&"bg-white/50"
             )}
           >
             <Icon className={cn("h-5 w-5", iconStyles[variant])} />
@@ -136,13 +136,13 @@ function StatsCard({
 // Status badge for credentials
 function CredentialStatusBadge({ status }: { status: string }) {
   const statusConfig: Record<string, { label: string; className: string; icon: React.ElementType }> = {
-    active: { label: "Active", className: "bg-emerald-100 text-emerald-800", icon: CheckCircle2 },
-    revoked: { label: "Revoked", className: "bg-red-100 text-red-800", icon: XCircle },
-    expired: { label: "Expired", className: "bg-slate-100 text-slate-800", icon: Clock },
-    suspended: { label: "Suspended", className: "bg-amber-100 text-amber-800", icon: AlertCircle },
+    active: { label:"Active", className:"bg-emerald-100 text-emerald-800", icon: CheckCircle2 },
+    revoked: { label:"Revoked", className:"bg-red-100 text-red-800", icon: XCircle },
+    expired: { label:"Expired", className:"bg-slate-100 text-slate-800", icon: Clock },
+    suspended: { label:"Suspended", className:"bg-amber-100 text-amber-800", icon: AlertCircle },
   };
 
-  const config = statusConfig[status] || { label: status, className: "bg-slate-100 text-slate-800", icon: AlertCircle };
+  const config = statusConfig[status] || { label: status, className:"bg-slate-100 text-slate-800", icon: AlertCircle };
   const Icon = config.icon;
 
   return (
@@ -189,9 +189,9 @@ function DIDDisplay({ did }: { did: string }) {
 function CreateDIDDialog({ onSuccess }: { onSuccess: () => void }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    controllerType: "organization" as "organization" | "user" | "system",
-    controllerId: "",
-    method: "did:web" as "did:web" | "did:ethr" | "did:key",
+    controllerType:"organization" as"organization" |"user" |"system",
+    controllerId:"",
+    method:"did:web" as"did:web" |"did:ethr" |"did:key",
   });
 
   const createMutation = trpc.vc.createDid.useMutation({
@@ -281,7 +281,7 @@ function CreateDIDDialog({ onSuccess }: { onSuccess: () => void }) {
               Cancel
             </Button>
             <Button type="submit" disabled={createMutation.isPending}>
-              {createMutation.isPending ? "Creating..." : "Create DID"}
+              {createMutation.isPending ?"Creating..." :"Create DID"}
             </Button>
           </div>
         </form>
@@ -294,10 +294,10 @@ function CreateDIDDialog({ onSuccess }: { onSuccess: () => void }) {
 function IssueCredentialDialog({ onSuccess }: { onSuccess: () => void }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    credentialType: "GQTierCredential" as const,
-    issuerDid: "",
-    subjectDid: "",
-    claimsSummary: "{}",
+    credentialType:"GQTierCredential" as const,
+    issuerDid:"",
+    subjectDid:"",
+    claimsSummary:"{}",
   });
 
   const issueMutation = trpc.vc.issueCredential.useMutation({
@@ -391,7 +391,7 @@ function IssueCredentialDialog({ onSuccess }: { onSuccess: () => void }) {
             <Input
               value={formData.claimsSummary}
               onChange={(e) => setFormData({ ...formData, claimsSummary: e.target.value })}
-              placeholder='{"tier": "GQ3", "score": 85}'
+              placeholder='{"tier":"GQ3","score": 85}'
             />
           </div>
 
@@ -400,7 +400,7 @@ function IssueCredentialDialog({ onSuccess }: { onSuccess: () => void }) {
               Cancel
             </Button>
             <Button type="submit" disabled={issueMutation.isPending}>
-              {issueMutation.isPending ? "Issuing..." : "Issue Credential"}
+              {issueMutation.isPending ?"Issuing..." :"Issue Credential"}
             </Button>
           </div>
         </form>
@@ -463,8 +463,8 @@ function VerifyCredentialDialog() {
 
           {verificationResult && (
             <div className={cn(
-              "p-4 rounded-lg",
-              verificationResult.valid ? "bg-emerald-50 border border-emerald-200" : "bg-red-50 border border-red-200"
+"p-4 rounded-lg",
+              verificationResult.valid ?"bg-emerald-50 border border-emerald-200" :"bg-red-50 border border-red-200"
             )}>
               <div className="flex items-center gap-2 mb-2">
                 {verificationResult.valid ? (
@@ -473,7 +473,7 @@ function VerifyCredentialDialog() {
                   <XCircle className="h-5 w-5 text-red-600" />
                 )}
                 <span className="font-medium">
-                  {verificationResult.valid ? "Valid Credential" : "Invalid Credential"}
+                  {verificationResult.valid ?"Valid Credential" :"Invalid Credential"}
                 </span>
               </div>
               {verificationResult.errors && verificationResult.errors.length > 0 && (
@@ -563,10 +563,10 @@ export default function CredentialsDashboard() {
         <FadeInUp className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 mb-1 flex items-center gap-3">
+              <H1 className="text-3xl  text-slate-900 mb-1 flex items-center gap-3">
                 <BadgeCheck className="h-8 w-8 text-purple-600" />
                 Verifiable Credentials
-              </h1>
+              </H1>
               <p className="text-gray-600">
                 W3C Verifiable Credentials and Decentralized Identifiers
               </p>
@@ -717,7 +717,7 @@ export default function CredentialsDashboard() {
                 <div className="text-center py-12 text-gray-600">
                   <Key className="h-12 w-12 mx-auto mb-3 opacity-50" />
                   <p>DID listing coming soon</p>
-                  <p className="text-sm">Use the "Create DID" button to register new identifiers</p>
+                  <p className="text-sm">Use the"Create DID" button to register new identifiers</p>
                 </div>
               </CardContent>
             </Card>
@@ -752,15 +752,15 @@ export default function CredentialsDashboard() {
           <CardContent>
             <div className="grid md:grid-cols-3 gap-4">
               {[
-                { type: "GQTierCredential", desc: "Grower Qualification tier attestation" },
-                { type: "SupplyAgreementCredential", desc: "Signed supply contract reference" },
-                { type: "EmissionsCertificate", desc: "Carbon emissions calculation certification" },
-                { type: "SustainabilityCertificate", desc: "Sustainability compliance attestation" },
-                { type: "DeliveryConfirmation", desc: "Consignment delivery verification" },
-                { type: "QualityAttestation", desc: "Feedstock quality test results" },
+                { type:"GQTierCredential", desc:"Grower Qualification tier attestation" },
+                { type:"SupplyAgreementCredential", desc:"Signed supply contract reference" },
+                { type:"EmissionsCertificate", desc:"Carbon emissions calculation certification" },
+                { type:"SustainabilityCertificate", desc:"Sustainability compliance attestation" },
+                { type:"DeliveryConfirmation", desc:"Consignment delivery verification" },
+                { type:"QualityAttestation", desc:"Feedstock quality test results" },
               ].map(({ type, desc }) => (
                 <div key={type} className="p-4 bg-slate-50 rounded-lg border">
-                  <h4 className="font-medium text-sm mb-1">{type}</h4>
+                  <H4 className="font-medium text-sm mb-1">{type}</H4>
                   <p className="text-xs text-gray-600">{desc}</p>
                 </div>
               ))}

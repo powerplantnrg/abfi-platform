@@ -8,35 +8,35 @@
  * - Typography components for consistent styling
  */
 
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { useFormAutoSave, AutoSaveIndicator } from "@/hooks/useFormAutoSave";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { trpc } from"@/lib/trpc";
+import { useFormAutoSave, AutoSaveIndicator } from"@/hooks/useFormAutoSave";
 
-import { Check, ChevronRight, ChevronLeft } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Check, ChevronRight, ChevronLeft } from"lucide-react";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Textarea } from"@/components/ui/textarea";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from"@/components/ui/select";
+import { Checkbox } from"@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from"@/components/ui/radio-group";
 
 const STEPS = [
-  { id: 1, label: "Project", title: "Project Overview" },
-  { id: 2, label: "Technology", title: "Technology Details" },
-  { id: 3, label: "Feedstock", title: "Feedstock Requirements" },
-  { id: 4, label: "Funding", title: "Funding Status" },
-  { id: 5, label: "Approvals", title: "Approvals & Permits" },
-  { id: 6, label: "Verification", title: "Verification" },
-  { id: 7, label: "Opportunities", title: "Opportunities" },
+  { id: 1, label:"Project", title:"Project Overview" },
+  { id: 2, label:"Technology", title:"Technology Details" },
+  { id: 3, label:"Feedstock", title:"Feedstock Requirements" },
+  { id: 4, label:"Funding", title:"Funding Status" },
+  { id: 5, label:"Approvals", title:"Approvals & Permits" },
+  { id: 6, label:"Verification", title:"Verification" },
+  { id: 7, label:"Opportunities", title:"Opportunities" },
 ];
 
 export default function ProjectRegistrationFlow() {
@@ -44,55 +44,55 @@ export default function ProjectRegistrationFlow() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Step 1: Project Overview
-    projectName: "",
-    developerName: "",
-    abn: "",
-    website: "",
-    region: "",
-    siteAddress: "",
-    developmentStage: "",
+    projectName:"",
+    developerName:"",
+    abn:"",
+    website:"",
+    region:"",
+    siteAddress:"",
+    developmentStage:"",
 
     // Step 2: Technology Details
-    conversionTechnology: "",
-    technologyProvider: "",
-    primaryOutput: "",
-    secondaryOutputs: "",
-    nameplateCapacity: "",
-    outputCapacity: "",
-    outputUnit: "",
+    conversionTechnology:"",
+    technologyProvider:"",
+    primaryOutput:"",
+    secondaryOutputs:"",
+    nameplateCapacity:"",
+    outputCapacity:"",
+    outputUnit:"",
 
     // Step 3: Feedstock Requirements
-    feedstockType: "",
-    secondaryFeedstocks: "",
-    annualFeedstockVolume: "",
-    feedstockQualitySpecs: "",
-    supplyRadius: "",
-    logisticsRequirements: "",
+    feedstockType:"",
+    secondaryFeedstocks:"",
+    annualFeedstockVolume:"",
+    feedstockQualitySpecs:"",
+    supplyRadius:"",
+    logisticsRequirements:"",
 
     // Step 4: Funding Status
-    totalCapex: "",
-    fundingSecured: "",
-    fundingSources: "",
-    investmentStage: "",
+    totalCapex:"",
+    fundingSecured:"",
+    fundingSources:"",
+    investmentStage:"",
     seekingInvestment: false,
-    investmentAmount: "",
+    investmentAmount:"",
 
     // Step 5: Approvals & Permits
     environmentalApproval: false,
     planningPermit: false,
     epaLicense: false,
-    otherApprovals: "",
-    approvalsNotes: "",
+    otherApprovals:"",
+    approvalsNotes:"",
 
     // Step 6: Verification
     verificationDocuments: [] as string[],
-    verificationNotes: "",
+    verificationNotes:"",
 
     // Step 7: Opportunities
     feedstockMatchingEnabled: true,
     financingInterest: false,
     partnershipInterest: false,
-    publicVisibility: "private",
+    publicVisibility:"private",
   });
 
   const updateFormData = (field: string, value: any) => {
@@ -101,7 +101,7 @@ export default function ProjectRegistrationFlow() {
 
   // Auto-save form data to localStorage
   const { savedData, saveStatus, lastSavedAt, clearSavedData } = useFormAutoSave({
-    key: "project-registration",
+    key:"project-registration",
     data: { formData, currentStep },
     version: 1,
     debounceMs: 1500,
@@ -132,12 +132,12 @@ export default function ProjectRegistrationFlow() {
       // Clear auto-saved draft on successful submission
       clearSavedData();
       alert(
-        "Project registered successfully! Your application has been submitted for review."
+"Project registered successfully! Your application has been submitted for review."
       );
       setLocation("/project-registration/success");
     },
     onError: error => {
-      alert(`Registration failed: ${error.message || "Please try again."}`);
+      alert(`Registration failed: ${error.message ||"Please try again."}`);
     },
   });
 
@@ -193,9 +193,9 @@ export default function ProjectRegistrationFlow() {
       <div className="relative max-w-4xl mx-auto px-6 py-12">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="font-serif text-3xl mb-2">
+          <H1 className="font-serif text-3xl mb-2">
             {STEPS[currentStep - 1].title}
-          </h1>
+          </H1>
           <div className="flex items-center justify-center gap-3">
             <p className="text-gray-400 text-sm">
               Step {currentStep} of {STEPS.length}
@@ -217,10 +217,10 @@ export default function ProjectRegistrationFlow() {
                 <div
                   className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-mono text-sm transition-colors ${
                     step.id < currentStep
-                      ? "bg-green-500 border-green-500 text-black"
+                      ?"bg-green-500 border-green-500 text-black"
                       : step.id === currentStep
-                        ? "bg-[#c9a962] border-[#c9a962] text-[#0a0f14]"
-                        : "bg-[#1a222d] border-[#1a222d] text-gray-500"
+                        ?"bg-[#c9a962] border-[#c9a962] text-[#0a0f14]"
+                        :"bg-[#1a222d] border-[#1a222d] text-gray-500"
                   }`}
                 >
                   {step.id < currentStep ? (
@@ -235,11 +235,11 @@ export default function ProjectRegistrationFlow() {
                 {idx < STEPS.length - 1 && (
                   <div
                     className={`absolute w-full h-0.5 top-5 left-1/2 -z-10 ${
-                      step.id < currentStep ? "bg-green-500" : "bg-[#1a222d]"
+                      step.id < currentStep ?"bg-green-500" :"bg-[#1a222d]"
                     }`}
                     style={{
                       width: `calc(100% / ${STEPS.length} - 40px)`,
-                      marginLeft: "20px",
+                      marginLeft:"20px",
                     }}
                   />
                 )}
@@ -405,27 +405,27 @@ function Step1({ formData, updateFormData }: any) {
         >
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {[
-              { value: "concept", label: "Concept", desc: "Early feasibility" },
+              { value:"concept", label:"Concept", desc:"Early feasibility" },
               {
-                value: "prefeasibility",
-                label: "Pre-Feasibility",
-                desc: "Initial studies",
+                value:"prefeasibility",
+                label:"Pre-Feasibility",
+                desc:"Initial studies",
               },
               {
-                value: "feasibility",
-                label: "Feasibility",
-                desc: "Detailed analysis",
+                value:"feasibility",
+                label:"Feasibility",
+                desc:"Detailed analysis",
               },
-              { value: "fid", label: "FID", desc: "Investment decision" },
+              { value:"fid", label:"FID", desc:"Investment decision" },
               {
-                value: "construction",
-                label: "Construction",
-                desc: "Under construction",
+                value:"construction",
+                label:"Construction",
+                desc:"Under construction",
               },
               {
-                value: "operational",
-                label: "Operational",
-                desc: "Currently operating",
+                value:"operational",
+                label:"Operational",
+                desc:"Currently operating",
               },
             ].map(stage => (
               <div

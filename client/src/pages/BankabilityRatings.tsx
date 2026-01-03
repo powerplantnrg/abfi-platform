@@ -9,13 +9,13 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { useLocation } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from"react";
+import { useLocation } from"wouter";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { ScrollArea } from"@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -23,7 +23,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Shield,
   Leaf,
@@ -39,102 +39,102 @@ import {
   ArrowRight,
   BarChart3,
   Info,
-} from "lucide-react";
-import { H1, H2, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"lucide-react";
+import { H1, H2, H3, Body, MetricValue, DataLabel } from"@/components/Typography";
 
 // Rating color schemes
 const getRatingColor = (rating: string) => {
   const colors: Record<string, string> = {
     // Overall Bankability
-    "AAA": "bg-[#D4AF37] text-black",
-    "AA": "bg-emerald-400 text-black",
-    "A": "bg-green-500 text-black",
-    "BBB": "bg-yellow-500 text-black",
-    "BB": "bg-[#D4AF37] text-black",
-    "B": "bg-orange-500 text-black",
-    "CCC": "bg-red-500 text-black",
-    "D": "bg-gray-700 text-black",
-    "N/R": "bg-gray-400 text-black",
+"AAA":"bg-[#D4AF37] text-black",
+"AA":"bg-emerald-400 text-black",
+"A":"bg-green-500 text-black",
+"BBB":"bg-yellow-500 text-black",
+"BB":"bg-[#D4AF37] text-black",
+"B":"bg-orange-500 text-black",
+"CCC":"bg-red-500 text-black",
+"D":"bg-gray-700 text-black",
+"N/R":"bg-gray-400 text-black",
     // Grower Contract
-    "GC1": "bg-[#D4AF37] text-black",
-    "GC2": "bg-green-500 text-black",
-    "GC3": "bg-[#D4AF37] text-black",
-    "GC4": "bg-red-500 text-black",
+"GC1":"bg-[#D4AF37] text-black",
+"GC2":"bg-green-500 text-black",
+"GC3":"bg-[#D4AF37] text-black",
+"GC4":"bg-red-500 text-black",
     // Technology Readiness
-    "TR1": "bg-[#D4AF37] text-black",
-    "TR2": "bg-green-500 text-black",
-    "TR3": "bg-[#D4AF37] text-black",
-    "TR4": "bg-red-500 text-black",
+"TR1":"bg-[#D4AF37] text-black",
+"TR2":"bg-green-500 text-black",
+"TR3":"bg-[#D4AF37] text-black",
+"TR4":"bg-red-500 text-black",
     // Carbon Intensity
-    "CI-A": "bg-[#D4AF37] text-black",
-    "CI-B": "bg-green-500 text-black",
-    "CI-C": "bg-[#D4AF37] text-black",
-    "CI-D": "bg-red-500 text-black",
+"CI-A":"bg-[#D4AF37] text-black",
+"CI-B":"bg-green-500 text-black",
+"CI-C":"bg-[#D4AF37] text-black",
+"CI-D":"bg-red-500 text-black",
     // Offtake Quality
-    "OQ1": "bg-[#D4AF37] text-black",
-    "OQ2": "bg-green-500 text-black",
-    "OQ3": "bg-[#D4AF37] text-black",
-    "OQ4": "bg-red-500 text-black",
+"OQ1":"bg-[#D4AF37] text-black",
+"OQ2":"bg-green-500 text-black",
+"OQ3":"bg-[#D4AF37] text-black",
+"OQ4":"bg-red-500 text-black",
     // Government Support
-    "GS1": "bg-[#D4AF37] text-black",
-    "GS2": "bg-green-500 text-black",
-    "GS3": "bg-[#D4AF37] text-black",
-    "GS4": "bg-red-500 text-black",
+"GS1":"bg-[#D4AF37] text-black",
+"GS2":"bg-green-500 text-black",
+"GS3":"bg-[#D4AF37] text-black",
+"GS4":"bg-red-500 text-black",
   };
-  return colors[rating] || "bg-gray-400 text-black";
+  return colors[rating] ||"bg-gray-400 text-black";
 };
 
 const getSignalColor = (signal: string) => {
-  if (signal.includes("BULLISH")) return "text-[#D4AF37] bg-emerald-50";
-  if (signal.includes("NEUTRAL")) return "text-[#D4AF37] bg-amber-50";
-  if (signal.includes("BEARISH")) return "text-red-600 bg-red-50";
-  return "text-gray-600 bg-gray-50";
+  if (signal.includes("BULLISH")) return"text-[#D4AF37] bg-emerald-50";
+  if (signal.includes("NEUTRAL")) return"text-[#D4AF37] bg-amber-50";
+  if (signal.includes("BEARISH")) return"text-red-600 bg-red-50";
+  return"text-gray-600 bg-gray-50";
 };
 
 // Rating taxonomy definitions
 const bankabilityRatings = [
-  { rating: "AAA", definition: "Investment Grade - Exceptional", appetite: "Strong institutional appetite", characteristics: "Proven technology, secured feedstock (GC1), investment-grade offtakers, government funding secured, operational or near-FID" },
-  { rating: "AA", definition: "Investment Grade - Strong", appetite: "Broad lender interest", characteristics: "Proven technology, strong feedstock security (GC1-GC2), quality offtakers, government support confirmed" },
-  { rating: "A", definition: "Investment Grade - Adequate", appetite: "Selective lender interest", characteristics: "Proven technology, adequate feedstock (GC2), credible offtakers, some government engagement" },
-  { rating: "BBB", definition: "Borderline Investment Grade", appetite: "Specialist lender interest", characteristics: "Technology proven elsewhere, feedstock arrangements developing (GC2-GC3), offtake discussions underway" },
-  { rating: "BB", definition: "Speculative - Moderate Risk", appetite: "Limited lender pool", characteristics: "Technology scaling, feedstock uncertain (GC3), offtake MOUs only, policy dependent" },
-  { rating: "B", definition: "Speculative - High Risk", appetite: "Specialist/venture only", characteristics: "First-of-kind technology, feedstock unproven (GC3-GC4), no binding offtake" },
-  { rating: "CCC", definition: "Speculative - Very High Risk", appetite: "Not currently financeable", characteristics: "Unproven technology, no feedstock security (GC4), no counterparties, fundamental feasibility questions" },
+  { rating:"AAA", definition:"Investment Grade - Exceptional", appetite:"Strong institutional appetite", characteristics:"Proven technology, secured feedstock (GC1), investment-grade offtakers, government funding secured, operational or near-FID" },
+  { rating:"AA", definition:"Investment Grade - Strong", appetite:"Broad lender interest", characteristics:"Proven technology, strong feedstock security (GC1-GC2), quality offtakers, government support confirmed" },
+  { rating:"A", definition:"Investment Grade - Adequate", appetite:"Selective lender interest", characteristics:"Proven technology, adequate feedstock (GC2), credible offtakers, some government engagement" },
+  { rating:"BBB", definition:"Borderline Investment Grade", appetite:"Specialist lender interest", characteristics:"Technology proven elsewhere, feedstock arrangements developing (GC2-GC3), offtake discussions underway" },
+  { rating:"BB", definition:"Speculative - Moderate Risk", appetite:"Limited lender pool", characteristics:"Technology scaling, feedstock uncertain (GC3), offtake MOUs only, policy dependent" },
+  { rating:"B", definition:"Speculative - High Risk", appetite:"Specialist/venture only", characteristics:"First-of-kind technology, feedstock unproven (GC3-GC4), no binding offtake" },
+  { rating:"CCC", definition:"Speculative - Very High Risk", appetite:"Not currently financeable", characteristics:"Unproven technology, no feedstock security (GC4), no counterparties, fundamental feasibility questions" },
 ];
 
 const growerContractRatings = [
-  { rating: "GC1", definition: "Secured - Binding Contracts", status: "Multi-year binding agreements with named growers/cooperatives; volume commitments ≥80% of requirements; price mechanisms disclosed; take-or-pay provisions", risk: "LOW" },
-  { rating: "GC2", definition: "Committed - Processor Agreements", status: "Binding agreements with mills/crushers/aggregators; processor has demonstrated grower relationships; volume commitments for project life", risk: "MEDIUM-LOW" },
-  { rating: "GC3", definition: "Indicative - MOUs/Partnerships", status: "Non-binding MOUs with processors or industry bodies; \"support\" letters from grower organizations; feasibility-stage discussions; no volume commitments", risk: "MEDIUM-HIGH" },
-  { rating: "GC4", definition: "Unsubstantiated - Aspirational", status: "No disclosed feedstock arrangements; claims of \"flexibility\" without supply security; spot market assumptions; greenfield agricultural development required", risk: "HIGH-CRITICAL" },
+  { rating:"GC1", definition:"Secured - Binding Contracts", status:"Multi-year binding agreements with named growers/cooperatives; volume commitments ≥80% of requirements; price mechanisms disclosed; take-or-pay provisions", risk:"LOW" },
+  { rating:"GC2", definition:"Committed - Processor Agreements", status:"Binding agreements with mills/crushers/aggregators; processor has demonstrated grower relationships; volume commitments for project life", risk:"MEDIUM-LOW" },
+  { rating:"GC3", definition:"Indicative - MOUs/Partnerships", status:"Non-binding MOUs with processors or industry bodies; \"support\" letters from grower organizations; feasibility-stage discussions; no volume commitments", risk:"MEDIUM-HIGH" },
+  { rating:"GC4", definition:"Unsubstantiated - Aspirational", status:"No disclosed feedstock arrangements; claims of \"flexibility\" without supply security; spot market assumptions; greenfield agricultural development required", risk:"HIGH-CRITICAL" },
 ];
 
 const technologyRatings = [
-  { rating: "TR1", trl: "TRL 9", definition: "Commercial - Proven at Scale", status: "Multiple commercial plants operating globally; technology licensor with track record" },
-  { rating: "TR2", trl: "TRL 7-8", definition: "Demonstration - Validated", status: "First commercial plant operating or commissioning; technology proven at scale" },
-  { rating: "TR3", trl: "TRL 5-6", definition: "Pilot - Scaling", status: "Pilot plant operational; commercial scale-up in progress; technology validation ongoing" },
-  { rating: "TR4", trl: "TRL 1-4", definition: "R&D - Developmental", status: "Laboratory or bench scale only; fundamental research phase; commercial pathway unproven" },
+  { rating:"TR1", trl:"TRL 9", definition:"Commercial - Proven at Scale", status:"Multiple commercial plants operating globally; technology licensor with track record" },
+  { rating:"TR2", trl:"TRL 7-8", definition:"Demonstration - Validated", status:"First commercial plant operating or commissioning; technology proven at scale" },
+  { rating:"TR3", trl:"TRL 5-6", definition:"Pilot - Scaling", status:"Pilot plant operational; commercial scale-up in progress; technology validation ongoing" },
+  { rating:"TR4", trl:"TRL 1-4", definition:"R&D - Developmental", status:"Laboratory or bench scale only; fundamental research phase; commercial pathway unproven" },
 ];
 
 const carbonIntensityRatings = [
-  { rating: "CI-A", range: "≤20 gCO₂e/MJ", reduction: "≥78%", eligibility: "Exceeds all current mandates; premium pricing eligible; CORSIA compliant" },
-  { rating: "CI-B", range: "21-35 gCO₂e/MJ", reduction: "61-77%", eligibility: "Meets EU RED III; Cleaner Fuels Program eligible (≤60 threshold); CORSIA compliant" },
-  { rating: "CI-C", range: "36-53 gCO₂e/MJ", reduction: "40-60%", eligibility: "Meets basic SAF definitions; may face regulatory threshold risk as standards tighten" },
-  { rating: "CI-D", range: "≥54 gCO₂e/MJ", reduction: "<40%", eligibility: "May not qualify as SAF under emerging frameworks; significant regulatory risk" },
+  { rating:"CI-A", range:"≤20 gCO₂e/MJ", reduction:"≥78%", eligibility:"Exceeds all current mandates; premium pricing eligible; CORSIA compliant" },
+  { rating:"CI-B", range:"21-35 gCO₂e/MJ", reduction:"61-77%", eligibility:"Meets EU RED III; Cleaner Fuels Program eligible (≤60 threshold); CORSIA compliant" },
+  { rating:"CI-C", range:"36-53 gCO₂e/MJ", reduction:"40-60%", eligibility:"Meets basic SAF definitions; may face regulatory threshold risk as standards tighten" },
+  { rating:"CI-D", range:"≥54 gCO₂e/MJ", reduction:"<40%", eligibility:"May not qualify as SAF under emerging frameworks; significant regulatory risk" },
 ];
 
 const offtakeQualityRatings = [
-  { rating: "OQ1", definition: "Investment Grade Binding", profile: "Binding HOA/contract with investment-grade counterparty (major airline, fuel major); volume and duration specified" },
-  { rating: "OQ2", definition: "Credible Committed", profile: "MOU with named creditworthy counterparty; exclusivity or priority arrangements; pricing framework agreed" },
-  { rating: "OQ3", definition: "Indicative Interest", profile: "Letters of support; industry partnership announcements; no volume or price commitment" },
-  { rating: "OQ4", definition: "Unsubstantiated", profile: "No disclosed offtake discussions; merchant market assumptions" },
+  { rating:"OQ1", definition:"Investment Grade Binding", profile:"Binding HOA/contract with investment-grade counterparty (major airline, fuel major); volume and duration specified" },
+  { rating:"OQ2", definition:"Credible Committed", profile:"MOU with named creditworthy counterparty; exclusivity or priority arrangements; pricing framework agreed" },
+  { rating:"OQ3", definition:"Indicative Interest", profile:"Letters of support; industry partnership announcements; no volume or price commitment" },
+  { rating:"OQ4", definition:"Unsubstantiated", profile:"No disclosed offtake discussions; merchant market assumptions" },
 ];
 
 const governmentSupportRatings = [
-  { rating: "GS1", definition: "Secured - Funds Committed", status: "ARENA/CEFC/state funding agreements executed; funds disbursed or committed" },
-  { rating: "GS2", definition: "Approved - Awaiting Disbursement", status: "Funding approved pending milestones; conditional commitments in place" },
-  { rating: "GS3", definition: "Engaged - Application Stage", status: "Active applications submitted; feasibility funding received; policy engagement ongoing" },
-  { rating: "GS4", definition: "No Government Engagement", status: "No disclosed government funding applications or support" },
+  { rating:"GS1", definition:"Secured - Funds Committed", status:"ARENA/CEFC/state funding agreements executed; funds disbursed or committed" },
+  { rating:"GS2", definition:"Approved - Awaiting Disbursement", status:"Funding approved pending milestones; conditional commitments in place" },
+  { rating:"GS3", definition:"Engaged - Application Stage", status:"Active applications submitted; feasibility funding received; policy engagement ongoing" },
+  { rating:"GS4", definition:"No Government Engagement", status:"No disclosed government funding applications or support" },
 ];
 
 export default function BankabilityRatings() {
@@ -146,7 +146,7 @@ export default function BankabilityRatings() {
       {/* Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <H1 className="text-2xl font-bold tracking-tight">ABFI Bankability Rating Framework</H1>
+          <H1 className="text-2xl  tracking-tight">ABFI Bankability Rating Framework</H1>
           <Body className="text-gray-600">Version 3.0 — Australian Biofuels Project Assessment System</Body>
         </div>
         <div className="flex gap-2">
@@ -206,7 +206,7 @@ export default function BankabilityRatings() {
         <CardContent className="p-4 flex items-start gap-3">
           <AlertTriangle className="h-5 w-5 text-[#D4AF37] mt-0.5 shrink-0" />
           <div>
-            <H3 className="font-semibold text-amber-900">Critical Finding: Universal Grower Contract Gap</H3>
+            <H3 className="text-amber-900">Critical Finding: Universal Grower Contract Gap</H3>
             <Body className="text-sm text-amber-800 mt-1">
               No Australian biofuels project achieves GC1 or GC2. Every project relies on aggregator relationships,
               mill partnerships without grower contracts, spot market assumptions, or non-existent agricultural development.
@@ -241,7 +241,7 @@ export default function BankabilityRatings() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {["AAA", "AA", "A", "BBB", "BB", "B", "CCC"].map(r => (
+                  {["AAA","AA","A","BBB","BB","B","CCC"].map(r => (
                     <Badge key={r} className={`${getRatingColor(r)} text-xs`}>{r}</Badge>
                   ))}
                 </div>
@@ -262,7 +262,7 @@ export default function BankabilityRatings() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {["GC1", "GC2", "GC3", "GC4"].map(r => (
+                  {["GC1","GC2","GC3","GC4"].map(r => (
                     <Badge key={r} className={`${getRatingColor(r)} text-xs`}>{r}</Badge>
                   ))}
                 </div>
@@ -283,7 +283,7 @@ export default function BankabilityRatings() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {["TR1", "TR2", "TR3", "TR4"].map(r => (
+                  {["TR1","TR2","TR3","TR4"].map(r => (
                     <Badge key={r} className={`${getRatingColor(r)} text-xs`}>{r}</Badge>
                   ))}
                 </div>
@@ -304,7 +304,7 @@ export default function BankabilityRatings() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {["CI-A", "CI-B", "CI-C", "CI-D"].map(r => (
+                  {["CI-A","CI-B","CI-C","CI-D"].map(r => (
                     <Badge key={r} className={`${getRatingColor(r)} text-xs`}>{r}</Badge>
                   ))}
                 </div>
@@ -325,7 +325,7 @@ export default function BankabilityRatings() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {["OQ1", "OQ2", "OQ3", "OQ4"].map(r => (
+                  {["OQ1","OQ2","OQ3","OQ4"].map(r => (
                     <Badge key={r} className={`${getRatingColor(r)} text-xs`}>{r}</Badge>
                   ))}
                 </div>
@@ -346,7 +346,7 @@ export default function BankabilityRatings() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {["GS1", "GS2", "GS3", "GS4"].map(r => (
+                  {["GS1","GS2","GS3","GS4"].map(r => (
                     <Badge key={r} className={`${getRatingColor(r)} text-xs`}>{r}</Badge>
                   ))}
                 </div>
@@ -392,7 +392,7 @@ export default function BankabilityRatings() {
                     <HelpCircle className="h-4 w-4 text-[#D4AF37] mt-1 shrink-0" />
                     <div>
                       <p className="font-medium text-sm">Investment Grade Threshold</p>
-                      <p className="text-xs text-gray-600">Only Malabar Biomethane achieves "A" rating with GC1, OQ1, and operational status.</p>
+                      <p className="text-xs text-gray-600">Only Malabar Biomethane achieves"A" rating with GC1, OQ1, and operational status.</p>
                     </div>
                   </div>
                 </div>
@@ -476,10 +476,10 @@ export default function BankabilityRatings() {
                         <TableCell className="text-sm text-gray-600">{item.status}</TableCell>
                         <TableCell>
                           <Badge variant="outline" className={
-                            item.risk === "LOW" ? "border-[#D4AF37] text-[#D4AF37]" :
-                            item.risk === "MEDIUM-LOW" ? "border-green-500 text-green-600" :
-                            item.risk === "MEDIUM-HIGH" ? "border-[#D4AF37] text-[#D4AF37]" :
-                            "border-red-500 text-red-600"
+                            item.risk ==="LOW" ?"border-[#D4AF37] text-[#D4AF37]" :
+                            item.risk ==="MEDIUM-LOW" ?"border-green-500 text-green-600" :
+                            item.risk ==="MEDIUM-HIGH" ?"border-[#D4AF37] text-[#D4AF37]" :
+"border-red-500 text-red-600"
                           }>
                             {item.risk}
                           </Badge>
@@ -574,10 +574,10 @@ export default function BankabilityRatings() {
 
               {/* Feedstock CI Multipliers */}
               <div className="mt-6 p-4 bg-slate-50 rounded-lg">
-                <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                <H4 className="text-sm mb-3 flex items-center gap-2">
                   <Info className="h-4 w-4" />
                   Feedstock CI Multipliers
-                </h4>
+                </H4>
                 <div className="grid md:grid-cols-2 gap-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">First-generation (food crops)</span>

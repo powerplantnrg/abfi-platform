@@ -8,25 +8,25 @@
  * - Typography components for consistent styling
  */
 
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -34,8 +34,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/table";
+import { Progress } from"@/components/ui/progress";
 import {
   Cloud,
   Sun,
@@ -55,8 +55,8 @@ import {
   ExternalLink,
   CloudLightning,
   Snowflake,
-} from "lucide-react";
-import { format } from "date-fns";
+} from"lucide-react";
+import { format } from"date-fns";
 
 // Weather condition icons
 const getWeatherIcon = (conditions: string) => {
@@ -71,24 +71,24 @@ const getWeatherIcon = (conditions: string) => {
 // Fire danger colors
 const getFireDangerColor = (rating: number) => {
   switch (rating) {
-    case 0: return "bg-gray-100 text-gray-800";
-    case 1: return "bg-green-100 text-green-800";
-    case 2: return "bg-yellow-100 text-yellow-800";
-    case 3: return "bg-orange-100 text-orange-800";
-    case 4: return "bg-red-100 text-red-800";
-    default: return "bg-gray-100 text-gray-800";
+    case 0: return"bg-gray-100 text-gray-800";
+    case 1: return"bg-green-100 text-green-800";
+    case 2: return"bg-yellow-100 text-yellow-800";
+    case 3: return"bg-orange-100 text-orange-800";
+    case 4: return"bg-red-100 text-red-800";
+    default: return"bg-gray-100 text-gray-800";
   }
 };
 
 // Drought status colors
 const getDroughtStatusColor = (status: string) => {
   switch (status.toLowerCase()) {
-    case "drought declared": return "bg-red-100 text-red-800";
-    case "drought watch": return "bg-orange-100 text-orange-800";
-    case "below average": return "bg-yellow-100 text-yellow-800";
-    case "recovering": return "bg-blue-100 text-blue-800";
-    case "normal": return "bg-green-100 text-green-800";
-    default: return "bg-gray-100 text-gray-800";
+    case"drought declared": return"bg-red-100 text-red-800";
+    case"drought watch": return"bg-orange-100 text-orange-800";
+    case"below average": return"bg-yellow-100 text-yellow-800";
+    case"recovering": return"bg-blue-100 text-blue-800";
+    case"normal": return"bg-green-100 text-green-800";
+    default: return"bg-gray-100 text-gray-800";
   }
 };
 
@@ -112,7 +112,7 @@ export default function BOMWeatherDashboard() {
     setLoading(true);
     setError(null);
     try {
-      const stateParam = selectedState !== "all" ? `?state=${selectedState}` : "";
+      const stateParam = selectedState !=="all" ? `?state=${selectedState}` :"";
 
       const [obsRes, forecastRes, fireRes, droughtRes, warningsRes, agRes] = await Promise.all([
         fetch(`/api/australian-data/bom/observations${stateParam}`),
@@ -168,7 +168,7 @@ export default function BOMWeatherDashboard() {
     <div className="container py-8">
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">BOM Weather Dashboard</h1>
+          <H1 className="text-3xl  mb-2">BOM Weather Dashboard</H1>
           <p className="text-gray-600">
             Bureau of Meteorology weather data for agricultural planning
           </p>
@@ -215,10 +215,10 @@ export default function BOMWeatherDashboard() {
                 <AlertTriangle className="h-6 w-6 text-amber-600" />
                 <div>
                   <p className="font-semibold text-amber-800">
-                    {warnings.activeCount} Active Weather Warning{warnings.activeCount > 1 ? "s" : ""}
+                    {warnings.activeCount} Active Weather Warning{warnings.activeCount > 1 ?"s" :""}
                   </p>
                   <p className="text-sm text-amber-700">
-                    {Object.entries(warnings.byType).map(([type, count]) => `${count} ${type}`).join(", ")}
+                    {Object.entries(warnings.byType).map(([type, count]) => `${count} ${type}`).join(",")}
                   </p>
                 </div>
               </div>
@@ -284,7 +284,7 @@ export default function BOMWeatherDashboard() {
               </div>
               <div>
                 <p className="text-sm text-gray-600">Season</p>
-                <p className="text-2xl font-bold">{agSummary?.season || "-"}</p>
+                <p className="text-2xl font-bold">{agSummary?.season ||"-"}</p>
               </div>
             </div>
           </CardContent>
@@ -349,16 +349,16 @@ export default function BOMWeatherDashboard() {
                   <div className="mt-4 pt-4 border-t">
                     <p className="text-sm font-medium mb-2">Agriculture Impact</p>
                     <div className="flex gap-2 flex-wrap">
-                      <Badge className={obs.agricultureImpact.heatStress === "High" ? "bg-red-100 text-red-800" : obs.agricultureImpact.heatStress === "Moderate" ? "bg-yellow-100 text-yellow-800" : "bg-green-100 text-green-800"}>
+                      <Badge className={obs.agricultureImpact.heatStress ==="High" ?"bg-red-100 text-red-800" : obs.agricultureImpact.heatStress ==="Moderate" ?"bg-yellow-100 text-yellow-800" :"bg-green-100 text-green-800"}>
                         Heat: {obs.agricultureImpact.heatStress}
                       </Badge>
-                      {obs.agricultureImpact.frostRisk !== "None" && (
+                      {obs.agricultureImpact.frostRisk !=="None" && (
                         <Badge className="bg-blue-100 text-blue-800">
                           <Snowflake className="h-3 w-3 mr-1" />
                           Frost: {obs.agricultureImpact.frostRisk}
                         </Badge>
                       )}
-                      <Badge className={obs.agricultureImpact.irrigationNeed === "High" ? "bg-amber-100 text-amber-800" : "bg-green-100 text-green-800"}>
+                      <Badge className={obs.agricultureImpact.irrigationNeed ==="High" ?"bg-amber-100 text-amber-800" :"bg-green-100 text-green-800"}>
                         Irrigation: {obs.agricultureImpact.irrigationNeed}
                       </Badge>
                     </div>
@@ -386,7 +386,7 @@ export default function BOMWeatherDashboard() {
                     {stationForecast.forecasts.map((day: any, dIndex: number) => (
                       <div key={dIndex} className="flex-shrink-0 w-32 text-center p-3 border rounded-lg">
                         <p className="font-medium text-sm">{day.dayName.slice(0, 3)}</p>
-                        <p className="text-xs text-gray-500">{format(new Date(day.date), "d MMM")}</p>
+                        <p className="text-xs text-gray-500">{format(new Date(day.date),"d MMM")}</p>
                         <div className="my-2">
                           {getWeatherIcon(day.conditions)}
                         </div>
@@ -406,11 +406,11 @@ export default function BOMWeatherDashboard() {
                           <Badge
                             variant="outline"
                             className={
-                              day.agricultureOutlook.harvestConditions === "Good"
-                                ? "text-green-600 border-green-300"
-                                : day.agricultureOutlook.harvestConditions === "Poor"
-                                  ? "text-red-600 border-red-300"
-                                  : "text-yellow-600 border-yellow-300"
+                              day.agricultureOutlook.harvestConditions ==="Good"
+                                ?"text-green-600 border-green-300"
+                                : day.agricultureOutlook.harvestConditions ==="Poor"
+                                  ?"text-red-600 border-red-300"
+                                  :"text-yellow-600 border-yellow-300"
                             }
                           >
                             {day.agricultureOutlook.harvestConditions}
@@ -465,7 +465,7 @@ export default function BOMWeatherDashboard() {
                       <p className="text-sm font-medium mb-2">Rating Legend</p>
                       <div className="flex flex-wrap gap-2">
                         {Object.entries(fireDanger.ratingLegend || {}).map(([key, val]: [string, any]) => (
-                          <Badge key={key} style={{ backgroundColor: val.color, color: "#fff" }}>
+                          <Badge key={key} style={{ backgroundColor: val.color, color:"#fff" }}>
                             {val.level}
                           </Badge>
                         ))}
@@ -548,7 +548,7 @@ export default function BOMWeatherDashboard() {
                               <p className="text-xs text-gray-500">{region.feedstock}</p>
                             </div>
                             <div className="text-right">
-                              <Badge className={region.impactLevel === "High" ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}>
+                              <Badge className={region.impactLevel ==="High" ?"bg-red-100 text-red-800" :"bg-yellow-100 text-yellow-800"}>
                                 {region.impactLevel}
                               </Badge>
                               <p className="text-xs text-gray-500 mt-1">-{region.productionReduction}%</p>
@@ -653,14 +653,14 @@ export default function BOMWeatherDashboard() {
                   <div className="space-y-4">
                     {Object.entries(agSummary.feedstockImplications).map(([key, value]: [string, any]) => (
                       <div key={key} className="p-3 border rounded-lg">
-                        <p className="font-medium capitalize">{key.replace(/([A-Z])/g, " $1").trim()}</p>
+                        <p className="font-medium capitalize">{key.replace(/([A-Z])/g," $1").trim()}</p>
                         <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                           <div>
                             <p className="text-gray-500">Availability</p>
                             <Badge className={
-                              value.availability.includes("Below") ? "bg-red-100 text-red-800" :
-                              value.availability.includes("Above") ? "bg-green-100 text-green-800" :
-                              "bg-gray-100 text-gray-800"
+                              value.availability.includes("Below") ?"bg-red-100 text-red-800" :
+                              value.availability.includes("Above") ?"bg-green-100 text-green-800" :
+"bg-gray-100 text-gray-800"
                             }>
                               {value.availability}
                             </Badge>
@@ -689,9 +689,9 @@ export default function BOMWeatherDashboard() {
                       <div className="flex items-center justify-between mb-2">
                         <p className="font-medium">{region.region}</p>
                         <Badge className={
-                          region.outlook === "Favorable" ? "bg-green-100 text-green-800" :
-                          region.outlook === "Challenging" ? "bg-red-100 text-red-800" :
-                          "bg-yellow-100 text-yellow-800"
+                          region.outlook ==="Favorable" ?"bg-green-100 text-green-800" :
+                          region.outlook ==="Challenging" ?"bg-red-100 text-red-800" :
+"bg-yellow-100 text-yellow-800"
                         }>
                           {region.outlook}
                         </Badge>
@@ -722,7 +722,7 @@ export default function BOMWeatherDashboard() {
       {/* Source Attribution */}
       <div className="mt-6 text-center text-sm text-gray-500">
         <p>
-          Data sourced from{" "}
+          Data sourced from{""}
           <a
             href="http://www.bom.gov.au/"
             target="_blank"

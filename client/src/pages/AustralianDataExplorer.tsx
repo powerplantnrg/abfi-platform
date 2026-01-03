@@ -15,13 +15,13 @@
  */
 
 
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from"@/components/ui/select";
 import {
   ArrowLeft,
   Cloud,
@@ -35,8 +35,8 @@ import {
   MapPin,
   RefreshCw,
   ExternalLink,
-} from "lucide-react";
-import { useLocation } from "wouter";
+} from"lucide-react";
+import { useLocation } from"wouter";
 
 interface ClimateData {
   location: { latitude: number; longitude: number };
@@ -197,7 +197,7 @@ export default function AustralianDataExplorer() {
       }
     } catch (err) {
       console.error("Failed to fetch climate data:", err);
-      setClimateError({ error: "Network error", message: "Failed to connect to climate data service" });
+      setClimateError({ error:"Network error", message:"Failed to connect to climate data service" });
     }
     setLoading(prev => ({ ...prev, climate: false }));
   };
@@ -216,7 +216,7 @@ export default function AustralianDataExplorer() {
       }
     } catch (err) {
       console.error("Failed to fetch soil data:", err);
-      setSoilError({ error: "Network error", message: "Failed to connect to soil data service" });
+      setSoilError({ error:"Network error", message:"Failed to connect to soil data service" });
     }
     setLoading(prev => ({ ...prev, soil: false }));
   };
@@ -236,13 +236,13 @@ export default function AustralianDataExplorer() {
       }
     } catch (err) {
       console.error("Failed to fetch carbon data:", err);
-      setCarbonError({ error: "Network error", message: "Failed to connect to carbon credits service" });
+      setCarbonError({ error:"Network error", message:"Failed to connect to carbon credits service" });
     }
     setLoading(prev => ({ ...prev, carbon: false }));
   };
 
   const formatNumber = (num: number, decimals = 1) => num.toFixed(decimals);
-  const formatVolume = (num: number) => (num / 1000000).toFixed(2) + "M";
+  const formatVolume = (num: number) => (num / 1000000).toFixed(2) +"M";
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -259,9 +259,9 @@ export default function AustralianDataExplorer() {
           </Button>
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <H1 className="text-3xl  text-gray-900">
                 Australian Data Explorer
-              </h1>
+              </H1>
               <p className="mt-2 text-gray-600">
                 Real-time environmental data for bioenergy feedstock analysis
               </p>
@@ -271,7 +271,7 @@ export default function AustralianDataExplorer() {
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-gray-400" />
               <Select
-                value={selectedRegion?.id || ""}
+                value={selectedRegion?.id ||""}
                 onValueChange={(id) => {
                   const region = regions.find(r => r.id === id);
                   if (region) setSelectedRegion(region);
@@ -320,7 +320,7 @@ export default function AustralianDataExplorer() {
                 <CardContent className="pt-6">
                   <div className="text-center">
                     <Cloud className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-orange-900">{climateError.error}</h3>
+                    <H3 className="text-lg  text-orange-900">{climateError.error}</H3>
                     <p className="text-orange-700 mt-2">{climateError.message}</p>
                     {climateError.sourceUrl && (
                       <a
@@ -466,7 +466,7 @@ export default function AustralianDataExplorer() {
                 <CardContent className="pt-6">
                   <div className="text-center">
                     <Leaf className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-orange-900">{soilError.error}</h3>
+                    <H3 className="text-lg  text-orange-900">{soilError.error}</H3>
                     <p className="text-orange-700 mt-2">{soilError.message}</p>
                     {soilError.sourceUrl && (
                       <a
@@ -488,7 +488,7 @@ export default function AustralianDataExplorer() {
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h3 className="text-lg font-semibold text-amber-900">Soil Analysis</h3>
+                        <H3 className="text-lg  text-amber-900">Soil Analysis</H3>
                         <p className="text-amber-700 mt-1">
                           Resolution: <span className="font-medium">{soilData.queryInfo.resolution}</span>
                         </p>
@@ -503,18 +503,18 @@ export default function AustralianDataExplorer() {
                 {/* Soil Summary Grid */}
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
-                    { key: "organicCarbon", label: "Organic Carbon", data: soilData.summary.organicCarbon },
-                    { key: "clay", label: "Clay Content", data: soilData.summary.clay },
-                    { key: "sand", label: "Sand Content", data: soilData.summary.sand },
-                    { key: "pH", label: "pH (Water)", data: soilData.summary.pH },
-                    { key: "bulkDensity", label: "Bulk Density", data: soilData.summary.bulkDensity },
-                    { key: "availableWater", label: "Available Water", data: soilData.summary.availableWater },
+                    { key:"organicCarbon", label:"Organic Carbon", data: soilData.summary.organicCarbon },
+                    { key:"clay", label:"Clay Content", data: soilData.summary.clay },
+                    { key:"sand", label:"Sand Content", data: soilData.summary.sand },
+                    { key:"pH", label:"pH (Water)", data: soilData.summary.pH },
+                    { key:"bulkDensity", label:"Bulk Density", data: soilData.summary.bulkDensity },
+                    { key:"availableWater", label:"Available Water", data: soilData.summary.availableWater },
                   ].map(({ key, label, data }) => (
                     <Card key={key}>
                       <CardContent className="pt-6">
                         <p className="text-sm text-gray-500">{label}</p>
                         <p className="text-2xl font-bold mt-1">
-                          {data.value !== null ? data.value.toFixed(2) : "N/A"} {data.unit}
+                          {data.value !== null ? data.value.toFixed(2) :"N/A"} {data.unit}
                         </p>
                         <p className="text-xs text-gray-400 mt-1">{data.depth}</p>
                       </CardContent>
@@ -549,7 +549,7 @@ export default function AustralianDataExplorer() {
                                 </td>
                                 {prop.layers.map((layer, i) => (
                                   <td key={i} className="text-right py-2 px-3">
-                                    {layer.value !== null ? layer.value.toFixed(2) : "-"}
+                                    {layer.value !== null ? layer.value.toFixed(2) :"-"}
                                   </td>
                                 ))}
                               </tr>
@@ -586,7 +586,7 @@ export default function AustralianDataExplorer() {
                 <CardContent className="pt-6">
                   <div className="text-center">
                     <TrendingUp className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-orange-900">{carbonError.error}</h3>
+                    <H3 className="text-lg  text-orange-900">{carbonError.error}</H3>
                     <p className="text-orange-700 mt-2">{carbonError.message}</p>
                     {carbonError.sourceUrl && (
                       <a
@@ -654,8 +654,8 @@ export default function AustralianDataExplorer() {
                   <Card>
                     <CardContent className="pt-6 text-center">
                       <p className="text-sm text-gray-500">Price Trend</p>
-                      <p className={`text-2xl font-bold flex items-center justify-center gap-2 ${carbonData.priceRange.trend === "rising" ? "text-green-600" : "text-red-600"}`}>
-                        {carbonData.priceRange.trend === "rising" ? <TrendingUp className="h-6 w-6" /> : <TrendingDown className="h-6 w-6" />}
+                      <p className={`text-2xl font-bold flex items-center justify-center gap-2 ${carbonData.priceRange.trend ==="rising" ?"text-green-600" :"text-red-600"}`}>
+                        {carbonData.priceRange.trend ==="rising" ? <TrendingUp className="h-6 w-6" /> : <TrendingDown className="h-6 w-6" />}
                         {carbonData.priceRange.trend.charAt(0).toUpperCase() + carbonData.priceRange.trend.slice(1)}
                       </p>
                     </CardContent>

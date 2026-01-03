@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -24,15 +24,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/table";
+import { Progress } from"@/components/ui/progress";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from"@/components/ui/dialog";
 import {
   Sun,
   Wind,
@@ -54,9 +54,9 @@ import {
   BarChart3,
   Users,
   Factory,
-} from "lucide-react";
-import { format } from "date-fns";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"lucide-react";
+import { format } from"date-fns";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 // Types
 interface ARENAProject {
@@ -65,7 +65,7 @@ interface ARENAProject {
   recipient: string;
   state: string;
   technology: string;
-  status: "active" | "completed" | "announced";
+  status:"active" |"completed" |"announced";
   arenaFunding: number;
   totalCost: number;
   startDate: string;
@@ -84,8 +84,8 @@ interface CEFCInvestment {
   recipient: string;
   state: string;
   sector: string;
-  investmentType: "debt" | "equity" | "guarantee";
-  status: "active" | "completed" | "announced";
+  investmentType:"debt" |"equity" |"guarantee";
+  status:"active" |"completed" |"announced";
   cefcCommitment: number;
   totalProjectValue: number;
   interestRate?: number;
@@ -99,7 +99,7 @@ interface CEFCInvestment {
   };
 }
 
-const COLORS = ["#10b981", "#3b82f6", "#8b5cf6", "#f59e0b", "#ef4444", "#06b6d4", "#ec4899"];
+const COLORS = ["#10b981","#3b82f6","#8b5cf6","#f59e0b","#ef4444","#06b6d4","#ec4899"];
 
 const TECHNOLOGY_ICONS: Record<string, React.ReactNode> = {
   Bioenergy: <Leaf className="h-4 w-4" />,
@@ -108,7 +108,7 @@ const TECHNOLOGY_ICONS: Record<string, React.ReactNode> = {
   Hydrogen: <Zap className="h-4 w-4" />,
   Storage: <Battery className="h-4 w-4" />,
   Transport: <Truck className="h-4 w-4" />,
-  "Energy Efficiency": <Building2 className="h-4 w-4" />,
+"Energy Efficiency": <Building2 className="h-4 w-4" />,
 };
 
 export default function ARENACEFCDashboard() {
@@ -127,7 +127,7 @@ export default function ARENACEFCDashboard() {
 
   const [selectedProject, setSelectedProject] = useState<ARENAProject | CEFCInvestment | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
-  const [detailsType, setDetailsType] = useState<"arena" | "cefc">("arena");
+  const [detailsType, setDetailsType] = useState<"arena" |"cefc">("arena");
 
   // Fetch data
   useEffect(() => {
@@ -181,19 +181,19 @@ export default function ARENACEFCDashboard() {
       return `$${(amount / 1000000).toFixed(1)}M`;
     }
     return new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
+      style:"currency",
+      currency:"AUD",
       minimumFractionDigits: 0,
     }).format(amount);
   };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "active":
+      case"active":
         return <Badge className="bg-green-100 text-green-800"><CheckCircle2 className="h-3 w-3 mr-1" />Active</Badge>;
-      case "completed":
+      case"completed":
         return <Badge className="bg-blue-100 text-blue-800"><CheckCircle2 className="h-3 w-3 mr-1" />Completed</Badge>;
-      case "announced":
+      case"announced":
         return <Badge className="bg-amber-100 text-amber-800"><Clock className="h-3 w-3 mr-1" />Announced</Badge>;
       default:
         return <Badge>{status}</Badge>;
@@ -202,11 +202,11 @@ export default function ARENACEFCDashboard() {
 
   const getInvestmentTypeBadge = (type: string) => {
     switch (type) {
-      case "debt":
+      case"debt":
         return <Badge className="bg-blue-100 text-blue-800">Debt</Badge>;
-      case "equity":
+      case"equity":
         return <Badge className="bg-purple-100 text-purple-800">Equity</Badge>;
-      case "guarantee":
+      case"guarantee":
         return <Badge className="bg-amber-100 text-amber-800">Guarantee</Badge>;
       default:
         return <Badge>{type}</Badge>;
@@ -215,18 +215,18 @@ export default function ARENACEFCDashboard() {
 
   // Filter projects
   const filteredArenaProjects = arenaProjects.filter((p) => {
-    const matchesState = selectedArenaState === "all" || p.state === selectedArenaState;
-    const matchesTech = selectedArenaTech === "all" || p.technology === selectedArenaTech;
+    const matchesState = selectedArenaState ==="all" || p.state === selectedArenaState;
+    const matchesTech = selectedArenaTech ==="all" || p.technology === selectedArenaTech;
     return matchesState && matchesTech;
   });
 
   const filteredCefcInvestments = cefcInvestments.filter((i) => {
-    const matchesSector = selectedCefcSector === "all" || i.sector === selectedCefcSector;
-    const matchesState = selectedCefcState === "all" || i.state === selectedCefcState;
+    const matchesSector = selectedCefcSector ==="all" || i.sector === selectedCefcSector;
+    const matchesState = selectedCefcState ==="all" || i.state === selectedCefcState;
     return matchesSector && matchesState;
   });
 
-  const openProjectDetails = (project: ARENAProject | CEFCInvestment, type: "arena" | "cefc") => {
+  const openProjectDetails = (project: ARENAProject | CEFCInvestment, type:"arena" |"cefc") => {
     setSelectedProject(project);
     setDetailsType(type);
     setDetailsOpen(true);
@@ -246,7 +246,7 @@ export default function ARENACEFCDashboard() {
     <div className="container py-8">
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">ARENA & CEFC Integration</h1>
+          <H1 className="text-3xl  mb-2">ARENA & CEFC Integration</H1>
           <p className="text-gray-600">
             Australian government clean energy funding and investment data
           </p>
@@ -279,7 +279,7 @@ export default function ARENACEFCDashboard() {
               <div>
                 <p className="text-sm text-green-700">ARENA Funding</p>
                 <p className="text-2xl font-bold text-green-900">
-                  {arenaStats ? formatCurrency(arenaStats.overview?.totalFundingCommitted || 0) : "-"}
+                  {arenaStats ? formatCurrency(arenaStats.overview?.totalFundingCommitted || 0) :"-"}
                 </p>
               </div>
             </div>
@@ -295,7 +295,7 @@ export default function ARENACEFCDashboard() {
               <div>
                 <p className="text-sm text-blue-700">CEFC Commitments</p>
                 <p className="text-2xl font-bold text-blue-900">
-                  {cefcStats ? formatCurrency(cefcStats.overview?.totalCommitments || 0) : "-"}
+                  {cefcStats ? formatCurrency(cefcStats.overview?.totalCommitments || 0) :"-"}
                 </p>
               </div>
             </div>
@@ -311,7 +311,7 @@ export default function ARENACEFCDashboard() {
               <div>
                 <p className="text-sm text-purple-700">CO2 Avoided</p>
                 <p className="text-2xl font-bold text-purple-900">
-                  {arenaStats ? `${((arenaStats.impact?.co2AvoidedAnnually || 0) / 1000000).toFixed(1)}M t` : "-"}
+                  {arenaStats ? `${((arenaStats.impact?.co2AvoidedAnnually || 0) / 1000000).toFixed(1)}M t` :"-"}
                 </p>
               </div>
             </div>
@@ -327,7 +327,7 @@ export default function ARENACEFCDashboard() {
               <div>
                 <p className="text-sm text-amber-700">Jobs Supported</p>
                 <p className="text-2xl font-bold text-amber-900">
-                  {arenaStats ? `${((arenaStats.impact?.jobsSupported || 0) / 1000).toFixed(1)}K` : "-"}
+                  {arenaStats ? `${((arenaStats.impact?.jobsSupported || 0) / 1000).toFixed(1)}K` :"-"}
                 </p>
               </div>
             </div>
@@ -424,7 +424,7 @@ export default function ARENACEFCDashboard() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => openProjectDetails(project, "arena")}
+                          onClick={() => openProjectDetails(project,"arena")}
                         >
                           View
                         </Button>
@@ -516,7 +516,7 @@ export default function ARENACEFCDashboard() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => openProjectDetails(investment, "cefc")}
+                          onClick={() => openProjectDetails(investment,"cefc")}
                         >
                           View
                         </Button>
@@ -570,7 +570,7 @@ export default function ARENACEFCDashboard() {
                     </div>
 
                     <div className="pt-4 border-t">
-                      <h4 className="font-semibold mb-3">Funding by Feedstock</h4>
+                      <H4 className="mb-3">Funding by Feedstock</H4>
                       <div className="space-y-2">
                         {bioenergyFunding.feedstockFocus?.map((item: any, index: number) => (
                           <div key={index} className="flex items-center justify-between">
@@ -601,10 +601,10 @@ export default function ARENACEFCDashboard() {
                 {bioenergyFunding?.upcomingOpportunities ? (
                   <div className="space-y-6">
                     <div>
-                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <H4 className="mb-3 flex items-center gap-2">
                         <Badge className="bg-green-100 text-green-800">ARENA</Badge>
                         Open Funding Rounds
-                      </h4>
+                      </H4>
                       <div className="space-y-3">
                         {bioenergyFunding.upcomingOpportunities.arenaCalls?.map((call: any, index: number) => (
                           <div key={index} className="p-3 border rounded-lg">
@@ -616,7 +616,7 @@ export default function ARENACEFCDashboard() {
                               <Badge variant="outline">{formatCurrency(call.funding)}</Badge>
                             </div>
                             <p className="text-xs text-gray-500 mt-2">
-                              Closes: {format(new Date(call.closes), "d MMM yyyy")}
+                              Closes: {format(new Date(call.closes),"d MMM yyyy")}
                             </p>
                           </div>
                         ))}
@@ -624,10 +624,10 @@ export default function ARENACEFCDashboard() {
                     </div>
 
                     <div>
-                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                      <H4 className="mb-3 flex items-center gap-2">
                         <Badge className="bg-blue-100 text-blue-800">CEFC</Badge>
                         Priority Areas
-                      </h4>
+                      </H4>
                       <div className="flex flex-wrap gap-2">
                         {bioenergyFunding.upcomingOpportunities.cefcPriorities?.map((priority: string, index: number) => (
                           <Badge key={index} variant="outline" className="text-sm">
@@ -778,17 +778,17 @@ export default function ARENACEFCDashboard() {
             <>
               <DialogHeader>
                 <DialogTitle>
-                  {detailsType === "arena" ? (selectedProject as ARENAProject).name : (selectedProject as CEFCInvestment).name}
+                  {detailsType ==="arena" ? (selectedProject as ARENAProject).name : (selectedProject as CEFCInvestment).name}
                 </DialogTitle>
                 <DialogDescription>
-                  {detailsType === "arena" ? "ARENA Funded Project" : "CEFC Investment"}
+                  {detailsType ==="arena" ?"ARENA Funded Project" :"CEFC Investment"}
                 </DialogDescription>
               </DialogHeader>
 
               <div className="space-y-4 mt-4">
                 <div className="flex items-center gap-2">
                   {getStatusBadge(selectedProject.status)}
-                  {detailsType === "cefc" && getInvestmentTypeBadge((selectedProject as CEFCInvestment).investmentType)}
+                  {detailsType ==="cefc" && getInvestmentTypeBadge((selectedProject as CEFCInvestment).investmentType)}
                   <Badge variant="outline" className="flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
                     {selectedProject.state}
@@ -798,11 +798,11 @@ export default function ARENACEFCDashboard() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="p-4 bg-gray-50 rounded-lg">
                     <p className="text-sm text-gray-600">
-                      {detailsType === "arena" ? "ARENA Funding" : "CEFC Commitment"}
+                      {detailsType ==="arena" ?"ARENA Funding" :"CEFC Commitment"}
                     </p>
                     <p className="text-2xl font-bold">
                       {formatCurrency(
-                        detailsType === "arena"
+                        detailsType ==="arena"
                           ? (selectedProject as ARENAProject).arenaFunding
                           : (selectedProject as CEFCInvestment).cefcCommitment
                       )}
@@ -812,7 +812,7 @@ export default function ARENACEFCDashboard() {
                     <p className="text-sm text-gray-600">Total Project Value</p>
                     <p className="text-2xl font-bold">
                       {formatCurrency(
-                        detailsType === "arena"
+                        detailsType ==="arena"
                           ? (selectedProject as ARENAProject).totalCost
                           : (selectedProject as CEFCInvestment).totalProjectValue
                       )}
@@ -821,16 +821,16 @@ export default function ARENACEFCDashboard() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Description</h4>
+                  <H4 className="mb-2">Description</H4>
                   <p className="text-gray-600">{selectedProject.description}</p>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Recipient</h4>
+                  <H4 className="mb-2">Recipient</H4>
                   <p>{selectedProject.recipient}</p>
                 </div>
 
-                {detailsType === "cefc" && (selectedProject as CEFCInvestment).interestRate && (
+                {detailsType ==="cefc" && (selectedProject as CEFCInvestment).interestRate && (
                   <div className="flex gap-4">
                     <div>
                       <p className="text-sm text-gray-600">Interest Rate</p>
@@ -845,7 +845,7 @@ export default function ARENACEFCDashboard() {
 
                 {selectedProject.outcomes && (
                   <div>
-                    <h4 className="font-semibold mb-2">Expected Outcomes</h4>
+                    <H4 className="mb-2">Expected Outcomes</H4>
                     <div className="grid grid-cols-3 gap-3">
                       {selectedProject.outcomes.capacity && (
                         <div className="p-3 bg-blue-50 rounded-lg text-center">
@@ -879,12 +879,12 @@ export default function ARENACEFCDashboard() {
                 <div className="flex justify-end gap-2 pt-4">
                   <Button variant="outline" asChild>
                     <a
-                      href={detailsType === "arena" ? "https://arena.gov.au/projects/" : "https://www.cefc.com.au/where-we-invest/"}
+                      href={detailsType ==="arena" ?"https://arena.gov.au/projects/" :"https://www.cefc.com.au/where-we-invest/"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <ExternalLink className="h-4 w-4 mr-2" />
-                      View on {detailsType === "arena" ? "ARENA" : "CEFC"} Website
+                      View on {detailsType ==="arena" ?"ARENA" :"CEFC"} Website
                     </a>
                   </Button>
                 </div>

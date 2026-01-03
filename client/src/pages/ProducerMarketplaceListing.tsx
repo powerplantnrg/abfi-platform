@@ -9,28 +9,28 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Button } from "@/components/ui/Button";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
+import { Progress } from"@/components/ui/progress";
 import {
   Leaf,
   ArrowLeft,
@@ -38,40 +38,40 @@ import {
   DollarSign,
   Truck,
   Package,
-} from "lucide-react";
-import { Link } from "wouter";
-import { Checkbox } from "@/components/ui/checkbox";
+} from"lucide-react";
+import { Link } from"wouter";
+import { Checkbox } from"@/components/ui/checkbox";
 
 export default function ProducerMarketplaceListing() {
   const [, setLocation] = useLocation();
   const [listingData, setListingData] = useState({
     // Availability
-    availableVolumeTonnes: "",
-    minimumOrderTonnes: "",
-    maximumOrderTonnes: "",
-    availabilityStartDate: "",
-    availabilityEndDate: "",
+    availableVolumeTonnes:"",
+    minimumOrderTonnes:"",
+    maximumOrderTonnes:"",
+    availabilityStartDate:"",
+    availabilityEndDate:"",
     // Pricing
-    priceModel: "",
-    basePrice: "",
+    priceModel:"",
+    basePrice:"",
     priceNegotiable: false,
     volumeDiscounts: false,
     // Logistics
-    storageLocation: "",
-    loadingFacilities: "",
+    storageLocation:"",
+    loadingFacilities:"",
     deliveryOptions: [] as string[],
-    deliveryRadius: "",
+    deliveryRadius:"",
     packagingOptions: [] as string[],
     // Quality
-    moistureContent: "",
-    ashContent: "",
-    energyContent: "",
-    qualityAssurance: "",
+    moistureContent:"",
+    ashContent:"",
+    energyContent:"",
+    qualityAssurance:"",
     certifications: [] as string[],
   });
 
   const toggleArrayValue = (
-    field: "deliveryOptions" | "packagingOptions" | "certifications",
+    field:"deliveryOptions" |"packagingOptions" |"certifications",
     value: string
   ) => {
     setListingData(prev => ({
@@ -85,7 +85,7 @@ export default function ProducerMarketplaceListing() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem(
-      "producerRegistration",
+"producerRegistration",
       JSON.stringify({
         step: 7,
         data: { listingData },
@@ -140,9 +140,9 @@ export default function ProducerMarketplaceListing() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Package className="h-5 w-5 text-[#F4C430]" />
-                    <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                    <H3 className="text-lg  text-[#0F3A5C]">
                       Availability
-                    </h3>
+                    </H3>
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-3">
@@ -231,9 +231,9 @@ export default function ProducerMarketplaceListing() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <DollarSign className="h-5 w-5 text-[#F4C430]" />
-                    <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                    <H3 className="text-lg  text-[#0F3A5C]">
                       Pricing
-                    </h3>
+                    </H3>
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-2">
@@ -264,7 +264,7 @@ export default function ProducerMarketplaceListing() {
                       </Select>
                     </div>
 
-                    {listingData.priceModel !== "tender" && (
+                    {listingData.priceModel !=="tender" && (
                       <div className="space-y-2">
                         <Label>Base Price (AUD/tonne) *</Label>
                         <Input
@@ -277,7 +277,7 @@ export default function ProducerMarketplaceListing() {
                               basePrice: e.target.value,
                             }))
                           }
-                          required={listingData.priceModel !== "tender"}
+                          required={listingData.priceModel !=="tender"}
                         />
                       </div>
                     )}
@@ -328,9 +328,9 @@ export default function ProducerMarketplaceListing() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Truck className="h-5 w-5 text-[#F4C430]" />
-                    <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                    <H3 className="text-lg  text-[#0F3A5C]">
                       Logistics
-                    </h3>
+                    </H3>
                   </div>
 
                   <div className="space-y-2">
@@ -379,7 +379,7 @@ export default function ProducerMarketplaceListing() {
                   <div className="space-y-3">
                     <Label>Delivery Options * (select all that apply)</Label>
                     <div className="grid gap-2 md:grid-cols-2">
-                      {["ex_works", "delivered", "both"].map(option => (
+                      {["ex_works","delivered","both"].map(option => (
                         <div
                           key={option}
                           className="flex items-center space-x-2"
@@ -397,11 +397,11 @@ export default function ProducerMarketplaceListing() {
                             htmlFor={`delivery_${option}`}
                             className="cursor-pointer"
                           >
-                            {option === "ex_works" &&
-                              "Ex-Works (buyer collects)"}
-                            {option === "delivered" &&
-                              "Delivered (seller delivers)"}
-                            {option === "both" && "Both options available"}
+                            {option ==="ex_works" &&
+"Ex-Works (buyer collects)"}
+                            {option ==="delivered" &&
+"Delivered (seller delivers)"}
+                            {option ==="both" &&"Both options available"}
                           </Label>
                         </div>
                       ))}
@@ -428,7 +428,7 @@ export default function ProducerMarketplaceListing() {
                   <div className="space-y-3">
                     <Label>Packaging Options * (select all that apply)</Label>
                     <div className="grid gap-2 md:grid-cols-2">
-                      {["bulk", "baled", "bagged", "chipped"].map(option => (
+                      {["bulk","baled","bagged","chipped"].map(option => (
                         <div
                           key={option}
                           className="flex items-center space-x-2"
@@ -456,9 +456,9 @@ export default function ProducerMarketplaceListing() {
 
                 {/* Quality Specifications */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                  <H3 className="text-lg  text-[#0F3A5C]">
                     Quality Specifications
-                  </h3>
+                  </H3>
 
                   <div className="grid gap-4 md:grid-cols-3">
                     <div className="space-y-2">
@@ -547,7 +547,7 @@ export default function ProducerMarketplaceListing() {
                   <div className="space-y-3">
                     <Label>Certifications (select all that apply)</Label>
                     <div className="grid gap-2 md:grid-cols-2">
-                      {["iscc", "rsb", "organic", "iso9001", "iso14001"].map(
+                      {["iscc","rsb","organic","iso9001","iso14001"].map(
                         cert => (
                           <div
                             key={cert}
@@ -566,11 +566,11 @@ export default function ProducerMarketplaceListing() {
                               htmlFor={`cert_${cert}`}
                               className="cursor-pointer uppercase"
                             >
-                              {cert === "iscc" && "ISCC"}
-                              {cert === "rsb" && "RSB"}
-                              {cert === "organic" && "Organic Certified"}
-                              {cert === "iso9001" && "ISO 9001"}
-                              {cert === "iso14001" && "ISO 14001"}
+                              {cert ==="iscc" &&"ISCC"}
+                              {cert ==="rsb" &&"RSB"}
+                              {cert ==="organic" &&"Organic Certified"}
+                              {cert ==="iso9001" &&"ISO 9001"}
+                              {cert ==="iso14001" &&"ISO 14001"}
                             </Label>
                           </div>
                         )

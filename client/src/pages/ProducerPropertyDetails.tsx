@@ -9,50 +9,50 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Button } from "@/components/ui/Button";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { Progress } from "@/components/ui/progress";
-import { Leaf, ArrowLeft, ArrowRight, Upload } from "lucide-react";
-import { Link } from "wouter";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
+import { Progress } from"@/components/ui/progress";
+import { Leaf, ArrowLeft, ArrowRight, Upload } from"lucide-react";
+import { Link } from"wouter";
 
 export default function ProducerPropertyDetails() {
   const [, setLocation] = useLocation();
   const [formData, setFormData] = useState({
-    propertyName: "",
-    address: "",
-    postcode: "",
-    state: "",
-    region: "",
-    totalLandArea: "",
-    cultivatedArea: "",
-    propertyType: "",
-    waterAccessType: "",
-    lotPlanNumbers: "",
+    propertyName:"",
+    address:"",
+    postcode:"",
+    state:"",
+    region:"",
+    totalLandArea:"",
+    cultivatedArea:"",
+    propertyType:"",
+    waterAccessType:"",
+    lotPlanNumbers:"",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem(
-      "producerRegistration",
+"producerRegistration",
       JSON.stringify({
         step: 3,
         data: { ...formData },
@@ -105,9 +105,9 @@ export default function ProducerPropertyDetails() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Property Identification */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                  <H3 className="text-lg  text-[#0F3A5C]">
                     Property Identification
-                  </h3>
+                  </H3>
 
                   <div className="space-y-2">
                     <Label htmlFor="propertyName">Property Name *</Label>
@@ -177,7 +177,7 @@ export default function ProducerPropertyDetails() {
                         onChange={e =>
                           setFormData(prev => ({
                             ...prev,
-                            postcode: e.target.value.replace(/\D/g, ""),
+                            postcode: e.target.value.replace(/\D/g,""),
                           }))
                         }
                         required
@@ -203,9 +203,9 @@ export default function ProducerPropertyDetails() {
 
                 {/* Land Details */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                  <H3 className="text-lg  text-[#0F3A5C]">
                     Land Details
-                  </h3>
+                  </H3>
 
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
@@ -308,9 +308,9 @@ export default function ProducerPropertyDetails() {
 
                 {/* Legal Identifiers */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-[#0F3A5C]">
+                  <H3 className="text-lg  text-[#0F3A5C]">
                     Legal Identifiers (Optional)
-                  </h3>
+                  </H3>
 
                   <div className="space-y-2">
                     <Label htmlFor="lotPlanNumbers">Lot/Plan Numbers</Label>

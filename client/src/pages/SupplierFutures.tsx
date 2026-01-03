@@ -8,22 +8,22 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, Body } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, Body } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Progress } from "@/components/ui/progress";
-import { trpc } from "@/lib/trpc";
-import DashboardLayout from "@/components/DashboardLayout";
-import { PageContainer } from "@/components/layout";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Progress } from"@/components/ui/progress";
+import { trpc } from"@/lib/trpc";
+import DashboardLayout from"@/components/DashboardLayout";
+import { PageContainer } from"@/components/layout";
 import {
   Sprout,
   Plus,
@@ -38,21 +38,21 @@ import {
   Users,
   ArrowRight,
   Package,
-} from "lucide-react";
-import { Link, useLocation } from "wouter";
-import { formatDate } from "@/const";
+} from"lucide-react";
+import { Link, useLocation } from"wouter";
+import { formatDate } from"@/const";
 
 const CROP_TYPE_LABELS: Record<string, string> = {
-  bamboo: "Bamboo",
-  rotation_forestry: "Rotation Forestry",
-  eucalyptus: "Eucalyptus",
-  poplar: "Poplar",
-  willow: "Willow",
-  miscanthus: "Miscanthus",
-  switchgrass: "Switchgrass",
-  arundo_donax: "Arundo Donax",
-  hemp: "Industrial Hemp",
-  other_perennial: "Other Perennial",
+  bamboo:"Bamboo",
+  rotation_forestry:"Rotation Forestry",
+  eucalyptus:"Eucalyptus",
+  poplar:"Poplar",
+  willow:"Willow",
+  miscanthus:"Miscanthus",
+  switchgrass:"Switchgrass",
+  arundo_donax:"Arundo Donax",
+  hemp:"Industrial Hemp",
+  other_perennial:"Other Perennial",
 };
 
 const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -72,61 +72,61 @@ const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
 const MOCK_FUTURES = [
   {
     id: 1,
-    futuresId: "FUT-2025-0001",
-    title: "Hunter Valley Eucalyptus Plantation",
-    cropType: "eucalyptus",
-    cropVariety: "E. grandis",
-    state: "NSW",
-    region: "Hunter Valley",
-    landAreaHectares: "2500",
+    futuresId:"FUT-2025-0001",
+    title:"Hunter Valley Eucalyptus Plantation",
+    cropType:"eucalyptus",
+    cropVariety:"E. grandis",
+    state:"NSW",
+    region:"Hunter Valley",
+    landAreaHectares:"2500",
     projectionStartYear: 2025,
     projectionEndYear: 2035,
-    totalProjectedTonnes: "250000",
-    totalContractedTonnes: "75000",
-    totalAvailableTonnes: "175000",
-    indicativePricePerTonne: "120.00",
-    status: "active",
-    publishedAt: "2025-01-15",
-    createdAt: "2025-01-10",
+    totalProjectedTonnes:"250000",
+    totalContractedTonnes:"75000",
+    totalAvailableTonnes:"175000",
+    indicativePricePerTonne:"120.00",
+    status:"active",
+    publishedAt:"2025-01-15",
+    createdAt:"2025-01-10",
     eoiCounts: { total: 5, pending: 2, accepted: 2, declined: 1 },
   },
   {
     id: 2,
-    futuresId: "FUT-2025-0002",
-    title: "Gippsland Miscanthus Farm",
-    cropType: "miscanthus",
-    cropVariety: "M. x giganteus",
-    state: "VIC",
-    region: "Gippsland",
-    landAreaHectares: "800",
+    futuresId:"FUT-2025-0002",
+    title:"Gippsland Miscanthus Farm",
+    cropType:"miscanthus",
+    cropVariety:"M. x giganteus",
+    state:"VIC",
+    region:"Gippsland",
+    landAreaHectares:"800",
     projectionStartYear: 2025,
     projectionEndYear: 2040,
-    totalProjectedTonnes: "120000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "120000",
-    indicativePricePerTonne: "95.00",
-    status: "active",
-    publishedAt: "2025-01-20",
-    createdAt: "2025-01-18",
+    totalProjectedTonnes:"120000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"120000",
+    indicativePricePerTonne:"95.00",
+    status:"active",
+    publishedAt:"2025-01-20",
+    createdAt:"2025-01-18",
     eoiCounts: { total: 3, pending: 3, accepted: 0, declined: 0 },
   },
   {
     id: 3,
-    futuresId: "FUT-2025-0003",
-    title: "Wide Bay Bamboo Plantation",
-    cropType: "bamboo",
-    state: "QLD",
-    region: "Wide Bay",
-    landAreaHectares: "400",
+    futuresId:"FUT-2025-0003",
+    title:"Wide Bay Bamboo Plantation",
+    cropType:"bamboo",
+    state:"QLD",
+    region:"Wide Bay",
+    landAreaHectares:"400",
     projectionStartYear: 2026,
     projectionEndYear: 2036,
-    totalProjectedTonnes: "60000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "60000",
+    totalProjectedTonnes:"60000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"60000",
     indicativePricePerTonne: null,
-    status: "draft",
+    status:"draft",
     publishedAt: null,
-    createdAt: "2025-01-25",
+    createdAt:"2025-01-25",
     eoiCounts: { total: 0, pending: 0, accepted: 0, declined: 0 },
   },
 ];
@@ -158,40 +158,40 @@ export default function SupplierFutures() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "draft":
-        return "bg-gray-100 text-gray-800";
-      case "partially_contracted":
-        return "bg-blue-100 text-blue-800";
-      case "fully_contracted":
-        return "bg-purple-100 text-purple-800";
-      case "expired":
-        return "bg-orange-100 text-orange-800";
-      case "cancelled":
-        return "bg-red-100 text-red-800";
+      case"active":
+        return"bg-green-100 text-green-800";
+      case"draft":
+        return"bg-gray-100 text-gray-800";
+      case"partially_contracted":
+        return"bg-blue-100 text-blue-800";
+      case"fully_contracted":
+        return"bg-purple-100 text-purple-800";
+      case"expired":
+        return"bg-orange-100 text-orange-800";
+      case"cancelled":
+        return"bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
   const formatStatusLabel = (status: string) => {
-    return status.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+    return status.replace(/_/g,"").replace(/\b\w/g, l => l.toUpperCase());
   };
 
   // Calculate stats
   const stats = {
-    active: futures?.filter((f: any) => f.status === "active").length || 0,
+    active: futures?.filter((f: any) => f.status ==="active").length || 0,
     totalProjected:
       futures?.reduce(
         (sum: number, f: any) =>
-          sum + (parseFloat(f.totalProjectedTonnes || "0") || 0),
+          sum + (parseFloat(f.totalProjectedTonnes ||"0") || 0),
         0
       ) || 0,
     totalContracted:
       futures?.reduce(
         (sum: number, f: any) =>
-          sum + (parseFloat(f.totalContractedTonnes || "0") || 0),
+          sum + (parseFloat(f.totalContractedTonnes ||"0") || 0),
         0
       ) || 0,
     pendingEOIs:
@@ -299,9 +299,9 @@ export default function SupplierFutures() {
           <div className="space-y-4">
             {futures.map((f: any) => {
               const availablePercent =
-                parseFloat(f.totalProjectedTonnes || "0") > 0
-                  ? (parseFloat(f.totalAvailableTonnes || "0") /
-                      parseFloat(f.totalProjectedTonnes || "0")) *
+                parseFloat(f.totalProjectedTonnes ||"0") > 0
+                  ? (parseFloat(f.totalAvailableTonnes ||"0") /
+                      parseFloat(f.totalProjectedTonnes ||"0")) *
                     100
                   : 100;
               const projectionYears =
@@ -346,7 +346,7 @@ export default function SupplierFutures() {
                         <MapPin className="h-4 w-4 text-gray-600" />
                         <span>
                           {f.state}
-                          {f.region ? `, ${f.region}` : ""}
+                          {f.region ? `, ${f.region}` :""}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
@@ -371,7 +371,7 @@ export default function SupplierFutures() {
                         <div className="font-semibold font-mono">
                           {f.indicativePricePerTonne
                             ? `$${parseFloat(f.indicativePricePerTonne).toFixed(2)}/t`
-                            : "Negotiable"}
+                            :"Negotiable"}
                         </div>
                       </div>
                     </div>
@@ -385,8 +385,8 @@ export default function SupplierFutures() {
                           </span>
                           <p className="font-semibold font-mono">
                             {parseFloat(
-                              f.totalProjectedTonnes || "0"
-                            ).toLocaleString()}{" "}
+                              f.totalProjectedTonnes ||"0"
+                            ).toLocaleString()}{""}
                             t
                           </p>
                         </div>
@@ -396,8 +396,8 @@ export default function SupplierFutures() {
                           </span>
                           <p className="font-semibold text-blue-600 font-mono">
                             {parseFloat(
-                              f.totalContractedTonnes || "0"
-                            ).toLocaleString()}{" "}
+                              f.totalContractedTonnes ||"0"
+                            ).toLocaleString()}{""}
                             t
                           </p>
                         </div>
@@ -407,8 +407,8 @@ export default function SupplierFutures() {
                           </span>
                           <p className="font-semibold text-green-600 font-mono">
                             {parseFloat(
-                              f.totalAvailableTonnes || "0"
-                            ).toLocaleString()}{" "}
+                              f.totalAvailableTonnes ||"0"
+                            ).toLocaleString()}{""}
                             t
                           </p>
                         </div>
@@ -465,7 +465,7 @@ export default function SupplierFutures() {
                             View Details
                           </Button>
                         </Link>
-                        {f.status === "draft" && (
+                        {f.status ==="draft" && (
                           <Link href={`/supplier/futures/create?edit=${f.id}`}>
                             <Button variant="outline" size="sm">
                               <Edit className="h-4 w-4 mr-2" />
@@ -500,9 +500,9 @@ export default function SupplierFutures() {
               <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-100 flex items-center justify-center">
                 <Sprout className="h-8 w-8 text-[#D4AF37]" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">
+              <H3 className="text-xl  mb-2">
                 No futures listings yet
-              </h3>
+              </H3>
               <p className="text-gray-600 mb-6 max-w-md mx-auto">
                 Create your first futures listing to advertise long-term
                 perennial crop supply and connect with buyers looking for
@@ -528,7 +528,7 @@ export default function SupplierFutures() {
                   <Package className="h-6 w-6 text-[#D4AF37]" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">View Your EOIs</h3>
+                  <H3 className="">View Your EOIs</H3>
                   <p className="text-sm text-gray-600">
                     Track and respond to expressions of interest from buyers
                   </p>

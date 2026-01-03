@@ -9,23 +9,23 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useRoute, useLocation } from "wouter";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useRoute, useLocation } from"wouter";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Textarea } from"@/components/ui/textarea";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Progress } from"@/components/ui/progress";
 import {
   Dialog,
   DialogContent,
@@ -33,10 +33,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { trpc } from "@/lib/trpc";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/dialog";
+import { trpc } from"@/lib/trpc";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   ArrowLeft,
   MapPin,
@@ -54,46 +54,46 @@ import {
   DollarSign,
   Leaf,
   AlertCircle,
-} from "lucide-react";
+} from"lucide-react";
 
 // Mock signal for demonstration when API returns empty
 const MOCK_SIGNAL = {
   id: 1,
-  signalNumber: "DS-2025-0001",
-  title: "Wheat Straw for Bioenergy Plant - Hunter Valley",
+  signalNumber:"DS-2025-0001",
+  title:"Wheat Straw for Bioenergy Plant - Hunter Valley",
   description:
-    "Large-scale bioenergy facility seeking consistent supply of wheat straw for year-round operations. Our facility is currently under construction with commissioning expected Q3 2025. We are seeking long-term offtake agreements with reliable suppliers who can demonstrate consistent quality and volume capabilities.",
-  feedstockType: "Wheat Straw",
-  feedstockCategory: "agricultural_residue",
+"Large-scale bioenergy facility seeking consistent supply of wheat straw for year-round operations. Our facility is currently under construction with commissioning expected Q3 2025. We are seeking long-term offtake agreements with reliable suppliers who can demonstrate consistent quality and volume capabilities.",
+  feedstockType:"Wheat Straw",
+  feedstockCategory:"agricultural_residue",
   annualVolume: 75000,
   volumeFlexibility: 15,
-  deliveryFrequency: "monthly",
+  deliveryFrequency:"monthly",
   minMoistureContent: 8,
   maxMoistureContent: 15,
   minEnergyContent: 14,
   maxAshContent: 8,
   maxChlorineContent: 500,
   otherQualitySpecs:
-    "No foreign material contamination. Bales must be stored under cover. Certification for sustainable harvesting practices preferred.",
-  deliveryLocation: "Muswellbrook",
-  deliveryState: "NSW",
+"No foreign material contamination. Bales must be stored under cover. Certification for sustainable harvesting practices preferred.",
+  deliveryLocation:"Muswellbrook",
+  deliveryState:"NSW",
   maxTransportDistance: 250,
-  deliveryMethod: "delivered",
+  deliveryMethod:"delivered",
   indicativePriceMin: 85,
   indicativePriceMax: 110,
-  pricingMechanism: "indexed",
-  supplyStartDate: "2025-07-01",
-  supplyEndDate: "2030-06-30",
+  pricingMechanism:"indexed",
+  supplyStartDate:"2025-07-01",
+  supplyEndDate:"2030-06-30",
   contractTerm: 5,
-  responseDeadline: "2025-03-15",
+  responseDeadline:"2025-03-15",
   sustainabilityRequirements:
-    "ISCC certification preferred. Carbon intensity documentation required. Suppliers must demonstrate sustainable farming practices and provide chain of custody documentation.",
-  status: "published",
+"ISCC certification preferred. Carbon intensity documentation required. Suppliers must demonstrate sustainable farming practices and provide chain of custody documentation.",
+  status:"published",
   responseCount: 8,
   viewCount: 156,
-  buyerName: "Hunter Energy Partners",
+  buyerName:"Hunter Energy Partners",
   buyerLogo: null,
-  createdAt: "2025-01-15",
+  createdAt:"2025-01-15",
 };
 
 const CATEGORY_COLORS: Record<
@@ -101,47 +101,47 @@ const CATEGORY_COLORS: Record<
   { bg: string; text: string; label: string }
 > = {
   agricultural_residue: {
-    bg: "bg-green-100",
-    text: "text-green-800",
-    label: "Agricultural Residue",
+    bg:"bg-green-100",
+    text:"text-green-800",
+    label:"Agricultural Residue",
   },
   forestry_residue: {
-    bg: "bg-amber-100",
-    text: "text-amber-800",
-    label: "Forestry Residue",
+    bg:"bg-amber-100",
+    text:"text-amber-800",
+    label:"Forestry Residue",
   },
   energy_crop: {
-    bg: "bg-blue-100",
-    text: "text-blue-800",
-    label: "Energy Crop",
+    bg:"bg-blue-100",
+    text:"text-blue-800",
+    label:"Energy Crop",
   },
   organic_waste: {
-    bg: "bg-purple-100",
-    text: "text-purple-800",
-    label: "Organic Waste",
+    bg:"bg-purple-100",
+    text:"text-purple-800",
+    label:"Organic Waste",
   },
   algae_aquatic: {
-    bg: "bg-cyan-100",
-    text: "text-cyan-800",
-    label: "Algae/Aquatic",
+    bg:"bg-cyan-100",
+    text:"text-cyan-800",
+    label:"Algae/Aquatic",
   },
-  mixed: { bg: "bg-gray-100", text: "text-gray-800", label: "Mixed" },
+  mixed: { bg:"bg-gray-100", text:"text-gray-800", label:"Mixed" },
 };
 
 export default function DemandSignalDetail() {
   const [, params] = useRoute("/demand-signals/:id");
   const [, setLocation] = useLocation();
   const { user } = useAuth();
-  const signalId = parseInt(params?.id || "0");
+  const signalId = parseInt(params?.id ||"0");
 
   const [showResponseDialog, setShowResponseDialog] = useState(false);
   const [responseForm, setResponseForm] = useState({
-    proposedVolume: "",
-    proposedPrice: "",
-    proposedDeliveryMethod: "",
-    proposedStartDate: "",
-    proposedContractTerm: "",
-    coverLetter: "",
+    proposedVolume:"",
+    proposedPrice:"",
+    proposedDeliveryMethod:"",
+    proposedStartDate:"",
+    proposedContractTerm:"",
+    coverLetter:"",
   });
 
   const { data, isLoading } = trpc.demandSignals.getById.useQuery({
@@ -157,12 +157,12 @@ export default function DemandSignalDetail() {
     onSuccess: () => {
       setShowResponseDialog(false);
       setResponseForm({
-        proposedVolume: "",
-        proposedPrice: "",
-        proposedDeliveryMethod: "",
-        proposedStartDate: "",
-        proposedContractTerm: "",
-        coverLetter: "",
+        proposedVolume:"",
+        proposedPrice:"",
+        proposedDeliveryMethod:"",
+        proposedStartDate:"",
+        proposedContractTerm:"",
+        coverLetter:"",
       });
     },
   });
@@ -182,11 +182,11 @@ export default function DemandSignalDetail() {
   };
 
   const formatDate = (date: Date | string | null) => {
-    if (!date) return "N/A";
+    if (!date) return"N/A";
     return new Date(date).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+      day:"numeric",
+      month:"short",
+      year:"numeric",
     });
   };
 
@@ -244,20 +244,20 @@ export default function DemandSignalDetail() {
                 </Badge>
                 <Badge
                   variant={
-                    signal.status === "published" ? "default" : "secondary"
+                    signal.status ==="published" ?"default" :"secondary"
                   }
                   className="bg-[#D4AF37] text-black border-0"
                 >
                   {signal.status}
                 </Badge>
               </div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-3">
+              <H1 className="text-3xl md:text-4xl font-display  mb-3">
                 {signal.title}
-              </h1>
+              </H1>
               <div className="flex items-center gap-4 text-black/70 text-sm">
                 <span className="flex items-center gap-1">
                   <Building2 className="h-4 w-4" />
-                  {(signal as any).buyerName || "Verified Buyer"}
+                  {(signal as any).buyerName ||"Verified Buyer"}
                 </span>
                 <span>•</span>
                 <span>{signal.signalNumber}</span>
@@ -334,7 +334,7 @@ export default function DemandSignalDetail() {
                       Delivery Frequency
                     </div>
                     <div className="text-xl font-bold capitalize">
-                      {signal.deliveryFrequency?.replace("_", " ")}
+                      {signal.deliveryFrequency?.replace("_","")}
                     </div>
                   </div>
                   {signal.contractTerm && (
@@ -465,7 +465,7 @@ export default function DemandSignalDetail() {
                       Delivery Method
                     </div>
                     <div className="font-semibold capitalize">
-                      {signal.deliveryMethod?.replace("_", " ")}
+                      {signal.deliveryMethod?.replace("_","")}
                     </div>
                   </div>
                 </div>
@@ -504,14 +504,14 @@ export default function DemandSignalDetail() {
                       {signal.pricingMechanism}
                     </div>
                     <div className="text-xs text-gray-600 mt-1">
-                      {signal.pricingMechanism === "indexed" &&
-                        "Price adjusts with market indices"}
-                      {signal.pricingMechanism === "fixed" &&
-                        "Price locked for contract term"}
-                      {signal.pricingMechanism === "negotiable" &&
-                        "Open to discussion"}
-                      {signal.pricingMechanism === "spot" &&
-                        "Spot market rates apply"}
+                      {signal.pricingMechanism ==="indexed" &&
+"Price adjusts with market indices"}
+                      {signal.pricingMechanism ==="fixed" &&
+"Price locked for contract term"}
+                      {signal.pricingMechanism ==="negotiable" &&
+"Open to discussion"}
+                      {signal.pricingMechanism ==="spot" &&
+"Spot market rates apply"}
                     </div>
                   </div>
                 </div>
@@ -544,9 +544,9 @@ export default function DemandSignalDetail() {
                 {isExpired ? (
                   <div className="text-center">
                     <AlertCircle className="h-12 w-12 mx-auto mb-4 text-red-500" />
-                    <h3 className="font-semibold mb-2">
+                    <H3 className="mb-2">
                       Response Deadline Passed
-                    </h3>
+                    </H3>
                     <p className="text-sm text-gray-600">
                       This demand signal is no longer accepting responses.
                     </p>
@@ -559,7 +559,7 @@ export default function DemandSignalDetail() {
                       </span>
                       <Badge
                         variant={
-                          daysUntilDeadline <= 7 ? "destructive" : "outline"
+                          daysUntilDeadline <= 7 ?"destructive" :"outline"
                         }
                       >
                         {daysUntilDeadline} days left
@@ -584,7 +584,7 @@ export default function DemandSignalDetail() {
                           <DialogHeader>
                             <DialogTitle>Submit Your Response</DialogTitle>
                             <DialogDescription>
-                              Provide your proposal for "{signal.title}"
+                              Provide your proposal for"{signal.title}"
                             </DialogDescription>
                           </DialogHeader>
                           <div className="space-y-4 py-4">
@@ -713,8 +713,8 @@ export default function DemandSignalDetail() {
                               size="lg"
                             >
                               {submitResponseMutation.isPending
-                                ? "Submitting..."
-                                : "Submit Response"}
+                                ?"Submitting..."
+                                :"Submit Response"}
                             </Button>
                           </div>
                         </DialogContent>
@@ -804,7 +804,7 @@ export default function DemandSignalDetail() {
                   </div>
                   <Progress value={responseCoverage} className="h-2" />
                   <p className="text-xs text-gray-600 mt-2">
-                    Estimated coverage based on {signal.responseCount || 0}{" "}
+                    Estimated coverage based on {signal.responseCount || 0}{""}
                     responses
                   </p>
                 </div>
@@ -826,7 +826,7 @@ export default function DemandSignalDetail() {
                   </div>
                   <div>
                     <div className="font-semibold">
-                      {(signal as any).buyerName || "Verified Buyer"}
+                      {(signal as any).buyerName ||"Verified Buyer"}
                     </div>
                     <div className="text-sm text-gray-600">
                       ABFI Verified

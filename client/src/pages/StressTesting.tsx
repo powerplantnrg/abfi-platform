@@ -1,28 +1,28 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useAuth } from"@/_core/hooks/useAuth";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Progress } from "@/components/ui/progress";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Progress } from"@/components/ui/progress";
+import { Label } from"@/components/ui/label";
+import { Input } from"@/components/ui/input";
+import { Slider } from"@/components/ui/slider";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -30,14 +30,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "@/components/ui/alert";
-import { trpc } from "@/lib/trpc";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/alert";
+import { trpc } from"@/lib/trpc";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   AlertTriangle,
   TrendingDown,
@@ -55,64 +55,64 @@ import {
   Lightbulb,
   ArrowRight,
   ArrowDown,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { ScoreGauge } from "@/components/ScoreCard";
+} from"lucide-react";
+import { cn } from"@/lib/utils";
+import { ScoreGauge } from"@/components/ScoreCard";
 
 const SCENARIO_TYPES = [
   {
-    id: "supplier_loss",
-    label: "Supplier Loss",
+    id:"supplier_loss",
+    label:"Supplier Loss",
     icon: Users,
-    description: "Simulate loss of a key supplier",
-    color: "text-red-600",
-    bgColor: "bg-red-50",
+    description:"Simulate loss of a key supplier",
+    color:"text-red-600",
+    bgColor:"bg-red-50",
   },
   {
-    id: "supply_shortfall",
-    label: "Supply Shortfall",
+    id:"supply_shortfall",
+    label:"Supply Shortfall",
     icon: TrendingDown,
-    description: "Simulate proportional volume reduction",
-    color: "text-orange-600",
-    bgColor: "bg-orange-50",
+    description:"Simulate proportional volume reduction",
+    color:"text-orange-600",
+    bgColor:"bg-orange-50",
   },
   {
-    id: "regional_shock",
-    label: "Regional Event",
+    id:"regional_shock",
+    label:"Regional Event",
     icon: MapPin,
-    description: "Simulate regional climate/weather event",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50",
+    description:"Simulate regional climate/weather event",
+    color:"text-blue-600",
+    bgColor:"bg-blue-50",
   },
   {
-    id: "price_spike",
-    label: "Price Shock",
+    id:"price_spike",
+    label:"Price Shock",
     icon: DollarSign,
-    description: "Simulate feedstock cost increases",
-    color: "text-purple-600",
-    bgColor: "bg-purple-50",
+    description:"Simulate feedstock cost increases",
+    color:"text-purple-600",
+    bgColor:"bg-purple-50",
   },
 ];
 
 const REGIONS = [
-  { value: "QLD", label: "Queensland" },
-  { value: "NSW", label: "New South Wales" },
-  { value: "VIC", label: "Victoria" },
-  { value: "SA", label: "South Australia" },
-  { value: "WA", label: "Western Australia" },
-  { value: "TAS", label: "Tasmania" },
-  { value: "NT", label: "Northern Territory" },
+  { value:"QLD", label:"Queensland" },
+  { value:"NSW", label:"New South Wales" },
+  { value:"VIC", label:"Victoria" },
+  { value:"SA", label:"South Australia" },
+  { value:"WA", label:"Western Australia" },
+  { value:"TAS", label:"Tasmania" },
+  { value:"NT", label:"Northern Territory" },
 ];
 
 const RATING_COLORS: Record<string, string> = {
-  AAA: "bg-[#D4AF37] text-black",
-  AA: "bg-green-500 text-black",
-  A: "bg-lime-500 text-black",
-  BBB: "bg-yellow-500 text-black",
-  BB: "bg-[#D4AF37] text-black",
-  B: "bg-orange-500 text-black",
-  CCC: "bg-red-500 text-black",
-  CC: "bg-red-700 text-black",
+  AAA:"bg-[#D4AF37] text-black",
+  AA:"bg-green-500 text-black",
+  A:"bg-lime-500 text-black",
+  BBB:"bg-yellow-500 text-black",
+  BB:"bg-[#D4AF37] text-black",
+  B:"bg-orange-500 text-black",
+  CCC:"bg-red-500 text-black",
+  CC:"bg-red-700 text-black",
 };
 
 export default function StressTesting() {
@@ -157,21 +157,21 @@ export default function StressTesting() {
     const scenarioParams: any = {};
 
     switch (selectedScenario) {
-      case "supplier_loss":
+      case"supplier_loss":
         if (!supplierId) {
           alert("Please select a supplier");
           return;
         }
         scenarioParams.supplierId = supplierId;
         break;
-      case "supply_shortfall":
+      case"supply_shortfall":
         scenarioParams.shortfallPercent = shortfallPercent;
         break;
-      case "regional_shock":
+      case"regional_shock":
         scenarioParams.region = region;
         scenarioParams.reductionPercent = reductionPercent;
         break;
-      case "price_spike":
+      case"price_spike":
         scenarioParams.priceIncreasePercent = priceIncreasePercent;
         break;
     }
@@ -181,8 +181,8 @@ export default function StressTesting() {
       scenarioType: selectedScenario as any,
       scenarioParams,
       baseScore: 75,
-      baseRating: "A",
-      projectEconomics: selectedScenario === "price_spike" ? {
+      baseRating:"A",
+      projectEconomics: selectedScenario ==="price_spike" ? {
         baseRevenue: 50000000,
         baseCost: 35000000,
         targetMargin: 15,
@@ -236,9 +236,9 @@ export default function StressTesting() {
                 </Badge>
               </div>
 
-              <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
+              <H1 className="text-4xl lg:text-5xl font-display  mb-4">
                 Bankability Stress Testing
-              </h1>
+              </H1>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Simulate adverse scenarios to test project resilience. Demonstrate
                 to lenders how your supply chain performs under stress conditions.
@@ -272,10 +272,10 @@ export default function StressTesting() {
                       key={project.id}
                       onClick={() => setSelectedProject(project.id)}
                       className={cn(
-                        "w-full text-left p-3 rounded-lg border transition-colors",
+"w-full text-left p-3 rounded-lg border transition-colors",
                         selectedProject === project.id
-                          ? "bg-[#D4AF37]/10 border-primary"
-                          : "hover:bg-muted/50"
+                          ?"bg-[#D4AF37]/10 border-primary"
+                          :"hover:bg-muted/50"
                       )}
                     >
                       <div className="font-medium text-sm">{project.name}</div>
@@ -285,7 +285,7 @@ export default function StressTesting() {
                       {project.bankabilityRating && (
                         <Badge
                           className={cn(
-                            "mt-2 text-xs",
+"mt-2 text-xs",
                             RATING_COLORS[project.bankabilityRating]
                           )}
                         >
@@ -305,9 +305,9 @@ export default function StressTesting() {
               <Card>
                 <CardContent className="py-16 text-center">
                   <AlertTriangle className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">
+                  <H3 className="text-lg  mb-2">
                     Select a Project
-                  </h3>
+                  </H3>
                   <p className="text-gray-600">
                     Choose a project from the sidebar to run stress tests
                   </p>
@@ -344,10 +344,10 @@ export default function StressTesting() {
                               key={scenario.id}
                               onClick={() => setSelectedScenario(scenario.id)}
                               className={cn(
-                                "p-4 rounded-xl border-2 text-left transition-all",
+"p-4 rounded-xl border-2 text-left transition-all",
                                 selectedScenario === scenario.id
-                                  ? "border-primary bg-primary/5"
-                                  : "border-muted hover:border-muted-foreground/30"
+                                  ?"border-primary bg-primary/5"
+                                  :"border-muted hover:border-muted-foreground/30"
                               )}
                             >
                               <div className={cn("p-2 rounded-lg w-fit mb-3", scenario.bgColor)}>
@@ -373,11 +373,11 @@ export default function StressTesting() {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      {selectedScenario === "supplier_loss" && (
+                      {selectedScenario ==="supplier_loss" && (
                         <div className="space-y-4">
                           <Label>Select Supplier to Remove</Label>
                           <Select
-                            value={supplierId?.toString() || ""}
+                            value={supplierId?.toString() ||""}
                             onValueChange={(v) => setSupplierId(parseInt(v))}
                           >
                             <SelectTrigger>
@@ -395,7 +395,7 @@ export default function StressTesting() {
                         </div>
                       )}
 
-                      {selectedScenario === "supply_shortfall" && (
+                      {selectedScenario ==="supply_shortfall" && (
                         <div className="space-y-4">
                           <div className="flex justify-between">
                             <Label>Supply Shortfall Percentage</Label>
@@ -421,7 +421,7 @@ export default function StressTesting() {
                         </div>
                       )}
 
-                      {selectedScenario === "regional_shock" && (
+                      {selectedScenario ==="regional_shock" && (
                         <div className="space-y-6">
                           <div className="space-y-2">
                             <Label>Affected Region</Label>
@@ -459,7 +459,7 @@ export default function StressTesting() {
                         </div>
                       )}
 
-                      {selectedScenario === "price_spike" && (
+                      {selectedScenario ==="price_spike" && (
                         <div className="space-y-4">
                           <div className="flex justify-between">
                             <Label>Price Increase</Label>
@@ -511,9 +511,9 @@ export default function StressTesting() {
                     <Card>
                       <CardContent className="py-12 text-center">
                         <BarChart3 className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold mb-2">
+                        <H3 className="text-lg  mb-2">
                           No Stress Tests Yet
-                        </h3>
+                        </H3>
                         <p className="text-gray-600 mb-4">
                           Run your first stress test to see results here
                         </p>
@@ -541,9 +541,9 @@ export default function StressTesting() {
                               </CardDescription>
                             </div>
                             <Badge
-                              variant={result.passesStressTest ? "default" : "destructive"}
+                              variant={result.passesStressTest ?"default" :"destructive"}
                             >
-                              {result.passesStressTest ? "PASS" : "FAIL"}
+                              {result.passesStressTest ?"PASS" :"FAIL"}
                             </Badge>
                           </div>
                         </CardHeader>
@@ -556,7 +556,7 @@ export default function StressTesting() {
                               </div>
                               <Badge
                                 className={cn(
-                                  "text-lg px-4 py-1",
+"text-lg px-4 py-1",
                                   RATING_COLORS[result.baseRating]
                                 )}
                               >
@@ -569,10 +569,10 @@ export default function StressTesting() {
                             <div className="flex flex-col items-center">
                               <ArrowRight className="h-6 w-6 text-gray-600" />
                               <div className={cn(
-                                "text-sm font-medium mt-1",
-                                result.ratingDelta < 0 ? "text-red-600" : "text-green-600"
+"text-sm font-medium mt-1",
+                                result.ratingDelta < 0 ?"text-red-600" :"text-green-600"
                               )}>
-                                {result.ratingDelta >= 0 ? "+" : ""}{result.ratingDelta} notches
+                                {result.ratingDelta >= 0 ?"+" :""}{result.ratingDelta} notches
                               </div>
                             </div>
                             <div className="text-center">
@@ -581,7 +581,7 @@ export default function StressTesting() {
                               </div>
                               <Badge
                                 className={cn(
-                                  "text-lg px-4 py-1",
+"text-lg px-4 py-1",
                                   RATING_COLORS[result.stressRating]
                                 )}
                               >
@@ -608,10 +608,10 @@ export default function StressTesting() {
                                 HHI Delta
                               </div>
                               <div className={cn(
-                                "text-xl font-bold font-mono",
-                                result.hhiDelta > 0 ? "text-orange-600" : "text-green-600"
+"text-xl font-bold font-mono",
+                                result.hhiDelta > 0 ?"text-orange-600" :"text-green-600"
                               )}>
-                                {result.hhiDelta > 0 ? "+" : ""}{result.hhiDelta}
+                                {result.hhiDelta > 0 ?"+" :""}{result.hhiDelta}
                               </div>
                             </div>
                             <div className="p-3 rounded-lg bg-muted/50 text-center">
@@ -655,10 +655,10 @@ export default function StressTesting() {
 
                           {/* Narrative Summary */}
                           <div className="p-4 rounded-lg bg-slate-50 dark:bg-white/50">
-                            <h4 className="font-semibold flex items-center gap-2 mb-2">
+                            <H4 className="flex items-center gap-2 mb-2">
                               <BarChart3 className="h-4 w-4" />
                               Analysis Summary
-                            </h4>
+                            </H4>
                             <p className="text-sm text-gray-600">
                               {result.narrativeSummary}
                             </p>
@@ -667,10 +667,10 @@ export default function StressTesting() {
                           {/* Recommendations */}
                           {result.recommendations && result.recommendations.length > 0 && (
                             <div className="p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
-                              <h4 className="font-semibold flex items-center gap-2 mb-3 text-blue-900 dark:text-blue-100">
+                              <H4 className="flex items-center gap-2 mb-3 text-blue-900 dark:text-blue-100">
                                 <Lightbulb className="h-4 w-4" />
                                 Recommendations
-                              </h4>
+                              </H4>
                               <ul className="space-y-2">
                                 {result.recommendations.map((rec: string, i: number) => (
                                   <li key={i} className="flex items-start gap-2 text-sm text-blue-800 dark:text-blue-200">

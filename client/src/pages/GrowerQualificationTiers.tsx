@@ -9,15 +9,15 @@
  * - Typography components for consistent styling
  */
 
-import { Button } from "@/components/ui/Button";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
 import {
   ArrowRight,
   Award,
@@ -29,11 +29,11 @@ import {
   BarChart3,
   Users,
   Leaf,
-} from "lucide-react";
-import { Link } from "wouter";
-import { cn } from "@/lib/utils";
-import { PageLayout } from "@/components/layout";
-import { H1, H2, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"lucide-react";
+import { Link } from"wouter";
+import { cn } from"@/lib/utils";
+import { PageLayout } from"@/components/layout";
+import { H1, H2, H3, Body, MetricValue, DataLabel } from"@/components/Typography";
 
 // Grower Qualification Tier Component
 function GQTierCard({
@@ -58,28 +58,28 @@ function GQTierCard({
     { bg: string; border: string; text: string; badge: string }
   > = {
     yellow: {
-      bg: "bg-yellow-50",
-      border: "border-yellow-200",
-      text: "text-yellow-700",
-      badge: "bg-yellow-100 text-yellow-800",
+      bg:"bg-yellow-50",
+      border:"border-yellow-200",
+      text:"text-yellow-700",
+      badge:"bg-yellow-100 text-yellow-800",
     },
     lime: {
-      bg: "bg-lime-50",
-      border: "border-lime-200",
-      text: "text-lime-700",
-      badge: "bg-lime-100 text-lime-800",
+      bg:"bg-lime-50",
+      border:"border-lime-200",
+      text:"text-lime-700",
+      badge:"bg-lime-100 text-lime-800",
     },
     green: {
-      bg: "bg-green-50",
-      border: "border-green-200",
-      text: "text-green-700",
-      badge: "bg-green-100 text-green-800",
+      bg:"bg-green-50",
+      border:"border-green-200",
+      text:"text-green-700",
+      badge:"bg-green-100 text-green-800",
     },
     emerald: {
-      bg: "bg-emerald-50",
-      border: "border-emerald-200",
-      text: "text-emerald-700",
-      badge: "bg-emerald-100 text-emerald-800",
+      bg:"bg-emerald-50",
+      border:"border-emerald-200",
+      text:"text-emerald-700",
+      badge:"bg-emerald-100 text-emerald-800",
     },
   };
 
@@ -88,9 +88,9 @@ function GQTierCard({
   return (
     <Card
       className={cn(
-        "relative overflow-hidden transition-all duration-300 hover:shadow-lg",
+"relative overflow-hidden transition-all duration-300 hover:shadow-lg",
         colors.border,
-        featured && "ring-2 ring-emerald-500 ring-offset-2"
+        featured &&"ring-2 ring-emerald-500 ring-offset-2"
       )}
     >
       {featured && (
@@ -98,7 +98,7 @@ function GQTierCard({
           Top Tier
         </div>
       )}
-      <CardHeader className={cn(colors.bg, "pb-4")}>
+      <CardHeader className={cn(colors.bg,"pb-4")}>
         <div className="flex items-center justify-between">
           <Badge className={colors.badge}>{tier}</Badge>
           <Award className={cn("h-6 w-6", colors.text)} />
@@ -109,10 +109,10 @@ function GQTierCard({
       <CardContent className="pt-4">
         <div className="space-y-4">
           <div>
-            <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+            <H4 className="text-sm  mb-2 flex items-center gap-2">
               <FileCheck className="h-4 w-4 text-gray-600" />
               Requirements
-            </h4>
+            </H4>
             <ul className="space-y-1.5">
               {requirements.map((req, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
@@ -125,10 +125,10 @@ function GQTierCard({
             </ul>
           </div>
           <div>
-            <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
+            <H4 className="text-sm  mb-2 flex items-center gap-2">
               <Star className="h-4 w-4 text-gray-600" />
               Benefits
-            </h4>
+            </H4>
             <ul className="space-y-1.5">
               {benefits.map((benefit, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
@@ -160,7 +160,7 @@ export default function GrowerQualificationTiers() {
               <Shield className="h-3.5 w-3.5 mr-1.5" />
               Grower Qualification System
             </Badge>
-            <H1 className="text-4xl md:text-5xl font-display font-bold mb-6">
+            <H1 className="text-4xl md:text-5xl font-display  mb-6">
               GQ Tier System
             </H1>
             <Body className="text-lg md:text-xl text-emerald-100 mb-8">
@@ -213,7 +213,7 @@ export default function GrowerQualificationTiers() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <H2 className="text-3xl font-display font-bold mb-4">
+            <H2 className="text-3xl font-display  mb-4">
               Your Path to GQ1 Status
             </H2>
             <Body className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -229,16 +229,16 @@ export default function GrowerQualificationTiers() {
               description="New entrants with basic registration"
               color="yellow"
               requirements={[
-                "ABN verification",
-                "Basic property details",
-                "Crop type declaration",
-                "Initial yield estimate",
+"ABN verification",
+"Basic property details",
+"Crop type declaration",
+"Initial yield estimate",
               ]}
               benefits={[
-                "Platform access",
-                "Buyer visibility",
-                "Basic analytics",
-                "Support resources",
+"Platform access",
+"Buyer visibility",
+"Basic analytics",
+"Support resources",
               ]}
             />
             <GQTierCard
@@ -247,16 +247,16 @@ export default function GrowerQualificationTiers() {
               description="Established operations building track record"
               color="lime"
               requirements={[
-                "All GQ4 requirements",
-                "12+ months operational data",
-                "Quality test results",
-                "Site assessment completed",
+"All GQ4 requirements",
+"12+ months operational data",
+"Quality test results",
+"Site assessment completed",
               ]}
               benefits={[
-                "Enhanced visibility",
-                "Priority matching",
-                "Market insights",
-                "5% price premium",
+"Enhanced visibility",
+"Priority matching",
+"Market insights",
+"5% price premium",
               ]}
             />
             <GQTierCard
@@ -265,16 +265,16 @@ export default function GrowerQualificationTiers() {
               description="Proven suppliers with verified history"
               color="green"
               requirements={[
-                "All GQ3 requirements",
-                "3+ years track record",
-                "Third-party certification",
-                "Sustainability documentation",
+"All GQ3 requirements",
+"3+ years track record",
+"Third-party certification",
+"Sustainability documentation",
               ]}
               benefits={[
-                "Premium buyer access",
-                "Long-term contracts",
-                "10% price premium",
-                "Finance eligibility",
+"Premium buyer access",
+"Long-term contracts",
+"10% price premium",
+"Finance eligibility",
               ]}
             />
             <GQTierCard
@@ -284,16 +284,16 @@ export default function GrowerQualificationTiers() {
               color="emerald"
               featured
               requirements={[
-                "All GQ2 requirements",
-                "5+ years verified history",
-                "Full bankability assessment",
-                "Continuous monitoring",
+"All GQ2 requirements",
+"5+ years verified history",
+"Full bankability assessment",
+"Continuous monitoring",
               ]}
               benefits={[
-                "Top-tier pricing (15%+)",
-                "Exclusive opportunities",
-                "Green finance access",
-                "Featured placement",
+"Top-tier pricing (15%+)",
+"Exclusive opportunities",
+"Green finance access",
+"Featured placement",
               ]}
             />
           </div>
@@ -304,7 +304,7 @@ export default function GrowerQualificationTiers() {
       <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <H2 className="text-3xl font-display font-bold mb-4">
+            <H2 className="text-3xl font-display  mb-4">
               How Qualification Works
             </H2>
             <Body className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -319,7 +319,7 @@ export default function GrowerQualificationTiers() {
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
                   <FileCheck className="h-6 w-6 text-[#D4AF37]" />
                 </div>
-                <H3 className="text-lg font-semibold mb-2">1. Register & Submit</H3>
+                <H3 className="text-lg  mb-2">1. Register & Submit</H3>
                 <Body className="text-sm text-gray-600">
                   Complete your producer registration with ABN verification,
                   property details, and initial documentation.
@@ -331,7 +331,7 @@ export default function GrowerQualificationTiers() {
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
                   <BarChart3 className="h-6 w-6 text-[#D4AF37]" />
                 </div>
-                <H3 className="text-lg font-semibold mb-2">2. Build Track Record</H3>
+                <H3 className="text-lg  mb-2">2. Build Track Record</H3>
                 <Body className="text-sm text-gray-600">
                   Deliver quality feedstock, maintain certifications, and
                   accumulate verified operational history.
@@ -343,7 +343,7 @@ export default function GrowerQualificationTiers() {
                 <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
                   <TrendingUp className="h-6 w-6 text-[#D4AF37]" />
                 </div>
-                <H3 className="text-lg font-semibold mb-2">3. Progress & Unlock</H3>
+                <H3 className="text-lg  mb-2">3. Progress & Unlock</H3>
                 <Body className="text-sm text-gray-600">
                   As you meet tier requirements, automatically unlock better
                   pricing, buyer access, and financing options.
@@ -359,7 +359,7 @@ export default function GrowerQualificationTiers() {
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto">
             <Leaf className="h-12 w-12 mx-auto mb-6 text-emerald-300" />
-            <H2 className="text-3xl font-display font-bold mb-4">
+            <H2 className="text-3xl font-display  mb-4">
               Ready to Get Qualified?
             </H2>
             <Body className="text-lg text-emerald-100 mb-8">

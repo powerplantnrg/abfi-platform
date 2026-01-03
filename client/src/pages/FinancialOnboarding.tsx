@@ -1,31 +1,31 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+} from"@/components/ui/select";
+import { Checkbox } from"@/components/ui/checkbox";
 import {
   Shield,
   Building2,
   TrendingUp,
   FileText,
   CheckCircle2,
-} from "lucide-react";
-import { trpc } from "@/lib/trpc";
+} from"lucide-react";
+import { trpc } from"@/lib/trpc";
 
 const steps = [
-  { id: 1, label: "Institution" },
-  { id: 2, label: "Verification" },
-  { id: 3, label: "Access Tier" },
-  { id: 4, label: "Compliance" },
+  { id: 1, label:"Institution" },
+  { id: 2, label:"Verification" },
+  { id: 3, label:"Access Tier" },
+  { id: 4, label:"Compliance" },
 ];
 
 export default function FinancialOnboarding() {
@@ -33,21 +33,21 @@ export default function FinancialOnboarding() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Step 1: Institution Details
-    institutionName: "",
-    abn: "",
-    institutionType: "",
-    regulatoryBody: "",
-    licenseNumber: "",
+    institutionName:"",
+    abn:"",
+    institutionType:"",
+    regulatoryBody:"",
+    licenseNumber:"",
 
     // Step 2: Verification
-    contactName: "",
-    contactTitle: "",
-    contactEmail: "",
-    contactPhone: "",
-    verificationMethod: "",
+    contactName:"",
+    contactTitle:"",
+    contactEmail:"",
+    contactPhone:"",
+    verificationMethod:"",
 
     // Step 3: Access Tier
-    accessTier: "",
+    accessTier:"",
     dataCategories: [] as string[],
 
     // Step 4: Compliance
@@ -84,7 +84,7 @@ export default function FinancialOnboarding() {
         contactEmail: formData.contactEmail,
         contactPhone: formData.contactPhone,
         verificationMethod: formData.verificationMethod as any,
-        accessTier: (formData.accessTier as any) || "basic",
+        accessTier: (formData.accessTier as any) ||"basic",
         dataCategories: formData.dataCategories,
         authorizedRepresentative:
           formData.declarations.authorizedRepresentative,
@@ -107,8 +107,8 @@ export default function FinancialOnboarding() {
     <div
       className="min-h-screen"
       style={{
-        background: "var(--bg-primary)",
-        position: "relative",
+        background:"var(--bg-primary)",
+        position:"relative",
         zIndex: 1,
       }}
     >
@@ -116,45 +116,45 @@ export default function FinancialOnboarding() {
       <header
         className="border-b"
         style={{
-          borderColor: "var(--border-subtle)",
-          background: "var(--bg-secondary)",
+          borderColor:"var(--border-subtle)",
+          background:"var(--bg-secondary)",
         }}
       >
         <div className="container mx-auto py-8">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center"
-              style={{ background: "var(--gradient-gold)" }}
+              style={{ background:"var(--gradient-gold)" }}
             >
               <Shield
                 className="h-6 w-6"
-                style={{ color: "var(--bg-primary)" }}
+                style={{ color:"var(--bg-primary)" }}
               />
             </div>
-            <h1
+            <H1
               className="text-3xl"
               style={{
-                fontFamily: "'DM Serif Display', serif",
-                color: "var(--text-[#D4AF37])",
+                fontFamily:"'DM Serif Display', serif",
+                color:"var(--text-[#D4AF37])",
               }}
             >
-              BioFeed <span style={{ color: "var(--accent-gold)" }}>AU</span>
-            </h1>
+              BioFeed <span style={{ color:"var(--accent-gold)" }}>AU</span>
+            </H1>
           </div>
           <div className="text-center">
-            <h2
+            <H2
               className="text-2xl mb-2"
               style={{
-                fontFamily: "'DM Serif Display', serif",
-                color: "var(--text-[#D4AF37])",
+                fontFamily:"'DM Serif Display', serif",
+                color:"var(--text-[#D4AF37])",
               }}
             >
               Financial Institution Onboarding
-            </h2>
+            </H2>
             <p
               style={{
-                color: "var(--text-secondary)",
-                fontSize: "15px",
+                color:"var(--text-secondary)",
+                fontSize:"15px",
                 fontWeight: 300,
               }}
             >
@@ -172,34 +172,34 @@ export default function FinancialOnboarding() {
             className="rounded-xl p-6 flex gap-4 mb-10"
             style={{
               background:
-                "linear-gradient(135deg, rgba(61, 139, 95, 0.1) 0%, rgba(201, 169, 98, 0.05) 100%)",
-              border: "1px solid rgba(61, 139, 95, 0.2)",
+"linear-gradient(135deg, rgba(61, 139, 95, 0.1) 0%, rgba(201, 169, 98, 0.05) 100%)",
+              border:"1px solid rgba(61, 139, 95, 0.2)",
             }}
           >
             <div
               className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
               style={{
-                background: "rgba(61, 139, 95, 0.2)",
-                color: "var(--accent-green-bright)",
+                background:"rgba(61, 139, 95, 0.2)",
+                color:"var(--accent-green-bright)",
               }}
             >
               <CheckCircle2 className="h-5 w-5" />
             </div>
             <div>
-              <h3
+              <H3
                 className="text-sm font-semibold mb-1"
                 style={{
-                  color: "var(--accent-green-bright)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.5px",
+                  color:"var(--accent-green-bright)",
+                  textTransform:"uppercase",
+                  letterSpacing:"0.5px",
                 }}
               >
                 Accredited Platform
-              </h3>
+              </H3>
               <p
                 style={{
-                  color: "var(--text-secondary)",
-                  fontSize: "14px",
+                  color:"var(--text-secondary)",
+                  fontSize:"14px",
                   fontWeight: 300,
                 }}
               >
@@ -216,13 +216,13 @@ export default function FinancialOnboarding() {
               {/* Progress line background */}
               <div
                 className="absolute top-5 left-10 right-10 h-0.5"
-                style={{ background: "var(--bg-tertiary)" }}
+                style={{ background:"var(--bg-tertiary)" }}
               />
               {/* Progress line fill */}
               <div
                 className="absolute top-5 left-10 h-0.5 transition-all duration-500"
                 style={{
-                  background: "var(--gradient-gold)",
+                  background:"var(--gradient-gold)",
                   width: `calc(${progressPercentage}% - 80px)`,
                 }}
               />
@@ -237,35 +237,35 @@ export default function FinancialOnboarding() {
                     style={{
                       background:
                         step.id === currentStep
-                          ? "var(--accent-gold)"
+                          ?"var(--accent-gold)"
                           : step.id < currentStep
-                            ? "var(--accent-green)"
-                            : "var(--bg-tertiary)",
+                            ?"var(--accent-green)"
+                            :"var(--bg-tertiary)",
                       color:
                         step.id <= currentStep
-                          ? "var(--bg-primary)"
-                          : "var(--text-tertiary)",
+                          ?"var(--bg-primary)"
+                          :"var(--text-tertiary)",
                       border: `2px solid ${
                         step.id === currentStep
-                          ? "var(--accent-gold)"
+                          ?"var(--accent-gold)"
                           : step.id < currentStep
-                            ? "var(--accent-green)"
-                            : "var(--bg-tertiary)"
+                            ?"var(--accent-green)"
+                            :"var(--bg-tertiary)"
                       }`,
-                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontFamily:"'IBM Plex Mono', monospace",
                     }}
                   >
-                    {step.id < currentStep ? "✓" : step.id}
+                    {step.id < currentStep ?"✓" : step.id}
                   </div>
                   <span
                     className="mt-2 text-xs font-medium"
                     style={{
                       color:
                         step.id <= currentStep
-                          ? "var(--text-secondary)"
-                          : "var(--text-tertiary)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
+                          ?"var(--text-secondary)"
+                          :"var(--text-tertiary)",
+                      textTransform:"uppercase",
+                      letterSpacing:"0.5px",
                     }}
                   >
                     {step.label}
@@ -279,24 +279,24 @@ export default function FinancialOnboarding() {
           <div
             className="rounded-xl p-8 mb-8"
             style={{
-              background: "var(--bg-secondary)",
-              border: "1px solid var(--border-subtle)",
+              background:"var(--bg-secondary)",
+              border:"1px solid var(--border-subtle)",
             }}
           >
             {/* Step 1: Institution Details */}
             {currentStep === 1 && (
               <div className="space-y-6">
                 <div>
-                  <h3
+                  <H3
                     className="text-2xl mb-2"
-                    style={{ fontFamily: "'DM Serif Display', serif" }}
+                    style={{ fontFamily:"'DM Serif Display', serif" }}
                   >
                     Institution Details
-                  </h3>
+                  </H3>
                   <p
                     style={{
-                      color: "var(--text-secondary)",
-                      fontSize: "14px",
+                      color:"var(--text-secondary)",
+                      fontSize:"14px",
                       fontWeight: 300,
                     }}
                   >
@@ -309,10 +309,10 @@ export default function FinancialOnboarding() {
                   <div className="col-span-2">
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Institution Name{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Institution Name{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       value={formData.institutionName}
@@ -325,9 +325,9 @@ export default function FinancialOnboarding() {
                       placeholder="e.g., Commonwealth Bank of Australia"
                       className="text-base"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -335,27 +335,27 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      ABN{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      ABN{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       value={formData.abn}
                       onChange={e =>
                         setFormData({
                           ...formData,
-                          abn: e.target.value.replace(/\D/g, "").slice(0, 11),
+                          abn: e.target.value.replace(/\D/g,"").slice(0, 11),
                         })
                       }
                       placeholder="12345678901"
                       maxLength={11}
                       className="text-base"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
-                        fontFamily: "'IBM Plex Mono', monospace",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
+                        fontFamily:"'IBM Plex Mono', monospace",
                       }}
                     />
                   </div>
@@ -363,10 +363,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Institution Type{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Institution Type{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Select
                       value={formData.institutionType}
@@ -376,8 +376,8 @@ export default function FinancialOnboarding() {
                     >
                       <SelectTrigger
                         style={{
-                          background: "var(--bg-tertiary)",
-                          border: "1px solid var(--border-subtle)",
+                          background:"var(--bg-tertiary)",
+                          border:"1px solid var(--border-subtle)",
                         }}
                       >
                         <SelectValue placeholder="Select type" />
@@ -414,10 +414,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Regulatory Body{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Regulatory Body{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Select
                       value={formData.regulatoryBody}
@@ -427,8 +427,8 @@ export default function FinancialOnboarding() {
                     >
                       <SelectTrigger
                         style={{
-                          background: "var(--bg-tertiary)",
-                          border: "1px solid var(--border-subtle)",
+                          background:"var(--bg-tertiary)",
+                          border:"1px solid var(--border-subtle)",
                         }}
                       >
                         <SelectValue placeholder="Select regulator" />
@@ -454,10 +454,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      License Number{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      License Number{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       value={formData.licenseNumber}
@@ -470,10 +470,10 @@ export default function FinancialOnboarding() {
                       placeholder="e.g., AFSL 123456"
                       className="text-base"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
-                        fontFamily: "'IBM Plex Mono', monospace",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
+                        fontFamily:"'IBM Plex Mono', monospace",
                       }}
                     />
                   </div>
@@ -485,16 +485,16 @@ export default function FinancialOnboarding() {
             {currentStep === 2 && (
               <div className="space-y-6">
                 <div>
-                  <h3
+                  <H3
                     className="text-2xl mb-2"
-                    style={{ fontFamily: "'DM Serif Display', serif" }}
+                    style={{ fontFamily:"'DM Serif Display', serif" }}
                   >
                     Authorized Representative
-                  </h3>
+                  </H3>
                   <p
                     style={{
-                      color: "var(--text-secondary)",
-                      fontSize: "14px",
+                      color:"var(--text-secondary)",
+                      fontSize:"14px",
                       fontWeight: 300,
                     }}
                   >
@@ -506,10 +506,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Full Name{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Full Name{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       value={formData.contactName}
@@ -521,9 +521,9 @@ export default function FinancialOnboarding() {
                       }
                       placeholder="John Smith"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -531,10 +531,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Job Title{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Job Title{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       value={formData.contactTitle}
@@ -546,9 +546,9 @@ export default function FinancialOnboarding() {
                       }
                       placeholder="e.g., Head of Project Finance"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -556,10 +556,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Corporate Email{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Corporate Email{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       type="email"
@@ -572,9 +572,9 @@ export default function FinancialOnboarding() {
                       }
                       placeholder="john.smith@institution.com"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -582,10 +582,10 @@ export default function FinancialOnboarding() {
                   <div>
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Phone Number{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Phone Number{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Input
                       type="tel"
@@ -598,9 +598,9 @@ export default function FinancialOnboarding() {
                       }
                       placeholder="+61 2 1234 5678"
                       style={{
-                        background: "var(--bg-tertiary)",
-                        border: "1px solid var(--border-subtle)",
-                        color: "var(--text-[#D4AF37])",
+                        background:"var(--bg-tertiary)",
+                        border:"1px solid var(--border-subtle)",
+                        color:"var(--text-[#D4AF37])",
                       }}
                     />
                   </div>
@@ -608,10 +608,10 @@ export default function FinancialOnboarding() {
                   <div className="col-span-2">
                     <Label
                       className="text-xs font-medium uppercase tracking-wide mb-2"
-                      style={{ color: "var(--text-secondary)" }}
+                      style={{ color:"var(--text-secondary)" }}
                     >
-                      Verification Method{" "}
-                      <span style={{ color: "var(--accent-copper)" }}>*</span>
+                      Verification Method{""}
+                      <span style={{ color:"var(--accent-copper)" }}>*</span>
                     </Label>
                     <Select
                       value={formData.verificationMethod}
@@ -621,8 +621,8 @@ export default function FinancialOnboarding() {
                     >
                       <SelectTrigger
                         style={{
-                          background: "var(--bg-tertiary)",
-                          border: "1px solid var(--border-subtle)",
+                          background:"var(--bg-tertiary)",
+                          border:"1px solid var(--border-subtle)",
                         }}
                       >
                         <SelectValue placeholder="Select verification method" />
@@ -648,16 +648,16 @@ export default function FinancialOnboarding() {
             {currentStep === 3 && (
               <div className="space-y-6">
                 <div>
-                  <h3
+                  <H3
                     className="text-2xl mb-2"
-                    style={{ fontFamily: "'DM Serif Display', serif" }}
+                    style={{ fontFamily:"'DM Serif Display', serif" }}
                   >
                     Data Access Tier
-                  </h3>
+                  </H3>
                   <p
                     style={{
-                      color: "var(--text-secondary)",
-                      fontSize: "14px",
+                      color:"var(--text-secondary)",
+                      fontSize:"14px",
                       fontWeight: 300,
                     }}
                   >
@@ -668,38 +668,38 @@ export default function FinancialOnboarding() {
                 <div className="grid grid-cols-3 gap-4">
                   {[
                     {
-                      id: "basic",
-                      name: "Basic",
-                      badge: "Starter",
-                      price: "$50k p.a.",
+                      id:"basic",
+                      name:"Basic",
+                      badge:"Starter",
+                      price:"$50k p.a.",
                       features: [
-                        "Market indices",
-                        "Regional data",
-                        "Quarterly reports",
+"Market indices",
+"Regional data",
+"Quarterly reports",
                       ],
                     },
                     {
-                      id: "professional",
-                      name: "Professional",
-                      badge: "Popular",
-                      price: "$100k p.a.",
+                      id:"professional",
+                      name:"Professional",
+                      badge:"Popular",
+                      price:"$100k p.a.",
                       features: [
-                        "Real-time data",
-                        "API access",
-                        "Custom reports",
-                        "Priority support",
+"Real-time data",
+"API access",
+"Custom reports",
+"Priority support",
                       ],
                     },
                     {
-                      id: "enterprise",
-                      name: "Enterprise",
-                      badge: "Premium",
-                      price: "Custom",
+                      id:"enterprise",
+                      name:"Enterprise",
+                      badge:"Premium",
+                      price:"Custom",
                       features: [
-                        "Full API access",
-                        "Dedicated support",
-                        "White-label options",
-                        "Custom integration",
+"Full API access",
+"Dedicated support",
+"White-label options",
+"Custom integration",
                       ],
                     },
                   ].map(tier => (
@@ -712,40 +712,40 @@ export default function FinancialOnboarding() {
                       style={{
                         background:
                           formData.accessTier === tier.id
-                            ? "linear-gradient(180deg, rgba(201, 169, 98, 0.08) 0%, var(--bg-secondary) 100%)"
-                            : "var(--bg-tertiary)",
-                        border: `2px solid ${formData.accessTier === tier.id ? "var(--accent-gold)" : "var(--border-subtle)"}`,
+                            ?"linear-gradient(180deg, rgba(201, 169, 98, 0.08) 0%, var(--bg-secondary) 100%)"
+                            :"var(--bg-tertiary)",
+                        border: `2px solid ${formData.accessTier === tier.id ?"var(--accent-gold)" :"var(--border-subtle)"}`,
                       }}
                     >
                       <div
                         className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide mb-3"
                         style={{
                           background:
-                            tier.id === "basic"
-                              ? "var(--bg-elevated)"
-                              : tier.id === "professional"
-                                ? "rgba(201, 169, 98, 0.2)"
-                                : "rgba(184, 115, 51, 0.2)",
+                            tier.id ==="basic"
+                              ?"var(--bg-elevated)"
+                              : tier.id ==="professional"
+                                ?"rgba(201, 169, 98, 0.2)"
+                                :"rgba(184, 115, 51, 0.2)",
                           color:
-                            tier.id === "basic"
-                              ? "var(--text-secondary)"
-                              : tier.id === "professional"
-                                ? "var(--accent-gold)"
-                                : "var(--accent-copper)",
+                            tier.id ==="basic"
+                              ?"var(--text-secondary)"
+                              : tier.id ==="professional"
+                                ?"var(--accent-gold)"
+                                :"var(--accent-copper)",
                         }}
                       >
                         {tier.badge}
                       </div>
-                      <h4
+                      <H4
                         className="text-xl mb-2"
-                        style={{ fontFamily: "'DM Serif Display', serif" }}
+                        style={{ fontFamily:"'DM Serif Display', serif" }}
                       >
                         {tier.name}
-                      </h4>
+                      </H4>
                       <p
                         className="text-sm mb-4"
                         style={{
-                          color: "var(--text-tertiary)",
+                          color:"var(--text-tertiary)",
                           fontWeight: 300,
                         }}
                       >
@@ -753,11 +753,11 @@ export default function FinancialOnboarding() {
                       </p>
                       <ul
                         className="text-left text-xs space-y-2"
-                        style={{ color: "var(--text-secondary)" }}
+                        style={{ color:"var(--text-secondary)" }}
                       >
                         {tier.features.map((feature, idx) => (
                           <li key={idx} className="flex items-center gap-2">
-                            <span style={{ color: "var(--accent-green)" }}>
+                            <span style={{ color:"var(--accent-green)" }}>
                               ✓
                             </span>
                             {feature}
@@ -774,16 +774,16 @@ export default function FinancialOnboarding() {
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div>
-                  <h3
+                  <H3
                     className="text-2xl mb-2"
-                    style={{ fontFamily: "'DM Serif Display', serif" }}
+                    style={{ fontFamily:"'DM Serif Display', serif" }}
                   >
                     Compliance & Declarations
-                  </h3>
+                  </H3>
                   <p
                     style={{
-                      color: "var(--text-secondary)",
-                      fontSize: "14px",
+                      color:"var(--text-secondary)",
+                      fontSize:"14px",
                       fontWeight: 300,
                     }}
                   >
@@ -794,43 +794,43 @@ export default function FinancialOnboarding() {
                 <div
                   className="rounded-xl p-6 space-y-4"
                   style={{
-                    background: "var(--bg-tertiary)",
-                    border: "1px solid var(--border-subtle)",
+                    background:"var(--bg-tertiary)",
+                    border:"1px solid var(--border-subtle)",
                   }}
                 >
-                  <h4
+                  <H4
                     className="text-sm font-semibold mb-4"
-                    style={{ color: "var(--text-[#D4AF37])" }}
+                    style={{ color:"var(--text-[#D4AF37])" }}
                   >
                     Required Declarations
-                  </h4>
+                  </H4>
 
                   {[
                     {
-                      id: "authorizedRepresentative",
+                      id:"authorizedRepresentative",
                       label:
-                        "I am an authorized representative of the institution with authority to enter into this agreement",
+"I am an authorized representative of the institution with authority to enter into this agreement",
                     },
                     {
-                      id: "dataProtection",
+                      id:"dataProtection",
                       label:
-                        "I acknowledge that all data accessed will be handled in accordance with Australian Privacy Principles and data protection regulations",
+"I acknowledge that all data accessed will be handled in accordance with Australian Privacy Principles and data protection regulations",
                     },
                     {
-                      id: "regulatoryCompliance",
+                      id:"regulatoryCompliance",
                       label:
-                        "I confirm that our institution complies with all applicable financial services regulations",
+"I confirm that our institution complies with all applicable financial services regulations",
                     },
                     {
-                      id: "termsAccepted",
+                      id:"termsAccepted",
                       label:
-                        "I have read and accept the Terms of Service and Data Access Agreement",
+"I have read and accept the Terms of Service and Data Access Agreement",
                     },
                   ].map(declaration => (
                     <div
                       key={declaration.id}
                       className="flex gap-3 pb-4 border-b last:border-0"
-                      style={{ borderColor: "var(--border-subtle)" }}
+                      style={{ borderColor:"var(--border-subtle)" }}
                     >
                       <Checkbox
                         id={declaration.id}
@@ -848,12 +848,12 @@ export default function FinancialOnboarding() {
                             },
                           })
                         }
-                        style={{ accentColor: "var(--accent-gold)" }}
+                        style={{ accentColor:"var(--accent-gold)" }}
                       />
                       <label
                         htmlFor={declaration.id}
                         className="text-sm leading-relaxed"
-                        style={{ color: "var(--text-secondary)" }}
+                        style={{ color:"var(--text-secondary)" }}
                       >
                         {declaration.label}
                       </label>
@@ -866,13 +866,13 @@ export default function FinancialOnboarding() {
             {/* Navigation Buttons */}
             <div
               className="flex justify-between mt-8 pt-6"
-              style={{ borderTop: "1px solid var(--border-subtle)" }}
+              style={{ borderTop:"1px solid var(--border-subtle)" }}
             >
               <Button
                 onClick={handleBack}
                 disabled={currentStep === 1}
                 variant="ghost"
-                style={{ color: "var(--text-secondary)" }}
+                style={{ color:"var(--text-secondary)" }}
               >
                 Back
               </Button>
@@ -880,12 +880,12 @@ export default function FinancialOnboarding() {
                 onClick={handleNext}
                 className="px-8"
                 style={{
-                  background: "var(--gradient-gold)",
-                  color: "var(--bg-primary)",
+                  background:"var(--gradient-gold)",
+                  color:"var(--bg-primary)",
                   fontWeight: 600,
                 }}
               >
-                {currentStep === 4 ? "Submit Application" : "Continue"}
+                {currentStep === 4 ?"Submit Application" :"Continue"}
               </Button>
             </div>
           </div>

@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useParams, useLocation } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { Button } from "@/components/ui/Button";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useParams, useLocation } from"wouter";
+import { trpc } from"@/lib/trpc";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Plus,
   FileText,
@@ -19,7 +19,7 @@ import {
   DollarSign,
   Shield,
   AlertCircle,
-} from "lucide-react";
+} from"lucide-react";
 
 export default function SupplyAgreements() {
   const { projectId } = useParams<{ projectId: string }>();
@@ -61,23 +61,23 @@ export default function SupplyAgreements() {
   }
 
   // Group agreements by tier
-  const tier1Agreements = agreements?.filter(a => a.tier === "tier1") || [];
-  const tier2Agreements = agreements?.filter(a => a.tier === "tier2") || [];
-  const optionAgreements = agreements?.filter(a => a.tier === "option") || [];
-  const rofrAgreements = agreements?.filter(a => a.tier === "rofr") || [];
+  const tier1Agreements = agreements?.filter(a => a.tier ==="tier1") || [];
+  const tier2Agreements = agreements?.filter(a => a.tier ==="tier2") || [];
+  const optionAgreements = agreements?.filter(a => a.tier ==="option") || [];
+  const rofrAgreements = agreements?.filter(a => a.tier ==="rofr") || [];
 
   // Calculate supply position
   const tier1Volume = tier1Agreements
-    .filter(a => a.status === "active" || a.status === "executed")
+    .filter(a => a.status ==="active" || a.status ==="executed")
     .reduce((sum, a) => sum + a.annualVolume, 0);
   const tier2Volume = tier2Agreements
-    .filter(a => a.status === "active" || a.status === "executed")
+    .filter(a => a.status ==="active" || a.status ==="executed")
     .reduce((sum, a) => sum + a.annualVolume, 0);
   const optionVolume = optionAgreements
-    .filter(a => a.status === "active" || a.status === "executed")
+    .filter(a => a.status ==="active" || a.status ==="executed")
     .reduce((sum, a) => sum + a.annualVolume, 0);
   const rofrVolume = rofrAgreements
-    .filter(a => a.status === "active" || a.status === "executed")
+    .filter(a => a.status ==="active" || a.status ==="executed")
     .reduce((sum, a) => sum + a.annualVolume, 0);
 
   const capacity = project.nameplateCapacity || 1;
@@ -90,43 +90,43 @@ export default function SupplyAgreements() {
 
   const getTierBadgeColor = (tier: string) => {
     switch (tier) {
-      case "tier1":
-        return "bg-green-100 text-green-800 border-green-300";
-      case "tier2":
-        return "bg-blue-100 text-blue-800 border-blue-300";
-      case "option":
-        return "bg-purple-100 text-purple-800 border-purple-300";
-      case "rofr":
-        return "bg-orange-100 text-orange-800 border-orange-300";
+      case"tier1":
+        return"bg-green-100 text-green-800 border-green-300";
+      case"tier2":
+        return"bg-blue-100 text-blue-800 border-blue-300";
+      case"option":
+        return"bg-purple-100 text-purple-800 border-purple-300";
+      case"rofr":
+        return"bg-orange-100 text-orange-800 border-orange-300";
       default:
-        return "";
+        return"";
     }
   };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "executed":
-        return "bg-blue-100 text-blue-800";
-      case "negotiation":
-        return "bg-yellow-100 text-yellow-800";
-      case "draft":
-        return "bg-gray-100 text-gray-800";
-      case "suspended":
-        return "bg-red-100 text-red-800";
-      case "terminated":
-        return "bg-red-100 text-red-800";
+      case"active":
+        return"bg-green-100 text-green-800";
+      case"executed":
+        return"bg-blue-100 text-blue-800";
+      case"negotiation":
+        return"bg-yellow-100 text-yellow-800";
+      case"draft":
+        return"bg-gray-100 text-gray-800";
+      case"suspended":
+        return"bg-red-100 text-red-800";
+      case"terminated":
+        return"bg-red-100 text-red-800";
       default:
-        return "";
+        return"";
     }
   };
 
   const formatPricingMechanism = (mechanism: string) => {
     return mechanism
       .split("_")
-      .map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) : "")
-      .join(" ");
+      .map(w => w ? w.charAt(0).toUpperCase() + w.slice(1) :"")
+      .join("");
   };
 
   const AgreementCard = ({ agreement }: { agreement: any }) => (
@@ -139,7 +139,7 @@ export default function SupplyAgreements() {
                 `Supplier #${agreement.supplierId}`}
             </CardTitle>
             <CardDescription>
-              {agreement.annualVolume.toLocaleString()} tonnes/year •{" "}
+              {agreement.annualVolume.toLocaleString()} tonnes/year •{""}
               {agreement.termYears} years
             </CardDescription>
           </div>
@@ -160,7 +160,7 @@ export default function SupplyAgreements() {
             <div>
               <p className="text-gray-600">Term</p>
               <p className="font-medium">
-                {new Date(agreement.startDate).toLocaleDateString()} -{" "}
+                {new Date(agreement.startDate).toLocaleDateString()} -{""}
                 {new Date(agreement.endDate).toLocaleDateString()}
               </p>
             </div>
@@ -245,7 +245,7 @@ export default function SupplyAgreements() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[#1B4332]">{project.name}</h1>
+          <H1 className="text-3xl  text-[#1B4332]">{project.name}</H1>
           <p className="text-gray-600 mt-1">
             Supply Agreement Portfolio Management
           </p>
@@ -265,7 +265,7 @@ export default function SupplyAgreements() {
         <CardHeader>
           <CardTitle>Supply Position Overview</CardTitle>
           <CardDescription>
-            Nameplate Capacity:{" "}
+            Nameplate Capacity:{""}
             {(project.nameplateCapacity || 0).toLocaleString()} tonnes/year
           </CardDescription>
         </CardHeader>
@@ -282,17 +282,17 @@ export default function SupplyAgreements() {
               </div>
               <div className="h-3 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${tier1Percent >= (project.tier1Target || 80) ? "bg-green-500" : "bg-yellow-500"}`}
+                  className={`h-full ${tier1Percent >= (project.tier1Target || 80) ?"bg-green-500" :"bg-yellow-500"}`}
                   style={{ width: `${Math.min(tier1Percent, 100)}%` }}
                 />
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                {tier1Volume.toLocaleString()} /{" "}
+                {tier1Volume.toLocaleString()} /{""}
                 {(
                   ((project.nameplateCapacity || 0) *
                     (project.tier1Target || 80)) /
                   100
-                ).toLocaleString()}{" "}
+                ).toLocaleString()}{""}
                 tonnes
               </p>
             </div>
@@ -308,17 +308,17 @@ export default function SupplyAgreements() {
               </div>
               <div className="h-3 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${tier2Percent >= (project.tier2Target || 40) ? "bg-blue-500" : "bg-yellow-500"}`}
+                  className={`h-full ${tier2Percent >= (project.tier2Target || 40) ?"bg-blue-500" :"bg-yellow-500"}`}
                   style={{ width: `${Math.min(tier2Percent, 100)}%` }}
                 />
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                {tier2Volume.toLocaleString()} /{" "}
+                {tier2Volume.toLocaleString()} /{""}
                 {(
                   ((project.nameplateCapacity || 0) *
                     (project.tier2Target || 40)) /
                   100
-                ).toLocaleString()}{" "}
+                ).toLocaleString()}{""}
                 tonnes
               </p>
             </div>
@@ -334,17 +334,17 @@ export default function SupplyAgreements() {
               </div>
               <div className="h-3 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${optionPercent >= (project.optionsTarget || 15) ? "bg-purple-500" : "bg-yellow-500"}`}
+                  className={`h-full ${optionPercent >= (project.optionsTarget || 15) ?"bg-purple-500" :"bg-yellow-500"}`}
                   style={{ width: `${Math.min(optionPercent, 100)}%` }}
                 />
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                {optionVolume.toLocaleString()} /{" "}
+                {optionVolume.toLocaleString()} /{""}
                 {(
                   ((project.nameplateCapacity || 0) *
                     (project.optionsTarget || 15)) /
                   100
-                ).toLocaleString()}{" "}
+                ).toLocaleString()}{""}
                 tonnes
               </p>
             </div>
@@ -360,17 +360,17 @@ export default function SupplyAgreements() {
               </div>
               <div className="h-3 bg-muted rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${rofrPercent >= (project.rofrTarget || 15) ? "bg-orange-500" : "bg-yellow-500"}`}
+                  className={`h-full ${rofrPercent >= (project.rofrTarget || 15) ?"bg-orange-500" :"bg-yellow-500"}`}
                   style={{ width: `${Math.min(rofrPercent, 100)}%` }}
                 />
               </div>
               <p className="text-xs text-gray-600 mt-1">
-                {rofrVolume.toLocaleString()} /{" "}
+                {rofrVolume.toLocaleString()} /{""}
                 {(
                   ((project.nameplateCapacity || 0) *
                     (project.rofrTarget || 15)) /
                   100
-                ).toLocaleString()}{" "}
+                ).toLocaleString()}{""}
                 tonnes
               </p>
             </div>

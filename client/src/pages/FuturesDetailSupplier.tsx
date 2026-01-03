@@ -9,20 +9,20 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Progress } from"@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { Textarea } from"@/components/ui/textarea";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -33,7 +33,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+} from"@/components/ui/alert-dialog";
 import {
   Dialog,
   DialogContent,
@@ -41,11 +41,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { PageLayout } from "@/components/layout";
-import { trpc } from "@/lib/trpc";
-import { formatDate } from "@/const";
-import { H1, H2, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"@/components/ui/dialog";
+import { PageLayout } from"@/components/layout";
+import { trpc } from"@/lib/trpc";
+import { formatDate } from"@/const";
+import { H1, H2, H3, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   ArrowLeft,
   Calendar,
@@ -71,183 +71,183 @@ import {
   Shield,
   BarChart3,
   FileText,
-} from "lucide-react";
-import { useState } from "react";
-import { Link, useRoute, useLocation, useSearch } from "wouter";
-import { toast } from "sonner";
+} from"lucide-react";
+import { useState } from"react";
+import { Link, useRoute, useLocation, useSearch } from"wouter";
+import { toast } from"sonner";
 
 // Mock data for demonstration - keyed by ID to match marketplace listings
 const MOCK_FUTURES_MAP: Record<number, any> = {
   1: {
     id: 1,
-    futuresId: "FUT-2025-0001",
-    title: "Blue Mallee Eucalyptus - Certified Sustainable Plantation",
+    futuresId:"FUT-2025-0001",
+    title:"Blue Mallee Eucalyptus - Certified Sustainable Plantation",
     description:
-      "Large-scale eucalyptus plantation in Victoria's Mallee region, managed for sustainable biomass production. Established plantation with proven yield history. First rotation harvest completed successfully.",
-    cropType: "eucalyptus",
-    cropVariety: "E. grandis",
-    state: "VIC",
-    region: "Mallee Region",
-    landAreaHectares: "2500",
-    landStatus: "owned",
+"Large-scale eucalyptus plantation in Victoria's Mallee region, managed for sustainable biomass production. Established plantation with proven yield history. First rotation harvest completed successfully.",
+    cropType:"eucalyptus",
+    cropVariety:"E. grandis",
+    state:"VIC",
+    region:"Mallee Region",
+    landAreaHectares:"2500",
+    landStatus:"owned",
     projectionStartYear: 2026,
     projectionEndYear: 2040,
     firstHarvestYear: 2026,
-    totalProjectedTonnes: "145000",
-    totalContractedTonnes: "20000",
-    totalAvailableTonnes: "125000",
-    indicativePricePerTonne: "85.00",
-    priceEscalationPercent: "2.5",
-    pricingNotes: "Base price indexed to CPI. Volume discounts available for commitments over 10,000 tonnes/year.",
-    expectedCarbonIntensity: "15.5",
-    expectedMoistureContent: "35",
-    expectedEnergyContent: "18.5",
-    status: "active",
+    totalProjectedTonnes:"145000",
+    totalContractedTonnes:"20000",
+    totalAvailableTonnes:"125000",
+    indicativePricePerTonne:"85.00",
+    priceEscalationPercent:"2.5",
+    pricingNotes:"Base price indexed to CPI. Volume discounts available for commitments over 10,000 tonnes/year.",
+    expectedCarbonIntensity:"15.5",
+    expectedMoistureContent:"35",
+    expectedEnergyContent:"18.5",
+    status:"active",
     publishedAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
   },
   2: {
     id: 2,
-    futuresId: "FUT-2025-0002",
-    title: "Giant Miscanthus Energy Crop - High Yield Variety",
+    futuresId:"FUT-2025-0002",
+    title:"Giant Miscanthus Energy Crop - High Yield Variety",
     description:
-      "High-yield miscanthus plantation in the fertile Riverina region. This perennial grass requires minimal inputs and provides consistent annual harvests.",
-    cropType: "miscanthus",
-    cropVariety: "Miscanthus x giganteus",
-    state: "NSW",
-    region: "Riverina",
-    landAreaHectares: "1200",
-    landStatus: "leased",
+"High-yield miscanthus plantation in the fertile Riverina region. This perennial grass requires minimal inputs and provides consistent annual harvests.",
+    cropType:"miscanthus",
+    cropVariety:"Miscanthus x giganteus",
+    state:"NSW",
+    region:"Riverina",
+    landAreaHectares:"1200",
+    landStatus:"leased",
     projectionStartYear: 2026,
     projectionEndYear: 2035,
     firstHarvestYear: 2027,
-    totalProjectedTonnes: "75000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "75000",
-    indicativePricePerTonne: "95.00",
-    priceEscalationPercent: "2.0",
-    pricingNotes: "Fixed pricing with annual CPI adjustment. Flexible delivery terms.",
-    expectedCarbonIntensity: "12.0",
-    expectedMoistureContent: "20",
-    expectedEnergyContent: "17.5",
-    status: "active",
+    totalProjectedTonnes:"75000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"75000",
+    indicativePricePerTonne:"95.00",
+    priceEscalationPercent:"2.0",
+    pricingNotes:"Fixed pricing with annual CPI adjustment. Flexible delivery terms.",
+    expectedCarbonIntensity:"12.0",
+    expectedMoistureContent:"20",
+    expectedEnergyContent:"17.5",
+    status:"active",
     publishedAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
   },
   3: {
     id: 3,
-    futuresId: "FUT-2025-0003",
-    title: "Dendrocalamus Bamboo - Fast-Growing Biomass",
+    futuresId:"FUT-2025-0003",
+    title:"Dendrocalamus Bamboo - Fast-Growing Biomass",
     description:
-      "Premium bamboo plantation on Queensland's Sunshine Coast. Fast-growing tropical bamboo with exceptional biomass yields.",
-    cropType: "bamboo",
-    cropVariety: "Dendrocalamus asper",
-    state: "QLD",
-    region: "Sunshine Coast Hinterland",
-    landAreaHectares: "3500",
-    landStatus: "owned",
+"Premium bamboo plantation on Queensland's Sunshine Coast. Fast-growing tropical bamboo with exceptional biomass yields.",
+    cropType:"bamboo",
+    cropVariety:"Dendrocalamus asper",
+    state:"QLD",
+    region:"Sunshine Coast Hinterland",
+    landAreaHectares:"3500",
+    landStatus:"owned",
     projectionStartYear: 2025,
     projectionEndYear: 2045,
     firstHarvestYear: 2025,
-    totalProjectedTonnes: "200000",
-    totalContractedTonnes: "20000",
-    totalAvailableTonnes: "180000",
-    indicativePricePerTonne: "75.00",
-    priceEscalationPercent: "2.5",
-    pricingNotes: "Long-term contracts preferred. Volume bonuses available.",
-    expectedCarbonIntensity: "10.0",
-    expectedMoistureContent: "45",
-    expectedEnergyContent: "16.0",
-    status: "active",
+    totalProjectedTonnes:"200000",
+    totalContractedTonnes:"20000",
+    totalAvailableTonnes:"180000",
+    indicativePricePerTonne:"75.00",
+    priceEscalationPercent:"2.5",
+    pricingNotes:"Long-term contracts preferred. Volume bonuses available.",
+    expectedCarbonIntensity:"10.0",
+    expectedMoistureContent:"45",
+    expectedEnergyContent:"16.0",
+    status:"active",
     publishedAt: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
   },
   4: {
     id: 4,
-    futuresId: "FUT-2025-0004",
-    title: "Short Rotation Forestry - Mixed Hardwood",
+    futuresId:"FUT-2025-0004",
+    title:"Short Rotation Forestry - Mixed Hardwood",
     description:
-      "Diverse short-rotation forestry operation in Tasmania's North East. Mixed hardwood species provide resilience and consistent yields.",
-    cropType: "rotation_forestry",
-    cropVariety: "Mixed Eucalyptus species",
-    state: "TAS",
-    region: "North East",
-    landAreaHectares: "5000",
-    landStatus: "owned",
+"Diverse short-rotation forestry operation in Tasmania's North East. Mixed hardwood species provide resilience and consistent yields.",
+    cropType:"rotation_forestry",
+    cropVariety:"Mixed Eucalyptus species",
+    state:"TAS",
+    region:"North East",
+    landAreaHectares:"5000",
+    landStatus:"owned",
     projectionStartYear: 2026,
     projectionEndYear: 2041,
     firstHarvestYear: 2028,
-    totalProjectedTonnes: "320000",
-    totalContractedTonnes: "40000",
-    totalAvailableTonnes: "280000",
-    indicativePricePerTonne: "65.00",
-    priceEscalationPercent: "2.0",
-    pricingNotes: "Competitive pricing for bulk contracts. Rail logistics available.",
-    expectedCarbonIntensity: "14.0",
-    expectedMoistureContent: "40",
-    expectedEnergyContent: "18.0",
-    status: "active",
+    totalProjectedTonnes:"320000",
+    totalContractedTonnes:"40000",
+    totalAvailableTonnes:"280000",
+    indicativePricePerTonne:"65.00",
+    priceEscalationPercent:"2.0",
+    pricingNotes:"Competitive pricing for bulk contracts. Rail logistics available.",
+    expectedCarbonIntensity:"14.0",
+    expectedMoistureContent:"40",
+    expectedEnergyContent:"18.0",
+    status:"active",
     publishedAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 50 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
   },
   5: {
     id: 5,
-    futuresId: "FUT-2025-0005",
-    title: "Industrial Hemp - Multi-Purpose Biomass",
+    futuresId:"FUT-2025-0005",
+    title:"Industrial Hemp - Multi-Purpose Biomass",
     description:
-      "Industrial hemp cultivation on Adelaide Plains. Fast-growing annual crop with multiple harvest cycles.",
-    cropType: "hemp",
-    cropVariety: "Industrial Hemp (low THC)",
-    state: "SA",
-    region: "Adelaide Plains",
-    landAreaHectares: "800",
-    landStatus: "leased",
+"Industrial hemp cultivation on Adelaide Plains. Fast-growing annual crop with multiple harvest cycles.",
+    cropType:"hemp",
+    cropVariety:"Industrial Hemp (low THC)",
+    state:"SA",
+    region:"Adelaide Plains",
+    landAreaHectares:"800",
+    landStatus:"leased",
     projectionStartYear: 2025,
     projectionEndYear: 2030,
     firstHarvestYear: 2025,
-    totalProjectedTonnes: "45000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "45000",
-    indicativePricePerTonne: "120.00",
-    priceEscalationPercent: "3.0",
-    pricingNotes: "Premium pricing reflects high-quality biomass. Flexible contract terms.",
-    expectedCarbonIntensity: "8.0",
-    expectedMoistureContent: "15",
-    expectedEnergyContent: "17.0",
-    status: "draft",
+    totalProjectedTonnes:"45000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"45000",
+    indicativePricePerTonne:"120.00",
+    priceEscalationPercent:"3.0",
+    pricingNotes:"Premium pricing reflects high-quality biomass. Flexible contract terms.",
+    expectedCarbonIntensity:"8.0",
+    expectedMoistureContent:"15",
+    expectedEnergyContent:"17.0",
+    status:"draft",
     publishedAt: null,
     createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
   },
   6: {
     id: 6,
-    futuresId: "FUT-2025-0006",
-    title: "Switchgrass - Low Input Energy Crop",
+    futuresId:"FUT-2025-0006",
+    title:"Switchgrass - Low Input Energy Crop",
     description:
-      "Native switchgrass plantation in Western Australia's South West. Low-input perennial grass with excellent drought tolerance.",
-    cropType: "switchgrass",
-    cropVariety: "Panicum virgatum",
-    state: "WA",
-    region: "South West",
-    landAreaHectares: "1800",
-    landStatus: "owned",
+"Native switchgrass plantation in Western Australia's South West. Low-input perennial grass with excellent drought tolerance.",
+    cropType:"switchgrass",
+    cropVariety:"Panicum virgatum",
+    state:"WA",
+    region:"South West",
+    landAreaHectares:"1800",
+    landStatus:"owned",
     projectionStartYear: 2026,
     projectionEndYear: 2036,
     firstHarvestYear: 2027,
-    totalProjectedTonnes: "90000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "90000",
-    indicativePricePerTonne: "88.00",
-    priceEscalationPercent: "2.5",
-    pricingNotes: "Competitive pricing for long-term offtake agreements.",
-    expectedCarbonIntensity: "11.0",
-    expectedMoistureContent: "25",
-    expectedEnergyContent: "17.5",
-    status: "active",
+    totalProjectedTonnes:"90000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"90000",
+    indicativePricePerTonne:"88.00",
+    priceEscalationPercent:"2.5",
+    pricingNotes:"Competitive pricing for long-term offtake agreements.",
+    expectedCarbonIntensity:"11.0",
+    expectedMoistureContent:"25",
+    expectedEnergyContent:"17.5",
+    status:"active",
     publishedAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
@@ -260,212 +260,212 @@ const DEFAULT_MOCK_FUTURES = MOCK_FUTURES_MAP[1];
 const MOCK_PROJECTIONS = [
   {
     projectionYear: 2025,
-    projectedTonnes: "5000",
-    contractedTonnes: "2000",
+    projectedTonnes:"5000",
+    contractedTonnes:"2000",
     confidencePercent: 90,
-    harvestSeason: "autumn",
-    notes: "Initial thinning",
+    harvestSeason:"autumn",
+    notes:"Initial thinning",
   },
   {
     projectionYear: 2026,
-    projectedTonnes: "12000",
-    contractedTonnes: "5000",
+    projectedTonnes:"12000",
+    contractedTonnes:"5000",
     confidencePercent: 85,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2027,
-    projectedTonnes: "25000",
-    contractedTonnes: "10000",
+    projectedTonnes:"25000",
+    contractedTonnes:"10000",
     confidencePercent: 80,
-    harvestSeason: "autumn",
-    notes: "First major harvest",
+    harvestSeason:"autumn",
+    notes:"First major harvest",
   },
   {
     projectionYear: 2028,
-    projectedTonnes: "28000",
-    contractedTonnes: "12000",
+    projectedTonnes:"28000",
+    contractedTonnes:"12000",
     confidencePercent: 80,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2029,
-    projectedTonnes: "30000",
-    contractedTonnes: "15000",
+    projectedTonnes:"30000",
+    contractedTonnes:"15000",
     confidencePercent: 75,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2030,
-    projectedTonnes: "32000",
-    contractedTonnes: "10000",
+    projectedTonnes:"32000",
+    contractedTonnes:"10000",
     confidencePercent: 75,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2031,
-    projectedTonnes: "32000",
-    contractedTonnes: "8000",
+    projectedTonnes:"32000",
+    contractedTonnes:"8000",
     confidencePercent: 70,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2032,
-    projectedTonnes: "32000",
-    contractedTonnes: "5000",
+    projectedTonnes:"32000",
+    contractedTonnes:"5000",
     confidencePercent: 70,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2033,
-    projectedTonnes: "30000",
-    contractedTonnes: "3000",
+    projectedTonnes:"30000",
+    contractedTonnes:"3000",
     confidencePercent: 65,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2034,
-    projectedTonnes: "28000",
-    contractedTonnes: "2000",
+    projectedTonnes:"28000",
+    contractedTonnes:"2000",
     confidencePercent: 65,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2035,
-    projectedTonnes: "28000",
-    contractedTonnes: "3000",
+    projectedTonnes:"28000",
+    contractedTonnes:"3000",
     confidencePercent: 60,
-    harvestSeason: "autumn",
-    notes: "Second rotation begins",
+    harvestSeason:"autumn",
+    notes:"Second rotation begins",
   },
   {
     projectionYear: 2036,
-    projectedTonnes: "25000",
-    contractedTonnes: "5000",
+    projectedTonnes:"25000",
+    contractedTonnes:"5000",
     confidencePercent: 60,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2037,
-    projectedTonnes: "28000",
-    contractedTonnes: "3000",
+    projectedTonnes:"28000",
+    contractedTonnes:"3000",
     confidencePercent: 55,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2038,
-    projectedTonnes: "30000",
-    contractedTonnes: "2000",
+    projectedTonnes:"30000",
+    contractedTonnes:"2000",
     confidencePercent: 55,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2039,
-    projectedTonnes: "30000",
-    contractedTonnes: "0",
+    projectedTonnes:"30000",
+    contractedTonnes:"0",
     confidencePercent: 50,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
   {
     projectionYear: 2040,
-    projectedTonnes: "30000",
-    contractedTonnes: "0",
+    projectedTonnes:"30000",
+    contractedTonnes:"0",
     confidencePercent: 50,
-    harvestSeason: "autumn",
-    notes: "",
+    harvestSeason:"autumn",
+    notes:"",
   },
 ];
 
 const MOCK_EOIS = [
   {
     id: 1,
-    eoiReference: "EOI-2025-0001",
-    status: "pending",
+    eoiReference:"EOI-2025-0001",
+    status:"pending",
     interestStartYear: 2026,
     interestEndYear: 2030,
-    annualVolumeTonnes: "5000",
-    totalVolumeTonnes: "25000",
-    offeredPricePerTonne: "140.00",
-    deliveryLocation: "Port of Newcastle",
-    deliveryFrequency: "quarterly",
+    annualVolumeTonnes:"5000",
+    totalVolumeTonnes:"25000",
+    offeredPricePerTonne:"140.00",
+    deliveryLocation:"Port of Newcastle",
+    deliveryFrequency:"quarterly",
     additionalTerms:
-      "Interested in long-term partnership. Can provide offtake guarantee.",
+"Interested in long-term partnership. Can provide offtake guarantee.",
     createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
     buyer: {
       id: 1,
-      companyName: "AusEnergy Biomass Pty Ltd",
-      contactEmail: "procurement@ausenergy.com.au",
-      contactPhone: "+61 2 9876 5432",
+      companyName:"AusEnergy Biomass Pty Ltd",
+      contactEmail:"procurement@ausenergy.com.au",
+      contactPhone:"+61 2 9876 5432",
     },
   },
   {
     id: 2,
-    eoiReference: "EOI-2025-0002",
-    status: "under_review",
+    eoiReference:"EOI-2025-0002",
+    status:"under_review",
     interestStartYear: 2027,
     interestEndYear: 2035,
-    annualVolumeTonnes: "8000",
-    totalVolumeTonnes: "72000",
-    offeredPricePerTonne: "138.50",
-    deliveryLocation: "Sydney Processing Hub",
-    deliveryFrequency: "monthly",
+    annualVolumeTonnes:"8000",
+    totalVolumeTonnes:"72000",
+    offeredPricePerTonne:"138.50",
+    deliveryLocation:"Sydney Processing Hub",
+    deliveryFrequency:"monthly",
     additionalTerms:
-      "Major biofuel producer seeking reliable long-term supply. Can provide advance payments.",
+"Major biofuel producer seeking reliable long-term supply. Can provide advance payments.",
     createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
     buyer: {
       id: 2,
-      companyName: "GreenFuels Australia",
-      contactEmail: "supply@greenfuels.com.au",
-      contactPhone: "+61 3 8765 4321",
+      companyName:"GreenFuels Australia",
+      contactEmail:"supply@greenfuels.com.au",
+      contactPhone:"+61 3 8765 4321",
     },
   },
   {
     id: 3,
-    eoiReference: "EOI-2024-0089",
-    status: "accepted",
+    eoiReference:"EOI-2024-0089",
+    status:"accepted",
     interestStartYear: 2025,
     interestEndYear: 2028,
-    annualVolumeTonnes: "6000",
-    totalVolumeTonnes: "24000",
-    offeredPricePerTonne: "132.00",
-    deliveryLocation: "Brisbane Industrial Park",
-    deliveryFrequency: "quarterly",
+    annualVolumeTonnes:"6000",
+    totalVolumeTonnes:"24000",
+    offeredPricePerTonne:"132.00",
+    deliveryLocation:"Brisbane Industrial Park",
+    deliveryFrequency:"quarterly",
     supplierResponse:
-      "Thank you for your interest. We are pleased to accept and look forward to finalizing the contract.",
+"Thank you for your interest. We are pleased to accept and look forward to finalizing the contract.",
     respondedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
     createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
     buyer: {
       id: 3,
-      companyName: "Pacific Bioenergy Corp",
-      contactEmail: "contracts@pacificbio.com",
-      contactPhone: "+61 7 3456 7890",
+      companyName:"Pacific Bioenergy Corp",
+      contactEmail:"contracts@pacificbio.com",
+      contactPhone:"+61 7 3456 7890",
     },
   },
 ];
 
 const CROP_TYPE_LABELS: Record<string, string> = {
-  bamboo: "Bamboo",
-  rotation_forestry: "Rotation Forestry",
-  eucalyptus: "Eucalyptus",
-  poplar: "Poplar",
-  willow: "Willow",
-  miscanthus: "Miscanthus",
-  switchgrass: "Switchgrass",
-  arundo_donax: "Arundo Donax",
-  hemp: "Industrial Hemp",
-  other_perennial: "Other Perennial",
+  bamboo:"Bamboo",
+  rotation_forestry:"Rotation Forestry",
+  eucalyptus:"Eucalyptus",
+  poplar:"Poplar",
+  willow:"Willow",
+  miscanthus:"Miscanthus",
+  switchgrass:"Switchgrass",
+  arundo_donax:"Arundo Donax",
+  hemp:"Industrial Hemp",
+  other_perennial:"Other Perennial",
 };
 
 const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -482,60 +482,60 @@ const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
 };
 
 const LAND_STATUS_LABELS: Record<string, string> = {
-  owned: "Owned",
-  leased: "Leased",
-  under_negotiation: "Under Negotiation",
-  planned_acquisition: "Planned Acquisition",
+  owned:"Owned",
+  leased:"Leased",
+  under_negotiation:"Under Negotiation",
+  planned_acquisition:"Planned Acquisition",
 };
 
 const EOI_STATUS_LABELS: Record<string, string> = {
-  pending: "Pending",
-  under_review: "Under Review",
-  accepted: "Accepted",
-  declined: "Declined",
-  expired: "Expired",
-  withdrawn: "Withdrawn",
+  pending:"Pending",
+  under_review:"Under Review",
+  accepted:"Accepted",
+  declined:"Declined",
+  expired:"Expired",
+  withdrawn:"Withdrawn",
 };
 
 const getStatusColor = (status: string) => {
   switch (status) {
-    case "active":
-      return "bg-emerald-100 text-emerald-800 border-emerald-200";
-    case "draft":
-      return "bg-gray-100 text-gray-800 border-gray-200";
-    case "partially_contracted":
-      return "bg-blue-100 text-blue-800 border-blue-200";
-    case "fully_contracted":
-      return "bg-purple-100 text-purple-800 border-purple-200";
-    case "expired":
-      return "bg-orange-100 text-orange-800 border-orange-200";
-    case "cancelled":
-      return "bg-red-100 text-red-800 border-red-200";
+    case"active":
+      return"bg-emerald-100 text-emerald-800 border-emerald-200";
+    case"draft":
+      return"bg-gray-100 text-gray-800 border-gray-200";
+    case"partially_contracted":
+      return"bg-blue-100 text-blue-800 border-blue-200";
+    case"fully_contracted":
+      return"bg-purple-100 text-purple-800 border-purple-200";
+    case"expired":
+      return"bg-orange-100 text-orange-800 border-orange-200";
+    case"cancelled":
+      return"bg-red-100 text-red-800 border-red-200";
     default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
+      return"bg-gray-100 text-gray-800 border-gray-200";
   }
 };
 
 const getEOIStatusColor = (status: string) => {
   switch (status) {
-    case "pending":
-      return "bg-yellow-100 text-yellow-800 border-yellow-200";
-    case "under_review":
-      return "bg-blue-100 text-blue-800 border-blue-200";
-    case "accepted":
-      return "bg-emerald-100 text-emerald-800 border-emerald-200";
-    case "declined":
-      return "bg-red-100 text-red-800 border-red-200";
-    case "expired":
-    case "withdrawn":
-      return "bg-gray-100 text-gray-600 border-gray-200";
+    case"pending":
+      return"bg-yellow-100 text-yellow-800 border-yellow-200";
+    case"under_review":
+      return"bg-blue-100 text-blue-800 border-blue-200";
+    case"accepted":
+      return"bg-emerald-100 text-emerald-800 border-emerald-200";
+    case"declined":
+      return"bg-red-100 text-red-800 border-red-200";
+    case"expired":
+    case"withdrawn":
+      return"bg-gray-100 text-gray-600 border-gray-200";
     default:
-      return "bg-gray-100 text-gray-800 border-gray-200";
+      return"bg-gray-100 text-gray-800 border-gray-200";
   }
 };
 
 const formatStatusLabel = (status: string) => {
-  return status.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase());
+  return status.replace(/_/g,"").replace(/\b\w/g, l => l.toUpperCase());
 };
 
 export default function FuturesDetailSupplier() {
@@ -544,15 +544,15 @@ export default function FuturesDetailSupplier() {
   const [, setLocation] = useLocation();
   const searchString = useSearch();
   const searchParams = new URLSearchParams(searchString);
-  const initialTab = searchParams.get("tab") || "details";
+  const initialTab = searchParams.get("tab") ||"details";
 
-  const futuresId = parseInt(params?.id || "0");
+  const futuresId = parseInt(params?.id ||"0");
 
   const [respondDialogOpen, setRespondDialogOpen] = useState(false);
   const [selectedEOI, setSelectedEOI] = useState<any>(null);
   const [responseText, setResponseText] = useState("");
   const [respondAction, setRespondAction] = useState<
-    "accepted" | "declined" | "under_review"
+"accepted" |"declined" |"under_review"
   >("under_review");
 
   const utils = trpc.useUtils();
@@ -650,7 +650,7 @@ export default function FuturesDetailSupplier() {
           <Card className="max-w-md">
             <CardContent className="py-8 text-center">
               <XCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
+              <H3 className="text-lg  mb-2">Access Denied</H3>
               <p className="text-gray-600 mb-4">
                 You don't have permission to view this futures listing.
               </p>
@@ -664,22 +664,22 @@ export default function FuturesDetailSupplier() {
     );
   }
 
-  const totalProjected = parseFloat(futures.totalProjectedTonnes || "0");
-  const totalContracted = parseFloat(futures.totalContractedTonnes || "0");
-  const totalAvailable = parseFloat(futures.totalAvailableTonnes || "0");
+  const totalProjected = parseFloat(futures.totalProjectedTonnes ||"0");
+  const totalContracted = parseFloat(futures.totalContractedTonnes ||"0");
+  const totalAvailable = parseFloat(futures.totalAvailableTonnes ||"0");
   const contractedPercent =
     totalProjected > 0 ? (totalContracted / totalProjected) * 100 : 0;
   const availablePercent =
     totalProjected > 0 ? (totalAvailable / totalProjected) * 100 : 100;
 
   const pendingEOIs =
-    eois?.filter((e: any) => ["pending", "under_review"].includes(e.status)) ||
+    eois?.filter((e: any) => ["pending","under_review"].includes(e.status)) ||
     [];
-  const acceptedEOIs = eois?.filter((e: any) => e.status === "accepted") || [];
+  const acceptedEOIs = eois?.filter((e: any) => e.status ==="accepted") || [];
 
   const openRespondDialog = (
     eoi: any,
-    action: "accepted" | "declined" | "under_review"
+    action:"accepted" |"declined" |"under_review"
   ) => {
     setSelectedEOI(eoi);
     setRespondAction(action);
@@ -759,7 +759,7 @@ export default function FuturesDetailSupplier() {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-2">
-              {futures.status === "draft" && !isUsingMockData && (
+              {futures.status ==="draft" && !isUsingMockData && (
                 <>
                   <Link href={`/supplier/futures/create?edit=${futures.id}`}>
                     <Button
@@ -813,7 +813,7 @@ export default function FuturesDetailSupplier() {
                   </AlertDialog>
                 </>
               )}
-              {futures.status === "active" && !isUsingMockData && (
+              {futures.status ==="active" && !isUsingMockData && (
                 <Button
                   variant="outline"
                   onClick={() => unpublishMutation.mutate({ id: futures.id })}
@@ -999,7 +999,7 @@ export default function FuturesDetailSupplier() {
                         <p className="font-semibold font-mono">
                           {parseFloat(
                             futures.landAreaHectares
-                          ).toLocaleString()}{" "}
+                          ).toLocaleString()}{""}
                           ha
                         </p>
                       </div>
@@ -1008,7 +1008,7 @@ export default function FuturesDetailSupplier() {
                           Land Status
                         </p>
                         <p className="font-semibold">
-                          {LAND_STATUS_LABELS[futures.landStatus || "owned"]}
+                          {LAND_STATUS_LABELS[futures.landStatus ||"owned"]}
                         </p>
                       </div>
                     </div>
@@ -1035,11 +1035,11 @@ export default function FuturesDetailSupplier() {
                     <div className="flex items-center gap-2 text-sm p-3 bg-muted/30 rounded-lg">
                       <Calendar className="h-4 w-4 text-gray-600" />
                       <span className="font-medium">
-                        {futures.projectionStartYear} -{" "}
+                        {futures.projectionStartYear} -{""}
                         {futures.projectionEndYear} (
                         {futures.projectionEndYear -
                           futures.projectionStartYear +
-                          1}{" "}
+                          1}{""}
                         years)
                       </span>
                     </div>
@@ -1047,7 +1047,7 @@ export default function FuturesDetailSupplier() {
                     {futures.firstHarvestYear && (
                       <div className="text-sm p-3 bg-emerald-50 rounded-lg border border-emerald-100">
                         <span className="text-emerald-700">
-                          First Harvest:{" "}
+                          First Harvest:{""}
                         </span>
                         <span className="font-semibold text-emerald-800">
                           {futures.firstHarvestYear}
@@ -1068,7 +1068,7 @@ export default function FuturesDetailSupplier() {
                           <p className="font-bold text-lg text-teal-800 font-mono">
                             {futures.indicativePricePerTonne
                               ? `$${parseFloat(futures.indicativePricePerTonne).toFixed(2)}/t`
-                              : "Negotiable"}
+                              :"Negotiable"}
                           </p>
                         </div>
                         <div className="p-3 bg-muted/50 rounded-lg">
@@ -1076,7 +1076,7 @@ export default function FuturesDetailSupplier() {
                             Annual Escalation
                           </p>
                           <p className="font-bold text-lg font-mono">
-                            {futures.priceEscalationPercent || "2.5"}%
+                            {futures.priceEscalationPercent ||"2.5"}%
                           </p>
                         </div>
                       </div>
@@ -1165,7 +1165,7 @@ export default function FuturesDetailSupplier() {
                         Year-by-year projected and contracted volumes
                       </CardDescription>
                     </div>
-                    {futures.status === "draft" && !isUsingMockData && (
+                    {futures.status ==="draft" && !isUsingMockData && (
                       <Link
                         href={`/supplier/futures/create?edit=${futures.id}`}
                       >
@@ -1209,16 +1209,16 @@ export default function FuturesDetailSupplier() {
                         <tbody>
                           {projections.map((p: any, index: number) => {
                             const projected = parseFloat(
-                              p.projectedTonnes || "0"
+                              p.projectedTonnes ||"0"
                             );
                             const contracted = parseFloat(
-                              p.contractedTonnes || "0"
+                              p.contractedTonnes ||"0"
                             );
                             const available = projected - contracted;
                             return (
                               <tr
                                 key={p.projectionYear}
-                                className={index % 2 === 0 ? "bg-muted/10" : ""}
+                                className={index % 2 === 0 ?"bg-muted/10" :""}
                               >
                                 <td className="py-3 px-4 font-semibold">
                                   {p.projectionYear}
@@ -1237,20 +1237,20 @@ export default function FuturesDetailSupplier() {
                                     variant="outline"
                                     className={
                                       p.confidencePercent >= 70
-                                        ? "border-emerald-200 text-emerald-700"
+                                        ?"border-emerald-200 text-emerald-700"
                                         : p.confidencePercent >= 50
-                                          ? "border-yellow-200 text-yellow-700"
-                                          : "border-red-200 text-red-700"
+                                          ?"border-yellow-200 text-yellow-700"
+                                          :"border-red-200 text-red-700"
                                     }
                                   >
                                     {p.confidencePercent || 80}%
                                   </Badge>
                                 </td>
                                 <td className="py-3 px-4 capitalize text-sm">
-                                  {p.harvestSeason || "-"}
+                                  {p.harvestSeason ||"-"}
                                 </td>
                                 <td className="py-3 px-4 text-sm text-gray-600 max-w-[200px] truncate">
-                                  {p.notes || "-"}
+                                  {p.notes ||"-"}
                                 </td>
                               </tr>
                             );
@@ -1279,7 +1279,7 @@ export default function FuturesDetailSupplier() {
                       <p className="font-medium mb-2">
                         No yield projections added yet
                       </p>
-                      {futures.status === "draft" && !isUsingMockData && (
+                      {futures.status ==="draft" && !isUsingMockData && (
                         <Link
                           href={`/supplier/futures/create?edit=${futures.id}`}
                         >
@@ -1356,14 +1356,14 @@ export default function FuturesDetailSupplier() {
                               </p>
                             </div>
 
-                            {["pending", "under_review"].includes(eoi.status) &&
+                            {["pending","under_review"].includes(eoi.status) &&
                               !isUsingMockData && (
                                 <div className="flex flex-wrap gap-2">
                                   <Button
                                     size="sm"
                                     variant="outline"
                                     onClick={() =>
-                                      openRespondDialog(eoi, "under_review")
+                                      openRespondDialog(eoi,"under_review")
                                     }
                                     className="border-blue-200 text-blue-600 hover:bg-blue-50"
                                   >
@@ -1374,7 +1374,7 @@ export default function FuturesDetailSupplier() {
                                     size="sm"
                                     variant="outline"
                                     onClick={() =>
-                                      openRespondDialog(eoi, "accepted")
+                                      openRespondDialog(eoi,"accepted")
                                     }
                                     className="border-emerald-200 text-[#D4AF37] hover:bg-emerald-50"
                                   >
@@ -1385,7 +1385,7 @@ export default function FuturesDetailSupplier() {
                                     size="sm"
                                     variant="outline"
                                     onClick={() =>
-                                      openRespondDialog(eoi, "declined")
+                                      openRespondDialog(eoi,"declined")
                                     }
                                     className="border-red-200 text-red-600 hover:bg-red-50"
                                   >
@@ -1467,7 +1467,7 @@ export default function FuturesDetailSupplier() {
                               <p className="font-semibold font-mono">
                                 {eoi.offeredPricePerTonne
                                   ? `$${parseFloat(eoi.offeredPricePerTonne).toFixed(2)}/t`
-                                  : "Negotiable"}
+                                  :"Negotiable"}
                               </p>
                             </div>
                           </div>
@@ -1477,14 +1477,14 @@ export default function FuturesDetailSupplier() {
                               {eoi.deliveryLocation && (
                                 <p className="mb-1">
                                   <span className="text-gray-600">
-                                    Delivery:{" "}
+                                    Delivery:{""}
                                   </span>
                                   <span className="font-medium">
                                     {eoi.deliveryLocation}
                                   </span>
                                   {eoi.deliveryFrequency && (
                                     <span className="text-gray-600">
-                                      {" "}
+                                      {""}
                                       ({eoi.deliveryFrequency})
                                     </span>
                                   )}
@@ -1492,7 +1492,7 @@ export default function FuturesDetailSupplier() {
                               )}
                               {eoi.additionalTerms && (
                                 <p className="text-gray-600 mt-2 italic">
-                                  "{eoi.additionalTerms}"
+"{eoi.additionalTerms}"
                                 </p>
                               )}
                             </div>
@@ -1522,7 +1522,7 @@ export default function FuturesDetailSupplier() {
                       <p className="font-medium mb-2">
                         No expressions of interest yet
                       </p>
-                      {futures.status === "draft" && (
+                      {futures.status ==="draft" && (
                         <p className="text-sm">
                           Publish your listing to start receiving EOIs from
                           buyers
@@ -1542,18 +1542,18 @@ export default function FuturesDetailSupplier() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {respondAction === "accepted" && "Accept EOI"}
-              {respondAction === "declined" && "Decline EOI"}
-              {respondAction === "under_review" && "Mark as Under Review"}
+              {respondAction ==="accepted" &&"Accept EOI"}
+              {respondAction ==="declined" &&"Decline EOI"}
+              {respondAction ==="under_review" &&"Mark as Under Review"}
             </DialogTitle>
             <DialogDescription>
               {selectedEOI && (
                 <>
-                  {respondAction === "accepted" &&
+                  {respondAction ==="accepted" &&
                     `You are accepting the EOI from ${selectedEOI.buyer?.companyName} for ${parseFloat(selectedEOI.totalVolumeTonnes).toLocaleString()}t.`}
-                  {respondAction === "declined" &&
+                  {respondAction ==="declined" &&
                     `You are declining the EOI from ${selectedEOI.buyer?.companyName}.`}
-                  {respondAction === "under_review" &&
+                  {respondAction ==="under_review" &&
                     `Mark this EOI as under review to indicate you are evaluating it.`}
                 </>
               )}
@@ -1567,11 +1567,11 @@ export default function FuturesDetailSupplier() {
               </label>
               <Textarea
                 placeholder={
-                  respondAction === "accepted"
-                    ? "Thank you for your interest. We would like to proceed with contract negotiations..."
-                    : respondAction === "declined"
-                      ? "Thank you for your interest. Unfortunately..."
-                      : "We are currently reviewing your EOI and will respond shortly..."
+                  respondAction ==="accepted"
+                    ?"Thank you for your interest. We would like to proceed with contract negotiations..."
+                    : respondAction ==="declined"
+                      ?"Thank you for your interest. Unfortunately..."
+                      :"We are currently reviewing your EOI and will respond shortly..."
                 }
                 value={responseText}
                 onChange={e => setResponseText(e.target.value)}
@@ -1592,14 +1592,14 @@ export default function FuturesDetailSupplier() {
               onClick={handleRespond}
               disabled={respondMutation.isPending || isUsingMockData}
               className={
-                respondAction === "accepted"
-                  ? "bg-[#D4AF37] hover:bg-emerald-700"
-                  : respondAction === "declined"
-                    ? "bg-red-600 hover:bg-red-700"
-                    : ""
+                respondAction ==="accepted"
+                  ?"bg-[#D4AF37] hover:bg-emerald-700"
+                  : respondAction ==="declined"
+                    ?"bg-red-600 hover:bg-red-700"
+                    :""
               }
             >
-              {respondMutation.isPending ? "Sending..." : "Send Response"}
+              {respondMutation.isPending ?"Sending..." :"Send Response"}
             </Button>
           </DialogFooter>
         </DialogContent>

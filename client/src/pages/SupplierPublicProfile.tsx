@@ -9,17 +9,18 @@
  * - Contact information sidebar
  */
 
-import { Button } from "@/components/ui/Button";
+import { Button } from"@/components/ui/Button";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { trpc } from "@/lib/trpc";
-import { cn } from "@/lib/utils";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { trpc } from"@/lib/trpc";
+import { cn } from"@/lib/utils";
 import {
   Loader2,
   MapPin,
@@ -37,96 +38,96 @@ import {
   Package,
   TrendingUp,
   ExternalLink,
-} from "lucide-react";
-import { useParams, Link } from "wouter";
+} from"lucide-react";
+import { useParams, Link } from"wouter";
 
 // Australian bamboo-focused sample data (would come from API)
 const SAMPLE_SUPPLIER = {
   id: 1,
-  companyName: "Queensland Bamboo Biomass",
-  abn: "12 345 678 901",
+  companyName:"Queensland Bamboo Biomass",
+  abn:"12 345 678 901",
   description: `Queensland Bamboo Biomass is a leading Australian producer of sustainable bamboo feedstock for bioenergy applications. Established in 2018, we operate 2,500 hectares of managed bamboo plantations across the Darling Downs region.
 
 Our bamboo is harvested using sustainable rotation practices, ensuring continuous supply while maintaining ecosystem health. We specialise in premium bamboo chips and pellets optimised for pyrolysis and gasification processes.
 
 With ISO 14001 environmental certification and FSC-certified sustainable forestry practices, we're committed to providing traceable, low-carbon biomass solutions for Australia's renewable energy sector.`,
-  state: "QLD",
-  city: "Toowoomba",
-  postcode: "4350",
-  website: "https://qldbamboo.com.au",
-  contactEmail: "supply@qldbamboo.com.au",
-  contactPhone: "+61 7 4567 8901",
-  verificationStatus: "verified",
+  state:"QLD",
+  city:"Toowoomba",
+  postcode:"4350",
+  website:"https://qldbamboo.com.au",
+  contactEmail:"supply@qldbamboo.com.au",
+  contactPhone:"+61 7 4567 8901",
+  verificationStatus:"verified",
   establishedYear: 2018,
   abfiScore: 94,
-  abfiRating: "A+",
-  totalVolume: "15,000 MT/year",
+  abfiRating:"A+",
+  totalVolume:"15,000 MT/year",
   activeContracts: 47,
-  responseTime: "<2 hours",
+  responseTime:"<2 hours",
 };
 
 // Sample feedstocks (would come from API)
 const SAMPLE_FEEDSTOCKS = [
   {
     id: 1,
-    name: "Premium Bamboo Chips",
-    type: "bamboo",
-    volume: "500 MT/month",
-    price: "$145/MT",
-    status: "available",
-    image: "/images/feedstocks/bamboo-chips.jpg",
+    name:"Premium Bamboo Chips",
+    type:"bamboo",
+    volume:"500 MT/month",
+    price:"$145/MT",
+    status:"available",
+    image:"/images/feedstocks/bamboo-chips.jpg",
     specs: {
-      moisture: "8-10%",
-      energy: "18.5 MJ/kg",
-      ash: "<2%",
+      moisture:"8-10%",
+      energy:"18.5 MJ/kg",
+      ash:"<2%",
     },
   },
   {
     id: 2,
-    name: "Bamboo Pellets",
-    type: "bamboo",
-    volume: "300 MT/month",
-    price: "$180/MT",
-    status: "available",
-    image: "/images/feedstocks/bamboo-pellets.jpg",
+    name:"Bamboo Pellets",
+    type:"bamboo",
+    volume:"300 MT/month",
+    price:"$180/MT",
+    status:"available",
+    image:"/images/feedstocks/bamboo-pellets.jpg",
     specs: {
-      moisture: "6-8%",
-      energy: "19.2 MJ/kg",
-      ash: "<1.5%",
+      moisture:"6-8%",
+      energy:"19.2 MJ/kg",
+      ash:"<1.5%",
     },
   },
   {
     id: 3,
-    name: "Bamboo Dust/Fines",
-    type: "bamboo",
-    volume: "150 MT/month",
-    price: "$95/MT",
-    status: "limited",
-    image: "/images/feedstocks/bamboo-fines.jpg",
+    name:"Bamboo Dust/Fines",
+    type:"bamboo",
+    volume:"150 MT/month",
+    price:"$95/MT",
+    status:"limited",
+    image:"/images/feedstocks/bamboo-fines.jpg",
     specs: {
-      moisture: "10-12%",
-      energy: "17.8 MJ/kg",
-      ash: "<3%",
+      moisture:"10-12%",
+      energy:"17.8 MJ/kg",
+      ash:"<3%",
     },
   },
 ];
 
 // Sample certifications
 const CERTIFICATIONS = [
-  { name: "ISO 14001", icon: Award, verified: true },
-  { name: "FSC Certified", icon: Leaf, verified: true },
-  { name: "ISCC EU", icon: CheckCircle, verified: true },
-  { name: "ISO 9001", icon: Award, verified: true },
+  { name:"ISO 14001", icon: Award, verified: true },
+  { name:"FSC Certified", icon: Leaf, verified: true },
+  { name:"ISCC EU", icon: CheckCircle, verified: true },
+  { name:"ISO 9001", icon: Award, verified: true },
 ];
 
 // Monthly production data for chart
 const PRODUCTION_DATA = [
-  { month: "Jan", volume: 420 },
-  { month: "Feb", volume: 380 },
-  { month: "Mar", volume: 450 },
-  { month: "Apr", volume: 520 },
-  { month: "May", volume: 580 },
-  { month: "Jun", volume: 620 },
+  { month:"Jan", volume: 420 },
+  { month:"Feb", volume: 380 },
+  { month:"Mar", volume: 450 },
+  { month:"Apr", volume: 520 },
+  { month:"May", volume: 580 },
+  { month:"Jun", volume: 620 },
 ];
 
 // Production chart component
@@ -211,21 +212,21 @@ function FeedstockCard({
         <Leaf className="h-16 w-16 text-[#D4AF37]" />
       </div>
       <CardContent className="p-4">
-        <h4 className="font-semibold text-slate-900 mb-1">{feedstock.name}</h4>
+        <H4 className="text-slate-900 mb-1">{feedstock.name}</H4>
         <p className="text-sm text-slate-600 mb-2">{feedstock.volume}</p>
         <div className="flex items-center justify-between mb-3">
           <span className="text-lg font-bold text-[#D4AF37]">
             {feedstock.price}
           </span>
           <Badge
-            variant={feedstock.status === "available" ? "default" : "secondary"}
+            variant={feedstock.status ==="available" ?"default" :"secondary"}
             className={cn(
-              feedstock.status === "available"
-                ? "bg-emerald-100 text-emerald-700"
-                : "bg-amber-100 text-amber-700"
+              feedstock.status ==="available"
+                ?"bg-emerald-100 text-emerald-700"
+                :"bg-amber-100 text-amber-700"
             )}
           >
-            {feedstock.status === "available" ? "Available Now" : "Limited Stock"}
+            {feedstock.status ==="available" ?"Available Now" :"Limited Stock"}
           </Badge>
         </div>
         <div className="grid grid-cols-3 gap-2 text-xs text-black0 mb-3">
@@ -300,10 +301,10 @@ export default function SupplierPublicProfile() {
 
                 <div className="flex-1">
                   <div className="flex items-center gap-3 flex-wrap mb-2">
-                    <h1 className="text-2xl font-bold text-slate-900">
+                    <H1 className="text-2xl  text-slate-900">
                       {supplier.companyName}
-                    </h1>
-                    {supplier.verificationStatus === "verified" && (
+                    </H1>
+                    {supplier.verificationStatus ==="verified" && (
                       <Badge className="bg-emerald-100 text-emerald-700 border-0">
                         <CheckCircle className="h-3 w-3 mr-1" />
                         Verified Supplier
@@ -402,9 +403,9 @@ export default function SupplierPublicProfile() {
 
             {/* Feedstock Listings */}
             <div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-4">
+              <H3 className="text-lg  text-slate-900 mb-4">
                 Available Bamboo Feedstocks
-              </h3>
+              </H3>
               <div className="grid md:grid-cols-3 gap-4">
                 {SAMPLE_FEEDSTOCKS.map(feedstock => (
                   <FeedstockCard key={feedstock.id} feedstock={feedstock} />
@@ -489,7 +490,7 @@ export default function SupplierPublicProfile() {
                       rel="noopener noreferrer"
                       className="text-[#D4AF37] hover:underline flex items-center gap-1"
                     >
-                      {supplier.website.replace(/^https?:\/\//, "")}
+                      {supplier.website.replace(/^https?:\/\//,"")}
                       <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>

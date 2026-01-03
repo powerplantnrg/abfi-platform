@@ -1,30 +1,30 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from"@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -32,8 +32,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/table";
+import { Progress } from"@/components/ui/progress";
 import {
   Search,
   Filter,
@@ -52,161 +52,161 @@ import {
   Zap,
   TrendingUp,
   MapPin,
-} from "lucide-react";
-import { format } from "date-fns";
+} from"lucide-react";
+import { format } from"date-fns";
 
 // Grant program types
 const GRANT_PROGRAMS = [
-  { value: "arena", label: "ARENA", fullName: "Australian Renewable Energy Agency", color: "bg-green-100 text-green-800" },
-  { value: "cefc", label: "CEFC", fullName: "Clean Energy Finance Corporation", color: "bg-blue-100 text-blue-800" },
-  { value: "accu", label: "ACCU", fullName: "Australian Carbon Credit Units", color: "bg-purple-100 text-purple-800" },
-  { value: "eis", label: "EIS", fullName: "Emissions Intensive Sector", color: "bg-amber-100 text-amber-800" },
-  { value: "powering", label: "Powering", fullName: "Powering the Regions Fund", color: "bg-cyan-100 text-cyan-800" },
+  { value:"arena", label:"ARENA", fullName:"Australian Renewable Energy Agency", color:"bg-green-100 text-green-800" },
+  { value:"cefc", label:"CEFC", fullName:"Clean Energy Finance Corporation", color:"bg-blue-100 text-blue-800" },
+  { value:"accu", label:"ACCU", fullName:"Australian Carbon Credit Units", color:"bg-purple-100 text-purple-800" },
+  { value:"eis", label:"EIS", fullName:"Emissions Intensive Sector", color:"bg-amber-100 text-amber-800" },
+  { value:"powering", label:"Powering", fullName:"Powering the Regions Fund", color:"bg-cyan-100 text-cyan-800" },
 ];
 
 const GRANT_STATUS = [
-  { value: "submitted", label: "Submitted", icon: Clock, color: "bg-gray-100 text-gray-800" },
-  { value: "under_review", label: "Under Review", icon: Eye, color: "bg-blue-100 text-blue-800" },
-  { value: "approved", label: "Approved", icon: CheckCircle2, color: "bg-green-100 text-green-800" },
-  { value: "conditionally_approved", label: "Conditionally Approved", icon: AlertTriangle, color: "bg-yellow-100 text-yellow-800" },
-  { value: "active", label: "Active", icon: Zap, color: "bg-emerald-100 text-emerald-800" },
-  { value: "completed", label: "Completed", icon: CheckCircle2, color: "bg-green-100 text-green-800" },
-  { value: "rejected", label: "Rejected", icon: XCircle, color: "bg-red-100 text-red-800" },
+  { value:"submitted", label:"Submitted", icon: Clock, color:"bg-gray-100 text-gray-800" },
+  { value:"under_review", label:"Under Review", icon: Eye, color:"bg-blue-100 text-blue-800" },
+  { value:"approved", label:"Approved", icon: CheckCircle2, color:"bg-green-100 text-green-800" },
+  { value:"conditionally_approved", label:"Conditionally Approved", icon: AlertTriangle, color:"bg-yellow-100 text-yellow-800" },
+  { value:"active", label:"Active", icon: Zap, color:"bg-emerald-100 text-emerald-800" },
+  { value:"completed", label:"Completed", icon: CheckCircle2, color:"bg-green-100 text-green-800" },
+  { value:"rejected", label:"Rejected", icon: XCircle, color:"bg-red-100 text-red-800" },
 ];
 
 // Mock grant applications data
 const MOCK_GRANTS = [
   {
-    id: "GR-2024-001",
-    projectName: "Mallee Eucalyptus Biomass Project",
-    applicant: "EcoFuels Australia Pty Ltd",
-    abn: "12 345 678 901",
-    program: "arena",
-    status: "active",
-    submittedDate: "2024-03-15",
-    approvedDate: "2024-05-20",
+    id:"GR-2024-001",
+    projectName:"Mallee Eucalyptus Biomass Project",
+    applicant:"EcoFuels Australia Pty Ltd",
+    abn:"12 345 678 901",
+    program:"arena",
+    status:"active",
+    submittedDate:"2024-03-15",
+    approvedDate:"2024-05-20",
     totalFunding: 2500000,
     disbursed: 1250000,
     milestones: [
-      { name: "Project Initiation", status: "completed", amount: 500000, date: "2024-06-01" },
-      { name: "Site Preparation", status: "completed", amount: 750000, date: "2024-08-15" },
-      { name: "Equipment Installation", status: "in_progress", amount: 750000, date: "2024-12-01" },
-      { name: "Commissioning", status: "pending", amount: 500000, date: "2025-03-01" },
+      { name:"Project Initiation", status:"completed", amount: 500000, date:"2024-06-01" },
+      { name:"Site Preparation", status:"completed", amount: 750000, date:"2024-08-15" },
+      { name:"Equipment Installation", status:"in_progress", amount: 750000, date:"2024-12-01" },
+      { name:"Commissioning", status:"pending", amount: 500000, date:"2025-03-01" },
     ],
-    location: "Mildura, VIC",
-    feedstockType: "Mallee eucalyptus",
+    location:"Mildura, VIC",
+    feedstockType:"Mallee eucalyptus",
     carbonReduction: 15000,
     jobsCreated: 45,
     compliance: {
-      financialReporting: "compliant",
-      environmentalAssessment: "compliant",
-      progressReports: "compliant",
-      communityEngagement: "attention_required",
+      financialReporting:"compliant",
+      environmentalAssessment:"compliant",
+      progressReports:"compliant",
+      communityEngagement:"attention_required",
     },
   },
   {
-    id: "GR-2024-002",
-    projectName: "Canola Stubble Biofuel Initiative",
-    applicant: "GrainPower Solutions",
-    abn: "98 765 432 109",
-    program: "cefc",
-    status: "approved",
-    submittedDate: "2024-06-10",
-    approvedDate: "2024-09-05",
+    id:"GR-2024-002",
+    projectName:"Canola Stubble Biofuel Initiative",
+    applicant:"GrainPower Solutions",
+    abn:"98 765 432 109",
+    program:"cefc",
+    status:"approved",
+    submittedDate:"2024-06-10",
+    approvedDate:"2024-09-05",
     totalFunding: 1800000,
     disbursed: 0,
     milestones: [
-      { name: "Feasibility Study", status: "pending", amount: 200000, date: "2024-11-01" },
-      { name: "Pilot Plant Construction", status: "pending", amount: 800000, date: "2025-03-01" },
-      { name: "Commercial Operations", status: "pending", amount: 800000, date: "2025-09-01" },
+      { name:"Feasibility Study", status:"pending", amount: 200000, date:"2024-11-01" },
+      { name:"Pilot Plant Construction", status:"pending", amount: 800000, date:"2025-03-01" },
+      { name:"Commercial Operations", status:"pending", amount: 800000, date:"2025-09-01" },
     ],
-    location: "Wagga Wagga, NSW",
-    feedstockType: "Canola stubble",
+    location:"Wagga Wagga, NSW",
+    feedstockType:"Canola stubble",
     carbonReduction: 8500,
     jobsCreated: 28,
     compliance: {
-      financialReporting: "pending",
-      environmentalAssessment: "compliant",
-      progressReports: "pending",
-      communityEngagement: "pending",
+      financialReporting:"pending",
+      environmentalAssessment:"compliant",
+      progressReports:"pending",
+      communityEngagement:"pending",
     },
   },
   {
-    id: "GR-2024-003",
-    projectName: "Sugarcane Bagasse Processing Facility",
-    applicant: "Tropical BioEnergy Co",
-    abn: "45 678 901 234",
-    program: "powering",
-    status: "under_review",
-    submittedDate: "2024-10-01",
+    id:"GR-2024-003",
+    projectName:"Sugarcane Bagasse Processing Facility",
+    applicant:"Tropical BioEnergy Co",
+    abn:"45 678 901 234",
+    program:"powering",
+    status:"under_review",
+    submittedDate:"2024-10-01",
     approvedDate: null,
     totalFunding: 4200000,
     disbursed: 0,
     milestones: [],
-    location: "Mackay, QLD",
-    feedstockType: "Sugarcane bagasse",
+    location:"Mackay, QLD",
+    feedstockType:"Sugarcane bagasse",
     carbonReduction: 22000,
     jobsCreated: 65,
     compliance: {
-      financialReporting: "pending",
-      environmentalAssessment: "under_review",
-      progressReports: "not_applicable",
-      communityEngagement: "pending",
+      financialReporting:"pending",
+      environmentalAssessment:"under_review",
+      progressReports:"not_applicable",
+      communityEngagement:"pending",
     },
   },
   {
-    id: "GR-2023-015",
-    projectName: "Wheat Straw Bioethanol Plant",
-    applicant: "AusBio Industries",
-    abn: "33 444 555 666",
-    program: "arena",
-    status: "completed",
-    submittedDate: "2023-02-20",
-    approvedDate: "2023-05-15",
+    id:"GR-2023-015",
+    projectName:"Wheat Straw Bioethanol Plant",
+    applicant:"AusBio Industries",
+    abn:"33 444 555 666",
+    program:"arena",
+    status:"completed",
+    submittedDate:"2023-02-20",
+    approvedDate:"2023-05-15",
     totalFunding: 3100000,
     disbursed: 3100000,
     milestones: [
-      { name: "Project Initiation", status: "completed", amount: 600000, date: "2023-06-01" },
-      { name: "Construction Phase 1", status: "completed", amount: 1000000, date: "2023-10-01" },
-      { name: "Construction Phase 2", status: "completed", amount: 1000000, date: "2024-02-01" },
-      { name: "Final Commissioning", status: "completed", amount: 500000, date: "2024-06-01" },
+      { name:"Project Initiation", status:"completed", amount: 600000, date:"2023-06-01" },
+      { name:"Construction Phase 1", status:"completed", amount: 1000000, date:"2023-10-01" },
+      { name:"Construction Phase 2", status:"completed", amount: 1000000, date:"2024-02-01" },
+      { name:"Final Commissioning", status:"completed", amount: 500000, date:"2024-06-01" },
     ],
-    location: "Geraldton, WA",
-    feedstockType: "Wheat straw",
+    location:"Geraldton, WA",
+    feedstockType:"Wheat straw",
     carbonReduction: 18500,
     jobsCreated: 52,
     compliance: {
-      financialReporting: "compliant",
-      environmentalAssessment: "compliant",
-      progressReports: "compliant",
-      communityEngagement: "compliant",
+      financialReporting:"compliant",
+      environmentalAssessment:"compliant",
+      progressReports:"compliant",
+      communityEngagement:"compliant",
     },
   },
   {
-    id: "GR-2024-004",
-    projectName: "Forestry Residue Pellet Production",
-    applicant: "TimberGreen Energy",
-    abn: "77 888 999 000",
-    program: "accu",
-    status: "conditionally_approved",
-    submittedDate: "2024-07-22",
-    approvedDate: "2024-10-10",
+    id:"GR-2024-004",
+    projectName:"Forestry Residue Pellet Production",
+    applicant:"TimberGreen Energy",
+    abn:"77 888 999 000",
+    program:"accu",
+    status:"conditionally_approved",
+    submittedDate:"2024-07-22",
+    approvedDate:"2024-10-10",
     totalFunding: 1500000,
     disbursed: 0,
     milestones: [
-      { name: "Conditions Fulfillment", status: "in_progress", amount: 0, date: "2024-12-15" },
-      { name: "Equipment Procurement", status: "pending", amount: 600000, date: "2025-02-01" },
-      { name: "Operations Launch", status: "pending", amount: 900000, date: "2025-06-01" },
+      { name:"Conditions Fulfillment", status:"in_progress", amount: 0, date:"2024-12-15" },
+      { name:"Equipment Procurement", status:"pending", amount: 600000, date:"2025-02-01" },
+      { name:"Operations Launch", status:"pending", amount: 900000, date:"2025-06-01" },
     ],
-    location: "Albany, WA",
-    feedstockType: "Forestry residue",
+    location:"Albany, WA",
+    feedstockType:"Forestry residue",
     carbonReduction: 12000,
     jobsCreated: 35,
     compliance: {
-      financialReporting: "pending",
-      environmentalAssessment: "attention_required",
-      progressReports: "pending",
-      communityEngagement: "compliant",
+      financialReporting:"pending",
+      environmentalAssessment:"attention_required",
+      progressReports:"pending",
+      communityEngagement:"compliant",
     },
   },
 ];
@@ -225,8 +225,8 @@ export default function GrantVerification() {
       grant.applicant.toLowerCase().includes(searchQuery.toLowerCase()) ||
       grant.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       grant.abn.includes(searchQuery);
-    const matchesProgram = selectedProgram === "all" || grant.program === selectedProgram;
-    const matchesStatus = selectedStatus === "all" || grant.status === selectedStatus;
+    const matchesProgram = selectedProgram ==="all" || grant.program === selectedProgram;
+    const matchesStatus = selectedStatus ==="all" || grant.status === selectedStatus;
     return matchesSearch && matchesProgram && matchesStatus;
   });
 
@@ -235,8 +235,8 @@ export default function GrantVerification() {
     totalGrants: MOCK_GRANTS.length,
     totalFunding: MOCK_GRANTS.reduce((sum, g) => sum + g.totalFunding, 0),
     totalDisbursed: MOCK_GRANTS.reduce((sum, g) => sum + g.disbursed, 0),
-    activeGrants: MOCK_GRANTS.filter((g) => g.status === "active").length,
-    underReview: MOCK_GRANTS.filter((g) => g.status === "under_review").length,
+    activeGrants: MOCK_GRANTS.filter((g) => g.status ==="active").length,
+    underReview: MOCK_GRANTS.filter((g) => g.status ==="under_review").length,
     totalCarbonReduction: MOCK_GRANTS.reduce((sum, g) => sum + g.carbonReduction, 0),
     totalJobs: MOCK_GRANTS.reduce((sum, g) => sum + g.jobsCreated, 0),
   };
@@ -261,13 +261,13 @@ export default function GrantVerification() {
 
   const getComplianceIcon = (status: string) => {
     switch (status) {
-      case "compliant":
+      case"compliant":
         return <CheckCircle2 className="h-4 w-4 text-green-600" />;
-      case "attention_required":
+      case"attention_required":
         return <AlertTriangle className="h-4 w-4 text-yellow-600" />;
-      case "non_compliant":
+      case"non_compliant":
         return <XCircle className="h-4 w-4 text-red-600" />;
-      case "under_review":
+      case"under_review":
         return <Eye className="h-4 w-4 text-blue-600" />;
       default:
         return <Clock className="h-4 w-4 text-gray-400" />;
@@ -281,8 +281,8 @@ export default function GrantVerification() {
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
+      style:"currency",
+      currency:"AUD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount);
@@ -291,7 +291,7 @@ export default function GrantVerification() {
   return (
     <div className="container py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Grant Verification</h1>
+        <H1 className="text-3xl  mb-2">Grant Verification</H1>
         <p className="text-gray-600">
           Verify and monitor government grant applications and disbursements
         </p>
@@ -416,7 +416,7 @@ export default function GrantVerification() {
             <CardHeader>
               <CardTitle>Grant Applications</CardTitle>
               <CardDescription>
-                {filteredGrants.length} grant{filteredGrants.length !== 1 ? "s" : ""} found
+                {filteredGrants.length} grant{filteredGrants.length !== 1 ?"s" :""} found
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -499,7 +499,7 @@ export default function GrantVerification() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {MOCK_GRANTS.filter((g) => g.status === "active").map((grant) => (
+                {MOCK_GRANTS.filter((g) => g.status ==="active").map((grant) => (
                   <div
                     key={grant.id}
                     className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
@@ -511,7 +511,7 @@ export default function GrantVerification() {
                           <span className="font-mono text-sm text-gray-500">{grant.id}</span>
                           {getProgramBadge(grant.program)}
                         </div>
-                        <h3 className="font-semibold">{grant.projectName}</h3>
+                        <H3 className="">{grant.projectName}</H3>
                         <p className="text-sm text-gray-600">{grant.applicant}</p>
                       </div>
                       <div className="text-right">
@@ -557,7 +557,7 @@ export default function GrantVerification() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {MOCK_GRANTS.filter((g) => g.status === "under_review").map((grant) => (
+                {MOCK_GRANTS.filter((g) => g.status ==="under_review").map((grant) => (
                   <div
                     key={grant.id}
                     className="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
@@ -570,10 +570,10 @@ export default function GrantVerification() {
                           {getProgramBadge(grant.program)}
                           {getStatusBadge(grant.status)}
                         </div>
-                        <h3 className="font-semibold">{grant.projectName}</h3>
+                        <H3 className="">{grant.projectName}</H3>
                         <p className="text-sm text-gray-600">{grant.applicant}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          Submitted: {format(new Date(grant.submittedDate), "d MMM yyyy")}
+                          Submitted: {format(new Date(grant.submittedDate),"d MMM yyyy")}
                         </p>
                       </div>
                       <div className="text-right">
@@ -599,7 +599,7 @@ export default function GrantVerification() {
                     </div>
                   </div>
                 ))}
-                {MOCK_GRANTS.filter((g) => g.status === "under_review").length === 0 && (
+                {MOCK_GRANTS.filter((g) => g.status ==="under_review").length === 0 && (
                   <p className="text-center text-gray-500 py-8">No applications under review</p>
                 )}
               </div>
@@ -781,9 +781,9 @@ export default function GrantVerification() {
                             className="flex items-center justify-between p-3 border rounded-lg"
                           >
                             <div className="flex items-center gap-3">
-                              {milestone.status === "completed" ? (
+                              {milestone.status ==="completed" ? (
                                 <CheckCircle2 className="h-5 w-5 text-green-600" />
-                              ) : milestone.status === "in_progress" ? (
+                              ) : milestone.status ==="in_progress" ? (
                                 <Clock className="h-5 w-5 text-blue-600" />
                               ) : (
                                 <Clock className="h-5 w-5 text-gray-400" />
@@ -791,7 +791,7 @@ export default function GrantVerification() {
                               <div>
                                 <p className="font-medium">{milestone.name}</p>
                                 <p className="text-sm text-gray-500">
-                                  Due: {format(new Date(milestone.date), "d MMM yyyy")}
+                                  Due: {format(new Date(milestone.date),"d MMM yyyy")}
                                 </p>
                               </div>
                             </div>
@@ -799,18 +799,18 @@ export default function GrantVerification() {
                               <p className="font-medium">{formatCurrency(milestone.amount)}</p>
                               <Badge
                                 variant={
-                                  milestone.status === "completed"
-                                    ? "default"
-                                    : milestone.status === "in_progress"
-                                      ? "secondary"
-                                      : "outline"
+                                  milestone.status ==="completed"
+                                    ?"default"
+                                    : milestone.status ==="in_progress"
+                                      ?"secondary"
+                                      :"outline"
                                 }
                               >
-                                {milestone.status === "completed"
-                                  ? "Completed"
-                                  : milestone.status === "in_progress"
-                                    ? "In Progress"
-                                    : "Pending"}
+                                {milestone.status ==="completed"
+                                  ?"Completed"
+                                  : milestone.status ==="in_progress"
+                                    ?"In Progress"
+                                    :"Pending"}
                               </Badge>
                             </div>
                           </div>
@@ -832,7 +832,7 @@ export default function GrantVerification() {
                         <div>
                           <p className="text-sm font-medium">Financial Reporting</p>
                           <p className="text-xs text-gray-500 capitalize">
-                            {selectedGrant.compliance.financialReporting.replace("_", " ")}
+                            {selectedGrant.compliance.financialReporting.replace("_","")}
                           </p>
                         </div>
                       </div>
@@ -841,7 +841,7 @@ export default function GrantVerification() {
                         <div>
                           <p className="text-sm font-medium">Environmental</p>
                           <p className="text-xs text-gray-500 capitalize">
-                            {selectedGrant.compliance.environmentalAssessment.replace("_", " ")}
+                            {selectedGrant.compliance.environmentalAssessment.replace("_","")}
                           </p>
                         </div>
                       </div>
@@ -850,7 +850,7 @@ export default function GrantVerification() {
                         <div>
                           <p className="text-sm font-medium">Progress Reports</p>
                           <p className="text-xs text-gray-500 capitalize">
-                            {selectedGrant.compliance.progressReports.replace("_", " ")}
+                            {selectedGrant.compliance.progressReports.replace("_","")}
                           </p>
                         </div>
                       </div>
@@ -859,7 +859,7 @@ export default function GrantVerification() {
                         <div>
                           <p className="text-sm font-medium">Community</p>
                           <p className="text-xs text-gray-500 capitalize">
-                            {selectedGrant.compliance.communityEngagement.replace("_", " ")}
+                            {selectedGrant.compliance.communityEngagement.replace("_","")}
                           </p>
                         </div>
                       </div>

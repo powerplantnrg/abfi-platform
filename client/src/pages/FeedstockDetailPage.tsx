@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 
 // --- Design System Colors (Tailwind compatible) ---
 // Gold: #D4AF37
@@ -50,38 +50,38 @@ interface FeedstockDetailData {
 
 // --- Mock Data (for implementation) ---
 const mockData: FeedstockDetailData = {
-  name: "Sustainable Palm Oil Feedstock",
+  name:"Sustainable Palm Oil Feedstock",
   metrics: [
-    { label: "Bankability Score", value: "85/100", status: 'Verified' },
-    { label: "Supplier Rating", value: "4.8/5.0" },
-    { label: "Production Volume", value: "15,000 MT/year" },
+    { label:"Bankability Score", value:"85/100", status: 'Verified' },
+    { label:"Supplier Rating", value:"4.8/5.0" },
+    { label:"Production Volume", value:"15,000 MT/year" },
   ],
   supplier: {
-    name: "Agri-Sustain Corp",
-    contactPerson: "Jane Doe",
+    name:"Agri-Sustain Corp",
+    contactPerson:"Jane Doe",
     verificationStatus: 'Verified',
   },
   productionSpecs: [
-    { label: "Origin", value: "Indonesia, Sumatra" },
-    { label: "Certification", value: "RSPO Certified" },
-    { label: "Processing Method", value: "Cold Pressed" },
-    { label: "Quality Metrics", value: "FFA < 2%" },
+    { label:"Origin", value:"Indonesia, Sumatra" },
+    { label:"Certification", value:"RSPO Certified" },
+    { label:"Processing Method", value:"Cold Pressed" },
+    { label:"Quality Metrics", value:"FFA < 2%" },
   ],
   bankability: {
     overall: 85,
     breakdown: [
-      { label: "Environmental", score: 90 },
-      { label: "Social", score: 80 },
-      { label: "Governance", score: 85 },
-      { label: "Financial", score: 95 },
+      { label:"Environmental", score: 90 },
+      { label:"Social", score: 80 },
+      { label:"Governance", score: 85 },
+      { label:"Financial", score: 95 },
     ],
   },
   location: {
-    address: "123 Palm Oil Rd, Sumatra, Indonesia",
-    mapPlaceholder: "Interactive Map Placeholder",
+    address:"123 Palm Oil Rd, Sumatra, Indonesia",
+    mapPlaceholder:"Interactive Map Placeholder",
   },
   evidenceVault: {
-    description: "Access all audit reports and compliance documents.",
+    description:"Access all audit reports and compliance documents.",
   },
 };
 
@@ -154,7 +154,7 @@ const GhostButton: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ 
 // Card Component
 const Card: React.FC<{ title: string; children: React.ReactNode; className?: string; id?: string }> = ({ title, children, className, id }) => (
   <div id={id} className={`bg-white border border-gray-200 shadow-sm hover:shadow-md rounded-xl p-6 transition-shadow duration-300 ${className}`}>
-    <h3 className="text-2xl font-semibold mb-6 text-black">{title}</h3>
+    <H3 className="text-2xl  mb-6 text-black">{title}</H3>
     {children}
   </div>
 );
@@ -176,7 +176,7 @@ const FeedstockDetailPage: React.FC = () => {
         
         {/* 1. Header Section (Feedstock Overview) */}
         <header className="mb-10">
-          <h1 className="text-4xl font-semibold mb-4 text-black">{data.name}</h1>
+          <H1 className="text-4xl font-semibold mb-4 text-black">{data.name}</H1>
           
           {/* Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -191,7 +191,7 @@ const FeedstockDetailPage: React.FC = () => {
             ))}
           </div>
 
-          {/* Primary CTA: "Inquire Now" */}
+          {/* Primary CTA:"Inquire Now" */}
           <PrimaryButton onClick={scrollToInquiry} className="w-full md:w-auto">
             Inquire Now
           </PrimaryButton>

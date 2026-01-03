@@ -1,26 +1,26 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useAuth } from "@/_core/hooks/useAuth";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useAuth } from"@/_core/hooks/useAuth";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { trpc } from"@/lib/trpc";
 import {
   Upload,
   FileText,
@@ -29,8 +29,8 @@ import {
   CheckCircle,
   Clock,
   Search,
-} from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
+} from"lucide-react";
+import { Textarea } from"@/components/ui/textarea";
 
 export default function EvidenceManagement() {
   const { user, loading: authLoading } = useAuth();
@@ -48,13 +48,13 @@ export default function EvidenceManagement() {
     );
   }
 
-  if (!user || (user.role !== "admin" && user.role !== "auditor")) {
+  if (!user || (user.role !=="admin" && user.role !=="auditor")) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="py-12 text-center">
             <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
+            <H3 className="text-lg  mb-2">Access Denied</H3>
             <p className="text-sm text-gray-600">
               Only administrators and auditors can access evidence management.
             </p>
@@ -71,7 +71,7 @@ export default function EvidenceManagement() {
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-3">
               <Shield className="h-8 w-8 text-[#D4AF37]" />
-              <h1 className="text-3xl font-bold">Evidence Management</h1>
+              <H1 className="text-3xl">Evidence Management</H1>
             </div>
             <Button onClick={() => setUploadDialogOpen(true)}>
               <Upload className="h-4 w-4 mr-2" />
@@ -247,28 +247,28 @@ function EvidenceItem({
 }: EvidenceItemProps) {
   const getStatusBadge = () => {
     switch (status) {
-      case "valid":
+      case"valid":
         return (
           <Badge className="bg-green-100 text-green-800">
             <CheckCircle className="h-3 w-3 mr-1" />
             Valid
           </Badge>
         );
-      case "expiring_soon":
+      case"expiring_soon":
         return (
           <Badge className="bg-yellow-100 text-yellow-800">
             <Clock className="h-3 w-3 mr-1" />
             Expiring Soon
           </Badge>
         );
-      case "expired":
+      case"expired":
         return (
           <Badge className="bg-red-100 text-red-800">
             <AlertCircle className="h-3 w-3 mr-1" />
             Expired
           </Badge>
         );
-      case "pending_verification":
+      case"pending_verification":
         return (
           <Badge className="bg-blue-100 text-blue-800">
             <Clock className="h-3 w-3 mr-1" />
@@ -283,8 +283,8 @@ function EvidenceItem({
   const getTypeLabel = (t: string) => {
     return t
       .split("_")
-      .map(word => word ? word.charAt(0).toUpperCase() + word.slice(1) : "")
-      .join(" ");
+      .map(word => word ? word.charAt(0).toUpperCase() + word.slice(1) :"")
+      .join("");
   };
 
   return (
@@ -328,7 +328,7 @@ function EvidenceItem({
           <div className="font-medium mt-0.5">
             {expiryDate
               ? new Date(expiryDate).toLocaleDateString()
-              : "No expiry"}
+              :"No expiry"}
           </div>
         </div>
         <div>
@@ -454,7 +454,7 @@ function UploadEvidenceDialog({ onClose }: UploadEvidenceDialogProps) {
             <Label htmlFor="metadata">Additional Metadata (Optional)</Label>
             <Textarea
               id="metadata"
-              placeholder='JSON format: { "testMethod": "ASTM D2974", "sampleId": "S-2024-001" }'
+              placeholder='JSON format: {"testMethod":"ASTM D2974","sampleId":"S-2024-001" }'
               rows={3}
             />
           </div>

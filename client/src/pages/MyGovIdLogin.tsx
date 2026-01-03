@@ -8,16 +8,16 @@
  * - Typography components for consistent styling
  */
 
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Alert, AlertDescription } from"@/components/ui/alert";
+import { Separator } from"@/components/ui/separator";
+import { Badge } from"@/components/ui/badge";
 import {
   Shield,
   Building2,
@@ -28,7 +28,7 @@ import {
   Fingerprint,
   Loader2,
   ChevronRight,
-} from "lucide-react";
+} from"lucide-react";
 
 interface MyGovIdStatus {
   configured: boolean;
@@ -66,9 +66,9 @@ export default function MyGovIdLogin() {
       .catch(() => {
         setStatus({
           configured: false,
-          issuer: "",
-          environment: "unknown",
-          message: "Could not connect to authentication service",
+          issuer:"",
+          environment:"unknown",
+          message:"Could not connect to authentication service",
         });
         setLoading(false);
       });
@@ -86,8 +86,8 @@ export default function MyGovIdLogin() {
 
     try {
       const response = await fetch("/api/mygovid/mock-login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method:"POST",
+        headers: {"Content-Type":"application/json" },
         body: JSON.stringify({
           name: mockName,
           email: mockEmail,
@@ -99,7 +99,7 @@ export default function MyGovIdLogin() {
       if (data.success) {
         setLocation("/compliance-dashboard");
       } else {
-        setError(data.error || "Mock login failed");
+        setError(data.error ||"Mock login failed");
       }
     } catch {
       setError("Failed to connect to authentication service");
@@ -124,7 +124,7 @@ export default function MyGovIdLogin() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-2xl mb-4">
             <Building2 className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">Government Portal Access</h1>
+          <H1 className="text-2xl  text-slate-900">Government Portal Access</H1>
           <p className="text-slate-600">
             Sign in with your myGovID to access government compliance features
           </p>
@@ -147,7 +147,7 @@ export default function MyGovIdLogin() {
                 alt="myGovID"
                 className="h-8"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
+                  (e.target as HTMLImageElement).style.display ="none";
                 }}
               />
               <CardTitle className="text-xl">myGovID</CardTitle>
@@ -202,13 +202,13 @@ export default function MyGovIdLogin() {
             {/* Status Badge */}
             <div className="flex items-center justify-center">
               <Badge
-                variant={status?.configured ? "default" : "secondary"}
-                className={status?.configured ? "bg-green-100 text-green-800" : ""}
+                variant={status?.configured ?"default" :"secondary"}
+                className={status?.configured ?"bg-green-100 text-green-800" :""}
               >
-                {status?.configured ? "Production Ready" : "Configuration Required"}
+                {status?.configured ?"Production Ready" :"Configuration Required"}
               </Badge>
               <span className="text-xs text-slate-500 ml-2">
-                {status?.environment === "production" ? "Production" : "Development"}
+                {status?.environment ==="production" ?"Production" :"Development"}
               </span>
             </div>
 
@@ -224,7 +224,7 @@ export default function MyGovIdLogin() {
         </Card>
 
         {/* Development Mock Login */}
-        {status?.environment !== "production" && (
+        {status?.environment !=="production" && (
           <Card className="border-dashed border-2 border-amber-300 bg-amber-50/50">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
