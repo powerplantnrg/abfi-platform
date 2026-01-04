@@ -1,8 +1,17 @@
-import { Button } from "@/components/ui/Button";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent } from "@/components/ui/Card";
-import { AlertCircle, Home } from "lucide-react";
-import { useLocation } from "wouter";
+/**
+ * 404 Not Found - Nextgen Design
+ *
+ * Features:
+ * - Error page display
+ * - Navigation assistance
+ * - Typography components for consistent styling
+ */
+
+import { Button } from"@/components/ui/Button";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Card, CardContent } from"@/components/ui/Card";
+import { AlertCircle, Home } from"lucide-react";
+import { useLocation } from"wouter";
 
 export default function NotFound() {
   const [, setLocation] = useLocation();
@@ -22,11 +31,11 @@ export default function NotFound() {
             </div>
           </div>
 
-          <h1 className="text-4xl font-bold text-slate-900 mb-2">404</h1>
+          <H1 className="text-4xl  text-slate-900 mb-2">404</H1>
 
-          <h2 className="text-xl font-semibold text-slate-700 mb-4">
+          <H2 className="text-xl font-semibold text-slate-700 mb-4">
             Page Not Found
-          </h2>
+          </H2>
 
           <p className="text-slate-600 mb-8 leading-relaxed">
             Sorry, the page you are looking for doesn't exist.

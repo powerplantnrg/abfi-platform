@@ -1,25 +1,35 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useAuth } from "@/_core/hooks/useAuth";
+/**
+ * Audit Logs - Nextgen Design
+ *
+ * Features:
+ * - Transaction audit trail viewer
+ * - Compliance evidence logging
+ * - Search and filter capabilities
+ * - Typography components for consistent styling
+ */
+
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useAuth } from"@/_core/hooks/useAuth";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -27,7 +37,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Dialog,
   DialogContent,
@@ -35,9 +45,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { trpc } from "@/lib/trpc";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/dialog";
+import { trpc } from"@/lib/trpc";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   Shield,
   FileSearch,
@@ -51,31 +61,31 @@ import {
   Database,
   Users,
   BarChart3,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { cn } from"@/lib/utils";
 
 const ACTION_COLORS: Record<string, string> = {
-  create: "bg-green-100 text-green-800",
-  update: "bg-blue-100 text-blue-800",
-  delete: "bg-red-100 text-red-800",
-  verify: "bg-purple-100 text-purple-800",
-  approve: "bg-emerald-100 text-emerald-800",
-  reject: "bg-orange-100 text-orange-800",
-  login: "bg-slate-100 text-slate-800",
-  export: "bg-cyan-100 text-cyan-800",
+  create:"bg-green-100 text-green-800",
+  update:"bg-blue-100 text-blue-800",
+  delete:"bg-red-100 text-red-800",
+  verify:"bg-purple-100 text-purple-800",
+  approve:"bg-emerald-100 text-emerald-800",
+  reject:"bg-orange-100 text-orange-800",
+  login:"bg-slate-100 text-slate-800",
+  export:"bg-cyan-100 text-cyan-800",
 };
 
 const ENTITY_TYPES = [
-  { value: "", label: "All Entities" },
-  { value: "feedstock", label: "Feedstock" },
-  { value: "supplier", label: "Supplier" },
-  { value: "buyer", label: "Buyer" },
-  { value: "certificate", label: "Certificate" },
-  { value: "project", label: "Project" },
-  { value: "agreement", label: "Agreement" },
-  { value: "assessment", label: "Assessment" },
-  { value: "evidence", label: "Evidence" },
-  { value: "user", label: "User" },
+  { value:"", label:"All Entities" },
+  { value:"feedstock", label:"Feedstock" },
+  { value:"supplier", label:"Supplier" },
+  { value:"buyer", label:"Buyer" },
+  { value:"certificate", label:"Certificate" },
+  { value:"project", label:"Project" },
+  { value:"agreement", label:"Agreement" },
+  { value:"assessment", label:"Assessment" },
+  { value:"evidence", label:"Evidence" },
+  { value:"user", label:"User" },
 ];
 
 export default function AuditLogs() {
@@ -91,28 +101,28 @@ export default function AuditLogs() {
       entityId: entityId ? parseInt(entityId) : undefined,
       limit,
     },
-    { enabled: !!user && user.role === "admin" }
+    { enabled: !!user && user.role ==="admin" }
   );
   const logs = auditLogsData?.logs;
 
   const { data: stats, isLoading: statsLoading } = trpc.audit.getStats.useQuery(
     undefined,
-    { enabled: !!user && user.role === "admin" }
+    { enabled: !!user && user.role ==="admin" }
   );
 
   const formatDate = (date: Date | string) => {
     return new Date(date).toLocaleString("en-AU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
+      day:"numeric",
+      month:"short",
+      year:"numeric",
+      hour:"2-digit",
+      minute:"2-digit",
     });
   };
 
   const getActionColor = (action: string) => {
     const baseAction = action.split("_")[0].toLowerCase();
-    return ACTION_COLORS[baseAction] || "bg-gray-100 text-gray-800";
+    return ACTION_COLORS[baseAction] ||"bg-gray-100 text-gray-800";
   };
 
   if (authLoading) {
@@ -128,14 +138,14 @@ export default function AuditLogs() {
     );
   }
 
-  if (!user || user.role !== "admin") {
+  if (!user || user.role !=="admin") {
     return (
       <PageLayout>
         <PageContainer>
           <Card className="mt-8">
             <CardContent className="py-12 text-center">
               <Shield className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Access Denied</h3>
+              <H3 className="text-lg  mb-2">Access Denied</H3>
               <p className="text-gray-600">
                 Only administrators can view audit logs.
               </p>
@@ -167,9 +177,9 @@ export default function AuditLogs() {
                 </Badge>
               </div>
 
-              <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
+              <H1 className="text-4xl lg:text-5xl font-display  mb-4">
                 Audit Logs
-              </h1>
+              </H1>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Comprehensive audit trail for all platform operations. Track changes,
                 verify compliance, and maintain regulatory defensibility.
@@ -262,7 +272,7 @@ export default function AuditLogs() {
                   </SelectTrigger>
                   <SelectContent>
                     {ENTITY_TYPES.map((type) => (
-                      <SelectItem key={type.value} value={type.value || "all"}>
+                      <SelectItem key={type.value} value={type.value ||"all"}>
                         {type.label}
                       </SelectItem>
                     ))}
@@ -332,7 +342,7 @@ export default function AuditLogs() {
             ) : !logs || logs.length === 0 ? (
               <div className="text-center py-12">
                 <FileSearch className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No Logs Found</h3>
+                <H3 className="text-lg  mb-2">No Logs Found</H3>
                 <p className="text-gray-600">
                   No audit logs match your filter criteria.
                 </p>
@@ -368,12 +378,12 @@ export default function AuditLogs() {
                         <div className="flex items-center gap-1">
                           <User className="h-3 w-3 text-gray-600" />
                           <span className="font-mono text-xs">
-                            {log.userId || "System"}
+                            {log.userId ||"System"}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell className="font-mono text-xs text-gray-600">
-                        {log.ipAddress || "N/A"}
+                        {log.ipAddress ||"N/A"}
                       </TableCell>
                       <TableCell className="text-right">
                         <Dialog>
@@ -419,11 +429,11 @@ export default function AuditLogs() {
                                 </div>
                                 <div>
                                   <Label className="text-gray-600">User ID</Label>
-                                  <div className="font-mono">{log.userId || "System"}</div>
+                                  <div className="font-mono">{log.userId ||"System"}</div>
                                 </div>
                                 <div>
                                   <Label className="text-gray-600">IP Address</Label>
-                                  <div className="font-mono">{log.ipAddress || "N/A"}</div>
+                                  <div className="font-mono">{log.ipAddress ||"N/A"}</div>
                                 </div>
                               </div>
                               {log.userAgent && (

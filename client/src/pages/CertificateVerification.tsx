@@ -1,19 +1,29 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { trpc } from "@/lib/trpc";
-import { Check, Copy, Shield, FileCheck, Hash } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+/**
+ * Certificate Verification - Nextgen Design
+ *
+ * Features:
+ * - Certificate authenticity verification
+ * - Blockchain evidence chain validation
+ * - Compliance status checking
+ * - Typography components for consistent styling
+ */
+
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { trpc } from"@/lib/trpc";
+import { Check, Copy, Shield, FileCheck, Hash } from"lucide-react";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Textarea } from"@/components/ui/textarea";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 
 export default function CertificateVerification() {
   const [activeTab, setActiveTab] = useState("verify");
@@ -29,7 +39,7 @@ export default function CertificateVerification() {
     const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray
-      .map(b => b.toString(16).padStart(2, "0"))
+      .map(b => b.toString(16).padStart(2,"0"))
       .join("");
     return hashHex;
   };
@@ -40,10 +50,10 @@ export default function CertificateVerification() {
     // In real implementation, fetch certificate data from backend
     const mockCertificateData = JSON.stringify({
       id: certificateId,
-      supplier: "Queensland Bioenergy Pty Ltd",
-      feedstock: "Bagasse",
+      supplier:"Queensland Bioenergy Pty Ltd",
+      feedstock:"Bagasse",
       quantity: 5000,
-      date: "2024-12-13",
+      date:"2024-12-13",
       verified: true,
     });
 
@@ -58,12 +68,12 @@ export default function CertificateVerification() {
     setVerificationResult({
       valid: true,
       certificateId: certificateId,
-      supplier: "Queensland Bioenergy Pty Ltd",
-      feedstock: "Bagasse (Sugarcane)",
-      quantity: "5,000 tonnes",
-      issueDate: "2024-12-13",
-      verifiedBy: "ABFI Platform",
-      status: "Active",
+      supplier:"Queensland Bioenergy Pty Ltd",
+      feedstock:"Bagasse (Sugarcane)",
+      quantity:"5,000 tonnes",
+      issueDate:"2024-12-13",
+      verifiedBy:"ABFI Platform",
+      status:"Active",
     });
   };
 
@@ -88,18 +98,18 @@ export default function CertificateVerification() {
             <div className="w-11 h-11 bg-[#D4AF37] rounded-xl flex items-center justify-center">
               <span className="font-bold text-xl text-black">AB</span>
             </div>
-            <h1 className="font-semibold text-3xl text-gray-900">
+            <H1 className="font-semibold text-3xl text-gray-900">
               ABFI <span className="text-[#D4AF37]">Platform</span>
-            </h1>
+            </H1>
           </div>
 
           <div className="inline-block bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wide mb-4">
             🔒 Blockchain Verified
           </div>
 
-          <h2 className="text-3xl font-semibold text-gray-900 mb-3">
+          <H2 className="text-3xl font-semibold text-gray-900 mb-3">
             Certificate Validation & Immutable Records
-          </h2>
+          </H2>
           <p className="text-gray-600 text-sm max-w-2xl mx-auto">
             Verify certificate authenticity using cryptographic hashing and
             blockchain-anchored records. All certificates are tamper-proof and
@@ -177,9 +187,9 @@ export default function CertificateVerification() {
                         <Check className="w-5 h-5 text-emerald-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-emerald-700">
+                        <H3 className="text-emerald-700">
                           Certificate Verified
-                        </h3>
+                        </H3>
                         <p className="text-xs text-gray-600">
                           This certificate is authentic and has not been
                           tampered with
@@ -293,9 +303,9 @@ export default function CertificateVerification() {
                 {computedHash && (
                   <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
                     <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-xs uppercase tracking-wide text-gray-600 font-semibold">
+                      <H4 className="text-xs uppercase tracking-wide text-gray-600">
                         SHA-256 Hash
-                      </h4>
+                      </H4>
                       <div className="flex items-center gap-2">
                         <span className="inline-flex items-center gap-1 bg-[#D4AF37]/15 text-[#D4AF37] px-2 py-1 rounded text-xs font-mono">
                           <Hash className="w-3 h-3" />
@@ -318,7 +328,7 @@ export default function CertificateVerification() {
                         className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"
                       >
                         <Copy className="w-3 h-3 mr-2" />
-                        {copied ? "Copied!" : "Copy Hash"}
+                        {copied ?"Copied!" :"Copy Hash"}
                       </Button>
                       <Button
                         onClick={handleVerifyHash}
@@ -361,28 +371,28 @@ export default function CertificateVerification() {
                 <div className="space-y-3">
                   {[
                     {
-                      action: "Certificate Issued",
-                      timestamp: "2024-12-13 10:30:15",
-                      hash: "a3f8...92c1",
-                      status: "success",
+                      action:"Certificate Issued",
+                      timestamp:"2024-12-13 10:30:15",
+                      hash:"a3f8...92c1",
+                      status:"success",
                     },
                     {
-                      action: "Hash Generated",
-                      timestamp: "2024-12-13 10:30:16",
-                      hash: "a3f8...92c1",
-                      status: "success",
+                      action:"Hash Generated",
+                      timestamp:"2024-12-13 10:30:16",
+                      hash:"a3f8...92c1",
+                      status:"success",
                     },
                     {
-                      action: "Blockchain Anchor",
-                      timestamp: "2024-12-13 10:31:02",
-                      hash: "a3f8...92c1",
-                      status: "success",
+                      action:"Blockchain Anchor",
+                      timestamp:"2024-12-13 10:31:02",
+                      hash:"a3f8...92c1",
+                      status:"success",
                     },
                     {
-                      action: "Verification Request",
-                      timestamp: "2024-12-13 14:22:45",
-                      hash: "a3f8...92c1",
-                      status: "success",
+                      action:"Verification Request",
+                      timestamp:"2024-12-13 14:22:45",
+                      hash:"a3f8...92c1",
+                      status:"success",
                     },
                   ].map((event, idx) => (
                     <div
@@ -392,13 +402,13 @@ export default function CertificateVerification() {
                       <div className="flex items-center gap-3">
                         <div
                           className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                            event.status === "success"
-                              ? "bg-emerald-100"
-                              : "bg-gray-200"
+                            event.status ==="success"
+                              ?"bg-emerald-100"
+                              :"bg-gray-200"
                           }`}
                         >
                           <Check
-                            className={`w-4 h-4 ${event.status === "success" ? "text-emerald-600" : "text-gray-500"}`}
+                            className={`w-4 h-4 ${event.status ==="success" ?"text-emerald-600" :"text-gray-500"}`}
                           />
                         </div>
                         <div>
@@ -424,9 +434,9 @@ export default function CertificateVerification() {
                   <div className="flex items-start gap-3">
                     <FileCheck className="w-5 h-5 text-blue-600 mt-0.5" />
                     <div>
-                      <h4 className="text-sm font-semibold text-blue-700 mb-1">
+                      <H4 className="text-sm  text-blue-700 mb-1">
                         Immutability Guarantee
-                      </h4>
+                      </H4>
                       <p className="text-xs text-gray-600 leading-relaxed">
                         All certificate hashes are anchored to a public
                         blockchain, creating an immutable audit trail. Once
@@ -447,7 +457,7 @@ export default function CertificateVerification() {
             <div className="w-10 h-10 bg-[#D4AF37]/15 rounded-lg flex items-center justify-center mb-3">
               <Shield className="w-5 h-5 text-[#D4AF37]" />
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">Tamper-Proof</h3>
+            <H3 className="text-gray-900 mb-2">Tamper-Proof</H3>
             <p className="text-xs text-gray-600 leading-relaxed">
               Cryptographic hashing ensures any modification to certificate data
               is immediately detectable
@@ -458,9 +468,9 @@ export default function CertificateVerification() {
             <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center mb-3">
               <FileCheck className="w-5 h-5 text-emerald-600" />
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">
+            <H3 className="text-gray-900 mb-2">
               Blockchain Anchored
-            </h3>
+            </H3>
             <p className="text-xs text-gray-600 leading-relaxed">
               Certificate hashes are permanently recorded on public blockchain
               for independent verification
@@ -471,7 +481,7 @@ export default function CertificateVerification() {
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
               <Hash className="w-5 h-5 text-blue-600" />
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2">SHA-256 Standard</h3>
+            <H3 className="text-gray-900 mb-2">SHA-256 Standard</H3>
             <p className="text-xs text-gray-600 leading-relaxed">
               Industry-standard cryptographic algorithm used by banks and
               governments worldwide

@@ -8,11 +8,11 @@
  * - Typography components for consistent styling
  */
 
-import { Link } from "wouter";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Check, ArrowRight, FileText, Clock, Mail } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent } from "@/components/ui/Card";
+import { Link } from"wouter";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Check, ArrowRight, FileText, Clock, Mail } from"lucide-react";
+import { Button } from"@/components/ui/Button";
+import { Card, CardContent } from"@/components/ui/Card";
 
 export default function ProjectRegistrationSuccess() {
   return (
@@ -36,9 +36,9 @@ export default function ProjectRegistrationSuccess() {
 
         {/* Success Message */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+          <H1 className="text-4xl md:text-5xl font-serif  mb-4">
             Project Registration Complete
-          </h1>
+          </H1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Your biorefinery/processor project has been successfully submitted
             for review. Our team will assess your application and contact you
@@ -80,16 +80,16 @@ export default function ProjectRegistrationSuccess() {
 
         {/* Next Steps */}
         <div className="max-w-3xl mx-auto mb-12">
-          <h2 className="text-2xl font-serif font-bold mb-6 text-center">
+          <H2 className="text-2xl font-serif  mb-6 text-center">
             What Happens Next?
-          </h2>
+          </H2>
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="bg-[#111820]/60 border-[#c9a962]/10 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-[#c9a962]/10 rounded-lg flex items-center justify-center mb-4">
                   <FileText className="w-6 h-6 text-[#c9a962]" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Review Process</h3>
+                <H3 className="text-lg  mb-2">Review Process</H3>
                 <p className="text-sm text-gray-400">
                   Our team will review your project details, technology
                   specifications, and documentation.
@@ -102,9 +102,9 @@ export default function ProjectRegistrationSuccess() {
                 <div className="w-12 h-12 bg-[#c9a962]/10 rounded-lg flex items-center justify-center mb-4">
                   <Clock className="w-6 h-6 text-[#c9a962]" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">
+                <H3 className="text-lg  mb-2">
                   Assessment Timeline
-                </h3>
+                </H3>
                 <p className="text-sm text-gray-400">
                   Expect feedback within 3-5 business days. Complex projects may
                   require additional review time.
@@ -117,7 +117,7 @@ export default function ProjectRegistrationSuccess() {
                 <div className="w-12 h-12 bg-[#c9a962]/10 rounded-lg flex items-center justify-center mb-4">
                   <Mail className="w-6 h-6 text-[#c9a962]" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Notification</h3>
+                <H3 className="text-lg  mb-2">Notification</H3>
                 <p className="text-sm text-gray-400">
                   You'll receive an email with next steps, including feedstock
                   matching opportunities.

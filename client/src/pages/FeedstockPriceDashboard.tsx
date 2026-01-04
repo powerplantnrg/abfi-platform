@@ -9,13 +9,13 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from"@/components/ui/select";
 import {
   TrendingUp,
   TrendingDown,
@@ -27,46 +27,46 @@ import {
   ChevronRight,
   BarChart3,
   LineChart as LineChartIcon,
-} from "lucide-react";
-import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"lucide-react";
+import { Link } from"wouter";
+import { trpc } from"@/lib/trpc";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 const COMMODITY_COLORS: Record<string, string> = {
-  UCO: "#22c55e",
-  Tallow: "#3b82f6",
-  Canola: "#f97316",
-  "Palm Oil": "#8b5cf6",
-  PFAD: "#eab308",
+  UCO:"#22c55e",
+  Tallow:"#3b82f6",
+  Canola:"#f97316",
+"Palm Oil":"#8b5cf6",
+  PFAD:"#eab308",
 };
 
 const REGION_COLORS: Record<string, string> = {
-  AUS: "#22c55e",
-  SEA: "#3b82f6",
-  EU: "#f97316",
-  NA: "#8b5cf6",
-  LATAM: "#eab308",
+  AUS:"#22c55e",
+  SEA:"#3b82f6",
+  EU:"#f97316",
+  NA:"#8b5cf6",
+  LATAM:"#eab308",
 };
 
 export default function FeedstockPriceDashboard() {
   const [selectedCommodity, setSelectedCommodity] = useState("UCO");
-  const [period, setPeriod] = useState<"1M" | "3M" | "6M" | "1Y" | "2Y">("1Y");
+  const [period, setPeriod] = useState<"1M" |"3M" |"6M" |"1Y" |"2Y">("1Y");
 
   // tRPC queries
   const kpisQuery = trpc.prices.getKPIs.useQuery();
   const ohlcQuery = trpc.prices.getOHLC.useQuery({
     commodity: selectedCommodity,
-    region: "AUS",
+    region:"AUS",
     period,
   });
   const heatmapQuery = trpc.prices.getHeatmap.useQuery({ commodity: selectedCommodity });
   const forwardQuery = trpc.prices.getForwardCurve.useQuery({
     commodity: selectedCommodity,
-    region: "AUS",
+    region:"AUS",
   });
   const technicalsQuery = trpc.prices.getTechnicals.useQuery({
     commodity: selectedCommodity,
-    region: "AUS",
+    region:"AUS",
   });
 
   const priceKPIs = kpisQuery.data || [];
@@ -99,15 +99,15 @@ export default function FeedstockPriceDashboard() {
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
+      day:"numeric",
+      month:"short",
     });
   };
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
+      style:"currency",
+      currency:"AUD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
@@ -115,9 +115,9 @@ export default function FeedstockPriceDashboard() {
 
   const getChangeIcon = (direction: string) => {
     switch (direction) {
-      case "up":
+      case"up":
         return <TrendingUp className="h-4 w-4 text-green-600" />;
-      case "down":
+      case"down":
         return <TrendingDown className="h-4 w-4 text-red-600" />;
       default:
         return <Minus className="h-4 w-4 text-gray-600" />;
@@ -126,12 +126,12 @@ export default function FeedstockPriceDashboard() {
 
   const getSignalColor = (signal: string) => {
     switch (signal) {
-      case "buy":
-        return "bg-green-100 text-green-800";
-      case "sell":
-        return "bg-red-100 text-red-800";
+      case"buy":
+        return"bg-green-100 text-green-800";
+      case"sell":
+        return"bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
@@ -145,7 +145,7 @@ export default function FeedstockPriceDashboard() {
     volume: d.volume,
     range: [d.low, d.high],
     body: [Math.min(d.open, d.close), Math.max(d.open, d.close)],
-    color: d.close >= d.open ? "#22c55e" : "#ef4444",
+    color: d.close >= d.open ?"#22c55e" :"#ef4444",
   })) || [];
 
   if (loading && !ohlcData) {
@@ -171,7 +171,7 @@ export default function FeedstockPriceDashboard() {
           <Card>
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
+              <H3 className="text-lg  mb-2">Error Loading Data</H3>
               <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
@@ -198,7 +198,7 @@ export default function FeedstockPriceDashboard() {
                 </Button>
               </Link>
             </div>
-            <h1 className="text-3xl font-bold">Feedstock Price Index</h1>
+            <H1 className="text-3xl">Feedstock Price Index</H1>
             <p className="text-gray-600 mt-1">
               IOSCO-compliant pricing methodology for biofuel feedstocks
             </p>
@@ -215,7 +215,7 @@ export default function FeedstockPriceDashboard() {
                 <SelectItem value="palm">Palm Oil</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={period} onValueChange={(v) => setPeriod(v as "1M" | "3M" | "6M" | "1Y" | "2Y")}>
+            <Select value={period} onValueChange={(v) => setPeriod(v as"1M" |"3M" |"6M" |"1Y" |"2Y")}>
               <SelectTrigger className="w-28">
                 <SelectValue placeholder="Period" />
               </SelectTrigger>
@@ -228,7 +228,7 @@ export default function FeedstockPriceDashboard() {
               </SelectContent>
             </Select>
             <Button variant="outline" onClick={loadData}>
-              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+              <RefreshCw className={`h-4 w-4 mr-2 ${loading ?"animate-spin" :""}`} />
               Refresh
             </Button>
           </div>
@@ -241,8 +241,8 @@ export default function FeedstockPriceDashboard() {
               key={kpi.commodity}
               className={`cursor-pointer transition-all ${
                 selectedCommodity.toUpperCase() === kpi.commodity.toUpperCase()
-                  ? "ring-2 ring-primary"
-                  : "hover:bg-muted/50"
+                  ?"ring-2 ring-primary"
+                  :"hover:bg-muted/50"
               }`}
               onClick={() => setSelectedCommodity(kpi.commodity.toLowerCase())}
             >
@@ -250,7 +250,7 @@ export default function FeedstockPriceDashboard() {
                 <CardDescription className="flex items-center gap-2">
                   <div
                     className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: COMMODITY_COLORS[kpi.commodity] || "#888" }}
+                    style={{ backgroundColor: COMMODITY_COLORS[kpi.commodity] ||"#888" }}
                   />
                   {kpi.commodity}
                 </CardDescription>
@@ -268,14 +268,14 @@ export default function FeedstockPriceDashboard() {
                   {getChangeIcon(kpi.change_direction)}
                   <span
                     className={`text-sm ${
-                      kpi.change_direction === "up"
-                        ? "text-green-600"
-                        : kpi.change_direction === "down"
-                          ? "text-red-600"
-                          : "text-gray-600"
+                      kpi.change_direction ==="up"
+                        ?"text-green-600"
+                        : kpi.change_direction ==="down"
+                          ?"text-red-600"
+                          :"text-gray-600"
                     }`}
                   >
-                    {kpi.change_pct > 0 ? "+" : ""}
+                    {kpi.change_pct > 0 ?"+" :""}
                     {kpi.change_pct.toFixed(1)}%
                   </span>
                 </div>
@@ -301,7 +301,7 @@ export default function FeedstockPriceDashboard() {
                     </CardDescription>
                   </div>
                   <Badge variant="outline">
-                    {ohlcData?.source || "ABFI Internal"}
+                    {ohlcData?.source ||"ABFI Internal"}
                   </Badge>
                 </div>
               </CardHeader>
@@ -318,7 +318,7 @@ export default function FeedstockPriceDashboard() {
                         />
                         <YAxis
                           yAxisId="price"
-                          domain={["auto", "auto"]}
+                          domain={["auto","auto"]}
                           tick={{ fontSize: 11 }}
                           tickFormatter={(v) => `$${v}`}
                         />
@@ -333,7 +333,7 @@ export default function FeedstockPriceDashboard() {
                             new Date(value).toLocaleDateString("en-AU")
                           }
                           formatter={(value: any, name: string) => {
-                            if (name === "volume") return [`${(value / 1000).toFixed(1)}k MT`, "Volume"];
+                            if (name ==="volume") return [`${(value / 1000).toFixed(1)}k MT`,"Volume"];
                             return [`$${value.toFixed(2)}`, name];
                           }}
                         />
@@ -389,7 +389,7 @@ export default function FeedstockPriceDashboard() {
                 <CardDescription>
                   {forwardCurve?.curve_shape
                     ? `Market structure: ${forwardCurve.curve_shape}`
-                    : "Loading forward curve..."}
+                    :"Loading forward curve..."}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -400,17 +400,17 @@ export default function FeedstockPriceDashboard() {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="tenor" />
                         <YAxis tickFormatter={(v) => `$${v}`} />
-                        <Tooltip formatter={(value) => [`$${value}`, "Price"]} />
+                        <Tooltip formatter={(value) => [`$${value}`,"Price"]} />
                         <Bar dataKey="price" radius={[4, 4, 0, 0]}>
                           {forwardCurve?.points.map((entry, index) => (
                             <Cell
                               key={`cell-${index}`}
                               fill={
                                 entry.change_from_spot > 0
-                                  ? "#22c55e"
+                                  ?"#22c55e"
                                   : entry.change_from_spot < 0
-                                    ? "#ef4444"
-                                    : "#3b82f6"
+                                    ?"#ef4444"
+                                    :"#3b82f6"
                               }
                             />
                           ))}
@@ -461,7 +461,7 @@ export default function FeedstockPriceDashboard() {
                     <div className="flex items-center gap-3">
                       <div
                         className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: REGION_COLORS[region.region] || "#888" }}
+                        style={{ backgroundColor: REGION_COLORS[region.region] ||"#888" }}
                       />
                       <div>
                         <div className="font-medium">{region.region_name}</div>
@@ -474,10 +474,10 @@ export default function FeedstockPriceDashboard() {
                       <div className="font-bold">{formatCurrency(region.price)}</div>
                       <div
                         className={`text-xs ${
-                          region.change_pct >= 0 ? "text-green-600" : "text-red-600"
+                          region.change_pct >= 0 ?"text-green-600" :"text-red-600"
                         }`}
                       >
-                        {region.change_pct >= 0 ? "+" : ""}
+                        {region.change_pct >= 0 ?"+" :""}
                         {region.change_pct.toFixed(1)}%
                       </div>
                     </div>

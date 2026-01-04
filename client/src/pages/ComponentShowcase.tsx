@@ -1,14 +1,24 @@
+/**
+ * Component Showcase - Nextgen Design
+ *
+ * Features:
+ * - Design system component library
+ * - Interactive component examples
+ * - Usage documentation
+ * - Typography components for consistent styling
+ */
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+} from"@/components/ui/accordion";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Alert, AlertDescription, AlertTitle } from"@/components/ui/alert";
+import { AspectRatio } from"@/components/ui/aspect-ratio";
+import { Avatar, AvatarFallback, AvatarImage } from"@/components/ui/avatar";
+import { Badge } from"@/components/ui/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,9 +26,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/Button";
-import { Calendar } from "@/components/ui/calendar";
+} from"@/components/ui/breadcrumb";
+import { Button } from"@/components/ui/Button";
+import { Calendar } from"@/components/ui/calendar";
 import {
   Card,
   CardContent,
@@ -26,20 +36,20 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+} from"@/components/ui/Card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Checkbox } from "@/components/ui/checkbox";
+} from"@/components/ui/carousel";
+import { Checkbox } from"@/components/ui/checkbox";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from"@/components/ui/collapsible";
 import {
   Command,
   CommandEmpty,
@@ -47,13 +57,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
+} from"@/components/ui/command";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
+} from"@/components/ui/context-menu";
 import {
   Dialog,
   DialogContent,
@@ -61,7 +71,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from"@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -71,7 +81,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
+} from"@/components/ui/drawer";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -79,19 +89,19 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from"@/components/ui/dropdown-menu";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Input } from "@/components/ui/input";
+} from"@/components/ui/hover-card";
+import { Input } from"@/components/ui/input";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/input-otp";
+import { Label } from"@/components/ui/label";
 import {
   Menubar,
   MenubarContent,
@@ -99,7 +109,7 @@ import {
   MenubarMenu,
   MenubarSeparator,
   MenubarTrigger,
-} from "@/components/ui/menubar";
+} from"@/components/ui/menubar";
 import {
   Pagination,
   PaginationContent,
@@ -107,28 +117,28 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from"@/components/ui/pagination";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Progress } from "@/components/ui/progress";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+} from"@/components/ui/popover";
+import { Progress } from"@/components/ui/progress";
+import { RadioGroup, RadioGroupItem } from"@/components/ui/radio-group";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from"@/components/ui/resizable";
+import { ScrollArea } from"@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+} from"@/components/ui/select";
+import { Separator } from"@/components/ui/separator";
 import {
   Sheet,
   SheetContent,
@@ -136,10 +146,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
+} from"@/components/ui/sheet";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Slider } from"@/components/ui/slider";
+import { Switch } from"@/components/ui/switch";
 import {
   Table,
   TableBody,
@@ -148,19 +158,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { Toggle } from "@/components/ui/toggle";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+} from"@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { Textarea } from"@/components/ui/textarea";
+import { Toggle } from"@/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from"@/components/ui/toggle-group";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useTheme } from "@/contexts/ThemeContext";
-import { format } from "date-fns";
-import { zhCN } from "date-fns/locale";
+} from"@/components/ui/tooltip";
+import { useTheme } from"@/contexts/ThemeContext";
+import { format } from"date-fns";
+import { zhCN } from"date-fns/locale";
 import {
   AlertCircle,
   CalendarIcon,
@@ -169,10 +179,10 @@ import {
   Moon,
   Sun,
   X,
-} from "lucide-react";
-import { useState } from "react";
-import { toast as sonnerToast } from "sonner";
-import { AIChatBox, type Message } from "@/components/AIChatBox";
+} from"lucide-react";
+import { useState } from"react";
+import { toast as sonnerToast } from"sonner";
+import { AIChatBox, type Message } from"@/components/AIChatBox";
 
 export default function ComponentsShowcase() {
   const { theme, toggleTheme } = useTheme();
@@ -190,7 +200,7 @@ export default function ComponentsShowcase() {
 
   // AI ChatBox demo state
   const [chatMessages, setChatMessages] = useState<Message[]>([
-    { role: "system", content: "You are a helpful assistant." },
+    { role:"system", content:"You are a helpful assistant." },
   ]);
   const [isChatLoading, setIsChatLoading] = useState(false);
 
@@ -203,7 +213,7 @@ export default function ComponentsShowcase() {
   };
 
   const handleDialogKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+    if (e.key ==="Enter" && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleDialogSubmit();
     }
@@ -211,15 +221,15 @@ export default function ComponentsShowcase() {
 
   const handleChatSend = (content: string) => {
     // Add user message
-    const newMessages: Message[] = [...chatMessages, { role: "user", content }];
+    const newMessages: Message[] = [...chatMessages, { role:"user", content }];
     setChatMessages(newMessages);
 
     // Simulate AI response with delay
     setIsChatLoading(true);
     setTimeout(() => {
       const aiResponse: Message = {
-        role: "assistant",
-        content: "This is a **demo response**. In a real app, you would call a tRPC mutation. Your message was: " + content,
+        role:"assistant",
+        content:"This is a **demo response**. In a real app, you would call a tRPC mutation. Your message was:" + content,
       };
       setChatMessages([...newMessages, aiResponse]);
       setIsChatLoading(false);
@@ -230,11 +240,11 @@ export default function ComponentsShowcase() {
     <div className="min-h-screen bg-background text-foreground">
       <main className="container max-w-6xl mx-auto">
         <div className="space-y-2 justify-between flex">
-          <h2 className="text-3xl font-bold tracking-tight mb-6">
+          <H2 className="text-3xl  tracking-tight mb-6">
             Shadcn/ui Component Library
-          </h2>
+          </H2>
           <Button variant="outline" size="icon" onClick={toggleTheme}>
-            {theme === "light" ? (
+            {theme ==="light" ? (
               <Moon className="h-5 w-5" />
             ) : (
               <Sun className="h-5 w-5" />
@@ -245,7 +255,7 @@ export default function ComponentsShowcase() {
         <div className="space-y-12">
           {/* Text Colors Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Text Colors</h3>
+            <H3 className="text-2xl">Text Colors</H3>
             <Card>
               <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -324,7 +334,7 @@ export default function ComponentsShowcase() {
 
           {/* Color Combinations Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Color Combinations</h3>
+            <H3 className="text-2xl">Color Combinations</H3>
             <Card>
               <CardContent className="pt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -383,7 +393,7 @@ export default function ComponentsShowcase() {
 
           {/* Buttons Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Buttons</h3>
+            <H3 className="text-2xl">Buttons</H3>
             <Card>
               <CardContent className="pt-6">
                 <div className="flex flex-wrap gap-4">
@@ -405,7 +415,7 @@ export default function ComponentsShowcase() {
 
           {/* Form Inputs Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Form Inputs</h3>
+            <H3 className="text-2xl">Form Inputs</H3>
             <Card>
               <CardContent className="pt-6 space-y-6">
                 <div className="space-y-2">
@@ -477,12 +487,12 @@ export default function ComponentsShowcase() {
                       <Button
                         variant="outline"
                         className={`w-full justify-start text-left font-normal ${
-                          !datePickerDate && "text-gray-600"
+                          !datePickerDate &&"text-gray-600"
                         }`}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {datePickerDate ? (
-                          format(datePickerDate, "PPP HH:mm", { locale: zhCN })
+                          format(datePickerDate,"PPP HH:mm", { locale: zhCN })
                         ) : (
                           <span>Select date and time</span>
                         )}
@@ -505,8 +515,8 @@ export default function ComponentsShowcase() {
                               type="time"
                               value={
                                 datePickerDate
-                                  ? format(datePickerDate, "HH:mm")
-                                  : "00:00"
+                                  ? format(datePickerDate,"HH:mm")
+                                  :"00:00"
                               }
                               onChange={e => {
                                 const [hours, minutes] =
@@ -526,8 +536,8 @@ export default function ComponentsShowcase() {
                   </Popover>
                   {datePickerDate && (
                     <p className="text-sm text-gray-600">
-                      Selected:{" "}
-                      {format(datePickerDate, "yyyy/MM/dd  HH:mm", {
+                      Selected:{""}
+                      {format(datePickerDate,"yyyy/MM/dd  HH:mm", {
                         locale: zhCN,
                       })}
                     </p>
@@ -545,15 +555,15 @@ export default function ComponentsShowcase() {
                       >
                         {selectedFramework
                           ? [
-                              { value: "react", label: "React" },
-                              { value: "vue", label: "Vue" },
-                              { value: "angular", label: "Angular" },
-                              { value: "svelte", label: "Svelte" },
-                              { value: "nextjs", label: "Next.js" },
-                              { value: "nuxt", label: "Nuxt" },
-                              { value: "remix", label: "Remix" },
+                              { value:"react", label:"React" },
+                              { value:"vue", label:"Vue" },
+                              { value:"angular", label:"Angular" },
+                              { value:"svelte", label:"Svelte" },
+                              { value:"nextjs", label:"Next.js" },
+                              { value:"nuxt", label:"Nuxt" },
+                              { value:"remix", label:"Remix" },
                             ].find(fw => fw.value === selectedFramework)?.label
-                          : "Select framework..."}
+                          :"Select framework..."}
                         <CalendarIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
@@ -564,13 +574,13 @@ export default function ComponentsShowcase() {
                           <CommandEmpty>No framework found</CommandEmpty>
                           <CommandGroup>
                             {[
-                              { value: "react", label: "React" },
-                              { value: "vue", label: "Vue" },
-                              { value: "angular", label: "Angular" },
-                              { value: "svelte", label: "Svelte" },
-                              { value: "nextjs", label: "Next.js" },
-                              { value: "nuxt", label: "Nuxt" },
-                              { value: "remix", label: "Remix" },
+                              { value:"react", label:"React" },
+                              { value:"vue", label:"Vue" },
+                              { value:"angular", label:"Angular" },
+                              { value:"svelte", label:"Svelte" },
+                              { value:"nextjs", label:"Next.js" },
+                              { value:"nuxt", label:"Nuxt" },
+                              { value:"remix", label:"Remix" },
                             ].map(framework => (
                               <CommandItem
                                 key={framework.value}
@@ -578,7 +588,7 @@ export default function ComponentsShowcase() {
                                 onSelect={currentValue => {
                                   setSelectedFramework(
                                     currentValue === selectedFramework
-                                      ? ""
+                                      ?""
                                       : currentValue
                                   );
                                   setOpenCombobox(false);
@@ -587,8 +597,8 @@ export default function ComponentsShowcase() {
                                 <Check
                                   className={`mr-2 h-4 w-4 ${
                                     selectedFramework === framework.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
+                                      ?"opacity-100"
+                                      :"opacity-0"
                                   }`}
                                 />
                                 {framework.label}
@@ -601,16 +611,16 @@ export default function ComponentsShowcase() {
                   </Popover>
                   {selectedFramework && (
                     <p className="text-sm text-gray-600">
-                      Selected:{" "}
+                      Selected:{""}
                       {
                         [
-                          { value: "react", label: "React" },
-                          { value: "vue", label: "Vue" },
-                          { value: "angular", label: "Angular" },
-                          { value: "svelte", label: "Svelte" },
-                          { value: "nextjs", label: "Next.js" },
-                          { value: "nuxt", label: "Nuxt" },
-                          { value: "remix", label: "Remix" },
+                          { value:"react", label:"React" },
+                          { value:"vue", label:"Vue" },
+                          { value:"angular", label:"Angular" },
+                          { value:"svelte", label:"Svelte" },
+                          { value:"nextjs", label:"Next.js" },
+                          { value:"nuxt", label:"Nuxt" },
+                          { value:"remix", label:"Remix" },
                         ].find(fw => fw.value === selectedFramework)?.label
                       }
                     </p>
@@ -634,9 +644,9 @@ export default function ComponentsShowcase() {
                             month => (
                               <SelectItem
                                 key={month}
-                                value={month.toString().padStart(2, "0")}
+                                value={month.toString().padStart(2,"0")}
                               >
-                                {month.toString().padStart(2, "0")}
+                                {month.toString().padStart(2,"0")}
                               </SelectItem>
                             )
                           )}
@@ -679,7 +689,7 @@ export default function ComponentsShowcase() {
 
           {/* Data Display Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Data Display</h3>
+            <H3 className="text-2xl">Data Display</H3>
             <Card>
               <CardContent className="pt-6 space-y-6">
                 <div className="space-y-2">
@@ -868,7 +878,7 @@ export default function ComponentsShowcase() {
 
           {/* Alerts Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Alerts</h3>
+            <H3 className="text-2xl">Alerts</H3>
             <div className="space-y-4">
               <Alert>
                 <AlertCircle className="h-4 w-4" />
@@ -889,7 +899,7 @@ export default function ComponentsShowcase() {
 
           {/* Tabs Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Tabs</h3>
+            <H3 className="text-2xl">Tabs</H3>
             <Tabs defaultValue="account" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="account">Account</TabsTrigger>
@@ -958,7 +968,7 @@ export default function ComponentsShowcase() {
 
           {/* Accordion Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Accordion</h3>
+            <H3 className="text-2xl">Accordion</H3>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
                 <AccordionTrigger>Is it accessible?</AccordionTrigger>
@@ -985,7 +995,7 @@ export default function ComponentsShowcase() {
 
           {/* Collapsible Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Collapsible</h3>
+            <H3 className="text-2xl">Collapsible</H3>
             <Collapsible>
               <Card>
                 <CardHeader>
@@ -1016,7 +1026,7 @@ export default function ComponentsShowcase() {
 
           {/* Dialog, Sheet, Drawer Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Overlays</h3>
+            <H3 className="text-2xl">Overlays</H3>
             <Card>
               <CardContent className="pt-6">
                 <div className="flex flex-wrap gap-4">
@@ -1098,7 +1108,7 @@ export default function ComponentsShowcase() {
                     </PopoverTrigger>
                     <PopoverContent>
                       <div className="space-y-2">
-                        <h4 className="font-medium leading-none">Dimensions</h4>
+                        <H4 className="font-medium leading-none">Dimensions</H4>
                         <p className="text-sm text-gray-600">
                           Set the dimensions for the layer.
                         </p>
@@ -1121,7 +1131,7 @@ export default function ComponentsShowcase() {
 
           {/* Menus Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Menus</h3>
+            <H3 className="text-2xl">Menus</H3>
             <Card>
               <CardContent className="pt-6">
                 <div className="flex flex-wrap gap-4">
@@ -1157,7 +1167,7 @@ export default function ComponentsShowcase() {
                     </HoverCardTrigger>
                     <HoverCardContent>
                       <div className="space-y-2">
-                        <h4 className="text-sm font-semibold">@nextjs</h4>
+                        <H4 className="text-sm">@nextjs</H4>
                         <p className="text-sm">
                           The React Framework – created and maintained by
                           @vercel.
@@ -1172,7 +1182,7 @@ export default function ComponentsShowcase() {
 
           {/* Calendar Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Calendar</h3>
+            <H3 className="text-2xl">Calendar</H3>
             <Card>
               <CardContent className="pt-6 flex justify-center">
                 <Calendar
@@ -1187,7 +1197,7 @@ export default function ComponentsShowcase() {
 
           {/* Carousel Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Carousel</h3>
+            <H3 className="text-2xl">Carousel</H3>
             <Card>
               <CardContent className="pt-6">
                 <Carousel className="w-full max-w-xs mx-auto">
@@ -1215,7 +1225,7 @@ export default function ComponentsShowcase() {
 
           {/* Toggle Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Toggle</h3>
+            <H3 className="text-2xl">Toggle</H3>
             <Card>
               <CardContent className="pt-6 space-y-4">
                 <div className="space-y-2">
@@ -1256,7 +1266,7 @@ export default function ComponentsShowcase() {
 
           {/* Aspect Ratio & Scroll Area Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Layout Components</h3>
+            <H3 className="text-2xl">Layout Components</H3>
             <Card>
               <CardContent className="pt-6 space-y-6">
                 <div className="space-y-2">
@@ -1288,7 +1298,7 @@ export default function ComponentsShowcase() {
 
           {/* Resizable Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Resizable Panels</h3>
+            <H3 className="text-2xl">Resizable Panels</H3>
             <Card>
               <CardContent className="pt-6">
                 <ResizablePanelGroup
@@ -1313,7 +1323,7 @@ export default function ComponentsShowcase() {
 
           {/* Toast Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">Toast</h3>
+            <H3 className="text-2xl">Toast</H3>
             <Card>
               <CardContent className="pt-6 space-y-4">
                 <div className="space-y-2">
@@ -1323,7 +1333,7 @@ export default function ComponentsShowcase() {
                       variant="outline"
                       onClick={() => {
                         sonnerToast.success("Operation successful", {
-                          description: "Your changes have been saved",
+                          description:"Your changes have been saved",
                         });
                       }}
                     >
@@ -1334,7 +1344,7 @@ export default function ComponentsShowcase() {
                       onClick={() => {
                         sonnerToast.error("Operation failed", {
                           description:
-                            "Cannot complete operation, please try again",
+"Cannot complete operation, please try again",
                         });
                       }}
                     >
@@ -1344,7 +1354,7 @@ export default function ComponentsShowcase() {
                       variant="outline"
                       onClick={() => {
                         sonnerToast.info("Information", {
-                          description: "This is an information message",
+                          description:"This is an information message",
                         });
                       }}
                     >
@@ -1355,7 +1365,7 @@ export default function ComponentsShowcase() {
                       onClick={() => {
                         sonnerToast.warning("Warning", {
                           description:
-                            "Please note the impact of this operation",
+"Please note the impact of this operation",
                         });
                       }}
                     >
@@ -1365,7 +1375,7 @@ export default function ComponentsShowcase() {
                       variant="outline"
                       onClick={() => {
                         sonnerToast.loading("Loading", {
-                          description: "Please wait",
+                          description:"Please wait",
                         });
                       }}
                     >
@@ -1378,9 +1388,9 @@ export default function ComponentsShowcase() {
                           setTimeout(resolve, 2000)
                         );
                         sonnerToast.promise(promise, {
-                          loading: "Processing...",
-                          success: "Processing complete!",
-                          error: "Processing failed",
+                          loading:"Processing...",
+                          success:"Processing complete!",
+                          error:"Processing failed",
                         });
                       }}
                     >
@@ -1394,7 +1404,7 @@ export default function ComponentsShowcase() {
 
           {/* AI ChatBox Section */}
           <section className="space-y-4">
-            <h3 className="text-2xl font-semibold">AI ChatBox</h3>
+            <H3 className="text-2xl">AI ChatBox</H3>
             <Card>
               <CardContent className="pt-6">
                 <div className="space-y-4">
@@ -1417,10 +1427,10 @@ export default function ComponentsShowcase() {
                     height="500px"
                     emptyStateMessage="How can I help you today?"
                     suggestedPrompts={[
-                      "What is React?",
-                      "Explain TypeScript",
-                      "How to use tRPC?",
-                      "Best practices for web development",
+"What is React?",
+"Explain TypeScript",
+"How to use tRPC?",
+"Best practices for web development",
                     ]}
                   />
                 </div>

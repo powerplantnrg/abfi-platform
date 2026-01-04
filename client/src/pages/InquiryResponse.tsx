@@ -1,28 +1,38 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useParams, useLocation } from "wouter";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+/**
+ * Inquiry Response - Nextgen Design
+ *
+ * Features:
+ * - Buyer inquiry management
+ * - Response templates
+ * - Communication tracking
+ * - Typography components for consistent styling
+ */
+
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useParams, useLocation } from"wouter";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Label } from"@/components/ui/label";
+import { Textarea } from"@/components/ui/textarea";
+import { Input } from"@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { Skeleton } from"@/components/ui/skeleton";
+import { trpc } from"@/lib/trpc";
 import {
   ArrowLeft,
   MessageSquare,
@@ -30,8 +40,8 @@ import {
   Calendar,
   DollarSign,
   Truck,
-} from "lucide-react";
-import { formatDate } from "@/const";
+} from"lucide-react";
+import { formatDate } from"@/const";
 
 export default function InquiryResponse() {
   const { inquiryId } = useParams<{ inquiryId: string }>();
@@ -46,7 +56,7 @@ export default function InquiryResponse() {
   const [deliveryTerms, setDeliveryTerms] = useState("");
   const [minimumOrder, setMinimumOrder] = useState("");
   const [responseStatus, setResponseStatus] = useState<
-    "accept" | "decline" | "negotiate"
+"accept" |"decline" |"negotiate"
   >("accept");
 
   const { data: inquiry, isLoading } = trpc.inquiries.getById.useQuery(
@@ -59,7 +69,7 @@ export default function InquiryResponse() {
       setLocation("/inquiries/supplier");
     },
     onError: error => {
-      setError(error.message || "Failed to send response");
+      setError(error.message ||"Failed to send response");
     },
   });
 
@@ -120,24 +130,24 @@ export default function InquiryResponse() {
       deliveryTimeframe,
       deliveryTerms,
       minimumOrder: minimumOrder ? parseInt(minimumOrder) : undefined,
-      status: responseStatus === "decline" ? "closed" : "responded",
+      status: responseStatus ==="decline" ?"closed" :"responded",
     });
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "responded":
-        return "bg-blue-100 text-blue-800";
-      case "accepted":
-        return "bg-green-100 text-green-800";
-      case "declined":
-        return "bg-red-100 text-red-800";
-      case "closed":
-        return "bg-gray-100 text-gray-800";
+      case"pending":
+        return"bg-yellow-100 text-yellow-800";
+      case"responded":
+        return"bg-blue-100 text-blue-800";
+      case"accepted":
+        return"bg-green-100 text-green-800";
+      case"declined":
+        return"bg-red-100 text-red-800";
+      case"closed":
+        return"bg-gray-100 text-gray-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
@@ -174,7 +184,7 @@ export default function InquiryResponse() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <h4 className="font-semibold mb-2">{inquiry.subject}</h4>
+                <H4 className="mb-2">{inquiry.subject}</H4>
                 <p className="text-sm text-gray-600">
                   Received on {formatDate(inquiry.createdAt)}
                 </p>
@@ -185,7 +195,7 @@ export default function InquiryResponse() {
                   <div className="flex items-center gap-2">
                     <Package className="h-4 w-4 text-gray-600" />
                     <div>
-                      <span className="text-gray-600">Feedstock:</span>{" "}
+                      <span className="text-gray-600">Feedstock:</span>{""}
                       <span className="font-medium">
                         ABFI-{inquiry.feedstockId}
                       </span>
@@ -199,7 +209,7 @@ export default function InquiryResponse() {
                     <div>
                       <span className="text-gray-600">
                         Volume Needed:
-                      </span>{" "}
+                      </span>{""}
                       <span className="font-medium">
                         {inquiry.volumeRequired.toLocaleString()} tonnes
                       </span>
@@ -213,7 +223,7 @@ export default function InquiryResponse() {
                     <div>
                       <span className="text-gray-600">
                         Delivery To:
-                      </span>{" "}
+                      </span>{""}
                       <span className="font-medium">
                         {inquiry.deliveryLocation}
                       </span>
@@ -227,7 +237,7 @@ export default function InquiryResponse() {
                     <div>
                       <span className="text-gray-600">
                         Target Date:
-                      </span>{" "}
+                      </span>{""}
                       <span className="font-medium">
                         {formatDate(inquiry.deliveryTimeframeStart)}
                       </span>
@@ -298,7 +308,7 @@ export default function InquiryResponse() {
                   </Select>
                 </div>
 
-                {responseStatus !== "decline" && (
+                {responseStatus !=="decline" && (
                   <>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
@@ -383,9 +393,9 @@ export default function InquiryResponse() {
                     id="response"
                     rows={6}
                     placeholder={
-                      responseStatus === "decline"
-                        ? "Explain why you cannot fulfill this request..."
-                        : "Provide additional details about your offering, payment terms, quality specifications, etc..."
+                      responseStatus ==="decline"
+                        ?"Explain why you cannot fulfill this request..."
+                        :"Provide additional details about your offering, payment terms, quality specifications, etc..."
                     }
                     value={response}
                     onChange={e => setResponse(e.target.value)}
@@ -403,7 +413,7 @@ export default function InquiryResponse() {
                     disabled={respondMutation.isPending}
                     className="flex-1"
                   >
-                    {respondMutation.isPending ? "Sending..." : "Send Response"}
+                    {respondMutation.isPending ?"Sending..." :"Send Response"}
                   </Button>
                   <Button
                     type="button"

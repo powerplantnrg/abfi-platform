@@ -9,30 +9,30 @@
  * - Typography components for consistent styling
  */
 
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Button } from "@/components/ui/Button";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Progress } from "@/components/ui/progress";
-import { Leaf, CheckCircle2, Eye, EyeOff, ArrowLeft, Send } from "lucide-react";
-import { Link } from "wouter";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Progress } from"@/components/ui/progress";
+import { Leaf, CheckCircle2, Eye, EyeOff, ArrowLeft, Send } from"lucide-react";
+import { Link } from"wouter";
+import { Checkbox } from"@/components/ui/checkbox";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { trpc } from"@/lib/trpc";
 
 export default function ProducerReview() {
   const [, setLocation] = useLocation();
@@ -76,10 +76,10 @@ export default function ProducerReview() {
 
     // Transform registration data to match API schema
     registerMutation.mutate({
-      abn: registrationData.accountSetup?.abn || "",
-      companyName: registrationData.accountSetup?.companyName || "",
+      abn: registrationData.accountSetup?.abn ||"",
+      companyName: registrationData.accountSetup?.companyName ||"",
       tradingName: registrationData.accountSetup?.tradingName,
-      contactEmail: registrationData.accountSetup?.contactEmail || "",
+      contactEmail: registrationData.accountSetup?.contactEmail ||"",
       contactPhone: registrationData.accountSetup?.contactPhone,
       website: registrationData.accountSetup?.website,
       properties: registrationData.properties
@@ -138,9 +138,9 @@ export default function ProducerReview() {
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="h-8 w-8 text-green-600" />
                 <div>
-                  <h3 className="text-lg font-semibold text-green-900">
+                  <H3 className="text-lg  text-green-900">
                     Registration Complete!
-                  </h3>
+                  </H3>
                   <p className="text-sm text-green-700">
                     Review your information below, then publish to the
                     marketplace.
@@ -163,9 +163,9 @@ export default function ProducerReview() {
             <CardContent className="space-y-6">
               {/* Account Details */}
               <div>
-                <h3 className="mb-3 text-lg font-semibold text-[#0F3A5C]">
+                <H3 className="mb-3 text-lg  text-[#0F3A5C]">
                   Account Details
-                </h3>
+                </H3>
                 <div className="grid gap-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Company Name:</span>
@@ -184,32 +184,32 @@ export default function ProducerReview() {
 
               {/* Property Details */}
               <div className="border-t pt-6">
-                <h3 className="mb-3 text-lg font-semibold text-[#0F3A5C]">
+                <H3 className="mb-3 text-lg  text-[#0F3A5C]">
                   Property Details
-                </h3>
+                </H3>
                 <div className="grid gap-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Property Name:</span>
                     <span className="font-medium">
-                      {registrationData.data?.propertyName || "—"}
+                      {registrationData.data?.propertyName ||"—"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Location:</span>
                     <span className="font-medium">
-                      {registrationData.data?.state || "—"}
+                      {registrationData.data?.state ||"—"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Total Land Area:</span>
                     <span className="font-medium">
-                      {registrationData.data?.totalLandArea || "—"} ha
+                      {registrationData.data?.totalLandArea ||"—"} ha
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Cultivated Area:</span>
                     <span className="font-medium">
-                      {registrationData.data?.cultivatedArea || "—"} ha
+                      {registrationData.data?.cultivatedArea ||"—"} ha
                     </span>
                   </div>
                 </div>
@@ -217,24 +217,24 @@ export default function ProducerReview() {
 
               {/* Production Profile */}
               <div className="border-t pt-6">
-                <h3 className="mb-3 text-lg font-semibold text-[#0F3A5C]">
+                <H3 className="mb-3 text-lg  text-[#0F3A5C]">
                   Production Profile
-                </h3>
+                </H3>
                 <div className="grid gap-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Feedstock Type:</span>
                     <span className="font-medium capitalize">
                       {registrationData.data?.feedstockType?.replace(
                         /_/g,
-                        " "
-                      ) || "—"}
+""
+                      ) ||"—"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Expected Harvest:</span>
                     <span className="font-medium">
                       {registrationData.data?.currentSeason?.expectedHarvest ||
-                        "—"}{" "}
+"—"}{""}
                       tonnes
                     </span>
                   </div>
@@ -249,20 +249,20 @@ export default function ProducerReview() {
 
               {/* ABFI Rating */}
               <div className="border-t pt-6">
-                <h3 className="mb-3 text-lg font-semibold text-[#0F3A5C]">
+                <H3 className="mb-3 text-lg  text-[#0F3A5C]">
                   ABFI Carbon Rating
-                </h3>
+                </H3>
                 <div className="flex items-center justify-between rounded-lg border-2 border-[#F4C430] bg-[#F4C430]/10 p-4">
                   <div>
                     <p className="text-sm text-gray-600">Your Rating</p>
                     <p className="text-4xl font-bold text-[#0F3A5C]">
-                      {registrationData.data?.carbonScore?.rating || "—"}
+                      {registrationData.data?.carbonScore?.rating ||"—"}
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm text-gray-600">Carbon Intensity</p>
                     <p className="text-lg font-semibold text-[#0F3A5C]">
-                      {registrationData.data?.carbonScore?.intensity || "—"}{" "}
+                      {registrationData.data?.carbonScore?.intensity ||"—"}{""}
                       gCO₂e/MJ
                     </p>
                   </div>
@@ -271,15 +271,15 @@ export default function ProducerReview() {
 
               {/* Marketplace Listing */}
               <div className="border-t pt-6">
-                <h3 className="mb-3 text-lg font-semibold text-[#0F3A5C]">
+                <H3 className="mb-3 text-lg  text-[#0F3A5C]">
                   Marketplace Listing
-                </h3>
+                </H3>
                 <div className="grid gap-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Available Volume:</span>
                     <span className="font-medium">
                       {registrationData.data?.listingData
-                        ?.availableVolumeTonnes || "—"}{" "}
+                        ?.availableVolumeTonnes ||"—"}{""}
                       tonnes/year
                     </span>
                   </div>
@@ -288,8 +288,8 @@ export default function ProducerReview() {
                     <span className="font-medium capitalize">
                       {registrationData.data?.listingData?.priceModel?.replace(
                         /_/g,
-                        " "
-                      ) || "—"}
+""
+                      ) ||"—"}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -297,14 +297,14 @@ export default function ProducerReview() {
                     <span className="font-medium">
                       {registrationData.data?.listingData?.basePrice
                         ? `$${registrationData.data.listingData.basePrice}/tonne`
-                        : "—"}
+                        :"—"}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Delivery Options:</span>
                     <span className="font-medium">
                       {registrationData.data?.listingData?.deliveryOptions
-                        ?.length || 0}{" "}
+                        ?.length || 0}{""}
                       options
                     </span>
                   </div>
@@ -437,11 +437,11 @@ export default function ProducerReview() {
                 />
                 <div className="flex-1">
                   <Label htmlFor="terms" className="cursor-pointer">
-                    I agree to the{" "}
+                    I agree to the{""}
                     <a href="/terms" className="text-[#F4C430] hover:underline">
                       Terms of Service
-                    </a>{" "}
-                    and{" "}
+                    </a>{""}
+                    and{""}
                     <a
                       href="/privacy"
                       className="text-[#F4C430] hover:underline"

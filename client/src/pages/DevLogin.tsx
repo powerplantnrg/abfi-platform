@@ -1,18 +1,21 @@
 /**
- * Development Login Page
+ * Developer Login - Nextgen Design
  *
- * A simple login page for development that allows selecting from demo users.
- * This page is only available in development mode.
+ * Features:
+ * - Development environment authentication
+ * - Quick role switching
+ * - Debug session management
+ * - Typography components for consistent styling
  */
 
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { User, Shield, ShoppingCart, BarChart3, Loader2, Building2, ExternalLink } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { User, Shield, ShoppingCart, BarChart3, Loader2, Building2, ExternalLink } from"lucide-react";
+import { Separator } from"@/components/ui/separator";
 
 interface DevUser {
   id: number;
@@ -29,10 +32,10 @@ const roleIcons: Record<string, React.ReactNode> = {
 };
 
 const roleColors: Record<string, string> = {
-  admin: "bg-purple-100 text-purple-800",
-  producer: "bg-green-100 text-green-800",
-  buyer: "bg-blue-100 text-blue-800",
-  analyst: "bg-orange-100 text-orange-800",
+  admin:"bg-purple-100 text-purple-800",
+  producer:"bg-green-100 text-green-800",
+  buyer:"bg-blue-100 text-blue-800",
+  analyst:"bg-orange-100 text-orange-800",
 };
 
 export default function DevLogin() {
@@ -44,7 +47,7 @@ export default function DevLogin() {
 
   useEffect(() => {
     // Fetch available dev users
-    fetch("/api/dev-auth/users", { credentials: "include" })
+    fetch("/api/dev-auth/users", { credentials:"include" })
       .then(res => res.json())
       .then(data => {
         setUsers(data.users || []);
@@ -63,10 +66,10 @@ export default function DevLogin() {
 
     try {
       const res = await fetch("/api/dev-auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method:"POST",
+        headers: {"Content-Type":"application/json" },
         body: JSON.stringify({ userId }),
-        credentials: "include",
+        credentials:"include",
       });
 
       const data = await res.json();
@@ -75,7 +78,7 @@ export default function DevLogin() {
         // Redirect to dashboard after successful login
         setLocation("/");
       } else {
-        setError(data.error || "Login failed");
+        setError(data.error ||"Login failed");
       }
     } catch (err) {
       setError("Login request failed");
@@ -97,9 +100,9 @@ export default function DevLogin() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-4">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <H1 className="text-3xl  text-gray-900 mb-2">
             ABFI Development Login
-          </h1>
+          </H1>
           <p className="text-gray-600">
             Select a demo user to test the platform
           </p>
@@ -124,7 +127,7 @@ export default function DevLogin() {
               <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={`p-2 rounded-lg ${roleColors[user.role] || "bg-gray-100"}`}>
+                    <div className={`p-2 rounded-lg ${roleColors[user.role] ||"bg-gray-100"}`}>
                       {roleIcons[user.role] || <User className="h-5 w-5" />}
                     </div>
                     <div>
@@ -152,7 +155,7 @@ export default function DevLogin() {
                       Logging in...
                     </>
                   ) : (
-                    <>Login as {user.name.split(" ")[0]}</>
+                    <>Login as {user.name.split("")[0]}</>
                   )}
                 </Button>
               </CardContent>

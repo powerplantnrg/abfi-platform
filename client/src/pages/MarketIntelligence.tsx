@@ -16,55 +16,56 @@
  */
 "use client";
 
-import { useState, useCallback } from "react";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { trpc } from "@/lib/trpc";
+import { useState, useCallback } from"react";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { trpc } from"@/lib/trpc";
 import {
   MarketIntelligenceMap,
   EntityDetailPanel,
   LAYER_CONFIGS,
   FEEDSTOCK_COLORS,
-} from "@/components/maps";
-import type { MapEntity, MapLayerType } from "@/components/maps";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+} from"@/components/maps";
+import type { MapEntity, MapLayerType } from"@/components/maps";
+import { Card, CardContent, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from"@/components/ui/select";
+import { Badge } from"@/components/ui/badge";
+import { cn } from"@/lib/utils";
 
 // Australian states for filtering
 const AUSTRALIAN_STATES = [
-  { value: "NSW", label: "New South Wales" },
-  { value: "VIC", label: "Victoria" },
-  { value: "QLD", label: "Queensland" },
-  { value: "SA", label: "South Australia" },
-  { value: "WA", label: "Western Australia" },
-  { value: "TAS", label: "Tasmania" },
-  { value: "NT", label: "Northern Territory" },
-  { value: "ACT", label: "Australian Capital Territory" },
+  { value:"NSW", label:"New South Wales" },
+  { value:"VIC", label:"Victoria" },
+  { value:"QLD", label:"Queensland" },
+  { value:"SA", label:"South Australia" },
+  { value:"WA", label:"Western Australia" },
+  { value:"TAS", label:"Tasmania" },
+  { value:"NT", label:"Northern Territory" },
+  { value:"ACT", label:"Australian Capital Territory" },
 ];
 
 // Feedstock categories
 const FEEDSTOCK_CATEGORIES = [
-  { value: "oilseed", label: "Oilseed", color: "#22c55e" },
-  { value: "UCO", label: "Used Cooking Oil", color: "#f59e0b" },
-  { value: "tallow", label: "Tallow", color: "#8b5cf6" },
-  { value: "lignocellulosic", label: "Lignocellulosic", color: "#3b82f6" },
-  { value: "waste", label: "Waste Biomass", color: "#6b7280" },
-  { value: "algae", label: "Algae", color: "#06b6d4" },
-  { value: "bamboo", label: "Bamboo", color: "#84cc16" },
+  { value:"oilseed", label:"Oilseed", color:"#22c55e" },
+  { value:"UCO", label:"Used Cooking Oil", color:"#f59e0b" },
+  { value:"tallow", label:"Tallow", color:"#8b5cf6" },
+  { value:"lignocellulosic", label:"Lignocellulosic", color:"#3b82f6" },
+  { value:"waste", label:"Waste Biomass", color:"#6b7280" },
+  { value:"algae", label:"Algae", color:"#06b6d4" },
+  { value:"bamboo", label:"Bamboo", color:"#84cc16" },
 ];
 
 export default function MarketIntelligence() {
   const { user } = useAuth();
-  const userRole = user?.role || "user";
+  const userRole = user?.role ||"user";
 
   // Selected entity state
   const [selectedEntity, setSelectedEntity] = useState<MapEntity | null>(null);
 
   // Filter state
-  const [activeTab, setActiveTab] = useState<"map" | "analytics" | "alerts">("map");
+  const [activeTab, setActiveTab] = useState<"map" |"analytics" |"alerts">("map");
   const [feedstockFilter, setFeedstockFilter] = useState<string[]>([]);
   const [regionFilter, setRegionFilter] = useState<string[]>([]);
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -89,17 +90,17 @@ export default function MarketIntelligence() {
   const handleEntityAction = useCallback((action: string, entity: MapEntity) => {
     // Handle different actions based on type
     switch (action) {
-      case "interest_expressed":
+      case"interest_expressed":
         // Show success toast
         break;
-      case "negotiation_started":
+      case"negotiation_started":
         // Navigate to negotiation page
         break;
-      case "view_contract":
+      case"view_contract":
         // Navigate to contract details
         window.location.href = `/contracts/${entity.id}`;
         break;
-      case "schedule_delivery":
+      case"schedule_delivery":
         // Open delivery scheduling modal
         break;
       default:
@@ -131,23 +132,23 @@ export default function MarketIntelligence() {
       <div className="bg-white border-b px-6 py-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Market Intelligence</h1>
+            <H1 className="text-2xl  text-gray-900">Market Intelligence</H1>
             <p className="text-sm text-gray-500 mt-1">
               Real-time supply, demand, and pricing data across Australia
             </p>
           </div>
           <div className="flex items-center gap-3">
-            {userRole === "buyer" && (
-              <Button variant="outline" onClick={() => window.location.href = "/demand-signals/create"}>
+            {userRole ==="buyer" && (
+              <Button variant="outline" onClick={() => window.location.href ="/demand-signals/create"}>
                 + Post Demand Signal
               </Button>
             )}
-            {userRole === "supplier" && (
-              <Button variant="outline" onClick={() => window.location.href = "/projects/create"}>
+            {userRole ==="supplier" && (
+              <Button variant="outline" onClick={() => window.location.href ="/projects/create"}>
                 + Register Project
               </Button>
             )}
-            <Button onClick={() => window.location.href = "/alerts/create"}>
+            <Button onClick={() => window.location.href ="/alerts/create"}>
               Set Price Alert
             </Button>
           </div>
@@ -307,20 +308,20 @@ export default function MarketIntelligence() {
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">Avg Price</span>
                       <span className="font-semibold text-green-600">
-                        ${marketSummary?.averageSpotPrice?.toFixed(2) || "0.00"}/t
+                        ${marketSummary?.averageSpotPrice?.toFixed(2) ||"0.00"}/t
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">Price Change (7d)</span>
                       <span
                         className={cn(
-                          "font-semibold",
+"font-semibold",
                           (marketSummary?.priceChangePercent || 0) >= 0
-                            ? "text-green-600"
-                            : "text-red-600"
+                            ?"text-green-600"
+                            :"text-red-600"
                         )}
                       >
-                        {(marketSummary?.priceChangePercent || 0) >= 0 ? "+" : ""}
+                        {(marketSummary?.priceChangePercent || 0) >= 0 ?"+" :""}
                         {marketSummary?.priceChangePercent?.toFixed(1) || 0}%
                       </span>
                     </div>
@@ -385,7 +386,7 @@ export default function MarketIntelligence() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>My Price Alerts</CardTitle>
-                <Button onClick={() => window.location.href = "/alerts/create"}>
+                <Button onClick={() => window.location.href ="/alerts/create"}>
                   + New Alert
                 </Button>
               </CardHeader>
@@ -400,14 +401,14 @@ export default function MarketIntelligence() {
                         <div>
                           <div className="font-medium">{alert.feedstockCategory}</div>
                           <div className="text-sm text-gray-500">
-                            {alert.alertType === "ABOVE_THRESHOLD" && `Alert when price > $${alert.thresholdValue}/t`}
-                            {alert.alertType === "BELOW_THRESHOLD" && `Alert when price < $${alert.thresholdValue}/t`}
-                            {alert.alertType === "PERCENT_CHANGE_UP" && `Alert on ${alert.thresholdValue}% increase`}
-                            {alert.alertType === "PERCENT_CHANGE_DOWN" && `Alert on ${alert.thresholdValue}% decrease`}
+                            {alert.alertType ==="ABOVE_THRESHOLD" && `Alert when price > $${alert.thresholdValue}/t`}
+                            {alert.alertType ==="BELOW_THRESHOLD" && `Alert when price < $${alert.thresholdValue}/t`}
+                            {alert.alertType ==="PERCENT_CHANGE_UP" && `Alert on ${alert.thresholdValue}% increase`}
+                            {alert.alertType ==="PERCENT_CHANGE_DOWN" && `Alert on ${alert.thresholdValue}% decrease`}
                           </div>
                         </div>
-                        <Badge variant={alert.isActive ? "default" : "secondary"}>
-                          {alert.isActive ? "Active" : "Paused"}
+                        <Badge variant={alert.isActive ?"default" :"secondary"}>
+                          {alert.isActive ?"Active" :"Paused"}
                         </Badge>
                       </div>
                     ))}
@@ -415,7 +416,7 @@ export default function MarketIntelligence() {
                 ) : (
                   <div className="text-center py-8">
                     <p className="text-gray-500 mb-4">No price alerts set up yet.</p>
-                    <Button onClick={() => window.location.href = "/alerts/create"}>
+                    <Button onClick={() => window.location.href ="/alerts/create"}>
                       Create Your First Alert
                     </Button>
                   </div>

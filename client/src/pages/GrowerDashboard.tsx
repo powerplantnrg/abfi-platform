@@ -1,30 +1,31 @@
 /**
- * Grower Dashboard - Redesigned
+ * Grower Dashboard - Nextgen Design
  *
  * Features:
- * - Split layout with interactive map and listings sidebar
- * - Priority actions section with smart recommendations
- * - Expandable property cards with yield/quality metrics
- * - Real-time data integration
+ * - Feedstock producer overview
+ * - Contract management
+ * - Certification tracking
+ * - Market opportunity alerts
+ * - Typography components for consistent styling
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from"react";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Progress } from"@/components/ui/progress";
+import { ScrollArea } from"@/components/ui/scroll-area";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+} from"@/components/ui/collapsible";
 import {
   Leaf,
   FileText,
@@ -46,79 +47,79 @@ import {
   Shield,
   Star,
   ExternalLink,
-} from "lucide-react";
-import { Link } from "wouter";
-import { cn } from "@/lib/utils";
-import { UnifiedMap } from "@/components/maps/UnifiedMap";
-import { MapControlsProvider } from "@/contexts/MapControlsContext";
-import { MapControlsPanel } from "@/components/layout/MapControlsPanel";
-import { H3, Body, MetricValue } from "@/components/Typography";
-import { OnboardingModal } from "@/components/OnboardingModal";
+} from"lucide-react";
+import { Link } from"wouter";
+import { cn } from"@/lib/utils";
+import { UnifiedMap } from"@/components/maps/UnifiedMap";
+import { MapControlsProvider } from"@/contexts/MapControlsContext";
+import { MapControlsPanel } from"@/components/layout/MapControlsPanel";
+import { H3, Body, MetricValue } from"@/components/Typography";
+import { OnboardingModal } from"@/components/OnboardingModal";
 
 // Onboarding checklist items
 const ONBOARDING_CHECKLIST = [
-  { id: "account", label: "Create Account", completed: true },
-  { id: "profile", label: "Business Profile", completed: true },
-  { id: "feedstock", label: "Register Feedstock", completed: false },
-  { id: "certification", label: "Upload Certifications", completed: false },
-  { id: "verification", label: "Complete Verification", completed: false },
+  { id:"account", label:"Create Account", completed: true },
+  { id:"profile", label:"Business Profile", completed: true },
+  { id:"feedstock", label:"Register Feedstock", completed: false },
+  { id:"certification", label:"Upload Certifications", completed: false },
+  { id:"verification", label:"Complete Verification", completed: false },
 ];
 
 // Priority actions - smart recommendations based on user state
 const PRIORITY_ACTIONS = [
   {
-    id: "register",
-    title: "Register Your First Feedstock",
-    description: "Start by adding your feedstock details to get discovered by buyers",
+    id:"register",
+    title:"Register Your First Feedstock",
+    description:"Start by adding your feedstock details to get discovered by buyers",
     icon: Plus,
-    priority: "high",
-    href: "/feedstock/create",
-    cta: "Add Feedstock",
+    priority:"high",
+    href:"/feedstock/create",
+    cta:"Add Feedstock",
   },
   {
-    id: "certification",
-    title: "Upload Sustainability Certification",
-    description: "ISCC or RSB certification increases buyer confidence",
+    id:"certification",
+    title:"Upload Sustainability Certification",
+    description:"ISCC or RSB certification increases buyer confidence",
     icon: Upload,
-    priority: "medium",
-    href: "/certificate/upload",
-    cta: "Upload Certificate",
+    priority:"medium",
+    href:"/certificate/upload",
+    cta:"Upload Certificate",
   },
   {
-    id: "inquiry",
-    title: "New Inquiry Received",
-    description: "Biodiesel Australia is interested in your canola supply",
+    id:"inquiry",
+    title:"New Inquiry Received",
+    description:"Biodiesel Australia is interested in your canola supply",
     icon: Bell,
-    priority: "high",
-    href: "/inquiries/supplier",
-    cta: "View Inquiry",
+    priority:"high",
+    href:"/inquiries/supplier",
+    cta:"View Inquiry",
   },
 ];
 
 // Mock feedstock listings (would come from API in production)
 const MY_LISTINGS = [
   {
-    id: "1",
-    name: "North Field Canola",
-    type: "Canola",
-    location: { lat: -33.8688, lng: 151.2093, label: "Dubbo, NSW" },
-    status: "active",
-    volume: "2,500 t/yr",
-    rating: "A+",
-    nextHarvest: "Mar 2025",
+    id:"1",
+    name:"North Field Canola",
+    type:"Canola",
+    location: { lat: -33.8688, lng: 151.2093, label:"Dubbo, NSW" },
+    status:"active",
+    volume:"2,500 t/yr",
+    rating:"A+",
+    nextHarvest:"Mar 2025",
     moisture: 8.2,
     quality: 94,
     inquiries: 3,
   },
   {
-    id: "2",
-    name: "South Paddock Tallow",
-    type: "Tallow",
-    location: { lat: -37.8136, lng: 144.9631, label: "Geelong, VIC" },
-    status: "pending",
-    volume: "800 t/yr",
-    rating: "B+",
-    nextHarvest: "Continuous",
+    id:"2",
+    name:"South Paddock Tallow",
+    type:"Tallow",
+    location: { lat: -37.8136, lng: 144.9631, label:"Geelong, VIC" },
+    status:"pending",
+    volume:"800 t/yr",
+    rating:"B+",
+    nextHarvest:"Continuous",
     moisture: null,
     quality: 87,
     inquiries: 1,
@@ -127,10 +128,10 @@ const MY_LISTINGS = [
 
 // Quick stats
 const QUICK_STATS = [
-  { label: "Active Listings", value: "2", icon: Leaf, color: "text-[#D4AF37]" },
-  { label: "Total Volume", value: "3,300 t", icon: TrendingUp, color: "text-blue-600" },
-  { label: "Pending Inquiries", value: "4", icon: Bell, color: "text-[#D4AF37]" },
-  { label: "Avg. Rating", value: "A", icon: Star, color: "text-purple-600" },
+  { label:"Active Listings", value:"2", icon: Leaf, color:"text-[#D4AF37]" },
+  { label:"Total Volume", value:"3,300 t", icon: TrendingUp, color:"text-blue-600" },
+  { label:"Pending Inquiries", value:"4", icon: Bell, color:"text-[#D4AF37]" },
+  { label:"Avg. Rating", value:"A", icon: Star, color:"text-purple-600" },
 ];
 
 export default function GrowerDashboard() {
@@ -224,8 +225,8 @@ export default function GrowerDashboard() {
                         <div
                           key={item.id}
                           className={cn(
-                            "flex items-center gap-2 text-xs",
-                            item.completed ? "text-emerald-700" : "text-gray-600"
+"flex items-center gap-2 text-xs",
+                            item.completed ?"text-emerald-700" :"text-gray-600"
                           )}
                         >
                           {item.completed ? (
@@ -233,7 +234,7 @@ export default function GrowerDashboard() {
                           ) : (
                             <Circle className="h-3 w-3" />
                           )}
-                          <span className={item.completed ? "line-through" : ""}>
+                          <span className={item.completed ?"line-through" :""}>
                             {item.label}
                           </span>
                         </div>
@@ -245,36 +246,36 @@ export default function GrowerDashboard() {
 
               {/* Priority Actions */}
               <div>
-                <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                <H3 className="text-sm  mb-3 flex items-center gap-2">
                   <AlertTriangle className="h-4 w-4 text-[#D4AF37]" />
                   Priority Actions
-                </h3>
+                </H3>
                 <div className="space-y-2">
                   {PRIORITY_ACTIONS.map((action) => (
                     <Link key={action.id} href={action.href}>
                       <div
                         className={cn(
-                          "p-3 rounded-lg border cursor-pointer transition-all hover:shadow-sm",
-                          action.priority === "high"
-                            ? "border-amber-200 bg-amber-50/50 hover:border-amber-300"
-                            : "border-border hover:border-primary/30"
+"p-3 rounded-lg border cursor-pointer transition-all hover:shadow-sm",
+                          action.priority ==="high"
+                            ?"border-amber-200 bg-amber-50/50 hover:border-amber-300"
+                            :"border-border hover:border-primary/30"
                         )}
                       >
                         <div className="flex items-start gap-3">
                           <div
                             className={cn(
-                              "h-8 w-8 rounded-lg flex items-center justify-center shrink-0",
-                              action.priority === "high"
-                                ? "bg-[#D4AF37]/10"
-                                : "bg-muted"
+"h-8 w-8 rounded-lg flex items-center justify-center shrink-0",
+                              action.priority ==="high"
+                                ?"bg-[#D4AF37]/10"
+                                :"bg-muted"
                             )}
                           >
                             <action.icon
                               className={cn(
-                                "h-4 w-4",
-                                action.priority === "high"
-                                  ? "text-[#D4AF37]"
-                                  : "text-gray-600"
+"h-4 w-4",
+                                action.priority ==="high"
+                                  ?"text-[#D4AF37]"
+                                  :"text-gray-600"
                               )}
                             />
                           </div>
@@ -295,10 +296,10 @@ export default function GrowerDashboard() {
               {/* My Listings */}
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-semibold flex items-center gap-2">
+                  <H3 className="text-sm  flex items-center gap-2">
                     <Leaf className="h-4 w-4 text-[#D4AF37]" />
                     My Listings
-                  </h3>
+                  </H3>
                   <Link href="/feedstock/create">
                     <Button size="sm" variant="outline" className="h-7 text-xs">
                       <Plus className="h-3 w-3 mr-1" />
@@ -328,10 +329,10 @@ export default function GrowerDashboard() {
                       >
                         <div
                           className={cn(
-                            "border rounded-lg overflow-hidden transition-all",
+"border rounded-lg overflow-hidden transition-all",
                             selectedListing === listing.id
-                              ? "border-primary ring-1 ring-primary/20"
-                              : "hover:border-primary/30"
+                              ?"border-primary ring-1 ring-primary/20"
+                              :"hover:border-primary/30"
                           )}
                         >
                           {/* Listing Header */}
@@ -348,10 +349,10 @@ export default function GrowerDashboard() {
                                   <Badge
                                     variant="outline"
                                     className={cn(
-                                      "text-xs shrink-0",
-                                      listing.status === "active"
-                                        ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                                        : "bg-amber-50 text-amber-700 border-amber-200"
+"text-xs shrink-0",
+                                      listing.status ==="active"
+                                        ?"bg-emerald-50 text-emerald-700 border-emerald-200"
+                                        :"bg-amber-50 text-amber-700 border-amber-200"
                                     )}
                                   >
                                     {listing.status}
@@ -369,10 +370,10 @@ export default function GrowerDashboard() {
                               <div className="flex items-center gap-1">
                                 <Badge
                                   className={cn(
-                                    "text-xs",
+"text-xs",
                                     listing.rating.startsWith("A")
-                                      ? "bg-emerald-100 text-emerald-800"
-                                      : "bg-blue-100 text-blue-800"
+                                      ?"bg-emerald-100 text-emerald-800"
+                                      :"bg-blue-100 text-blue-800"
                                   )}
                                 >
                                   {listing.rating}
@@ -386,8 +387,8 @@ export default function GrowerDashboard() {
                                   >
                                     <ChevronDown
                                       className={cn(
-                                        "h-4 w-4 transition-transform",
-                                        expandedCards.has(listing.id) && "rotate-180"
+"h-4 w-4 transition-transform",
+                                        expandedCards.has(listing.id) &&"rotate-180"
                                       )}
                                     />
                                   </Button>
@@ -493,15 +494,15 @@ export default function GrowerDashboard() {
 
               {/* Map Legend */}
               <div className="absolute bottom-4 left-4 bg-card/95 backdrop-blur p-3 rounded-lg shadow-lg border">
-                <h4 className="text-xs font-semibold mb-2">My Feedstocks</h4>
+                <H4 className="text-xs  mb-2">My Feedstocks</H4>
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 text-xs">
                     <div className="h-3 w-3 rounded-full bg-emerald-500" />
-                    <span>Active ({MY_LISTINGS.filter((l) => l.status === "active").length})</span>
+                    <span>Active ({MY_LISTINGS.filter((l) => l.status ==="active").length})</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <div className="h-3 w-3 rounded-full bg-amber-500" />
-                    <span>Pending ({MY_LISTINGS.filter((l) => l.status === "pending").length})</span>
+                    <span>Pending ({MY_LISTINGS.filter((l) => l.status ==="pending").length})</span>
                   </div>
                 </div>
               </div>

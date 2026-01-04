@@ -1,45 +1,49 @@
 /**
- * @deprecated This component is superseded by UnifiedMapPage.tsx
- * Routes are redirected to /map which uses the consolidated UnifiedMap component.
- * This file can be removed once migration is complete.
- * @see client/src/pages/UnifiedMapPage.tsx
+ * Map View - Nextgen Design
+ *
+ * Features:
+ * - Interactive feedstock location map
+ * - Supplier visualization
+ * - Regional filtering
+ * - Typography components for consistent styling
  */
-import { Button } from "@/components/ui/Button";
+
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   AUSTRALIAN_STATES,
   FEEDSTOCK_CATEGORIES,
   formatPrice,
   getScoreGrade,
-} from "@/const";
-import { trpc } from "@/lib/trpc";
-import { Award, Filter, Leaf, List, MapIcon, MapPin } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Link } from "wouter";
-import { MapView as GoogleMapView } from "@/components/Map";
-import { H1, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"@/const";
+import { trpc } from"@/lib/trpc";
+import { Award, Filter, Leaf, List, MapIcon, MapPin } from"lucide-react";
+import { useEffect, useRef, useState } from"react";
+import { Link } from"wouter";
+import { MapView as GoogleMapView } from"@/components/Map";
+import { H1, Body, MetricValue, DataLabel } from"@/components/Typography";
 
 export default function MapView() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
   const [minScore, setMinScore] = useState<number | undefined>();
   const [maxCarbon, setMaxCarbon] = useState<number | undefined>();
-  const [viewMode, setViewMode] = useState<"map" | "list">("map");
+  const [viewMode, setViewMode] = useState<"map" |"list">("map");
   const [selectedFeedstock, setSelectedFeedstock] = useState<any>(null);
 
   const mapRef = useRef<google.maps.Map | null>(null);
@@ -99,7 +103,7 @@ export default function MapView() {
             scale: 10,
             fillColor: getMarkerColor(feedstock.abfiScore),
             fillOpacity: 0.8,
-            strokeColor: "#ffffff",
+            strokeColor:"#ffffff",
             strokeWeight: 2,
           },
         });
@@ -113,7 +117,7 @@ export default function MapView() {
                 <p style="font-size: 12px; color: #666; margin-bottom: 8px;">${feedstock.abfiId}</p>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
                   <span style="font-size: 12px;">ABFI Score:</span>
-                  <span style="font-weight: bold; color: ${getScoreColor(feedstock.abfiScore)}">${feedstock.abfiScore || "N/A"}</span>
+                  <span style="font-weight: bold; color: ${getScoreColor(feedstock.abfiScore)}">${feedstock.abfiScore ||"N/A"}</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
                   <span style="font-size: 12px;">Available:</span>
@@ -121,14 +125,14 @@ export default function MapView() {
                 </div>
                 ${
                   feedstock.pricePerTonne &&
-                  feedstock.priceVisibility === "public"
+                  feedstock.priceVisibility ==="public"
                     ? `
                   <div style="display: flex; justify-between; margin-bottom: 8px;">
                     <span style="font-size: 12px;">Price:</span>
                     <span style="font-weight: bold;">${formatPrice(feedstock.pricePerTonne)}/tonne</span>
                   </div>
                 `
-                    : ""
+                    :""
                 }
                 <a href="/inquiry/send?feedstockId=${feedstock.id}" style="display: inline-block; margin-top: 8px; padding: 6px 12px; background: #1B4332; color: white; text-decoration: none; border-radius: 4px; font-size: 12px;">Send Inquiry</a>
               </div>
@@ -154,17 +158,17 @@ export default function MapView() {
   }, [feedstocks]);
 
   const getMarkerColor = (score: number | null): string => {
-    if (!score) return "#9CA3AF"; // gray
-    if (score >= 80) return "#10B981"; // green
-    if (score >= 60) return "#F59E0B"; // yellow
-    return "#EF4444"; // red
+    if (!score) return"#9CA3AF"; // gray
+    if (score >= 80) return"#10B981"; // green
+    if (score >= 60) return"#F59E0B"; // yellow
+    return"#EF4444"; // red
   };
 
   const getScoreColor = (score: number | null): string => {
-    if (!score) return "#9CA3AF";
-    if (score >= 80) return "#10B981";
-    if (score >= 60) return "#F59E0B";
-    return "#EF4444";
+    if (!score) return"#9CA3AF";
+    if (score >= 80) return"#10B981";
+    if (score >= 60) return"#F59E0B";
+    return"#EF4444";
   };
 
   return (
@@ -180,14 +184,14 @@ export default function MapView() {
           </Link>
           <div className="flex gap-2">
             <Button
-              variant={viewMode === "map" ? "default" : "outline"}
+              variant={viewMode ==="map" ?"default" :"outline"}
               onClick={() => setViewMode("map")}
             >
               <MapIcon className="h-4 w-4 mr-2" />
               Map View
             </Button>
             <Link href="/browse">
-              <Button variant={viewMode === "list" ? "default" : "outline"}>
+              <Button variant={viewMode ==="list" ?"default" :"outline"}>
                 <List className="h-4 w-4 mr-2" />
                 List View
               </Button>
@@ -198,7 +202,7 @@ export default function MapView() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <H1 className="text-4xl text-[#D4AF37] mb-2">
+          <H1 className="text-[#D4AF37] mb-2">
             Feedstock Map
           </H1>
           <Body className="text-gray-600">
@@ -268,7 +272,7 @@ export default function MapView() {
                     min="0"
                     max="100"
                     placeholder="e.g., 70"
-                    value={minScore || ""}
+                    value={minScore ||""}
                     onChange={e =>
                       setMinScore(
                         e.target.value ? Number(e.target.value) : undefined
@@ -287,7 +291,7 @@ export default function MapView() {
                     type="number"
                     min="0"
                     placeholder="e.g., 50"
-                    value={maxCarbon || ""}
+                    value={maxCarbon ||""}
                     onChange={e =>
                       setMaxCarbon(
                         e.target.value ? Number(e.target.value) : undefined
@@ -340,7 +344,7 @@ export default function MapView() {
             <div className="mb-4 flex justify-between items-center">
               <p className="text-gray-600">
                 {isLoading
-                  ? "Loading..."
+                  ?"Loading..."
                   : `${feedstocks?.length || 0} feedstocks found`}
               </p>
             </div>
@@ -378,12 +382,12 @@ export default function MapView() {
                     <div className="text-right">
                       <div className="flex items-center gap-1 text-[#D4AF37]">
                         <Award className="h-5 w-5" />
-                        <MetricValue size="md">{selectedFeedstock.abfiScore || "N/A"}</MetricValue>
+                        <MetricValue size="md">{selectedFeedstock.abfiScore ||"N/A"}</MetricValue>
                       </div>
                       <div className="text-xs text-gray-500">
                         {selectedFeedstock.abfiScore
                           ? getScoreGrade(selectedFeedstock.abfiScore)
-                          : ""}
+                          :""}
                       </div>
                     </div>
                   </div>
@@ -393,19 +397,19 @@ export default function MapView() {
                     <div>
                       <DataLabel>Annual Capacity</DataLabel>
                       <p className="font-mono tabular-nums font-medium">
-                        {selectedFeedstock.annualCapacityTonnes.toLocaleString()}{" "}
+                        {selectedFeedstock.annualCapacityTonnes.toLocaleString()}{""}
                         tonnes
                       </p>
                     </div>
                     <div>
                       <DataLabel>Available Now</DataLabel>
                       <p className="font-mono tabular-nums font-medium">
-                        {selectedFeedstock.availableVolumeCurrent.toLocaleString()}{" "}
+                        {selectedFeedstock.availableVolumeCurrent.toLocaleString()}{""}
                         tonnes
                       </p>
                     </div>
                     {selectedFeedstock.pricePerTonne &&
-                      selectedFeedstock.priceVisibility === "public" && (
+                      selectedFeedstock.priceVisibility ==="public" && (
                         <div>
                           <DataLabel>Price</DataLabel>
                           <p className="font-mono tabular-nums font-medium">

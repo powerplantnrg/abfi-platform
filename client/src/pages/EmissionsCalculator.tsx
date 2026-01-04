@@ -1,32 +1,42 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+/**
+ * Emissions Calculator - Nextgen Design
+ *
+ * Features:
+ * - GHG emissions estimation tools
+ * - Scope 1/2/3 calculations
+ * - Reduction pathway modeling
+ * - Typography components for consistent styling
+ */
+
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
-import { Slider } from "@/components/ui/slider";
-import { Switch } from "@/components/ui/switch";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/tabs";
+import { Slider } from"@/components/ui/slider";
+import { Switch } from"@/components/ui/switch";
+import { trpc } from"@/lib/trpc";
 import {
   BarChart3,
   Truck,
@@ -42,16 +52,16 @@ import {
   ArrowRight,
   RefreshCw,
   Info,
-} from "lucide-react";
-import { Redirect } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Redirect } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   PageWrapper,
   FadeInUp,
-} from "@/components/ui/motion";
-import DashboardLayout from "@/components/DashboardLayout";
-import { useState, useMemo } from "react";
-import { H1, H2, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"@/components/ui/motion";
+import DashboardLayout from"@/components/DashboardLayout";
+import { useState, useMemo } from"react";
+import { H1, H2, Body, MetricValue, DataLabel } from"@/components/Typography";
 
 // Transport mode icons
 function getTransportIcon(mode: string) {
@@ -73,20 +83,20 @@ function ResultCard({
   label,
   value,
   unit,
-  variant = "default",
+  variant ="default",
   icon: Icon,
 }: {
   label: string;
   value: string | number;
   unit: string;
-  variant?: "default" | "success" | "warning" | "error";
+  variant?:"default" |"success" |"warning" |"error";
   icon?: React.ElementType;
 }) {
   const variantStyles = {
-    default: "bg-slate-50",
-    success: "bg-emerald-50 border-emerald-200",
-    warning: "bg-amber-50 border-amber-200",
-    error: "bg-red-50 border-red-200",
+    default:"bg-slate-50",
+    success:"bg-emerald-50 border-emerald-200",
+    warning:"bg-amber-50 border-amber-200",
+    error:"bg-red-50 border-red-200",
   };
 
   return (
@@ -108,8 +118,8 @@ function TransportCalculator() {
   const [formData, setFormData] = useState({
     distanceKm: 500,
     massKg: 10000,
-    transportMode: "road_truck" as const,
-    vehicleType: "",
+    transportMode:"road_truck" as const,
+    vehicleType:"",
     loadFactor: 0.8,
     returnEmpty: false,
   });
@@ -228,7 +238,7 @@ function TransportCalculator() {
                   label="Carbon Intensity"
                   value={result.carbonIntensityGCo2eTkm}
                   unit="gCO2e/tkm"
-                  variant={result.carbonIntensityGCo2eTkm < 50 ? "success" : result.carbonIntensityGCo2eTkm < 100 ? "warning" : "error"}
+                  variant={result.carbonIntensityGCo2eTkm < 50 ?"success" : result.carbonIntensityGCo2eTkm < 100 ?"warning" :"error"}
                   icon={Leaf}
                 />
                 <div className="grid grid-cols-2 gap-4">
@@ -260,7 +270,7 @@ function CORSIACalculator() {
 
   const { data: result, isLoading } = trpc.emissions.calculateCorsiaCI.useQuery({
     safPathway: pathway as any,
-    customCI: pathway === "custom" ? customCI : undefined,
+    customCI: pathway ==="custom" ? customCI : undefined,
   });
 
   const { data: defaults } = trpc.emissions.getCorsiaDefaults.useQuery();
@@ -298,7 +308,7 @@ function CORSIACalculator() {
               </Select>
             </div>
 
-            {pathway === "custom" && (
+            {pathway ==="custom" && (
               <div>
                 <Label>Custom CI (gCO2e/MJ)</Label>
                 <Input
@@ -312,7 +322,7 @@ function CORSIACalculator() {
 
             {defaults && (
               <div className="p-4 bg-slate-50 rounded-lg">
-                <h4 className="text-sm font-medium mb-3">CORSIA Default Values</h4>
+                <H4 className="text-sm font-medium mb-3">CORSIA Default Values</H4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-600">Conventional Jet A-1</span>
@@ -361,14 +371,14 @@ function CORSIACalculator() {
                   label="GHG Reduction"
                   value={result.ghgReductionPercent}
                   unit="%"
-                  variant={result.ghgReductionPercent >= 65 ? "success" : result.ghgReductionPercent >= 10 ? "warning" : "error"}
+                  variant={result.ghgReductionPercent >= 65 ?"success" : result.ghgReductionPercent >= 10 ?"warning" :"error"}
                   icon={Leaf}
                 />
 
                 <div className="space-y-3 pt-2">
                   <div className={cn(
-                    "flex items-center gap-3 p-3 rounded-lg",
-                    result.meetsCorsia ? "bg-emerald-50" : "bg-amber-50"
+"flex items-center gap-3 p-3 rounded-lg",
+                    result.meetsCorsia ?"bg-emerald-50" :"bg-amber-50"
                   )}>
                     {result.meetsCorsia ? (
                       <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
@@ -382,8 +392,8 @@ function CORSIACalculator() {
                   </div>
 
                   <div className={cn(
-                    "flex items-center gap-3 p-3 rounded-lg",
-                    result.meetsRedII ? "bg-emerald-50" : "bg-red-50"
+"flex items-center gap-3 p-3 rounded-lg",
+                    result.meetsRedII ?"bg-emerald-50" :"bg-red-50"
                   )}>
                     {result.meetsRedII ? (
                       <CheckCircle2 className="h-5 w-5 text-[#D4AF37]" />
@@ -412,13 +422,13 @@ function CORSIACalculator() {
 // Feedstock Carbon Intensity Calculator
 function FeedstockCalculator() {
   const [formData, setFormData] = useState({
-    feedstockType: "sugarcane",
+    feedstockType:"sugarcane",
     massKg: 10000,
     nitrogenFertilizerKg: 50,
     dieselLiters: 100,
     electricityKwh: 200,
     transportDistanceKm: 100,
-    transportMode: "road",
+    transportMode:"road",
   });
 
   const { data: result, isLoading } = trpc.emissions.calculateFeedstockCI.useQuery(formData);
@@ -471,7 +481,7 @@ function FeedstockCalculator() {
             </div>
 
             <div className="space-y-3 pt-2">
-              <h4 className="text-sm font-medium">Cultivation Inputs</h4>
+              <H4 className="text-sm font-medium">Cultivation Inputs</H4>
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <Label className="text-xs">N Fertilizer (kg)</Label>
@@ -501,7 +511,7 @@ function FeedstockCalculator() {
             </div>
 
             <div className="space-y-3 pt-2">
-              <h4 className="text-sm font-medium">Transport to Processing</h4>
+              <H4 className="text-sm font-medium">Transport to Processing</H4>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label className="text-xs">Distance (km)</Label>
@@ -560,12 +570,12 @@ function FeedstockCalculator() {
                   label="Carbon Intensity"
                   value={result.carbonIntensityGCo2eKg}
                   unit="gCO2e/kg"
-                  variant={result.carbonIntensityGCo2eKg < 50 ? "success" : result.carbonIntensityGCo2eKg < 150 ? "warning" : "error"}
+                  variant={result.carbonIntensityGCo2eKg < 50 ?"success" : result.carbonIntensityGCo2eKg < 150 ?"warning" :"error"}
                   icon={Leaf}
                 />
 
                 <div className="space-y-2 pt-2">
-                  <h4 className="text-sm font-medium">Emissions Breakdown</h4>
+                  <H4 className="text-sm font-medium">Emissions Breakdown</H4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">Cultivation</span>
@@ -711,19 +721,19 @@ export default function EmissionsCalculator() {
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h4 className="font-semibold text-blue-900 mb-2">ISO 14083:2023</h4>
+                <H4 className="text-blue-900 mb-2">ISO 14083:2023</H4>
                 <p className="text-sm text-blue-800">
                   Quantification of greenhouse gas emissions from transport operations, including freight and passenger transport.
                 </p>
               </div>
               <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-200">
-                <h4 className="font-semibold text-emerald-900 mb-2">CORSIA</h4>
+                <H4 className="text-emerald-900 mb-2">CORSIA</H4>
                 <p className="text-sm text-emerald-800">
                   Carbon Offsetting and Reduction Scheme for International Aviation - default life cycle values for SAF.
                 </p>
               </div>
               <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                <h4 className="font-semibold text-purple-900 mb-2">ISO 14064-1</h4>
+                <H4 className="text-purple-900 mb-2">ISO 14064-1</H4>
                 <p className="text-sm text-purple-800">
                   Greenhouse gas accounting and verification at organization level - Scope 1, 2, and 3 emissions.
                 </p>

@@ -1,8 +1,18 @@
-import { Link } from "wouter";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Check, ArrowRight, FileText, Clock, Mail, Shield } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent } from "@/components/ui/Card";
+/**
+ * Financial Onboarding Success - Nextgen Design
+ *
+ * Features:
+ * - Registration completion confirmation
+ * - Next steps guidance
+ * - Dashboard navigation
+ * - Typography components for consistent styling
+ */
+
+import { Link } from"wouter";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Check, ArrowRight, FileText, Clock, Mail, Shield } from"lucide-react";
+import { Button } from"@/components/ui/Button";
+import { Card, CardContent } from"@/components/ui/Card";
 
 export default function FinancialOnboardingSuccess() {
   return (
@@ -26,9 +36,9 @@ export default function FinancialOnboardingSuccess() {
 
         {/* Success Message */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+          <H1 className="text-4xl md:text-5xl font-serif  mb-4">
             Institution Onboarding Complete
-          </h1>
+          </H1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Your financial institution profile has been successfully submitted.
             Our compliance team will review your credentials and activate your
@@ -71,18 +81,18 @@ export default function FinancialOnboardingSuccess() {
 
         {/* Next Steps */}
         <div className="max-w-3xl mx-auto mb-12">
-          <h2 className="text-2xl font-serif font-bold mb-6 text-center">
+          <H2 className="text-2xl font-serif  mb-6 text-center">
             Onboarding Process
-          </h2>
+          </H2>
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="bg-[#111820]/60 border-[#c9a962]/10 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="w-12 h-12 bg-[#c9a962]/10 rounded-lg flex items-center justify-center mb-4">
                   <Shield className="w-6 h-6 text-[#c9a962]" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">
+                <H3 className="text-lg  mb-2">
                   Compliance Review
-                </h3>
+                </H3>
                 <p className="text-sm text-gray-400">
                   Our team will verify your ABN, regulatory credentials, and
                   authorized representative details.
@@ -95,7 +105,7 @@ export default function FinancialOnboardingSuccess() {
                 <div className="w-12 h-12 bg-[#c9a962]/10 rounded-lg flex items-center justify-center mb-4">
                   <Clock className="w-6 h-6 text-[#c9a962]" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Review Timeline</h3>
+                <H3 className="text-lg  mb-2">Review Timeline</H3>
                 <p className="text-sm text-gray-400">
                   Expect account activation within 5-7 business days. Additional
                   documentation may be requested for verification.
@@ -108,9 +118,9 @@ export default function FinancialOnboardingSuccess() {
                 <div className="w-12 h-12 bg-[#c9a962]/10 rounded-lg flex items-center justify-center mb-4">
                   <Mail className="w-6 h-6 text-[#c9a962]" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">
+                <H3 className="text-lg  mb-2">
                   Access Activation
-                </h3>
+                </H3>
                 <p className="text-sm text-gray-400">
                   Once approved, you'll receive login credentials and access to
                   your selected data tier.
@@ -124,9 +134,9 @@ export default function FinancialOnboardingSuccess() {
         <div className="max-w-3xl mx-auto mb-12">
           <Card className="bg-[#111820]/80 border-[#c9a962]/20">
             <CardContent className="p-8">
-              <h3 className="text-xl font-serif font-bold mb-4 text-center">
+              <H3 className="text-xl font-serif font-bold mb-4 text-center">
                 Your Data Access Benefits
-              </h3>
+              </H3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-[#c9a962] mt-0.5" />

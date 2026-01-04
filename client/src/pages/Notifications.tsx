@@ -1,11 +1,21 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { trpc } from "@/lib/trpc";
+/**
+ * Notifications - Nextgen Design
+ *
+ * Features:
+ * - System notification center
+ * - Alert preferences
+ * - Read/unread management
+ * - Typography components for consistent styling
+ */
+
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
+import { Card, CardContent } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { trpc } from"@/lib/trpc";
 import {
   Bell,
   CheckCheck,
@@ -13,8 +23,8 @@ import {
   AlertCircle,
   FileText,
   TrendingUp,
-} from "lucide-react";
-import { toast } from "sonner";
+} from"lucide-react";
+import { toast } from"sonner";
 
 export default function Notifications() {
   const { user, loading: authLoading } = useAuth();
@@ -49,13 +59,13 @@ export default function Notifications() {
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case "inquiry_received":
-      case "inquiry_response":
+      case"inquiry_received":
+      case"inquiry_response":
         return <Mail className="h-5 w-5" />;
-      case "verification_complete":
-      case "verification_required":
+      case"verification_complete":
+      case"verification_required":
         return <FileText className="h-5 w-5" />;
-      case "rating_updated":
+      case"rating_updated":
         return <TrendingUp className="h-5 w-5" />;
       default:
         return <Bell className="h-5 w-5" />;
@@ -64,17 +74,17 @@ export default function Notifications() {
 
   const getNotificationColor = (type: string) => {
     switch (type) {
-      case "inquiry_received":
-      case "inquiry_response":
-        return "bg-blue-50 border-blue-200";
-      case "verification_complete":
-        return "bg-green-50 border-green-200";
-      case "verification_required":
-        return "bg-yellow-50 border-yellow-200";
-      case "rating_updated":
-        return "bg-purple-50 border-purple-200";
+      case"inquiry_received":
+      case"inquiry_response":
+        return"bg-blue-50 border-blue-200";
+      case"verification_complete":
+        return"bg-green-50 border-green-200";
+      case"verification_required":
+        return"bg-yellow-50 border-yellow-200";
+      case"rating_updated":
+        return"bg-purple-50 border-purple-200";
       default:
-        return "bg-gray-50 border-gray-200";
+        return"bg-gray-50 border-gray-200";
     }
   };
 
@@ -96,7 +106,7 @@ export default function Notifications() {
       <div className="container py-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
+            <H1 className="text-4xl  mb-2 flex items-center gap-3">
               <Bell className="h-10 w-10" />
               Notifications
               {unreadCount > 0 && (
@@ -104,7 +114,7 @@ export default function Notifications() {
                   {unreadCount} new
                 </Badge>
               )}
-            </h1>
+            </H1>
             <p className="text-gray-600">
               Stay updated with your platform activity
             </p>
@@ -144,7 +154,7 @@ export default function Notifications() {
                   <Card
                     key={notification.id}
                     className={`${getNotificationColor(notification.type)} ${
-                      !notification.readAt ? "border-l-4 border-l-primary" : ""
+                      !notification.readAt ?"border-l-4 border-l-primary" :""
                     } hover:shadow-md transition-shadow cursor-pointer`}
                     onClick={() => {
                       if (!notification.readAt) {
@@ -161,18 +171,18 @@ export default function Notifications() {
                         </div>
                         <div className="flex-1">
                           <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold">
+                            <H3 className="">
                               {notification.title}
-                            </h3>
+                            </H3>
                             <span className="text-xs text-gray-600 whitespace-nowrap ml-4">
                               {new Date(
                                 notification.createdAt
-                              ).toLocaleDateString()}{" "}
+                              ).toLocaleDateString()}{""}
                               {new Date(
                                 notification.createdAt
                               ).toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
+                                hour:"2-digit",
+                                minute:"2-digit",
                               })}
                             </span>
                           </div>
@@ -197,9 +207,9 @@ export default function Notifications() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <Bell className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">
+                  <H3 className="text-lg  mb-2">
                     No notifications yet
-                  </h3>
+                  </H3>
                   <p className="text-gray-600">
                     You'll see updates about inquiries, verifications, and
                     ratings here
@@ -239,18 +249,18 @@ export default function Notifications() {
                         </div>
                         <div className="flex-1">
                           <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold">
+                            <H3 className="">
                               {notification.title}
-                            </h3>
+                            </H3>
                             <span className="text-xs text-gray-600 whitespace-nowrap ml-4">
                               {new Date(
                                 notification.createdAt
-                              ).toLocaleDateString()}{" "}
+                              ).toLocaleDateString()}{""}
                               {new Date(
                                 notification.createdAt
                               ).toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
+                                hour:"2-digit",
+                                minute:"2-digit",
                               })}
                             </span>
                           </div>
@@ -273,7 +283,7 @@ export default function Notifications() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <CheckCheck className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">All caught up!</h3>
+                  <H3 className="text-lg  mb-2">All caught up!</H3>
                   <p className="text-gray-600">
                     You have no unread notifications
                   </p>

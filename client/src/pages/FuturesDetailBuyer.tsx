@@ -9,28 +9,28 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Progress } from"@/components/ui/progress";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from"@/components/ui/select";
+import { Textarea } from"@/components/ui/textarea";
 import {
   Dialog,
   DialogContent,
@@ -39,11 +39,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { trpc } from "@/lib/trpc";
-import { formatDate } from "@/const";
-import { PageLayout, PageContainer } from "@/components/layout";
-import { H1, H2, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"@/components/ui/dialog";
+import { trpc } from"@/lib/trpc";
+import { formatDate } from"@/const";
+import { PageLayout, PageContainer } from"@/components/layout";
+import { H1, H2, H3, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   ArrowLeft,
   Calendar,
@@ -65,22 +65,22 @@ import {
   Package,
   BarChart3,
   Shield,
-} from "lucide-react";
-import { useState, useMemo } from "react";
-import { Link, useRoute, useLocation } from "wouter";
-import { toast } from "sonner";
+} from"lucide-react";
+import { useState, useMemo } from"react";
+import { Link, useRoute, useLocation } from"wouter";
+import { toast } from"sonner";
 
 const CROP_TYPE_LABELS: Record<string, string> = {
-  bamboo: "Bamboo",
-  rotation_forestry: "Rotation Forestry",
-  eucalyptus: "Eucalyptus",
-  poplar: "Poplar",
-  willow: "Willow",
-  miscanthus: "Miscanthus",
-  switchgrass: "Switchgrass",
-  arundo_donax: "Arundo Donax",
-  hemp: "Industrial Hemp",
-  other_perennial: "Other Perennial",
+  bamboo:"Bamboo",
+  rotation_forestry:"Rotation Forestry",
+  eucalyptus:"Eucalyptus",
+  poplar:"Poplar",
+  willow:"Willow",
+  miscanthus:"Miscanthus",
+  switchgrass:"Switchgrass",
+  arundo_donax:"Arundo Donax",
+  hemp:"Industrial Hemp",
+  other_perennial:"Other Perennial",
 };
 
 const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -97,58 +97,58 @@ const CROP_TYPE_ICONS: Record<string, React.ReactNode> = {
 };
 
 const DELIVERY_FREQUENCIES = [
-  { value: "monthly", label: "Monthly" },
-  { value: "quarterly", label: "Quarterly" },
-  { value: "semi-annual", label: "Semi-Annual" },
-  { value: "annual", label: "Annual" },
-  { value: "flexible", label: "Flexible" },
+  { value:"monthly", label:"Monthly" },
+  { value:"quarterly", label:"Quarterly" },
+  { value:"semi-annual", label:"Semi-Annual" },
+  { value:"annual", label:"Annual" },
+  { value:"flexible", label:"Flexible" },
 ];
 
 const PAYMENT_TERMS = [
-  { value: "net_30", label: "Net 30" },
-  { value: "net_60", label: "Net 60" },
-  { value: "net_90", label: "Net 90" },
-  { value: "on_delivery", label: "On Delivery" },
-  { value: "advance", label: "Advance Payment" },
-  { value: "negotiable", label: "Negotiable" },
+  { value:"net_30", label:"Net 30" },
+  { value:"net_60", label:"Net 60" },
+  { value:"net_90", label:"Net 90" },
+  { value:"on_delivery", label:"On Delivery" },
+  { value:"advance", label:"Advance Payment" },
+  { value:"negotiable", label:"Negotiable" },
 ];
 
 const EOI_STATUS_LABELS: Record<string, string> = {
-  pending: "Pending Review",
-  under_review: "Under Review",
-  accepted: "Accepted",
-  declined: "Declined",
-  expired: "Expired",
-  withdrawn: "Withdrawn",
+  pending:"Pending Review",
+  under_review:"Under Review",
+  accepted:"Accepted",
+  declined:"Declined",
+  expired:"Expired",
+  withdrawn:"Withdrawn",
 };
 
 const getEOIStatusColor = (status: string) => {
   switch (status) {
-    case "pending":
-      return "bg-yellow-100 text-yellow-800";
-    case "under_review":
-      return "bg-blue-100 text-blue-800";
-    case "accepted":
-      return "bg-green-100 text-green-800";
-    case "declined":
-      return "bg-red-100 text-red-800";
-    case "expired":
-    case "withdrawn":
-      return "bg-gray-100 text-gray-800";
+    case"pending":
+      return"bg-yellow-100 text-yellow-800";
+    case"under_review":
+      return"bg-blue-100 text-blue-800";
+    case"accepted":
+      return"bg-green-100 text-green-800";
+    case"declined":
+      return"bg-red-100 text-red-800";
+    case"expired":
+    case"withdrawn":
+      return"bg-gray-100 text-gray-800";
     default:
-      return "bg-gray-100 text-gray-800";
+      return"bg-gray-100 text-gray-800";
   }
 };
 
 const getEOIStatusIcon = (status: string) => {
   switch (status) {
-    case "pending":
+    case"pending":
       return <Clock className="h-5 w-5 text-yellow-600" />;
-    case "under_review":
+    case"under_review":
       return <AlertCircle className="h-5 w-5 text-blue-600" />;
-    case "accepted":
+    case"accepted":
       return <CheckCircle2 className="h-5 w-5 text-green-600" />;
-    case "declined":
+    case"declined":
       return <XCircle className="h-5 w-5 text-red-600" />;
     default:
       return <Clock className="h-5 w-5 text-gray-600" />;
@@ -159,160 +159,160 @@ const getEOIStatusIcon = (status: string) => {
 const MOCK_FUTURES_MAP: Record<number, any> = {
   1: {
     id: 1,
-    futuresId: "FUT-2025-0001",
-    title: "Blue Mallee Eucalyptus - Certified Sustainable Plantation",
-    cropType: "eucalyptus",
-    cropVariety: "E. grandis",
+    futuresId:"FUT-2025-0001",
+    title:"Blue Mallee Eucalyptus - Certified Sustainable Plantation",
+    cropType:"eucalyptus",
+    cropVariety:"E. grandis",
     description:
-      "Large-scale eucalyptus plantation in Victoria's Mallee region, managed for sustainable biomass production. Established plantation with proven yield history. First rotation harvest completed successfully. Modern harvesting and processing infrastructure on-site.",
-    state: "VIC",
-    region: "Mallee Region",
-    landAreaHectares: "2500",
+"Large-scale eucalyptus plantation in Victoria's Mallee region, managed for sustainable biomass production. Established plantation with proven yield history. First rotation harvest completed successfully. Modern harvesting and processing infrastructure on-site.",
+    state:"VIC",
+    region:"Mallee Region",
+    landAreaHectares:"2500",
     projectionStartYear: 2026,
     projectionEndYear: 2040,
     firstHarvestYear: 2026,
-    totalProjectedTonnes: "145000",
-    totalContractedTonnes: "20000",
-    totalAvailableTonnes: "125000",
-    indicativePricePerTonne: "85.00",
-    priceEscalationPercent: "2.5",
+    totalProjectedTonnes:"145000",
+    totalContractedTonnes:"20000",
+    totalAvailableTonnes:"125000",
+    indicativePricePerTonne:"85.00",
+    priceEscalationPercent:"2.5",
     pricingNotes:
-      "Base price indexed to CPI. Volume discounts available for commitments over 10,000 tonnes/year.",
-    expectedCarbonIntensity: "15.5",
-    expectedMoistureContent: "35",
-    expectedEnergyContent: "18.5",
-    status: "active",
-    publishedAt: "2025-01-15",
+"Base price indexed to CPI. Volume discounts available for commitments over 10,000 tonnes/year.",
+    expectedCarbonIntensity:"15.5",
+    expectedMoistureContent:"35",
+    expectedEnergyContent:"18.5",
+    status:"active",
+    publishedAt:"2025-01-15",
   },
   2: {
     id: 2,
-    futuresId: "FUT-2025-0002",
-    title: "Giant Miscanthus Energy Crop - High Yield Variety",
-    cropType: "miscanthus",
-    cropVariety: "Miscanthus x giganteus",
+    futuresId:"FUT-2025-0002",
+    title:"Giant Miscanthus Energy Crop - High Yield Variety",
+    cropType:"miscanthus",
+    cropVariety:"Miscanthus x giganteus",
     description:
-      "High-yield miscanthus plantation in the fertile Riverina region. This perennial grass requires minimal inputs and provides consistent annual harvests. Ideal for bioenergy applications with excellent combustion properties.",
-    state: "NSW",
-    region: "Riverina",
-    landAreaHectares: "1200",
+"High-yield miscanthus plantation in the fertile Riverina region. This perennial grass requires minimal inputs and provides consistent annual harvests. Ideal for bioenergy applications with excellent combustion properties.",
+    state:"NSW",
+    region:"Riverina",
+    landAreaHectares:"1200",
     projectionStartYear: 2026,
     projectionEndYear: 2035,
     firstHarvestYear: 2027,
-    totalProjectedTonnes: "75000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "75000",
-    indicativePricePerTonne: "95.00",
-    priceEscalationPercent: "2.0",
-    pricingNotes: "Fixed pricing with annual CPI adjustment. Flexible delivery terms.",
-    expectedCarbonIntensity: "12.0",
-    expectedMoistureContent: "20",
-    expectedEnergyContent: "17.5",
-    status: "active",
-    publishedAt: "2025-02-01",
+    totalProjectedTonnes:"75000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"75000",
+    indicativePricePerTonne:"95.00",
+    priceEscalationPercent:"2.0",
+    pricingNotes:"Fixed pricing with annual CPI adjustment. Flexible delivery terms.",
+    expectedCarbonIntensity:"12.0",
+    expectedMoistureContent:"20",
+    expectedEnergyContent:"17.5",
+    status:"active",
+    publishedAt:"2025-02-01",
   },
   3: {
     id: 3,
-    futuresId: "FUT-2025-0003",
-    title: "Dendrocalamus Bamboo - Fast-Growing Biomass",
-    cropType: "bamboo",
-    cropVariety: "Dendrocalamus asper",
+    futuresId:"FUT-2025-0003",
+    title:"Dendrocalamus Bamboo - Fast-Growing Biomass",
+    cropType:"bamboo",
+    cropVariety:"Dendrocalamus asper",
     description:
-      "Premium bamboo plantation on Queensland's Sunshine Coast. Fast-growing tropical bamboo with exceptional biomass yields. Sustainable harvesting practices ensure continuous production over the 20-year projection period.",
-    state: "QLD",
-    region: "Sunshine Coast Hinterland",
-    landAreaHectares: "3500",
+"Premium bamboo plantation on Queensland's Sunshine Coast. Fast-growing tropical bamboo with exceptional biomass yields. Sustainable harvesting practices ensure continuous production over the 20-year projection period.",
+    state:"QLD",
+    region:"Sunshine Coast Hinterland",
+    landAreaHectares:"3500",
     projectionStartYear: 2025,
     projectionEndYear: 2045,
     firstHarvestYear: 2025,
-    totalProjectedTonnes: "200000",
-    totalContractedTonnes: "20000",
-    totalAvailableTonnes: "180000",
-    indicativePricePerTonne: "75.00",
-    priceEscalationPercent: "2.5",
-    pricingNotes: "Long-term contracts preferred. Volume bonuses available.",
-    expectedCarbonIntensity: "10.0",
-    expectedMoistureContent: "45",
-    expectedEnergyContent: "16.0",
-    status: "active",
-    publishedAt: "2025-01-10",
+    totalProjectedTonnes:"200000",
+    totalContractedTonnes:"20000",
+    totalAvailableTonnes:"180000",
+    indicativePricePerTonne:"75.00",
+    priceEscalationPercent:"2.5",
+    pricingNotes:"Long-term contracts preferred. Volume bonuses available.",
+    expectedCarbonIntensity:"10.0",
+    expectedMoistureContent:"45",
+    expectedEnergyContent:"16.0",
+    status:"active",
+    publishedAt:"2025-01-10",
   },
   4: {
     id: 4,
-    futuresId: "FUT-2025-0004",
-    title: "Short Rotation Forestry - Mixed Hardwood",
-    cropType: "rotation_forestry",
-    cropVariety: "Mixed Eucalyptus species",
+    futuresId:"FUT-2025-0004",
+    title:"Short Rotation Forestry - Mixed Hardwood",
+    cropType:"rotation_forestry",
+    cropVariety:"Mixed Eucalyptus species",
     description:
-      "Diverse short-rotation forestry operation in Tasmania's North East. Mixed hardwood species provide resilience and consistent yields. FSC certified sustainable forestry practices.",
-    state: "TAS",
-    region: "North East",
-    landAreaHectares: "5000",
+"Diverse short-rotation forestry operation in Tasmania's North East. Mixed hardwood species provide resilience and consistent yields. FSC certified sustainable forestry practices.",
+    state:"TAS",
+    region:"North East",
+    landAreaHectares:"5000",
     projectionStartYear: 2026,
     projectionEndYear: 2041,
     firstHarvestYear: 2028,
-    totalProjectedTonnes: "320000",
-    totalContractedTonnes: "40000",
-    totalAvailableTonnes: "280000",
-    indicativePricePerTonne: "65.00",
-    priceEscalationPercent: "2.0",
-    pricingNotes: "Competitive pricing for bulk contracts. Rail logistics available.",
-    expectedCarbonIntensity: "14.0",
-    expectedMoistureContent: "40",
-    expectedEnergyContent: "18.0",
-    status: "active",
-    publishedAt: "2025-01-20",
+    totalProjectedTonnes:"320000",
+    totalContractedTonnes:"40000",
+    totalAvailableTonnes:"280000",
+    indicativePricePerTonne:"65.00",
+    priceEscalationPercent:"2.0",
+    pricingNotes:"Competitive pricing for bulk contracts. Rail logistics available.",
+    expectedCarbonIntensity:"14.0",
+    expectedMoistureContent:"40",
+    expectedEnergyContent:"18.0",
+    status:"active",
+    publishedAt:"2025-01-20",
   },
   5: {
     id: 5,
-    futuresId: "FUT-2025-0005",
-    title: "Industrial Hemp - Multi-Purpose Biomass",
-    cropType: "hemp",
-    cropVariety: "Industrial Hemp (low THC)",
+    futuresId:"FUT-2025-0005",
+    title:"Industrial Hemp - Multi-Purpose Biomass",
+    cropType:"hemp",
+    cropVariety:"Industrial Hemp (low THC)",
     description:
-      "Industrial hemp cultivation on Adelaide Plains. Fast-growing annual crop with multiple harvest cycles. Biomass suitable for various applications including bioenergy and biocomposites.",
-    state: "SA",
-    region: "Adelaide Plains",
-    landAreaHectares: "800",
+"Industrial hemp cultivation on Adelaide Plains. Fast-growing annual crop with multiple harvest cycles. Biomass suitable for various applications including bioenergy and biocomposites.",
+    state:"SA",
+    region:"Adelaide Plains",
+    landAreaHectares:"800",
     projectionStartYear: 2025,
     projectionEndYear: 2030,
     firstHarvestYear: 2025,
-    totalProjectedTonnes: "45000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "45000",
-    indicativePricePerTonne: "120.00",
-    priceEscalationPercent: "3.0",
-    pricingNotes: "Premium pricing reflects high-quality biomass. Flexible contract terms.",
-    expectedCarbonIntensity: "8.0",
-    expectedMoistureContent: "15",
-    expectedEnergyContent: "17.0",
-    status: "active",
-    publishedAt: "2025-02-15",
+    totalProjectedTonnes:"45000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"45000",
+    indicativePricePerTonne:"120.00",
+    priceEscalationPercent:"3.0",
+    pricingNotes:"Premium pricing reflects high-quality biomass. Flexible contract terms.",
+    expectedCarbonIntensity:"8.0",
+    expectedMoistureContent:"15",
+    expectedEnergyContent:"17.0",
+    status:"active",
+    publishedAt:"2025-02-15",
   },
   6: {
     id: 6,
-    futuresId: "FUT-2025-0006",
-    title: "Switchgrass - Low Input Energy Crop",
-    cropType: "switchgrass",
-    cropVariety: "Panicum virgatum",
+    futuresId:"FUT-2025-0006",
+    title:"Switchgrass - Low Input Energy Crop",
+    cropType:"switchgrass",
+    cropVariety:"Panicum virgatum",
     description:
-      "Native switchgrass plantation in Western Australia's South West. Low-input perennial grass with excellent drought tolerance. Ideal for marginal lands and sustainable bioenergy production.",
-    state: "WA",
-    region: "South West",
-    landAreaHectares: "1800",
+"Native switchgrass plantation in Western Australia's South West. Low-input perennial grass with excellent drought tolerance. Ideal for marginal lands and sustainable bioenergy production.",
+    state:"WA",
+    region:"South West",
+    landAreaHectares:"1800",
     projectionStartYear: 2026,
     projectionEndYear: 2036,
     firstHarvestYear: 2027,
-    totalProjectedTonnes: "90000",
-    totalContractedTonnes: "0",
-    totalAvailableTonnes: "90000",
-    indicativePricePerTonne: "88.00",
-    priceEscalationPercent: "2.5",
-    pricingNotes: "Competitive pricing for long-term offtake agreements.",
-    expectedCarbonIntensity: "11.0",
-    expectedMoistureContent: "25",
-    expectedEnergyContent: "17.5",
-    status: "active",
-    publishedAt: "2025-02-20",
+    totalProjectedTonnes:"90000",
+    totalContractedTonnes:"0",
+    totalAvailableTonnes:"90000",
+    indicativePricePerTonne:"88.00",
+    priceEscalationPercent:"2.5",
+    pricingNotes:"Competitive pricing for long-term offtake agreements.",
+    expectedCarbonIntensity:"11.0",
+    expectedMoistureContent:"25",
+    expectedEnergyContent:"17.5",
+    status:"active",
+    publishedAt:"2025-02-20",
   },
 };
 
@@ -322,102 +322,102 @@ const DEFAULT_MOCK_FUTURES = MOCK_FUTURES_MAP[1];
 const MOCK_PROJECTIONS = [
   {
     projectionYear: 2025,
-    projectedTonnes: "15000",
+    projectedTonnes:"15000",
     confidencePercent: 95,
-    harvestSeason: "autumn",
+    harvestSeason:"autumn",
   },
   {
     projectionYear: 2026,
-    projectedTonnes: "22000",
+    projectedTonnes:"22000",
     confidencePercent: 90,
-    harvestSeason: "autumn",
+    harvestSeason:"autumn",
   },
   {
     projectionYear: 2027,
-    projectedTonnes: "25000",
+    projectedTonnes:"25000",
     confidencePercent: 85,
-    harvestSeason: "autumn",
+    harvestSeason:"autumn",
   },
   {
     projectionYear: 2028,
-    projectedTonnes: "28000",
+    projectedTonnes:"28000",
     confidencePercent: 80,
-    harvestSeason: "autumn",
+    harvestSeason:"autumn",
   },
   {
     projectionYear: 2029,
-    projectedTonnes: "28000",
+    projectedTonnes:"28000",
     confidencePercent: 75,
-    harvestSeason: "autumn",
+    harvestSeason:"autumn",
   },
   {
     projectionYear: 2030,
-    projectedTonnes: "28000",
+    projectedTonnes:"28000",
     confidencePercent: 75,
-    harvestSeason: "autumn",
+    harvestSeason:"autumn",
   },
 ];
 
 const MOCK_SUPPLIERS: Record<number, any> = {
   1: {
-    companyName: "Mallee Sustainable Energy",
-    city: "Mildura",
-    state: "VIC",
+    companyName:"Mallee Sustainable Energy",
+    city:"Mildura",
+    state:"VIC",
     description:
-      "Pioneer in sustainable mallee eucalyptus cultivation for bioenergy. Operating in Victoria's Mallee region since 2005.",
-    contactEmail: "contact@malleesustainable.com.au",
-    contactPhone: "+61 3 5022 1234",
-    website: "https://malleesustainable.com.au",
+"Pioneer in sustainable mallee eucalyptus cultivation for bioenergy. Operating in Victoria's Mallee region since 2005.",
+    contactEmail:"contact@malleesustainable.com.au",
+    contactPhone:"+61 3 5022 1234",
+    website:"https://malleesustainable.com.au",
   },
   2: {
-    companyName: "Riverina Biomass Co",
-    city: "Wagga Wagga",
-    state: "NSW",
+    companyName:"Riverina Biomass Co",
+    city:"Wagga Wagga",
+    state:"NSW",
     description:
-      "Specializing in perennial grass energy crops across the fertile Riverina region.",
-    contactEmail: "info@riverinabio mass.com.au",
-    contactPhone: "+61 2 6925 5678",
-    website: "https://riverinabio mass.com.au",
+"Specializing in perennial grass energy crops across the fertile Riverina region.",
+    contactEmail:"info@riverinabio mass.com.au",
+    contactPhone:"+61 2 6925 5678",
+    website:"https://riverinabio mass.com.au",
   },
   3: {
-    companyName: "Tropical Bamboo Farms",
-    city: "Nambour",
-    state: "QLD",
+    companyName:"Tropical Bamboo Farms",
+    city:"Nambour",
+    state:"QLD",
     description:
-      "Australia's largest bamboo plantation operator, focused on sustainable tropical biomass.",
-    contactEmail: "sales@tropicalbamboo.com.au",
-    contactPhone: "+61 7 5476 9012",
-    website: "https://tropicalbamboo.com.au",
+"Australia's largest bamboo plantation operator, focused on sustainable tropical biomass.",
+    contactEmail:"sales@tropicalbamboo.com.au",
+    contactPhone:"+61 7 5476 9012",
+    website:"https://tropicalbamboo.com.au",
   },
   4: {
-    companyName: "Tasmanian Forestry Alliance",
-    city: "Launceston",
-    state: "TAS",
+    companyName:"Tasmanian Forestry Alliance",
+    city:"Launceston",
+    state:"TAS",
     description:
-      "FSC-certified forestry cooperative with decades of sustainable timber and biomass experience.",
-    contactEmail: "contact@tasforestry.com.au",
-    contactPhone: "+61 3 6331 4567",
-    website: "https://tasforestry.com.au",
+"FSC-certified forestry cooperative with decades of sustainable timber and biomass experience.",
+    contactEmail:"contact@tasforestry.com.au",
+    contactPhone:"+61 3 6331 4567",
+    website:"https://tasforestry.com.au",
   },
   5: {
-    companyName: "SA Hemp Industries",
-    city: "Adelaide",
-    state: "SA",
+    companyName:"SA Hemp Industries",
+    city:"Adelaide",
+    state:"SA",
     description:
-      "Leading industrial hemp producer in South Australia, pioneering hemp biomass applications.",
-    contactEmail: "info@sahempind.com.au",
-    contactPhone: "+61 8 8232 7890",
-    website: "https://sahempind.com.au",
+"Leading industrial hemp producer in South Australia, pioneering hemp biomass applications.",
+    contactEmail:"info@sahempind.com.au",
+    contactPhone:"+61 8 8232 7890",
+    website:"https://sahempind.com.au",
   },
   6: {
-    companyName: "WA Energy Crops",
-    city: "Bunbury",
-    state: "WA",
+    companyName:"WA Energy Crops",
+    city:"Bunbury",
+    state:"WA",
     description:
-      "Sustainable energy crop specialists in Western Australia's South West region.",
-    contactEmail: "contact@waenergycrops.com.au",
-    contactPhone: "+61 8 9721 3456",
-    website: "https://waenergycrops.com.au",
+"Sustainable energy crop specialists in Western Australia's South West region.",
+    contactEmail:"contact@waenergycrops.com.au",
+    contactPhone:"+61 8 9721 3456",
+    website:"https://waenergycrops.com.au",
   },
 };
 
@@ -427,7 +427,7 @@ export default function FuturesDetailBuyer() {
   const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
   const [, params] = useRoute("/futures/:id");
-  const futuresId = parseInt(params?.id || "0");
+  const futuresId = parseInt(params?.id ||"0");
 
   const [eoiDialogOpen, setEoiDialogOpen] = useState(false);
 
@@ -524,9 +524,9 @@ export default function FuturesDetailBuyer() {
     );
   }
 
-  const totalProjected = parseFloat(futures.totalProjectedTonnes || "0");
-  const totalAvailable = parseFloat(futures.totalAvailableTonnes || "0");
-  const totalContracted = parseFloat(futures.totalContractedTonnes || "0");
+  const totalProjected = parseFloat(futures.totalProjectedTonnes ||"0");
+  const totalAvailable = parseFloat(futures.totalAvailableTonnes ||"0");
+  const totalContracted = parseFloat(futures.totalContractedTonnes ||"0");
   const availablePercent =
     totalProjected > 0 ? (totalAvailable / totalProjected) * 100 : 100;
 
@@ -666,10 +666,10 @@ export default function FuturesDetailBuyer() {
               <CardContent className="space-y-6">
                 {/* Location & Land */}
                 <div>
-                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
+                  <H4 className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                     <MapPin className="h-4 w-4" />
                     Location & Land
-                  </h4>
+                  </H4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div>
                       <p className="text-sm text-gray-600">State</p>
@@ -684,7 +684,7 @@ export default function FuturesDetailBuyer() {
                     <div>
                       <p className="text-sm text-gray-600">Land Area</p>
                       <p className="font-semibold">
-                        {parseFloat(futures.landAreaHectares).toLocaleString()}{" "}
+                        {parseFloat(futures.landAreaHectares).toLocaleString()}{""}
                         ha
                       </p>
                     </div>
@@ -693,24 +693,24 @@ export default function FuturesDetailBuyer() {
 
                 {/* Timeline */}
                 <div className="border-t pt-6">
-                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
+                  <H4 className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                     <Calendar className="h-4 w-4" />
                     Timeline
-                  </h4>
+                  </H4>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div>
                       <p className="text-sm text-gray-600">
                         Projection Period
                       </p>
                       <p className="font-semibold">
-                        {futures.projectionStartYear} -{" "}
+                        {futures.projectionStartYear} -{""}
                         {futures.projectionEndYear}
                       </p>
                       <p className="text-xs text-gray-600">
                         (
                         {futures.projectionEndYear -
                           futures.projectionStartYear +
-                          1}{" "}
+                          1}{""}
                         years)
                       </p>
                     </div>
@@ -729,10 +729,10 @@ export default function FuturesDetailBuyer() {
 
                 {/* Pricing */}
                 <div className="border-t pt-6">
-                  <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
+                  <H4 className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                     <DollarSign className="h-4 w-4" />
                     Pricing
-                  </h4>
+                  </H4>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <DataLabel className="text-gray-600">
@@ -741,7 +741,7 @@ export default function FuturesDetailBuyer() {
                       <MetricValue className="text-2xl text-[#D4AF37]">
                         {futures.indicativePricePerTonne
                           ? `$${parseFloat(futures.indicativePricePerTonne).toFixed(2)}`
-                          : "Negotiable"}
+                          :"Negotiable"}
                       </MetricValue>
                       <DataLabel className="text-gray-600">per tonne</DataLabel>
                     </div>
@@ -750,7 +750,7 @@ export default function FuturesDetailBuyer() {
                         Annual Escalation
                       </p>
                       <p className="font-semibold">
-                        {futures.priceEscalationPercent || "2.5"}%
+                        {futures.priceEscalationPercent ||"2.5"}%
                       </p>
                     </div>
                   </div>
@@ -766,10 +766,10 @@ export default function FuturesDetailBuyer() {
                   futures.expectedMoistureContent ||
                   futures.expectedEnergyContent) && (
                   <div className="border-t pt-6">
-                    <h4 className="font-semibold mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
+                    <H4 className="mb-3 flex items-center gap-2 text-sm uppercase tracking-wide text-gray-600">
                       <BarChart3 className="h-4 w-4" />
                       Expected Quality Parameters
-                    </h4>
+                    </H4>
                     <div className="grid grid-cols-3 gap-4">
                       {futures.expectedCarbonIntensity && (
                         <div className="p-3 bg-muted/50 rounded-lg text-center">
@@ -812,7 +812,7 @@ export default function FuturesDetailBuyer() {
                 {/* Description */}
                 {futures.description && (
                   <div className="border-t pt-6">
-                    <h4 className="font-semibold mb-3">Description</h4>
+                    <H4 className="mb-3">Description</H4>
                     <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">
                       {futures.description}
                     </p>
@@ -853,7 +853,7 @@ export default function FuturesDetailBuyer() {
                         {projections.map((p: any, index: number) => (
                           <tr
                             key={p.projectionYear}
-                            className={index % 2 === 0 ? "" : "bg-muted/30"}
+                            className={index % 2 === 0 ?"" :"bg-muted/30"}
                           >
                             <td className="py-3 px-4 font-semibold">
                               {p.projectionYear}
@@ -866,17 +866,17 @@ export default function FuturesDetailBuyer() {
                                 variant="outline"
                                 className={
                                   p.confidencePercent >= 90
-                                    ? "border-green-500 text-green-600"
+                                    ?"border-green-500 text-green-600"
                                     : p.confidencePercent >= 75
-                                      ? "border-[#D4AF37] text-[#D4AF37]"
-                                      : "border-gray-500 text-gray-600"
+                                      ?"border-[#D4AF37] text-[#D4AF37]"
+                                      :"border-gray-500 text-gray-600"
                                 }
                               >
                                 {p.confidencePercent || 80}%
                               </Badge>
                             </td>
                             <td className="py-3 px-4 capitalize">
-                              {p.harvestSeason || "-"}
+                              {p.harvestSeason ||"-"}
                             </td>
                           </tr>
                         ))}
@@ -919,7 +919,7 @@ export default function FuturesDetailBuyer() {
                         </p>
                       </div>
                     )}
-                    {["pending", "under_review"].includes(
+                    {["pending","under_review"].includes(
                       existingEOI.status
                     ) && (
                       <Button
@@ -955,7 +955,7 @@ export default function FuturesDetailBuyer() {
                       <div className="space-y-6 py-4">
                         {/* Interest Period */}
                         <div className="space-y-4">
-                          <h4 className="font-semibold">Interest Period</h4>
+                          <H4 className="">Interest Period</H4>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                               <Label>Start Year *</Label>
@@ -991,7 +991,7 @@ export default function FuturesDetailBuyer() {
                                   {yearOptions
                                     .filter(
                                       y =>
-                                        y >= parseInt(interestStartYear || "0")
+                                        y >= parseInt(interestStartYear ||"0")
                                     )
                                     .map(year => (
                                       <SelectItem
@@ -1009,7 +1009,7 @@ export default function FuturesDetailBuyer() {
 
                         {/* Volume */}
                         <div className="space-y-4">
-                          <h4 className="font-semibold">Volume Requirements</h4>
+                          <H4 className="">Volume Requirements</H4>
                           <div className="space-y-2">
                             <Label>Annual Volume (tonnes) *</Label>
                             <Input
@@ -1025,11 +1025,11 @@ export default function FuturesDetailBuyer() {
                           {totalEOIVolume > 0 && (
                             <div className="bg-muted/50 rounded-lg p-3">
                               <p className="text-sm">
-                                <strong>Total volume requested:</strong>{" "}
+                                <strong>Total volume requested:</strong>{""}
                                 {totalEOIVolume.toLocaleString()} tonnes
                               </p>
                               <p className="text-sm text-gray-600">
-                                Available: {totalAvailable.toLocaleString()}{" "}
+                                Available: {totalAvailable.toLocaleString()}{""}
                                 tonnes
                               </p>
                               {totalEOIVolume > totalAvailable && (
@@ -1044,7 +1044,7 @@ export default function FuturesDetailBuyer() {
 
                         {/* Pricing */}
                         <div className="space-y-4">
-                          <h4 className="font-semibold">Pricing</h4>
+                          <H4 className="">Pricing</H4>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                               <Label>Offered Price ($/tonne)</Label>
@@ -1092,7 +1092,7 @@ export default function FuturesDetailBuyer() {
 
                         {/* Delivery */}
                         <div className="space-y-4">
-                          <h4 className="font-semibold">Delivery</h4>
+                          <H4 className="">Delivery</H4>
                           <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
                               <Label>Delivery Location</Label>
@@ -1166,8 +1166,8 @@ export default function FuturesDetailBuyer() {
                           }
                         >
                           {submitEOIMutation.isPending
-                            ? "Submitting..."
-                            : "Submit EOI"}
+                            ?"Submitting..."
+                            :"Submit EOI"}
                         </Button>
                       </DialogFooter>
                     </DialogContent>
@@ -1245,7 +1245,7 @@ export default function FuturesDetailBuyer() {
                           rel="noopener noreferrer"
                           className="text-[#D4AF37] hover:underline"
                         >
-                          {supplier.website.replace(/^https?:\/\//, "")}
+                          {supplier.website.replace(/^https?:\/\//,"")}
                         </a>
                       </div>
                     )}
@@ -1283,7 +1283,7 @@ export default function FuturesDetailBuyer() {
                   <span className="font-medium">
                     {futures.projectionEndYear -
                       futures.projectionStartYear +
-                      1}{" "}
+                      1}{""}
                     years
                   </span>
                 </div>
@@ -1297,7 +1297,7 @@ export default function FuturesDetailBuyer() {
                         (futures.projectionEndYear -
                           futures.projectionStartYear +
                           1)
-                    ).toLocaleString()}{" "}
+                    ).toLocaleString()}{""}
                     t
                   </span>
                 </div>
@@ -1308,7 +1308,7 @@ export default function FuturesDetailBuyer() {
                   <span className="font-medium">
                     {futures.publishedAt
                       ? formatDate(futures.publishedAt)
-                      : "N/A"}
+                      :"N/A"}
                   </span>
                 </div>
               </CardContent>

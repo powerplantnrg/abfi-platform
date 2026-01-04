@@ -9,32 +9,32 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { useLocation } from "wouter";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { useLocation } from"wouter";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Textarea } from"@/components/ui/textarea";
+import { Badge } from"@/components/ui/badge";
+import { Progress } from"@/components/ui/progress";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { trpc } from "@/lib/trpc";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/select";
+import { trpc } from"@/lib/trpc";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   ArrowLeft,
   ArrowRight,
@@ -47,16 +47,16 @@ import {
   Calendar,
   Leaf,
   CheckCircle2,
-} from "lucide-react";
+} from"lucide-react";
 
 const STEPS = [
-  { id: 1, title: "Basics", icon: Package },
-  { id: 2, title: "Volume", icon: Package },
-  { id: 3, title: "Quality", icon: Beaker },
-  { id: 4, title: "Delivery", icon: MapPin },
-  { id: 5, title: "Pricing", icon: DollarSign },
-  { id: 6, title: "Timeline", icon: Calendar },
-  { id: 7, title: "Review", icon: CheckCircle2 },
+  { id: 1, title:"Basics", icon: Package },
+  { id: 2, title:"Volume", icon: Package },
+  { id: 3, title:"Quality", icon: Beaker },
+  { id: 4, title:"Delivery", icon: MapPin },
+  { id: 5, title:"Pricing", icon: DollarSign },
+  { id: 6, title:"Timeline", icon: Calendar },
+  { id: 7, title:"Review", icon: CheckCircle2 },
 ];
 
 export default function CreateDemandSignal() {
@@ -64,31 +64,31 @@ export default function CreateDemandSignal() {
   const [, setLocation] = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    feedstockType: "",
-    feedstockCategory: "agricultural_residue" as const,
-    annualVolume: "",
-    volumeFlexibility: "",
-    deliveryFrequency: "monthly" as const,
-    minMoistureContent: "",
-    maxMoistureContent: "",
-    minEnergyContent: "",
-    maxAshContent: "",
-    maxChlorineContent: "",
-    otherQualitySpecs: "",
-    deliveryLocation: "",
-    deliveryState: "NSW" as const,
-    maxTransportDistance: "",
-    deliveryMethod: "delivered" as const,
-    indicativePriceMin: "",
-    indicativePriceMax: "",
-    pricingMechanism: "negotiable" as const,
-    supplyStartDate: "",
-    supplyEndDate: "",
-    contractTerm: "",
-    responseDeadline: "",
-    sustainabilityRequirements: "",
+    title:"",
+    description:"",
+    feedstockType:"",
+    feedstockCategory:"agricultural_residue" as const,
+    annualVolume:"",
+    volumeFlexibility:"",
+    deliveryFrequency:"monthly" as const,
+    minMoistureContent:"",
+    maxMoistureContent:"",
+    minEnergyContent:"",
+    maxAshContent:"",
+    maxChlorineContent:"",
+    otherQualitySpecs:"",
+    deliveryLocation:"",
+    deliveryState:"NSW" as const,
+    maxTransportDistance:"",
+    deliveryMethod:"delivered" as const,
+    indicativePriceMin:"",
+    indicativePriceMax:"",
+    pricingMechanism:"negotiable" as const,
+    supplyStartDate:"",
+    supplyEndDate:"",
+    contractTerm:"",
+    responseDeadline:"",
+    sustainabilityRequirements:"",
   });
 
   const createMutation = trpc.demandSignals.create.useMutation({
@@ -97,7 +97,7 @@ export default function CreateDemandSignal() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent, status: "draft" | "published") => {
+  const handleSubmit = (e: React.FormEvent, status:"draft" |"published") => {
     e.preventDefault();
 
     createMutation.mutate({
@@ -152,12 +152,12 @@ export default function CreateDemandSignal() {
 
   const getCategoryLabel = (category: string) => {
     const labels: Record<string, string> = {
-      agricultural_residue: "Agricultural Residue",
-      forestry_residue: "Forestry Residue",
-      energy_crop: "Energy Crop",
-      organic_waste: "Organic Waste",
-      algae_aquatic: "Algae/Aquatic",
-      mixed: "Mixed",
+      agricultural_residue:"Agricultural Residue",
+      forestry_residue:"Forestry Residue",
+      energy_crop:"Energy Crop",
+      organic_waste:"Organic Waste",
+      algae_aquatic:"Algae/Aquatic",
+      mixed:"Mixed",
     };
     return labels[category] || category;
   };
@@ -178,9 +178,9 @@ export default function CreateDemandSignal() {
 
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold mb-2">
+              <H1 className="text-3xl md:text-4xl font-display  mb-2">
                 Post Demand Signal
-              </h1>
+              </H1>
               <p className="text-black/70">
                 Specify your feedstock requirements to connect with verified
                 suppliers
@@ -210,10 +210,10 @@ export default function CreateDemandSignal() {
                   onClick={() => setCurrentStep(step.id)}
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg whitespace-nowrap transition-all ${
                     isActive
-                      ? "bg-primary text-black"
+                      ?"bg-primary text-black"
                       : isComplete
-                        ? "bg-[#D4AF37]/10 text-[#D4AF37]"
-                        : "text-gray-600 hover:bg-muted"
+                        ?"bg-[#D4AF37]/10 text-[#D4AF37]"
+                        :"text-gray-600 hover:bg-muted"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -229,7 +229,7 @@ export default function CreateDemandSignal() {
 
       {/* Form Content */}
       <PageContainer size="md" padding="md">
-        <form onSubmit={e => handleSubmit(e, "published")}>
+        <form onSubmit={e => handleSubmit(e,"published")}>
           {/* Step 1: Basic Information */}
           {currentStep === 1 && (
             <Card>
@@ -394,14 +394,14 @@ export default function CreateDemandSignal() {
                 </div>
 
                 <div className="bg-muted/50 rounded-lg p-4">
-                  <h4 className="font-medium mb-2">Volume Calculator</h4>
+                  <H4 className="font-medium mb-2">Volume Calculator</H4>
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
                       <div className="text-gray-600">Daily</div>
                       <div className="font-mono font-medium">
                         {formData.annualVolume
                           ? `${Math.round(parseInt(formData.annualVolume) / 365)} t`
-                          : "—"}
+                          :"—"}
                       </div>
                     </div>
                     <div>
@@ -409,7 +409,7 @@ export default function CreateDemandSignal() {
                       <div className="font-mono font-medium">
                         {formData.annualVolume
                           ? `${Math.round(parseInt(formData.annualVolume) / 12).toLocaleString()} t`
-                          : "—"}
+                          :"—"}
                       </div>
                     </div>
                     <div>
@@ -417,7 +417,7 @@ export default function CreateDemandSignal() {
                       <div className="font-mono font-medium">
                         {formData.annualVolume
                           ? `${Math.round(parseInt(formData.annualVolume) / 4).toLocaleString()} t`
-                          : "—"}
+                          :"—"}
                       </div>
                     </div>
                   </div>
@@ -714,13 +714,13 @@ export default function CreateDemandSignal() {
 
                 {formData.annualVolume && formData.indicativePriceMax && (
                   <div className="bg-primary/5 rounded-lg p-4 border border-primary/20">
-                    <h4 className="font-medium mb-2">Estimated Annual Value</h4>
+                    <H4 className="font-medium mb-2">Estimated Annual Value</H4>
                     <div className="text-2xl font-bold font-mono text-[#D4AF37]">
                       $
                       {(
                         parseInt(formData.annualVolume) *
                         parseInt(formData.indicativePriceMax)
-                      ).toLocaleString()}{" "}
+                      ).toLocaleString()}{""}
                       AUD
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
@@ -843,12 +843,12 @@ export default function CreateDemandSignal() {
                   <div className="space-y-6">
                     {/* Basic Info */}
                     <div className="border-b pb-4">
-                      <h4 className="text-sm font-medium text-gray-600 mb-2">
+                      <H4 className="text-sm font-medium text-gray-600 mb-2">
                         BASIC INFORMATION
-                      </h4>
-                      <h3 className="text-xl font-semibold">
-                        {formData.title || "Untitled Signal"}
-                      </h3>
+                      </H4>
+                      <H3 className="text-xl">
+                        {formData.title ||"Untitled Signal"}
+                      </H3>
                       {formData.description && (
                         <p className="text-gray-600 mt-2">
                           {formData.description}
@@ -859,7 +859,7 @@ export default function CreateDemandSignal() {
                           {getCategoryLabel(formData.feedstockCategory)}
                         </Badge>
                         <Badge variant="outline">
-                          {formData.feedstockType || "Not specified"}
+                          {formData.feedstockType ||"Not specified"}
                         </Badge>
                       </div>
                     </div>
@@ -873,7 +873,7 @@ export default function CreateDemandSignal() {
                         <div className="font-semibold font-mono">
                           {formData.annualVolume
                             ? `${parseInt(formData.annualVolume).toLocaleString()} t`
-                            : "—"}
+                            :"—"}
                         </div>
                       </div>
                       <div>
@@ -883,7 +883,7 @@ export default function CreateDemandSignal() {
                         <div className="font-semibold">
                           {formData.volumeFlexibility
                             ? `±${formData.volumeFlexibility}%`
-                            : "—"}
+                            :"—"}
                         </div>
                       </div>
                       <div>
@@ -901,7 +901,7 @@ export default function CreateDemandSignal() {
                         <div className="font-semibold">
                           {formData.contractTerm
                             ? `${formData.contractTerm} years`
-                            : "—"}
+                            :"—"}
                         </div>
                       </div>
                     </div>
@@ -921,7 +921,7 @@ export default function CreateDemandSignal() {
                           Delivery Method
                         </div>
                         <div className="font-semibold capitalize">
-                          {formData.deliveryMethod.replace("_", " ")}
+                          {formData.deliveryMethod.replace("_","")}
                         </div>
                       </div>
                       <div>
@@ -931,7 +931,7 @@ export default function CreateDemandSignal() {
                         <div className="font-semibold">
                           {formData.maxTransportDistance
                             ? `${formData.maxTransportDistance} km`
-                            : "No limit"}
+                            :"No limit"}
                         </div>
                       </div>
                     </div>
@@ -946,7 +946,7 @@ export default function CreateDemandSignal() {
                           {formData.indicativePriceMin &&
                           formData.indicativePriceMax
                             ? `$${formData.indicativePriceMin} - $${formData.indicativePriceMax}/t`
-                            : "Not specified"}
+                            :"Not specified"}
                         </div>
                       </div>
                       <div>
@@ -966,7 +966,7 @@ export default function CreateDemandSignal() {
                           Supply Start
                         </div>
                         <div className="font-semibold">
-                          {formData.supplyStartDate || "Not set"}
+                          {formData.supplyStartDate ||"Not set"}
                         </div>
                       </div>
                       <div>
@@ -974,7 +974,7 @@ export default function CreateDemandSignal() {
                           Supply End
                         </div>
                         <div className="font-semibold">
-                          {formData.supplyEndDate || "Open-ended"}
+                          {formData.supplyEndDate ||"Open-ended"}
                         </div>
                       </div>
                       <div>
@@ -982,7 +982,7 @@ export default function CreateDemandSignal() {
                           Response Deadline
                         </div>
                         <div className="font-semibold text-red-600">
-                          {formData.responseDeadline || "Not set"}
+                          {formData.responseDeadline ||"Not set"}
                         </div>
                       </div>
                     </div>
@@ -1010,7 +1010,7 @@ export default function CreateDemandSignal() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={e => handleSubmit(e as any, "draft")}
+                    onClick={e => handleSubmit(e as any,"draft")}
                     disabled={createMutation.isPending}
                   >
                     <FileText className="h-4 w-4 mr-2" />
@@ -1026,8 +1026,8 @@ export default function CreateDemandSignal() {
                   >
                     <Send className="h-4 w-4 mr-2" />
                     {createMutation.isPending
-                      ? "Publishing..."
-                      : "Publish Signal"}
+                      ?"Publishing..."
+                      :"Publish Signal"}
                   </Button>
                 </>
               ) : (

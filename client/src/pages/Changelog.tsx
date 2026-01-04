@@ -1,13 +1,17 @@
 /**
- * Changelog Page
+ * Platform Changelog - Nextgen Design
  *
- * Displays version history and recent platform updates.
+ * Features:
+ * - Version history display
+ * - Feature release notes
+ * - Update notifications
+ * - Typography components for consistent styling
  */
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent, CardHeader, CardTitle } from"@/components/ui/Card";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Badge } from"@/components/ui/badge";
+import { ScrollArea } from"@/components/ui/scroll-area";
 import {
   Sparkles,
   Bug,
@@ -15,144 +19,144 @@ import {
   Shield,
   Zap,
   ArrowLeft,
-} from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { useLocation } from "wouter";
+} from"lucide-react";
+import { Button } from"@/components/ui/Button";
+import { useLocation } from"wouter";
 
 interface ChangelogEntry {
   version: string;
   date: string;
-  type: "major" | "minor" | "patch";
+  type:"major" |"minor" |"patch";
   changes: {
-    category: "feature" | "fix" | "improvement" | "security" | "performance";
+    category:"feature" |"fix" |"improvement" |"security" |"performance";
     description: string;
   }[];
 }
 
 const changelog: ChangelogEntry[] = [
   {
-    version: "3.3.0",
-    date: "2024-12-27",
-    type: "minor",
+    version:"3.3.0",
+    date:"2024-12-27",
+    type:"minor",
     changes: [
       {
-        category: "feature",
-        description: "Integrated helpdesk widget with feedback submission",
+        category:"feature",
+        description:"Integrated helpdesk widget with feedback submission",
       },
       {
-        category: "improvement",
-        description: "Quick access to help center, support, and changelog",
+        category:"improvement",
+        description:"Quick access to help center, support, and changelog",
       },
     ],
   },
   {
-    version: "3.2.0",
-    date: "2024-12-27",
-    type: "minor",
+    version:"3.2.0",
+    date:"2024-12-27",
+    type:"minor",
     changes: [
       {
-        category: "feature",
-        description: "Real-time notifications via Server-Sent Events (SSE)",
+        category:"feature",
+        description:"Real-time notifications via Server-Sent Events (SSE)",
       },
       {
-        category: "improvement",
-        description: "Instant toast notifications for new activities",
+        category:"improvement",
+        description:"Instant toast notifications for new activities",
       },
     ],
   },
   {
-    version: "3.1.0",
-    date: "2024-12-27",
-    type: "minor",
+    version:"3.1.0",
+    date:"2024-12-27",
+    type:"minor",
     changes: [
       {
-        category: "feature",
-        description: "Added Sentry error tracking for improved error monitoring",
+        category:"feature",
+        description:"Added Sentry error tracking for improved error monitoring",
       },
       {
-        category: "improvement",
-        description: "Enhanced keyboard accessibility with WCAG 2.2 AA focus indicators",
+        category:"improvement",
+        description:"Enhanced keyboard accessibility with WCAG 2.2 AA focus indicators",
       },
       {
-        category: "feature",
-        description: "Form auto-save for multi-step registration flows",
+        category:"feature",
+        description:"Form auto-save for multi-step registration flows",
       },
       {
-        category: "improvement",
-        description: "Skip-to-main navigation link for screen reader users",
+        category:"improvement",
+        description:"Skip-to-main navigation link for screen reader users",
       },
     ],
   },
   {
-    version: "3.0.0",
-    date: "2024-12-20",
-    type: "major",
+    version:"3.0.0",
+    date:"2024-12-20",
+    type:"major",
     changes: [
       {
-        category: "feature",
-        description: "Evidence Vault with blockchain anchoring and IPFS storage",
+        category:"feature",
+        description:"Evidence Vault with blockchain anchoring and IPFS storage",
       },
       {
-        category: "feature",
-        description: "Verifiable Credentials (W3C VC) issuance and verification",
+        category:"feature",
+        description:"Verifiable Credentials (W3C VC) issuance and verification",
       },
       {
-        category: "feature",
-        description: "Stealth Discovery with IP Australia patent search integration",
+        category:"feature",
+        description:"Stealth Discovery with IP Australia patent search integration",
       },
       {
-        category: "security",
-        description: "Enhanced security headers and rate limiting",
+        category:"security",
+        description:"Enhanced security headers and rate limiting",
       },
       {
-        category: "performance",
-        description: "Optimized bundle splitting for faster page loads",
+        category:"performance",
+        description:"Optimized bundle splitting for faster page loads",
       },
     ],
   },
   {
-    version: "2.5.0",
-    date: "2024-12-01",
-    type: "minor",
+    version:"2.5.0",
+    date:"2024-12-01",
+    type:"minor",
     changes: [
       {
-        category: "feature",
-        description: "Grower registration flow with property mapping",
+        category:"feature",
+        description:"Grower registration flow with property mapping",
       },
       {
-        category: "feature",
-        description: "Futures marketplace for feedstock contracts",
+        category:"feature",
+        description:"Futures marketplace for feedstock contracts",
       },
       {
-        category: "improvement",
-        description: "Redesigned grower-first UI with improved readability",
+        category:"improvement",
+        description:"Redesigned grower-first UI with improved readability",
       },
       {
-        category: "fix",
-        description: "Fixed map rendering issues on mobile devices",
+        category:"fix",
+        description:"Fixed map rendering issues on mobile devices",
       },
     ],
   },
   {
-    version: "2.0.0",
-    date: "2024-11-15",
-    type: "major",
+    version:"2.0.0",
+    date:"2024-11-15",
+    type:"major",
     changes: [
       {
-        category: "feature",
-        description: "Bankability ratings and project assessment system",
+        category:"feature",
+        description:"Bankability ratings and project assessment system",
       },
       {
-        category: "feature",
-        description: "Developer dashboard with project management",
+        category:"feature",
+        description:"Developer dashboard with project management",
       },
       {
-        category: "feature",
-        description: "Finance dashboard with lending sentiment analysis",
+        category:"feature",
+        description:"Finance dashboard with lending sentiment analysis",
       },
       {
-        category: "security",
-        description: "Implemented secure session management",
+        category:"security",
+        description:"Implemented secure session management",
       },
     ],
   },
@@ -167,17 +171,17 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  feature: "bg-blue-100 text-blue-800",
-  fix: "bg-red-100 text-red-800",
-  improvement: "bg-amber-100 text-amber-800",
-  security: "bg-green-100 text-green-800",
-  performance: "bg-purple-100 text-purple-800",
+  feature:"bg-blue-100 text-blue-800",
+  fix:"bg-red-100 text-red-800",
+  improvement:"bg-amber-100 text-amber-800",
+  security:"bg-green-100 text-green-800",
+  performance:"bg-purple-100 text-purple-800",
 };
 
 const typeColors = {
-  major: "bg-red-500",
-  minor: "bg-blue-500",
-  patch: "bg-gray-500",
+  major:"bg-red-500",
+  minor:"bg-blue-500",
+  patch:"bg-gray-500",
 };
 
 export default function Changelog() {
@@ -196,7 +200,7 @@ export default function Changelog() {
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Changelog</h1>
+          <H1 className="text-3xl  text-gray-900">Changelog</H1>
           <p className="mt-2 text-gray-600">
             Track the latest updates and improvements to the ABFI Platform.
           </p>
@@ -253,7 +257,7 @@ export default function Changelog() {
         {/* Footer */}
         <div className="mt-8 pt-6 border-t text-center text-sm text-gray-500">
           <p>
-            Have feedback or feature requests?{" "}
+            Have feedback or feature requests?{""}
             <a
               href="mailto:support@abfi.com.au"
               className="text-blue-600 hover:underline"

@@ -1,22 +1,29 @@
 /**
- * RSIE Admin Dashboard - Risk & Supply Intelligence Engine
- * Admin-only page for managing data sources, weather integration, risk events, and monitoring.
+ * RSIE Admin Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Risk & Supply Intelligence Engine management
+ * - Data source configuration
+ * - Weather integration monitoring
+ * - Risk event management
+ * - Typography components for consistent styling
  */
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import DashboardLayout from "@/components/DashboardLayout";
-import { Button } from "@/components/ui/Button";
+
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import DashboardLayout from"@/components/DashboardLayout";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Badge } from"@/components/ui/badge";
+import { Switch } from"@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -24,13 +31,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/tooltip";
+import { trpc } from"@/lib/trpc";
 import {
   Database,
   AlertTriangle,
@@ -62,12 +69,12 @@ import {
   AlertCircle,
   Sun,
   Snowflake,
-} from "lucide-react";
-import { Redirect } from "wouter";
-import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import { formatDistanceToNow } from "date-fns";
-import { useState } from "react";
+} from"lucide-react";
+import { Redirect } from"wouter";
+import { toast } from"sonner";
+import { cn } from"@/lib/utils";
+import { formatDistanceToNow } from"date-fns";
+import { useState } from"react";
 
 // Risk event type icons
 const RISK_TYPE_ICONS: Record<string, React.ReactNode> = {
@@ -96,10 +103,10 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 };
 
 const SEVERITY_COLORS: Record<string, string> = {
-  critical: "bg-red-500",
-  high: "bg-orange-500",
-  medium: "bg-yellow-500",
-  low: "bg-green-500",
+  critical:"bg-red-500",
+  high:"bg-orange-500",
+  medium:"bg-yellow-500",
+  low:"bg-green-500",
 };
 
 function StatsCard({
@@ -109,7 +116,7 @@ function StatsCard({
   icon,
   trend,
   loading,
-  variant = "default",
+  variant ="default",
 }: {
   title: string;
   value: string | number;
@@ -117,13 +124,13 @@ function StatsCard({
   icon: React.ReactNode;
   trend?: { value: number; label: string };
   loading?: boolean;
-  variant?: "default" | "success" | "warning" | "error";
+  variant?:"default" |"success" |"warning" |"error";
 }) {
   const variants = {
-    default: "bg-[#D4AF37]/10",
-    success: "bg-green-500/10",
-    warning: "bg-yellow-500/10",
-    error: "bg-red-500/10",
+    default:"bg-[#D4AF37]/10",
+    success:"bg-green-500/10",
+    warning:"bg-yellow-500/10",
+    error:"bg-red-500/10",
   };
 
   if (loading) {
@@ -157,17 +164,17 @@ function StatsCard({
           <div className="flex items-center gap-1 mt-2">
             <TrendingUp
               className={cn(
-                "h-3 w-3",
-                trend.value >= 0 ? "text-green-500" : "text-red-500"
+"h-3 w-3",
+                trend.value >= 0 ?"text-green-500" :"text-red-500"
               )}
             />
             <span
               className={cn(
-                "text-xs",
-                trend.value >= 0 ? "text-green-500" : "text-red-500"
+"text-xs",
+                trend.value >= 0 ?"text-green-500" :"text-red-500"
               )}
             >
-              {trend.value >= 0 ? "+" : ""}
+              {trend.value >= 0 ?"+" :""}
               {trend.value}% {trend.label}
             </span>
           </div>
@@ -200,10 +207,10 @@ function GridCellMap({ cells }: { cells: Array<{ cellId: string; lat: number; ln
                   key={cell.cellId}
                   onClick={() => setSelectedCell(selectedCell === cell.cellId ? null : cell.cellId)}
                   className={cn(
-                    "w-full text-left px-2 py-1 rounded text-xs transition-colors",
+"w-full text-left px-2 py-1 rounded text-xs transition-colors",
                     selectedCell === cell.cellId
-                      ? "bg-primary text-[#D4AF37]-foreground"
-                      : "hover:bg-muted"
+                      ?"bg-primary text-[#D4AF37]-foreground"
+                      :"hover:bg-muted"
                   )}
                 >
                   <div className="flex items-center gap-1">
@@ -246,7 +253,7 @@ function WeatherApiPanel() {
       refetchApiStatus();
     },
     onError: (error) => {
-      toast.error(error.message || "Weather ingestion failed");
+      toast.error(error.message ||"Weather ingestion failed");
     },
   });
 
@@ -293,7 +300,7 @@ function WeatherApiPanel() {
                         <div>
                           <div className="font-medium text-red-600">API Error</div>
                           <div className="text-xs text-gray-600">
-                            {apiStatus?.error || "Connection failed"}
+                            {apiStatus?.error ||"Connection failed"}
                           </div>
                         </div>
                       </>
@@ -413,7 +420,7 @@ function DataSourcesPanel() {
       refetchDataSources();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to update data source");
+      toast.error(error.message ||"Failed to update data source");
     },
   });
 
@@ -425,7 +432,7 @@ function DataSourcesPanel() {
       refetchDataSources();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to seed data sources");
+      toast.error(error.message ||"Failed to seed data sources");
     },
   });
 
@@ -539,12 +546,12 @@ function DataSourcesPanel() {
                     </TableCell>
                     <TableCell>
                       <Badge variant="outline" className="text-xs">
-                        {source.licenseClass.replace("_", " ")}
+                        {source.licenseClass.replace("_","")}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={source.isEnabled ? "default" : "secondary"}>
-                        {source.isEnabled ? "Enabled" : "Disabled"}
+                      <Badge variant={source.isEnabled ?"default" :"secondary"}>
+                        {source.isEnabled ?"Enabled" :"Disabled"}
                       </Badge>
                     </TableCell>
                     <TableCell className="text-right">
@@ -568,7 +575,7 @@ function DataSourcesPanel() {
               <Database className="h-12 w-12 mx-auto mb-4 opacity-20" />
               <p className="font-medium">No data sources configured</p>
               <p className="text-sm mt-1">
-                Click "Seed Data Sources" above to add Australian data sources
+                Click"Seed Data Sources" above to add Australian data sources
               </p>
             </div>
           )}
@@ -588,7 +595,7 @@ export default function AdminRSIE() {
     refetch: refetchRiskEvents,
   } = trpc.rsie.riskEvents.list.useQuery(
     { limit: 10 },
-    { enabled: isAuthenticated && user?.role === "admin" }
+    { enabled: isAuthenticated && user?.role ==="admin" }
   );
 
   // Ingestion Runs
@@ -598,26 +605,26 @@ export default function AdminRSIE() {
     refetch: refetchIngestionRuns,
   } = trpc.rsie.ingestion.listRuns.useQuery(
     { limit: 10 },
-    { enabled: isAuthenticated && user?.role === "admin" }
+    { enabled: isAuthenticated && user?.role ==="admin" }
   );
 
   // Intelligence Items
   const { data: intelligenceData, isLoading: loadingIntelligence } =
     trpc.rsie.intelligence.list.useQuery(
       { limit: 5 },
-      { enabled: isAuthenticated && user?.role === "admin" }
+      { enabled: isAuthenticated && user?.role ==="admin" }
     );
 
   // Feedback Stats
   const { data: feedbackStats, isLoading: loadingFeedback } =
     trpc.rsie.feedback.stats.useQuery(undefined, {
-      enabled: isAuthenticated && user?.role === "admin",
+      enabled: isAuthenticated && user?.role ==="admin",
     });
 
   // Data Sources for stats
   const { data: dataSources, isLoading: loadingDataSources } =
     trpc.rsie.dataSources.list.useQuery(undefined, {
-      enabled: isAuthenticated && user?.role === "admin",
+      enabled: isAuthenticated && user?.role ==="admin",
     });
 
   // Mutations
@@ -629,7 +636,7 @@ export default function AdminRSIE() {
         );
       },
       onError: error => {
-        toast.error(error.message || "Failed to recalculate exposures");
+        toast.error(error.message ||"Failed to recalculate exposures");
       },
     });
 
@@ -639,7 +646,7 @@ export default function AdminRSIE() {
       refetchRiskEvents();
     },
     onError: error => {
-      toast.error(error.message || "Failed to resolve risk event");
+      toast.error(error.message ||"Failed to resolve risk event");
     },
   });
 
@@ -659,7 +666,7 @@ export default function AdminRSIE() {
     );
   }
 
-  if (!isAuthenticated || user?.role !== "admin") {
+  if (!isAuthenticated || user?.role !=="admin") {
     return <Redirect to="/dashboard" />;
   }
 
@@ -667,11 +674,11 @@ export default function AdminRSIE() {
   const enabledSourcesCount = dataSources?.filter(s => s.isEnabled).length ?? 0;
   const totalSourcesCount = dataSources?.length ?? 0;
   const activeRiskCount =
-    riskEventsData?.events.filter(e => e.eventStatus === "active").length ?? 0;
+    riskEventsData?.events.filter(e => e.eventStatus ==="active").length ?? 0;
   const watchRiskCount =
-    riskEventsData?.events.filter(e => e.eventStatus === "watch").length ?? 0;
+    riskEventsData?.events.filter(e => e.eventStatus ==="watch").length ?? 0;
   const recentSuccessfulRuns =
-    ingestionRuns?.filter(r => r.status === "succeeded").length ?? 0;
+    ingestionRuns?.filter(r => r.status ==="succeeded").length ?? 0;
 
   return (
     <DashboardLayout>
@@ -683,7 +690,7 @@ export default function AdminRSIE() {
               <Shield className="h-6 w-6 text-[#D4AF37]" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold">RSIE Dashboard</h1>
+              <H1 className="text-2xl">RSIE Dashboard</H1>
               <p className="text-gray-600">
                 Risk & Supply Intelligence Engine
               </p>
@@ -724,7 +731,7 @@ export default function AdminRSIE() {
             description="Enabled sources"
             icon={<Database className="h-4 w-4 text-[#D4AF37]" />}
             loading={loadingDataSources}
-            variant={totalSourcesCount > 0 ? "success" : "warning"}
+            variant={totalSourcesCount > 0 ?"success" :"warning"}
           />
           <StatsCard
             title="Active Risks"
@@ -732,7 +739,7 @@ export default function AdminRSIE() {
             description={`${watchRiskCount} on watch`}
             icon={<AlertTriangle className="h-4 w-4 text-orange-500" />}
             loading={loadingRiskEvents}
-            variant={activeRiskCount > 0 ? "error" : "success"}
+            variant={activeRiskCount > 0 ?"error" :"success"}
           />
           <StatsCard
             title="Ingestion Runs"
@@ -744,7 +751,7 @@ export default function AdminRSIE() {
           />
           <StatsCard
             title="Feedback Score"
-            value={feedbackStats?.avgNps?.toFixed(1) ?? "-"}
+            value={feedbackStats?.avgNps?.toFixed(1) ??"-"}
             description={`${feedbackStats?.count ?? 0} responses`}
             icon={<MessageSquare className="h-4 w-4 text-blue-500" />}
             loading={loadingFeedback}
@@ -821,11 +828,11 @@ export default function AdminRSIE() {
                           <div>
                             <div className="flex items-center gap-2">
                               <span className="font-medium capitalize">
-                                {event.eventType.replace("_", " ")}
+                                {event.eventType.replace("_","")}
                               </span>
                               <Badge
                                 className={cn(
-                                  "text-xs text-black",
+"text-xs text-black",
                                   SEVERITY_COLORS[event.severity]
                                 )}
                               >
@@ -834,13 +841,13 @@ export default function AdminRSIE() {
                               <Badge
                                 variant="outline"
                                 className={cn(
-                                  "text-xs",
-                                  event.eventStatus === "active" &&
-                                    "border-red-500 text-red-500",
-                                  event.eventStatus === "watch" &&
-                                    "border-yellow-500 text-yellow-500",
-                                  event.eventStatus === "resolved" &&
-                                    "border-green-500 text-green-500"
+"text-xs",
+                                  event.eventStatus ==="active" &&
+"border-red-500 text-red-500",
+                                  event.eventStatus ==="watch" &&
+"border-yellow-500 text-yellow-500",
+                                  event.eventStatus ==="resolved" &&
+"border-green-500 text-green-500"
                                 )}
                               >
                                 {event.eventStatus}
@@ -850,7 +857,7 @@ export default function AdminRSIE() {
                               <span>Score: {event.scoreTotal}</span>
                               <span className="mx-2">|</span>
                               <span>
-                                Confidence:{" "}
+                                Confidence:{""}
                                 {(Number(event.confidence) * 100).toFixed(0)}%
                               </span>
                               <span className="mx-2">|</span>
@@ -862,7 +869,7 @@ export default function AdminRSIE() {
                             </div>
                           </div>
                         </div>
-                        {event.eventStatus !== "resolved" && (
+                        {event.eventStatus !=="resolved" && (
                           <Button
                             variant="outline"
                             size="sm"
@@ -935,16 +942,16 @@ export default function AdminRSIE() {
                           </TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
-                              {run.status === "succeeded" && (
+                              {run.status ==="succeeded" && (
                                 <CheckCircle2 className="h-4 w-4 text-green-500" />
                               )}
-                              {run.status === "failed" && (
+                              {run.status ==="failed" && (
                                 <XCircle className="h-4 w-4 text-red-500" />
                               )}
-                              {run.status === "started" && (
+                              {run.status ==="started" && (
                                 <Clock className="h-4 w-4 text-blue-500 animate-pulse" />
                               )}
-                              {run.status === "partial" && (
+                              {run.status ==="partial" && (
                                 <AlertTriangle className="h-4 w-4 text-yellow-500" />
                               )}
                               <span className="capitalize">{run.status}</span>
@@ -971,7 +978,7 @@ export default function AdminRSIE() {
                                     new Date(run.startedAt).getTime()) /
                                     1000
                                 )}s`
-                              : "-"}
+                              :"-"}
                           </TableCell>
                         </TableRow>
                       ))}
@@ -1017,13 +1024,13 @@ export default function AdminRSIE() {
                         className="flex items-start gap-4 p-4 border rounded-lg"
                       >
                         <div className="p-2 bg-muted rounded-lg">
-                          {item.itemType === "news" && (
+                          {item.itemType ==="news" && (
                             <Newspaper className="h-4 w-4" />
                           )}
-                          {item.itemType === "policy" && (
+                          {item.itemType ==="policy" && (
                             <FileText className="h-4 w-4" />
                           )}
-                          {item.itemType === "market_note" && (
+                          {item.itemType ==="market_note" && (
                             <BarChart3 className="h-4 w-4" />
                           )}
                         </div>
@@ -1033,7 +1040,7 @@ export default function AdminRSIE() {
                               {item.title}
                             </span>
                             <Badge variant="outline" className="capitalize text-xs">
-                              {item.itemType.replace("_", " ")}
+                              {item.itemType.replace("_","")}
                             </Badge>
                           </div>
                           {item.summary && (

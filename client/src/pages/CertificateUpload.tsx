@@ -1,38 +1,48 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+/**
+ * Certificate Upload - Nextgen Design
+ *
+ * Features:
+ * - Document upload interface
+ * - Certificate validation workflow
+ * - File type verification
+ * - Typography components for consistent styling
+ */
+
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { trpc } from "@/lib/trpc";
-import { ArrowLeft, FileText, Leaf, Upload } from "lucide-react";
-import { useState } from "react";
-import { Link, Redirect, useLocation, useSearch } from "wouter";
-import { toast } from "sonner";
+} from"@/components/ui/select";
+import { trpc } from"@/lib/trpc";
+import { ArrowLeft, FileText, Leaf, Upload } from"lucide-react";
+import { useState } from"react";
+import { Link, Redirect, useLocation, useSearch } from"wouter";
+import { toast } from"sonner";
 
 const CERTIFICATE_TYPES = [
   {
-    value: "ISCC",
-    label: "ISCC (International Sustainability & Carbon Certification)",
+    value:"ISCC",
+    label:"ISCC (International Sustainability & Carbon Certification)",
   },
-  { value: "RSB", label: "RSB (Roundtable on Sustainable Biomaterials)" },
-  { value: "RED_II", label: "RED II (Renewable Energy Directive)" },
-  { value: "ABFI", label: "ABFI Certification" },
-  { value: "ISO_14001", label: "ISO 14001 (Environmental Management)" },
-  { value: "other", label: "Other" },
+  { value:"RSB", label:"RSB (Roundtable on Sustainable Biomaterials)" },
+  { value:"RED_II", label:"RED II (Renewable Energy Directive)" },
+  { value:"ABFI", label:"ABFI Certification" },
+  { value:"ISO_14001", label:"ISO 14001 (Environmental Management)" },
+  { value:"other", label:"Other" },
 ];
 
 export default function CertificateUpload() {
@@ -46,7 +56,7 @@ export default function CertificateUpload() {
   });
 
   const { data: feedstock } = trpc.feedstocks.getById.useQuery(
-    { id: parseInt(feedstockId || "0") },
+    { id: parseInt(feedstockId ||"0") },
     { enabled: !!feedstockId }
   );
 
@@ -64,7 +74,7 @@ export default function CertificateUpload() {
       setLocation(`/feedstock/${feedstockId}`);
     },
     onError: (error: any) => {
-      toast.error(error.message || "Failed to upload certificate");
+      toast.error(error.message ||"Failed to upload certificate");
       setUploading(false);
     },
   });
@@ -190,9 +200,9 @@ export default function CertificateUpload() {
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-2">
             <FileText className="h-8 w-8 text-[#D4AF37]" />
-            <h1 className="text-4xl font-bold text-[#D4AF37]">
+            <H1 className="text-4xl  text-[#D4AF37]">
               Upload Certificate
-            </h1>
+            </H1>
           </div>
           <p className="text-gray-600">
             Add certification documents to improve your ABFI rating
@@ -213,7 +223,7 @@ export default function CertificateUpload() {
               <div className="text-right">
                 <p className="text-sm text-gray-600">Current ABFI Score</p>
                 <p className="text-2xl font-bold text-[#D4AF37]">
-                  {feedstock.abfiScore || "N/A"}
+                  {feedstock.abfiScore ||"N/A"}
                 </p>
               </div>
             </div>
@@ -312,7 +322,7 @@ export default function CertificateUpload() {
                           <>
                             <span className="font-semibold">
                               Click to upload
-                            </span>{" "}
+                            </span>{""}
                             or drag and drop
                           </>
                         )}
@@ -334,9 +344,9 @@ export default function CertificateUpload() {
             </div>
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-900 mb-2">
+              <H4 className="text-blue-900 mb-2">
                 Benefits of Certification
-              </h4>
+              </H4>
               <ul className="text-sm text-blue-800 space-y-1">
                 <li>• Improves your sustainability score in the ABFI rating</li>
                 <li>• Increases buyer confidence and trust</li>
@@ -350,7 +360,7 @@ export default function CertificateUpload() {
                 <Button variant="outline">Cancel</Button>
               </Link>
               <Button onClick={handleSubmit} disabled={!canSubmit}>
-                {uploading ? "Uploading..." : "Upload Certificate"}
+                {uploading ?"Uploading..." :"Upload Certificate"}
               </Button>
             </div>
           </CardContent>

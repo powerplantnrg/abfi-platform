@@ -58,7 +58,7 @@ const PathwayCard: React.FC<PathwayCardProps> = ({ icon, headline, description, 
     <div className="text-black w-12 h-12 flex items-center justify-center rounded-lg bg-gray-100">
       {icon}
     </div>
-    <h3 className={`text-2xl font-semibold text-black`}>{headline}</h3>
+    <H3 className="text-black">{headline}</H3>
     <p className={`text-gray-700 flex-grow ${BASE_TEXT_SIZE}`}>{description}</p>
     <Button variant="ghost" className="self-start">
       {ctaText} <ChevronRight className="w-4 h-4 ml-2" />

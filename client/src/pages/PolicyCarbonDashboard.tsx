@@ -10,16 +10,16 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
+import { Label } from"@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from"@/components/ui/select";
+import { Slider } from"@/components/ui/slider";
 import {
   AlertCircle,
   ArrowLeft,
@@ -36,43 +36,43 @@ import {
   Newspaper,
   ExternalLink,
   Filter,
-} from "lucide-react";
-import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"lucide-react";
+import { Link } from"wouter";
+import { trpc } from"@/lib/trpc";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 const JURISDICTION_COLORS: Record<string, string> = {
-  Federal: "#3b82f6",
-  NSW: "#22c55e",
-  VIC: "#8b5cf6",
-  QLD: "#f97316",
-  SA: "#eab308",
-  WA: "#ef4444",
-  TAS: "#06b6d4",
-  NT: "#ec4899",
-  ACT: "#6366f1",
+  Federal:"#3b82f6",
+  NSW:"#22c55e",
+  VIC:"#8b5cf6",
+  QLD:"#f97316",
+  SA:"#eab308",
+  WA:"#ef4444",
+  TAS:"#06b6d4",
+  NT:"#ec4899",
+  ACT:"#6366f1",
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  proposed: "bg-yellow-100 text-yellow-800 border-yellow-300",
-  review: "bg-blue-100 text-blue-800 border-blue-300",
-  enacted: "bg-green-100 text-green-800 border-green-300",
-  expired: "bg-gray-100 text-gray-800 border-gray-300",
+  proposed:"bg-yellow-100 text-yellow-800 border-yellow-300",
+  review:"bg-blue-100 text-blue-800 border-blue-300",
+  enacted:"bg-green-100 text-green-800 border-green-300",
+  expired:"bg-gray-100 text-gray-800 border-gray-300",
 };
 
 const EVENT_COLORS: Record<string, string> = {
-  enacted: "#22c55e",
-  consultation_open: "#3b82f6",
-  expected_decision: "#f97316",
+  enacted:"#22c55e",
+  consultation_open:"#3b82f6",
+  expected_decision:"#f97316",
 };
 
 export default function PolicyCarbonDashboard() {
   const [activeTab, setActiveTab] = useState("policy");
-  const [newsSource, setNewsSource] = useState<"all" | "verra" | "gold_standard" | "cfi">("all");
+  const [newsSource, setNewsSource] = useState<"all" |"verra" |"gold_standard" |"cfi">("all");
 
   // Carbon calculator state
   const [calcInput, setCalcInput] = useState({
-    project_type: "bioenergy_plant",
+    project_type:"bioenergy_plant",
     annual_output_tonnes: 50000,
     emission_factor: 0.85,
     baseline_year: 2025,
@@ -136,8 +136,8 @@ export default function PolicyCarbonDashboard() {
 
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-AU", {
-      style: "currency",
-      currency: "AUD",
+      style:"currency",
+      currency:"AUD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
@@ -145,8 +145,8 @@ export default function PolicyCarbonDashboard() {
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
+      day:"numeric",
+      month:"short",
     });
   };
 
@@ -154,8 +154,8 @@ export default function PolicyCarbonDashboard() {
   const timelineByMonth = timeline.reduce(
     (acc, event) => {
       const month = new Date(event.date).toLocaleDateString("en-AU", {
-        month: "short",
-        year: "numeric",
+        month:"short",
+        year:"numeric",
       });
       if (!acc[month]) acc[month] = [];
       acc[month].push(event);
@@ -187,7 +187,7 @@ export default function PolicyCarbonDashboard() {
           <Card>
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
+              <H3 className="text-lg  mb-2">Error Loading Data</H3>
               <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
@@ -214,13 +214,13 @@ export default function PolicyCarbonDashboard() {
                 </Button>
               </Link>
             </div>
-            <h1 className="text-3xl font-bold">Policy & Carbon Revenue</h1>
+            <H1 className="text-3xl">Policy & Carbon Revenue</H1>
             <p className="text-gray-600 mt-1">
               Track Australian bioenergy policy and calculate carbon revenue projections
             </p>
           </div>
           <Button variant="outline" onClick={loadData}>
-            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ?"animate-spin" :""}`} />
             Refresh
           </Button>
         </div>
@@ -235,7 +235,7 @@ export default function PolicyCarbonDashboard() {
               <CardContent>
                 <div className="flex items-end gap-2">
                   <span className="text-4xl font-bold">
-                    {kpi.label === "ACCU Price" ? `$${kpi.value}` : kpi.value}
+                    {kpi.label ==="ACCU Price" ? `$${kpi.value}` : kpi.value}
                   </span>
                 </div>
                 <p className="text-sm text-gray-600 mt-1">
@@ -281,9 +281,9 @@ export default function PolicyCarbonDashboard() {
                     <div className="space-y-6">
                       {Object.entries(timelineByMonth).map(([month, events]) => (
                         <div key={month}>
-                          <h4 className="font-semibold text-sm text-gray-600 mb-3">
+                          <H4 className="text-sm text-gray-600 mb-3">
                             {month}
-                          </h4>
+                          </H4>
                           <div className="space-y-2">
                             {events.map((event, idx) => (
                               <div
@@ -294,7 +294,7 @@ export default function PolicyCarbonDashboard() {
                                   className="w-3 h-3 rounded-full"
                                   style={{
                                     backgroundColor:
-                                      JURISDICTION_COLORS[event.jurisdiction] || "#888",
+                                      JURISDICTION_COLORS[event.jurisdiction] ||"#888",
                                   }}
                                 />
                                 <Badge variant="outline">{event.jurisdiction}</Badge>
@@ -304,14 +304,14 @@ export default function PolicyCarbonDashboard() {
                                 <Badge
                                   variant="outline"
                                   className={
-                                    event.event_type === "enacted"
-                                      ? "bg-green-100 text-green-800"
-                                      : event.event_type === "consultation_open"
-                                        ? "bg-blue-100 text-blue-800"
-                                        : "bg-orange-100 text-orange-800"
+                                    event.event_type ==="enacted"
+                                      ?"bg-green-100 text-green-800"
+                                      : event.event_type ==="consultation_open"
+                                        ?"bg-blue-100 text-blue-800"
+                                        :"bg-orange-100 text-orange-800"
                                   }
                                 >
-                                  {event.event_type.replace("_", " ")}
+                                  {event.event_type.replace("_","")}
                                 </Badge>
                                 <span className="text-sm text-gray-600">
                                   {formatDate(event.date)}
@@ -411,7 +411,7 @@ export default function PolicyCarbonDashboard() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Filter className="h-4 w-4 text-gray-400" />
-                    <Select value={newsSource} onValueChange={(v: "all" | "verra" | "gold_standard" | "cfi") => setNewsSource(v)}>
+                    <Select value={newsSource} onValueChange={(v:"all" |"verra" |"gold_standard" |"cfi") => setNewsSource(v)}>
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Filter by source" />
                       </SelectTrigger>
@@ -445,11 +445,11 @@ export default function PolicyCarbonDashboard() {
                               <Badge
                                 variant="outline"
                                 className={
-                                  article.source === "verra"
-                                    ? "bg-blue-100 text-blue-800 border-blue-300"
-                                    : article.source === "gold_standard"
-                                      ? "bg-yellow-100 text-yellow-800 border-yellow-300"
-                                      : "bg-green-100 text-green-800 border-green-300"
+                                  article.source ==="verra"
+                                    ?"bg-blue-100 text-blue-800 border-blue-300"
+                                    : article.source ==="gold_standard"
+                                      ?"bg-yellow-100 text-yellow-800 border-yellow-300"
+                                      :"bg-green-100 text-green-800 border-green-300"
                                 }
                               >
                                 {article.sourceName}
@@ -457,22 +457,22 @@ export default function PolicyCarbonDashboard() {
                               <Badge
                                 variant="outline"
                                 className={
-                                  article.relevance === "high"
-                                    ? "bg-red-100 text-red-800 border-red-300"
-                                    : article.relevance === "medium"
-                                      ? "bg-orange-100 text-orange-800 border-orange-300"
-                                      : "bg-gray-100 text-gray-800 border-gray-300"
+                                  article.relevance ==="high"
+                                    ?"bg-red-100 text-red-800 border-red-300"
+                                    : article.relevance ==="medium"
+                                      ?"bg-orange-100 text-orange-800 border-orange-300"
+                                      :"bg-gray-100 text-gray-800 border-gray-300"
                                 }
                               >
                                 {article.relevance} relevance
                               </Badge>
                               <span className="text-xs text-gray-500">
-                                {article.category.replace("_", " ")}
+                                {article.category.replace("_","")}
                               </span>
                             </div>
-                            <h4 className="font-semibold text-sm mb-1">
+                            <H4 className="text-sm mb-1">
                               {article.title}
-                            </h4>
+                            </H4>
                             {article.excerpt && (
                               <p className="text-sm text-gray-600 line-clamp-2">
                                 {article.excerpt}
@@ -481,9 +481,9 @@ export default function PolicyCarbonDashboard() {
                             <div className="flex items-center gap-4 mt-2">
                               <span className="text-xs text-gray-500">
                                 {new Date(article.publishedDate).toLocaleDateString("en-AU", {
-                                  day: "numeric",
-                                  month: "short",
-                                  year: "numeric",
+                                  day:"numeric",
+                                  month:"short",
+                                  year:"numeric",
                                 })}
                               </span>
                               {article.keywords && article.keywords.length > 0 && (
@@ -566,7 +566,7 @@ export default function PolicyCarbonDashboard() {
 
                   <div className="space-y-2">
                     <Label>
-                      Annual Output: {calcInput.annual_output_tonnes.toLocaleString()}{" "}
+                      Annual Output: {calcInput.annual_output_tonnes.toLocaleString()}{""}
                       tonnes
                     </Label>
                     <Slider
@@ -609,7 +609,7 @@ export default function PolicyCarbonDashboard() {
                     {accuPrice && (
                       <p className="text-xs text-gray-600">
                         Current ACCU spot: ${accuPrice.price} (
-                        {accuPrice.change >= 0 ? "+" : ""}
+                        {accuPrice.change >= 0 ?"+" :""}
                         {accuPrice.change_pct.toFixed(1)}%)
                       </p>
                     )}
@@ -736,7 +736,7 @@ export default function PolicyCarbonDashboard() {
                           <Tooltip
                             formatter={(value: number) => [
                               formatCurrency(value),
-                              "Revenue Impact",
+"Revenue Impact",
                             ]}
                           />
                           <Bar dataKey="revenue_impact" radius={[0, 4, 4, 0]}>
@@ -744,13 +744,13 @@ export default function PolicyCarbonDashboard() {
                               <Cell
                                 key={`cell-${index}`}
                                 fill={
-                                  entry.mandate_level === "B20"
-                                    ? "#22c55e"
-                                    : entry.mandate_level === "B10"
-                                      ? "#3b82f6"
-                                      : entry.mandate_level === "B5"
-                                        ? "#f97316"
-                                        : "#888"
+                                  entry.mandate_level ==="B20"
+                                    ?"#22c55e"
+                                    : entry.mandate_level ==="B10"
+                                      ?"#3b82f6"
+                                      : entry.mandate_level ==="B5"
+                                        ?"#f97316"
+                                        :"#888"
                                 }
                               />
                             ))}

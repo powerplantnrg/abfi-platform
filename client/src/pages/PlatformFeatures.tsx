@@ -1,14 +1,24 @@
-import { Button } from "@/components/ui/Button";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+/**
+ * Platform Features - Nextgen Design
+ *
+ * Features:
+ * - Feature overview and documentation
+ * - Capability showcase
+ * - Use case examples
+ * - Typography components for consistent styling
+ */
+
+import { Button } from"@/components/ui/Button";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   ArrowRight,
   Award,
@@ -48,9 +58,9 @@ import {
   Settings,
   Key,
   Webhook,
-} from "lucide-react";
-import { Link } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Link } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   FadeInUp,
   StaggerContainer,
@@ -58,7 +68,7 @@ import {
   HoverCard,
   AnimatedCounter,
   motion,
-} from "@/components/ui/motion";
+} from"@/components/ui/motion";
 
 // Feature Card with expanded details
 function FeatureCard({
@@ -79,34 +89,34 @@ function FeatureCard({
     { bg: string; text: string; border: string }
   > = {
     emerald: {
-      bg: "bg-[#D4AF37]/10",
-      text: "text-[#D4AF37]",
-      border: "hover:border-[#D4AF37]/30",
+      bg:"bg-[#D4AF37]/10",
+      text:"text-[#D4AF37]",
+      border:"hover:border-[#D4AF37]/30",
     },
     amber: {
-      bg: "bg-[#D4AF37]/10",
-      text: "text-[#D4AF37]",
-      border: "hover:border-[#D4AF37]/30",
+      bg:"bg-[#D4AF37]/10",
+      text:"text-[#D4AF37]",
+      border:"hover:border-[#D4AF37]/30",
     },
     blue: {
-      bg: "bg-blue-500/10",
-      text: "text-blue-600",
-      border: "hover:border-blue-500/30",
+      bg:"bg-blue-500/10",
+      text:"text-blue-600",
+      border:"hover:border-blue-500/30",
     },
     purple: {
-      bg: "bg-purple-500/10",
-      text: "text-purple-600",
-      border: "hover:border-purple-500/30",
+      bg:"bg-purple-500/10",
+      text:"text-purple-600",
+      border:"hover:border-purple-500/30",
     },
     rose: {
-      bg: "bg-rose-500/10",
-      text: "text-rose-600",
-      border: "hover:border-rose-500/30",
+      bg:"bg-rose-500/10",
+      text:"text-rose-600",
+      border:"hover:border-rose-500/30",
     },
     cyan: {
-      bg: "bg-cyan-500/10",
-      text: "text-cyan-600",
-      border: "hover:border-cyan-500/30",
+      bg:"bg-cyan-500/10",
+      text:"text-cyan-600",
+      border:"hover:border-cyan-500/30",
     },
   };
 
@@ -115,14 +125,14 @@ function FeatureCard({
   return (
     <Card
       className={cn(
-        "h-full border-2 border-transparent transition-colors",
+"h-full border-2 border-transparent transition-colors",
         classes.border
       )}
     >
       <CardHeader>
         <div
           className={cn(
-            "h-12 w-12 rounded-xl flex items-center justify-center mb-4",
+"h-12 w-12 rounded-xl flex items-center justify-center mb-4",
             classes.bg
           )}
         >
@@ -217,12 +227,12 @@ export default function PlatformFeatures() {
             </FadeInUp>
 
             <FadeInUp delay={0.1}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
+              <H1 className="text-4xl sm:text-5xl lg:text-6xl font-display  mb-6 leading-tight">
                 Bank-Grade Infrastructure
                 <span className="block text-[#D4AF37]">
                   for Bioenergy Finance
                 </span>
-              </h1>
+              </H1>
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
@@ -270,9 +280,9 @@ export default function PlatformFeatures() {
             <Badge variant="outline" className="mb-4">
               Core Platform
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Everything You Need, Built In
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From supply discovery to covenant monitoring — a complete
               infrastructure stack.
@@ -287,10 +297,10 @@ export default function PlatformFeatures() {
                 description="Browse and list long-term biomass supply contracts up to 25 years forward."
                 color="emerald"
                 features={[
-                  "Filter by crop type, region, volume",
-                  "View supplier GQ ratings",
-                  "Submit expressions of interest",
-                  "Negotiate directly on platform",
+"Filter by crop type, region, volume",
+"View supplier GQ ratings",
+"Submit expressions of interest",
+"Negotiate directly on platform",
                 ]}
               />
             </StaggerItem>
@@ -302,10 +312,10 @@ export default function PlatformFeatures() {
                 description="Standardized AAA-CCC ratings that lenders understand and trust."
                 color="amber"
                 features={[
-                  "5-pillar assessment framework",
-                  "Weighted scoring methodology",
-                  "Rating watch and outlook",
-                  "Historical trend analysis",
+"5-pillar assessment framework",
+"Weighted scoring methodology",
+"Rating watch and outlook",
+"Historical trend analysis",
                 ]}
               />
             </StaggerItem>
@@ -317,10 +327,10 @@ export default function PlatformFeatures() {
                 description="GQ1-GQ4 tiers standardize supplier assessment across the industry."
                 color="emerald"
                 features={[
-                  "Progressive tier advancement",
-                  "Verification requirements",
-                  "Track record documentation",
-                  "Certification integration",
+"Progressive tier advancement",
+"Verification requirements",
+"Track record documentation",
+"Certification integration",
                 ]}
               />
             </StaggerItem>
@@ -332,10 +342,10 @@ export default function PlatformFeatures() {
                 description="Automated daily checks with instant breach alerts to all stakeholders."
                 color="blue"
                 features={[
-                  "Contract expiration tracking",
-                  "Volume threshold monitoring",
-                  "Supplier status changes",
-                  "Custom covenant rules",
+"Contract expiration tracking",
+"Volume threshold monitoring",
+"Supplier status changes",
+"Custom covenant rules",
                 ]}
               />
             </StaggerItem>
@@ -347,10 +357,10 @@ export default function PlatformFeatures() {
                 description="Visualize supply chains geospatially with advanced filtering and analysis."
                 color="cyan"
                 features={[
-                  "Supplier location mapping",
-                  "Concentration analysis",
-                  "Distance calculations",
-                  "Regional statistics",
+"Supplier location mapping",
+"Concentration analysis",
+"Distance calculations",
+"Regional statistics",
                 ]}
               />
             </StaggerItem>
@@ -362,10 +372,10 @@ export default function PlatformFeatures() {
                 description="Match supply availability with buyer requirements automatically."
                 color="purple"
                 features={[
-                  "Buyer requirement posting",
-                  "Automated matching",
-                  "Interest notifications",
-                  "Market intelligence",
+"Buyer requirement posting",
+"Automated matching",
+"Interest notifications",
+"Market intelligence",
                 ]}
               />
             </StaggerItem>
@@ -383,9 +393,9 @@ export default function PlatformFeatures() {
             >
               Security & Compliance
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Bank-Grade Security Built In
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Every feature designed with financial compliance requirements from
               day one.
@@ -396,44 +406,44 @@ export default function PlatformFeatures() {
             {[
               {
                 icon: Fingerprint,
-                title: "SHA-256 Evidence Chain",
+                title:"SHA-256 Evidence Chain",
                 description:
-                  "Every document cryptographically hashed and chained",
+"Every document cryptographically hashed and chained",
               },
               {
                 icon: History,
-                title: "Temporal Versioning",
-                description: "Query any data point at any historical date",
+                title:"Temporal Versioning",
+                description:"Query any data point at any historical date",
               },
               {
                 icon: Shield,
-                title: "SOC 2 Type II",
-                description: "Enterprise security controls and audit logging",
+                title:"SOC 2 Type II",
+                description:"Enterprise security controls and audit logging",
               },
               {
                 icon: Lock,
-                title: "256-bit Encryption",
-                description: "Data encrypted at rest and in transit",
+                title:"256-bit Encryption",
+                description:"Data encrypted at rest and in transit",
               },
               {
                 icon: Database,
-                title: "AU Data Residency",
-                description: "All data stored in Australian data centers",
+                title:"AU Data Residency",
+                description:"All data stored in Australian data centers",
               },
               {
                 icon: FileCheck,
-                title: "Compliance Certificates",
-                description: "Auditor-ready packages with crypto signatures",
+                title:"Compliance Certificates",
+                description:"Auditor-ready packages with crypto signatures",
               },
               {
                 icon: Activity,
-                title: "99.9% Uptime SLA",
-                description: "Enterprise-grade availability guarantee",
+                title:"99.9% Uptime SLA",
+                description:"Enterprise-grade availability guarantee",
               },
               {
                 icon: Key,
-                title: "SSO Support",
-                description: "Enterprise single sign-on integration",
+                title:"SSO Support",
+                description:"Enterprise single sign-on integration",
               },
             ].map((item, i) => (
               <StaggerItem key={i}>
@@ -441,7 +451,7 @@ export default function PlatformFeatures() {
                   <div className="h-10 w-10 rounded-lg bg-[#D4AF37]/20 flex items-center justify-center mb-4">
                     <item.icon className="h-5 w-5 text-[#D4AF37]" />
                   </div>
-                  <h3 className="font-semibold mb-2">{item.title}</h3>
+                  <H3 className="mb-2">{item.title}</H3>
                   <p className="text-sm text-gray-500">{item.description}</p>
                 </div>
               </StaggerItem>
@@ -454,9 +464,9 @@ export default function PlatformFeatures() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Features by User Type
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Explore capabilities tailored to your role in the bioenergy supply
               chain.
@@ -484,33 +494,33 @@ export default function PlatformFeatures() {
                 {[
                   {
                     icon: Sprout,
-                    title: "Producer Registration",
-                    desc: "Complete onboarding with ABN verification and property details",
+                    title:"Producer Registration",
+                    desc:"Complete onboarding with ABN verification and property details",
                   },
                   {
                     icon: Calendar,
-                    title: "Futures Listing",
-                    desc: "Project yields up to 25 years forward with annual breakdown",
+                    title:"Futures Listing",
+                    desc:"Project yields up to 25 years forward with annual breakdown",
                   },
                   {
                     icon: Award,
-                    title: "GQ Qualification",
-                    desc: "Progress through GQ4 to GQ1 as you build track record",
+                    title:"GQ Qualification",
+                    desc:"Progress through GQ4 to GQ1 as you build track record",
                   },
                   {
                     icon: FileText,
-                    title: "EOI Management",
-                    desc: "Receive and respond to buyer expressions of interest",
+                    title:"EOI Management",
+                    desc:"Receive and respond to buyer expressions of interest",
                   },
                   {
                     icon: BarChart3,
-                    title: "Performance Dashboard",
-                    desc: "Track deliveries, quality tests, and compliance status",
+                    title:"Performance Dashboard",
+                    desc:"Track deliveries, quality tests, and compliance status",
                   },
                   {
                     icon: DollarSign,
-                    title: "Fair Pricing",
-                    desc: "Transparent market pricing based on verified quality",
+                    title:"Fair Pricing",
+                    desc:"Transparent market pricing based on verified quality",
                   },
                 ].map((item, i) => (
                   <Card
@@ -550,33 +560,33 @@ export default function PlatformFeatures() {
                 {[
                   {
                     icon: Search,
-                    title: "Supply Discovery",
-                    desc: "Browse verified suppliers filtered by region, crop, and capacity",
+                    title:"Supply Discovery",
+                    desc:"Browse verified suppliers filtered by region, crop, and capacity",
                   },
                   {
                     icon: Target,
-                    title: "EOI Submission",
-                    desc: "Express interest in futures with volume and term preferences",
+                    title:"EOI Submission",
+                    desc:"Express interest in futures with volume and term preferences",
                   },
                   {
                     icon: Layers,
-                    title: "Portfolio Builder",
-                    desc: "Aggregate suppliers into diversified supply chains",
+                    title:"Portfolio Builder",
+                    desc:"Aggregate suppliers into diversified supply chains",
                   },
                   {
                     icon: Award,
-                    title: "Bankability Assessment",
-                    desc: "Get AAA-CCC rating on your supply portfolio",
+                    title:"Bankability Assessment",
+                    desc:"Get AAA-CCC rating on your supply portfolio",
                   },
                   {
                     icon: PieChart,
-                    title: "Concentration Analysis",
-                    desc: "Analyze single-supplier and geographic concentration",
+                    title:"Concentration Analysis",
+                    desc:"Analyze single-supplier and geographic concentration",
                   },
                   {
                     icon: FileCheck,
-                    title: "Compliance Packages",
-                    desc: "Generate bank-ready documentation with crypto signatures",
+                    title:"Compliance Packages",
+                    desc:"Generate bank-ready documentation with crypto signatures",
                   },
                 ].map((item, i) => (
                   <Card
@@ -616,33 +626,33 @@ export default function PlatformFeatures() {
                 {[
                   {
                     icon: Eye,
-                    title: "Portfolio Dashboard",
-                    desc: "Monitor all financed projects in one view",
+                    title:"Portfolio Dashboard",
+                    desc:"Monitor all financed projects in one view",
                   },
                   {
                     icon: Clock,
-                    title: "Covenant Monitoring",
-                    desc: "Automated daily checks with instant breach alerts",
+                    title:"Covenant Monitoring",
+                    desc:"Automated daily checks with instant breach alerts",
                   },
                   {
                     icon: History,
-                    title: "Time Machine",
-                    desc: "Reconstruct any data point at historical dates",
+                    title:"Time Machine",
+                    desc:"Reconstruct any data point at historical dates",
                   },
                   {
                     icon: Bell,
-                    title: "Alert Center",
-                    desc: "Centralized notifications for all covenant events",
+                    title:"Alert Center",
+                    desc:"Centralized notifications for all covenant events",
                   },
                   {
                     icon: LineChart,
-                    title: "Rating Tracker",
-                    desc: "Historical trends and outlook forecasts",
+                    title:"Rating Tracker",
+                    desc:"Historical trends and outlook forecasts",
                   },
                   {
                     icon: Webhook,
-                    title: "API Integration",
-                    desc: "Connect to loan management and risk systems",
+                    title:"API Integration",
+                    desc:"Connect to loan management and risk systems",
                   },
                 ].map((item, i) => (
                   <Card
@@ -688,21 +698,21 @@ export default function PlatformFeatures() {
               <Badge variant="outline" className="mb-4">
                 Developer Tools
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+              <H2 className="text-3xl md:text-4xl font-display  mb-6">
                 Build on ABFI Infrastructure
-              </h2>
+              </H2>
               <p className="text-lg text-gray-600 mb-6">
                 Comprehensive APIs for integration with your existing systems.
                 Webhooks for real-time event notifications.
               </p>
               <ul className="space-y-4 mb-8">
                 {[
-                  "REST API with full CRUD operations",
-                  "Webhook notifications for events",
-                  "Bulk data export (CSV, JSON)",
-                  "OAuth 2.0 authentication",
-                  "Rate limiting and quotas",
-                  "Sandbox environment for testing",
+"REST API with full CRUD operations",
+"Webhook notifications for events",
+"Bulk data export (CSV, JSON)",
+"OAuth 2.0 authentication",
+"Rate limiting and quotas",
+"Sandbox environment for testing",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-[#D4AF37] shrink-0" />
@@ -724,20 +734,20 @@ export default function PlatformFeatures() {
                     {`GET /api/v1/projects/{id}/rating
 
 {
-  "project_id": "PRJ-2024-0042",
-  "rating": {
-    "current": "AA+",
-    "outlook": "stable",
-    "effective_date": "2024-03-15"
+"project_id":"PRJ-2024-0042",
+"rating": {
+"current":"AA+",
+"outlook":"stable",
+"effective_date":"2024-03-15"
   },
-  "pillars": {
-    "volume_security": 92,
-    "counterparty_quality": 88,
-    "contract_structure": 95,
-    "concentration_risk": 78,
-    "operational_readiness": 85
+"pillars": {
+"volume_security": 92,
+"counterparty_quality": 88,
+"contract_structure": 95,
+"concentration_risk": 78,
+"operational_readiness": 85
   },
-  "evidence_hash": "a3f8b2c1..."
+"evidence_hash":"a3f8b2c1..."
 }`}
                   </pre>
                 </CardContent>
@@ -751,9 +761,9 @@ export default function PlatformFeatures() {
       <section className="py-20 bg-gradient-to-br from-primary via-primary to-primary/90 text-[#D4AF37]-foreground">
         <div className="container mx-auto px-4">
           <FadeInUp className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            <H2 className="text-3xl md:text-4xl font-display  mb-6">
               Ready to Get Started?
-            </h2>
+            </H2>
             <p className="text-xl opacity-90 mb-10">
               Join Australia's leading bioenergy supply chain platform today.
             </p>
@@ -807,7 +817,7 @@ export default function PlatformFeatures() {
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-black">Platform</h3>
+              <H3 className="mb-4 text-black">Platform</H3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
@@ -836,7 +846,7 @@ export default function PlatformFeatures() {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-black">Resources</h3>
+              <H3 className="mb-4 text-black">Resources</H3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
@@ -865,7 +875,7 @@ export default function PlatformFeatures() {
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold mb-4 text-black">Legal</h3>
+              <H3 className="mb-4 text-black">Legal</H3>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link

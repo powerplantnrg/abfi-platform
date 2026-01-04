@@ -9,15 +9,15 @@
  * - Typography components for consistent styling
  */
 
-import { Button } from "@/components/ui/Button";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
 import {
   ArrowRight,
   Award,
@@ -40,9 +40,9 @@ import {
   LineChart,
   BadgeCheck,
   ChevronRight,
-} from "lucide-react";
-import { Link } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Link } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   FadeInUp,
   StaggerContainer,
@@ -50,8 +50,8 @@ import {
   HoverCard,
   AnimatedCounter,
   motion,
-} from "@/components/ui/motion";
-import { H1, H2, H3, Body, MetricValue } from "@/components/Typography";
+} from"@/components/ui/motion";
+import { H1, H2, H3, Body, MetricValue } from"@/components/Typography";
 
 // Grower Qualification Tier Component
 function GQTierCard({
@@ -72,24 +72,24 @@ function GQTierCard({
     { bg: string; border: string; text: string }
   > = {
     emerald: {
-      bg: "bg-[#D4AF37]/10",
-      border: "border-[#D4AF37]/30",
-      text: "text-[#D4AF37]",
+      bg:"bg-[#D4AF37]/10",
+      border:"border-[#D4AF37]/30",
+      text:"text-[#D4AF37]",
     },
     green: {
-      bg: "bg-green-500/10",
-      border: "border-green-500/30",
-      text: "text-green-600",
+      bg:"bg-green-500/10",
+      border:"border-green-500/30",
+      text:"text-green-600",
     },
     lime: {
-      bg: "bg-lime-500/10",
-      border: "border-lime-500/30",
-      text: "text-lime-600",
+      bg:"bg-lime-500/10",
+      border:"border-lime-500/30",
+      text:"text-lime-600",
     },
     yellow: {
-      bg: "bg-yellow-500/10",
-      border: "border-yellow-500/30",
-      text: "text-yellow-600",
+      bg:"bg-yellow-500/10",
+      border:"border-yellow-500/30",
+      text:"text-yellow-600",
     },
   };
 
@@ -99,7 +99,7 @@ function GQTierCard({
     <Card className={cn("border-2", classes.border)}>
       <CardHeader>
         <div className="flex items-center justify-between mb-2">
-          <Badge className={cn(classes.bg, classes.text, "border-0")}>
+          <Badge className={cn(classes.bg, classes.text,"border-0")}>
             {tier}
           </Badge>
         </div>
@@ -194,10 +194,10 @@ export default function ForGrowers() {
             </FadeInUp>
 
             <FadeInUp delay={0.1}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
+              <H1 className="text-4xl sm:text-5xl lg:text-6xl font-display  mb-6 leading-tight">
                 Transform Your Land Into
                 <span className="block text-emerald-300">Bankable Assets</span>
-              </h1>
+              </H1>
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
@@ -247,9 +247,9 @@ export default function ForGrowers() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Why Growers Choose ABFI
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Move beyond spot markets. Build long-term value with verified
               credentials and institutional buyers.
@@ -260,27 +260,27 @@ export default function ForGrowers() {
             {[
               {
                 icon: BadgeCheck,
-                title: "Verified Status",
+                title:"Verified Status",
                 description:
-                  "GQ1-GQ4 certification demonstrates your operational excellence to buyers and lenders.",
+"GQ1-GQ4 certification demonstrates your operational excellence to buyers and lenders.",
               },
               {
                 icon: Calendar,
-                title: "25-Year Visibility",
+                title:"25-Year Visibility",
                 description:
-                  "List futures projections up to 25 years forward. Let buyers find you before planting.",
+"List futures projections up to 25 years forward. Let buyers find you before planting.",
               },
               {
                 icon: DollarSign,
-                title: "Fair Price Discovery",
+                title:"Fair Price Discovery",
                 description:
-                  "Transparent marketplace pricing based on verified quality, location, and contract terms.",
+"Transparent marketplace pricing based on verified quality, location, and contract terms.",
               },
               {
                 icon: Handshake,
-                title: "Direct Buyer Access",
+                title:"Direct Buyer Access",
                 description:
-                  "Connect directly with project developers and off-takers. No intermediaries.",
+"Connect directly with project developers and off-takers. No intermediaries.",
               },
             ].map((item, i) => (
               <StaggerItem key={i}>
@@ -310,9 +310,9 @@ export default function ForGrowers() {
             <Badge variant="outline" className="mb-4">
               Grower Qualification System
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Your Path to GQ1 Status
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Progress through standardized tiers as you demonstrate operational
               maturity. Higher tiers unlock better pricing and buyer access.
@@ -327,10 +327,10 @@ export default function ForGrowers() {
                 description="New entrants with basic registration"
                 color="yellow"
                 requirements={[
-                  "ABN verification",
-                  "Basic property details",
-                  "Crop type declaration",
-                  "Initial yield estimate",
+"ABN verification",
+"Basic property details",
+"Crop type declaration",
+"Initial yield estimate",
                 ]}
               />
             </StaggerItem>
@@ -341,10 +341,10 @@ export default function ForGrowers() {
                 description="Established operations building track record"
                 color="lime"
                 requirements={[
-                  "All GQ4 requirements",
-                  "12+ months operational data",
-                  "Quality test results",
-                  "Site assessment completed",
+"All GQ4 requirements",
+"12+ months operational data",
+"Quality test results",
+"Site assessment completed",
                 ]}
               />
             </StaggerItem>
@@ -355,10 +355,10 @@ export default function ForGrowers() {
                 description="Proven suppliers with verified history"
                 color="green"
                 requirements={[
-                  "All GQ3 requirements",
-                  "3+ years track record",
-                  "Third-party certification",
-                  "Sustainability documentation",
+"All GQ3 requirements",
+"3+ years track record",
+"Third-party certification",
+"Sustainability documentation",
                 ]}
               />
             </StaggerItem>
@@ -369,10 +369,10 @@ export default function ForGrowers() {
                 description="Top-tier suppliers for institutional buyers"
                 color="emerald"
                 requirements={[
-                  "All GQ2 requirements",
-                  "5+ years consistent delivery",
-                  "Financial audited records",
-                  "Multi-site capability",
+"All GQ2 requirements",
+"5+ years consistent delivery",
+"Financial audited records",
+"Multi-site capability",
                 ]}
               />
             </StaggerItem>
@@ -384,9 +384,9 @@ export default function ForGrowers() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               How It Works
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               From registration to receiving EOIs — your path to long-term
               contracts.
@@ -397,31 +397,31 @@ export default function ForGrowers() {
             <StaggerContainer className="space-y-8">
               {[
                 {
-                  step: "01",
-                  title: "Register & Verify",
+                  step:"01",
+                  title:"Register & Verify",
                   description:
-                    "Complete your producer registration with ABN verification and property details. Upload supporting documentation to establish your baseline GQ tier.",
+"Complete your producer registration with ABN verification and property details. Upload supporting documentation to establish your baseline GQ tier.",
                   icon: FileCheck,
                 },
                 {
-                  step: "02",
-                  title: "Create Futures Listings",
+                  step:"02",
+                  title:"Create Futures Listings",
                   description:
-                    "Project your yields up to 25 years forward. Define crop types, volumes, quality expectations, and indicative pricing for each harvest year.",
+"Project your yields up to 25 years forward. Define crop types, volumes, quality expectations, and indicative pricing for each harvest year.",
                   icon: Calendar,
                 },
                 {
-                  step: "03",
-                  title: "Receive Expressions of Interest",
+                  step:"03",
+                  title:"Receive Expressions of Interest",
                   description:
-                    "Verified buyers browse the marketplace and submit EOIs on your listings. Review offers, negotiate terms, and accept the best deals.",
+"Verified buyers browse the marketplace and submit EOIs on your listings. Review offers, negotiate terms, and accept the best deals.",
                   icon: Target,
                 },
                 {
-                  step: "04",
-                  title: "Execute & Deliver",
+                  step:"04",
+                  title:"Execute & Deliver",
                   description:
-                    "Finalize contracts through the platform. Track deliveries, upload quality certificates, and build your track record for higher GQ tiers.",
+"Finalize contracts through the platform. Track deliveries, upload quality certificates, and build your track record for higher GQ tiers.",
                   icon: Handshake,
                 },
               ].map((item, i) => (
@@ -437,7 +437,7 @@ export default function ForGrowers() {
                     <div className="flex-1 pt-2">
                       <div className="flex items-center gap-3 mb-2">
                         <item.icon className="h-5 w-5 text-[#D4AF37]" />
-                        <h3 className="text-xl font-semibold">{item.title}</h3>
+                        <H3 className="text-xl">{item.title}</H3>
                       </div>
                       <p className="text-gray-600">
                         {item.description}
@@ -455,9 +455,9 @@ export default function ForGrowers() {
       <section className="py-20 bg-white text-black">
         <div className="container mx-auto px-4">
           <FadeInUp className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Supported Perennial Crops
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Long-rotation biomass crops that qualify for futures listing on
               ABFI.
@@ -466,16 +466,16 @@ export default function ForGrowers() {
 
           <StaggerContainer className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
             {[
-              { name: "Bamboo", icon: Sprout },
-              { name: "Eucalyptus", icon: TreeDeciduous },
-              { name: "Rotation Forestry", icon: TreeDeciduous },
-              { name: "Poplar", icon: TreeDeciduous },
-              { name: "Willow", icon: TreeDeciduous },
-              { name: "Miscanthus", icon: Wheat },
-              { name: "Switchgrass", icon: Wheat },
-              { name: "Arundo Donax", icon: Wheat },
-              { name: "Industrial Hemp", icon: Leaf },
-              { name: "Other Perennials", icon: Sprout },
+              { name:"Bamboo", icon: Sprout },
+              { name:"Eucalyptus", icon: TreeDeciduous },
+              { name:"Rotation Forestry", icon: TreeDeciduous },
+              { name:"Poplar", icon: TreeDeciduous },
+              { name:"Willow", icon: TreeDeciduous },
+              { name:"Miscanthus", icon: Wheat },
+              { name:"Switchgrass", icon: Wheat },
+              { name:"Arundo Donax", icon: Wheat },
+              { name:"Industrial Hemp", icon: Leaf },
+              { name:"Other Perennials", icon: Sprout },
             ].map((crop, i) => (
               <StaggerItem key={i}>
                 <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center hover:bg-white/10 transition-colors">
@@ -524,9 +524,9 @@ export default function ForGrowers() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <FadeInUp className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            <H2 className="text-3xl md:text-4xl font-display  mb-6">
               Ready to List Your Biomass Futures?
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 mb-8">
               Join hundreds of growers who are building long-term value through
               verified supply agreements.

@@ -7,25 +7,25 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { trpc } from "@/lib/trpc";
+import { useState } from"react";
+import { trpc } from"@/lib/trpc";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/select";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   AlertCircle,
   CheckCircle2,
@@ -37,16 +37,16 @@ import {
   Activity,
   Users,
   ClipboardCheck,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { H1, H3, Body, MetricValue, DataLabel } from "@/components/Typography";
+} from"lucide-react";
+import { cn } from"@/lib/utils";
+import { H1, H3, Body, MetricValue, DataLabel } from"@/components/Typography";
 
 // Quick stats for top bar
 const QUICK_STATS = [
-  { label: "Audit Events", value: "1,247", icon: Activity, color: "text-[#D4AF37]" },
-  { label: "Active Consents", value: "156", icon: Users, color: "text-blue-600" },
-  { label: "Open Disputes", value: "3", icon: AlertCircle, color: "text-red-500" },
-  { label: "Compliance Score", value: "94%", icon: ClipboardCheck, color: "text-green-600" },
+  { label:"Audit Events", value:"1,247", icon: Activity, color:"text-[#D4AF37]" },
+  { label:"Active Consents", value:"156", icon: Users, color:"text-blue-600" },
+  { label:"Open Disputes", value:"3", icon: AlertCircle, color:"text-red-500" },
+  { label:"Compliance Score", value:"94%", icon: ClipboardCheck, color:"text-green-600" },
 ];
 
 // Metric card helper component
@@ -94,13 +94,13 @@ export default function ComplianceDashboard() {
 
   const getComplianceBadge = (level: string) => {
     switch (level) {
-      case "excellent":
+      case"excellent":
         return <Badge className="bg-green-100 text-green-800 border-green-200">Excellent</Badge>;
-      case "good":
+      case"good":
         return <Badge className="bg-blue-100 text-blue-800 border-blue-200">Good</Badge>;
-      case "fair":
+      case"fair":
         return <Badge className="bg-amber-100 text-amber-800 border-amber-200">Fair</Badge>;
-      case "needs_attention":
+      case"needs_attention":
         return <Badge className="bg-red-100 text-red-800 border-red-200">Needs Attention</Badge>;
       default:
         return <Badge variant="outline">Unknown</Badge>;
@@ -109,7 +109,7 @@ export default function ComplianceDashboard() {
 
   const downloadReport = () => {
     if (!reportSummary.data) return;
-    const blob = new Blob([reportSummary.data], { type: "text/plain" });
+    const blob = new Blob([reportSummary.data], { type:"text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -226,17 +226,17 @@ export default function ComplianceDashboard() {
               </CardTitle>
               <CardDescription>
                 Q{report.data.period.quarter} {report.data.period.year} (
-                {new Date(report.data.period.startDate).toLocaleDateString()} -{" "}
+                {new Date(report.data.period.startDate).toLocaleDateString()} -{""}
                 {new Date(report.data.period.endDate).toLocaleDateString()})
               </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <H3 className="mb-3 flex items-center gap-2">
                     <AlertCircle className="h-5 w-5 text-yellow-500" />
                     Key Findings
-                  </h3>
+                  </H3>
                   {report.data.summary.keyFindings.length === 0 ? (
                     <p className="text-sm text-gray-600">
                       No significant findings
@@ -253,10 +253,10 @@ export default function ComplianceDashboard() {
                   )}
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <H3 className="mb-3 flex items-center gap-2">
                     <CheckCircle2 className="h-5 w-5 text-green-500" />
                     Recommendations
-                  </h3>
+                  </H3>
                   {report.data.summary.recommendations.length === 0 ? (
                     <p className="text-sm text-gray-600">
                       No recommendations
@@ -318,7 +318,7 @@ export default function ComplianceDashboard() {
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold mb-3">Top Actions</h4>
+                      <H4 className="mb-3">Top Actions</H4>
                       <div className="space-y-2">
                         {report.data.auditMetrics?.eventsByAction
                           .slice(0, 5)
@@ -335,7 +335,7 @@ export default function ComplianceDashboard() {
                     </div>
 
                     <div>
-                      <h4 className="font-semibold mb-3">Top Entity Types</h4>
+                      <H4 className="mb-3">Top Entity Types</H4>
                       <div className="space-y-2">
                         {report.data.auditMetrics?.eventsByEntity
                           .slice(0, 5)
@@ -387,7 +387,7 @@ export default function ComplianceDashboard() {
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold mb-3">Overrides by Type</h4>
+                      <H4 className="mb-3">Overrides by Type</H4>
                       <div className="space-y-2">
                         {report.data.overrideMetrics?.overridesByType.map(
                           (type, i) => (
@@ -406,9 +406,9 @@ export default function ComplianceDashboard() {
                     </div>
 
                     <div>
-                      <h4 className="font-semibold mb-3">
+                      <H4 className="mb-3">
                         Overrides by Entity
-                      </h4>
+                      </H4>
                       <div className="space-y-2">
                         {report.data.overrideMetrics?.overridesByEntity.map(
                           (entity, i) => (
@@ -455,7 +455,7 @@ export default function ComplianceDashboard() {
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold mb-3">Consents by Type</h4>
+                      <H4 className="mb-3">Consents by Type</H4>
                       <div className="space-y-2">
                         {report.data.consentMetrics?.consentsByType.map(
                           (consent, i) => (
@@ -465,7 +465,7 @@ export default function ComplianceDashboard() {
                             >
                               <span className="text-sm">
                                 {consent.consentType} (
-                                {consent.granted ? "Granted" : "Denied"})
+                                {consent.granted ?"Granted" :"Denied"})
                               </span>
                               <Badge variant="outline">{consent.count}</Badge>
                             </div>
@@ -477,9 +477,9 @@ export default function ComplianceDashboard() {
                     {(report.data.consentMetrics?.withdrawalsByType?.length ||
                       0) > 0 && (
                       <div>
-                        <h4 className="font-semibold mb-3">
+                        <H4 className="mb-3">
                           Withdrawals by Type
-                        </h4>
+                        </H4>
                         <div className="space-y-2">
                           {report.data.consentMetrics?.withdrawalsByType?.map(
                             (withdrawal, i) => (
@@ -534,7 +534,7 @@ export default function ComplianceDashboard() {
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold mb-3">Disputes by Type</h4>
+                      <H4 className="mb-3">Disputes by Type</H4>
                       <div className="space-y-2">
                         {report.data.disputeMetrics?.disputesByType.map(
                           (type, i) => (
@@ -553,7 +553,7 @@ export default function ComplianceDashboard() {
                     </div>
 
                     <div>
-                      <h4 className="font-semibold mb-3">Disputes by Status</h4>
+                      <H4 className="mb-3">Disputes by Status</H4>
                       <div className="space-y-2">
                         {report.data.disputeMetrics?.disputesByStatus.map(
                           (status, i) => (
@@ -572,9 +572,9 @@ export default function ComplianceDashboard() {
                     {(report.data.disputeMetrics?.resolutionOutcomes?.length ||
                       0) > 0 && (
                       <div>
-                        <h4 className="font-semibold mb-3">
+                        <H4 className="mb-3">
                           Resolution Outcomes
-                        </h4>
+                        </H4>
                         <div className="space-y-2">
                           {report.data.disputeMetrics?.resolutionOutcomes?.map(
                             (outcome, i) => (
@@ -627,22 +627,22 @@ export default function ComplianceDashboard() {
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h4 className="font-semibold mb-3">
+                      <H4 className="mb-3">
                         Certificates Issued
-                      </h4>
+                      </H4>
                       <div className="text-3xl font-bold">
                         {report.data.certificateMetrics?.totalCertificates || 0}
                       </div>
                       <p className="text-sm text-gray-600 mt-1">
-                        {report.data.certificateMetrics?.expiringSoon || 0}{" "}
+                        {report.data.certificateMetrics?.expiringSoon || 0}{""}
                         expiring soon
                       </p>
                     </div>
 
                     <div>
-                      <h4 className="font-semibold mb-3">
+                      <H4 className="mb-3">
                         Certificates by Type
-                      </h4>
+                      </H4>
                       <div className="space-y-2">
                         {report.data.certificateMetrics?.certificatesByType
                           .slice(0, 5)

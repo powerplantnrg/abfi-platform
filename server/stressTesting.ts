@@ -8,6 +8,7 @@ import {
   stressScenarios,
   stressTestResults,
   contractEnforceabilityScores,
+  projects,
   type InsertStressScenario,
   type InsertStressTestResult,
   type InsertContractEnforceabilityScore,
@@ -285,8 +286,18 @@ export async function runStressTest(params: {
   const stressRating = scoreToRating(stressScore);
   const ratingDelta = calculateRatingDelta(params.baseRating, stressRating);
 
-  // Calculate Tier 1 coverage (simplified)
-  const baseTier1Coverage = 100; // Placeholder
+  // Calculate Tier 1 coverage from actual project data
+  const [project] = await db
+    .select()
+    .from(projects)
+    .where(eq(projects.id, params.projectId));
+
+  const annualDemand = project?.annualFeedstockVolume || 1; // Avoid division by zero
+  const totalAgreementVolume = params.agreements.reduce(
+    (sum, a) => sum + (a.committedVolume || 0),
+    0
+  );
+  const baseTier1Coverage = Math.round((totalAgreementVolume / annualDemand) * 100);
   const stressTier1Coverage = Math.max(
     0,
     baseTier1Coverage - stressMetrics.supplyShortfallPercent

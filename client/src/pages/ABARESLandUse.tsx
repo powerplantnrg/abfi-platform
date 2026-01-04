@@ -1,22 +1,32 @@
-import { useState, useEffect } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+/**
+ * ABARES Land Use Mapping - Nextgen Design
+ *
+ * Features:
+ * - Interactive land use map visualization
+ * - Regional feedstock potential analysis
+ * - Agricultural commodity data integration
+ * - Typography components for consistent styling
+ */
+
+import { useState, useEffect } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -24,15 +34,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/dialog";
+import { Progress } from"@/components/ui/progress";
 import {
   Map,
   Layers,
@@ -49,8 +59,8 @@ import {
   ChevronRight,
   BarChart3,
   TrendingUp,
-} from "lucide-react";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"lucide-react";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 // Types
 interface LandUseClass {
@@ -81,15 +91,15 @@ interface FeedstockRegion {
   bioenergyPotential: string;
 }
 
-const COLORS = ["#1a472a", "#2d5a3d", "#c4a35a", "#4a90d9", "#d45500", "#0077be"];
+const COLORS = ["#1a472a","#2d5a3d","#c4a35a","#4a90d9","#d45500","#0077be"];
 
 const LAND_USE_ICONS: Record<string, React.ReactNode> = {
-  "1": <TreeDeciduous className="h-4 w-4" />,
-  "2": <TreeDeciduous className="h-4 w-4" />,
-  "3": <Wheat className="h-4 w-4" />,
-  "4": <Droplets className="h-4 w-4" />,
-  "5": <Factory className="h-4 w-4" />,
-  "6": <Droplets className="h-4 w-4" />,
+"1": <TreeDeciduous className="h-4 w-4" />,
+"2": <TreeDeciduous className="h-4 w-4" />,
+"3": <Wheat className="h-4 w-4" />,
+"4": <Droplets className="h-4 w-4" />,
+"5": <Factory className="h-4 w-4" />,
+"6": <Droplets className="h-4 w-4" />,
 };
 
 export default function ABARESLandUse() {
@@ -172,19 +182,19 @@ export default function ABARESLandUse() {
     setRegionDialogOpen(true);
   };
 
-  const filteredRegions = selectedState === "all"
+  const filteredRegions = selectedState ==="all"
     ? feedstockRegions
     : feedstockRegions.filter((r) => r.state === selectedState);
 
   const getPotentialBadge = (potential: string) => {
     switch (potential.toLowerCase()) {
-      case "high":
+      case"high":
         return <Badge className="bg-green-100 text-green-800">High</Badge>;
-      case "medium-high":
+      case"medium-high":
         return <Badge className="bg-lime-100 text-lime-800">Medium-High</Badge>;
-      case "medium":
+      case"medium":
         return <Badge className="bg-yellow-100 text-yellow-800">Medium</Badge>;
-      case "low":
+      case"low":
         return <Badge className="bg-gray-100 text-gray-800">Low</Badge>;
       default:
         return <Badge>{potential}</Badge>;
@@ -205,7 +215,7 @@ export default function ABARESLandUse() {
     <div className="container py-8">
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">ABARES Land Use Mapping</h1>
+          <H1 className="text-3xl  mb-2">ABARES Land Use Mapping</H1>
           <p className="text-gray-600">
             Catchment Scale Land Use of Australia (CLUM) - Bioenergy feedstock analysis
           </p>
@@ -238,7 +248,7 @@ export default function ABARESLandUse() {
               <div>
                 <p className="text-sm text-gray-600">Total Land Area</p>
                 <p className="text-2xl font-bold">
-                  {statistics ? formatArea(statistics.national?.totalArea || 0) : "-"}
+                  {statistics ? formatArea(statistics.national?.totalArea || 0) :"-"}
                 </p>
               </div>
             </div>
@@ -254,7 +264,7 @@ export default function ABARESLandUse() {
               <div>
                 <p className="text-sm text-gray-600">Agricultural Land</p>
                 <p className="text-2xl font-bold">
-                  {statistics ? formatArea(statistics.national?.agriculturalLand?.total || 0) : "-"}
+                  {statistics ? formatArea(statistics.national?.agriculturalLand?.total || 0) :"-"}
                 </p>
               </div>
             </div>
@@ -270,7 +280,7 @@ export default function ABARESLandUse() {
               <div>
                 <p className="text-sm text-gray-600">Feedstock Potential</p>
                 <p className="text-2xl font-bold">
-                  {statistics ? formatTonnes(statistics.bioenergyPotential?.availableForBioenergy || 0) : "-"}
+                  {statistics ? formatTonnes(statistics.bioenergyPotential?.availableForBioenergy || 0) :"-"}
                 </p>
               </div>
             </div>
@@ -286,7 +296,7 @@ export default function ABARESLandUse() {
               <div>
                 <p className="text-sm text-gray-600">Energy Potential</p>
                 <p className="text-2xl font-bold">
-                  {statistics?.bioenergyPotential?.energyPotential || "-"}
+                  {statistics?.bioenergyPotential?.energyPotential ||"-"}
                 </p>
               </div>
             </div>
@@ -342,7 +352,7 @@ export default function ABARESLandUse() {
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <h3 className="font-semibold">{region.name}</h3>
+                          <H3 className="">{region.name}</H3>
                           <Badge variant="outline" className="mt-1">{region.state}</Badge>
                         </div>
                         {getPotentialBadge(region.bioenergyPotential)}
@@ -412,7 +422,7 @@ export default function ABARESLandUse() {
                       />
                       <ChevronRight
                         className={`h-4 w-4 transition-transform ${
-                          expandedClasses.has(level1.code) ? "rotate-90" : ""
+                          expandedClasses.has(level1.code) ?"rotate-90" :""
                         }`}
                       />
                       <span className="font-medium">{level1.code}. {level1.name}</span>
@@ -434,7 +444,7 @@ export default function ABARESLandUse() {
                               {level2.children && level2.children.length > 0 && (
                                 <ChevronRight
                                   className={`h-3 w-3 transition-transform ${
-                                    expandedClasses.has(level2.code) ? "rotate-90" : ""
+                                    expandedClasses.has(level2.code) ?"rotate-90" :""
                                   }`}
                                 />
                               )}
@@ -442,11 +452,11 @@ export default function ABARESLandUse() {
                               {level2.feedstockPotential && (
                                 <Badge
                                   className={`ml-auto text-xs ${
-                                    level2.feedstockPotential.potential === "high"
-                                      ? "bg-green-100 text-green-800"
-                                      : level2.feedstockPotential.potential === "medium"
-                                        ? "bg-yellow-100 text-yellow-800"
-                                        : "bg-gray-100 text-gray-800"
+                                    level2.feedstockPotential.potential ==="high"
+                                      ?"bg-green-100 text-green-800"
+                                      : level2.feedstockPotential.potential ==="medium"
+                                        ?"bg-yellow-100 text-yellow-800"
+                                        :"bg-gray-100 text-gray-800"
                                   }`}
                                 >
                                   {level2.feedstockPotential.potential} potential
@@ -515,7 +525,7 @@ export default function ABARESLandUse() {
                             cy="50%"
                             outerRadius={100}
                             label={({ name, percentage }) =>
-                              percentage > 5 ? `${percentage.toFixed(0)}%` : ""
+                              percentage > 5 ? `${percentage.toFixed(0)}%` :""
                             }
                           >
                             {statistics.national.byPrimaryClass.map((_: any, index: number) => (
@@ -548,7 +558,7 @@ export default function ABARESLandUse() {
                 {statistics?.national?.agriculturalLand ? (
                   <div className="space-y-4">
                     {Object.entries(statistics.national.agriculturalLand)
-                      .filter(([key]) => key !== "total")
+                      .filter(([key]) => key !=="total")
                       .map(([key, value]) => (
                         <div key={key}>
                           <div className="flex justify-between text-sm mb-1">
@@ -698,17 +708,17 @@ export default function ABARESLandUse() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <H4 className="mb-2 flex items-center gap-2">
                     <Leaf className="h-4 w-4 text-green-600" />
                     Primary Feedstock
-                  </h4>
+                  </H4>
                   <Badge className="bg-green-100 text-green-800 text-base px-3 py-1">
                     {selectedRegion.primaryFeedstock}
                   </Badge>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2">Secondary Feedstocks</h4>
+                  <H4 className="mb-2">Secondary Feedstocks</H4>
                   <div className="flex flex-wrap gap-2">
                     {selectedRegion.secondaryFeedstocks.map((fs, i) => (
                       <Badge key={i} variant="outline">
@@ -719,10 +729,10 @@ export default function ABARESLandUse() {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <H4 className="mb-2 flex items-center gap-2">
                     <Factory className="h-4 w-4" />
                     Existing Infrastructure
-                  </h4>
+                  </H4>
                   <div className="flex flex-wrap gap-2">
                     {selectedRegion.existingInfrastructure.map((inf, i) => (
                       <Badge key={i} variant="secondary">
@@ -733,15 +743,15 @@ export default function ABARESLandUse() {
                 </div>
 
                 <div className="p-4 bg-blue-50 rounded-lg">
-                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <H4 className="mb-2 flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-blue-600" />
                     Location
-                  </h4>
+                  </H4>
                   <p className="text-sm text-gray-600">
                     Center: {selectedRegion.center.lat.toFixed(2)}°S, {selectedRegion.center.lon.toFixed(2)}°E
                   </p>
                   <p className="text-sm text-gray-600">
-                    Bounds: {selectedRegion.bounds.north.toFixed(1)}°N to {selectedRegion.bounds.south.toFixed(1)}°S,{" "}
+                    Bounds: {selectedRegion.bounds.north.toFixed(1)}°N to {selectedRegion.bounds.south.toFixed(1)}°S,{""}
                     {selectedRegion.bounds.west.toFixed(1)}°W to {selectedRegion.bounds.east.toFixed(1)}°E
                   </p>
                 </div>

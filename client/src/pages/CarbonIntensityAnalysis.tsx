@@ -1,17 +1,21 @@
 /**
- * ABFI Carbon Intensity Analysis Page
+ * Carbon Intensity Analysis - Nextgen Design
  *
- * Detailed lifecycle GHG emissions analysis for Australian biofuels projects
+ * Features:
+ * - Feedstock carbon intensity calculations
+ * - Emissions pathway modeling
+ * - Comparative analysis tools
+ * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Progress } from "@/components/ui/progress";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Progress } from"@/components/ui/progress";
+import { ScrollArea } from"@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
@@ -19,14 +23,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   ArrowLeft,
   Factory,
@@ -40,57 +44,57 @@ import {
   AlertTriangle,
   Info,
   BarChart3,
-} from "lucide-react";
+} from"lucide-react";
 
 // Rating colors
 const getCIRatingColor = (rating: string) => {
   const colors: Record<string, string> = {
-    "CI-A": "bg-[#D4AF37] text-black",
-    "CI-B": "bg-green-500 text-black",
-    "CI-C": "bg-[#D4AF37] text-black",
-    "CI-D": "bg-red-500 text-black",
+"CI-A":"bg-[#D4AF37] text-black",
+"CI-B":"bg-green-500 text-black",
+"CI-C":"bg-[#D4AF37] text-black",
+"CI-D":"bg-red-500 text-black",
   };
-  return colors[rating] || "bg-gray-400 text-black";
+  return colors[rating] ||"bg-gray-400 text-black";
 };
 
 // Pathway CI benchmarks
 const pathwayBenchmarks = [
-  { pathway: "HEFA", feedstock: "UCO", ci: "15-25", rating: "CI-A", notes: "Waste pathway; lowest CI", icon: Droplets },
-  { pathway: "HEFA", feedstock: "Tallow", ci: "20-30", rating: "CI-A/B", notes: "Animal rendering waste", icon: Factory },
-  { pathway: "HEFA", feedstock: "Canola (AU)", ci: "28-35", rating: "CI-B", notes: "Low-till Australian practices", icon: Leaf },
-  { pathway: "HEFA", feedstock: "Palm oil", ci: "40-60+", rating: "CI-C/D", notes: "ILUC concerns; may not qualify", icon: AlertTriangle },
-  { pathway: "ATJ", feedstock: "Sugarcane ethanol", ci: "25-35", rating: "CI-B", notes: "Bagasse cogen credit helps", icon: Leaf },
-  { pathway: "ATJ", feedstock: "Wheat ethanol", ci: "30-40", rating: "CI-B/C", notes: "Depends on farming practices", icon: Leaf },
-  { pathway: "ATJ", feedstock: "Corn ethanol (US)", ci: "45-55", rating: "CI-C", notes: "Higher ILUC; lower efficiency", icon: AlertTriangle },
-  { pathway: "HTL", feedstock: "Bagasse", ci: "25-35", rating: "CI-B", notes: "Second-gen; no ILUC", icon: Flame },
-  { pathway: "HTL", feedstock: "Forestry residues", ci: "30-40", rating: "CI-B/C", notes: "Collection logistics add CI", icon: Leaf },
-  { pathway: "Fischer-Tropsch", feedstock: "Biomass", ci: "35-50", rating: "CI-C", notes: "Energy-intensive process", icon: Factory },
-  { pathway: "Power-to-Liquid", feedstock: "Green H2 + DAC", ci: "5-15", rating: "CI-A*", notes: "Only with renewable electricity", icon: Zap },
-  { pathway: "Power-to-Liquid", feedstock: "Grid H2", ci: "60-100+", rating: "CI-D", notes: "Grid carbon intensity dependent", icon: AlertTriangle },
+  { pathway:"HEFA", feedstock:"UCO", ci:"15-25", rating:"CI-A", notes:"Waste pathway; lowest CI", icon: Droplets },
+  { pathway:"HEFA", feedstock:"Tallow", ci:"20-30", rating:"CI-A/B", notes:"Animal rendering waste", icon: Factory },
+  { pathway:"HEFA", feedstock:"Canola (AU)", ci:"28-35", rating:"CI-B", notes:"Low-till Australian practices", icon: Leaf },
+  { pathway:"HEFA", feedstock:"Palm oil", ci:"40-60+", rating:"CI-C/D", notes:"ILUC concerns; may not qualify", icon: AlertTriangle },
+  { pathway:"ATJ", feedstock:"Sugarcane ethanol", ci:"25-35", rating:"CI-B", notes:"Bagasse cogen credit helps", icon: Leaf },
+  { pathway:"ATJ", feedstock:"Wheat ethanol", ci:"30-40", rating:"CI-B/C", notes:"Depends on farming practices", icon: Leaf },
+  { pathway:"ATJ", feedstock:"Corn ethanol (US)", ci:"45-55", rating:"CI-C", notes:"Higher ILUC; lower efficiency", icon: AlertTriangle },
+  { pathway:"HTL", feedstock:"Bagasse", ci:"25-35", rating:"CI-B", notes:"Second-gen; no ILUC", icon: Flame },
+  { pathway:"HTL", feedstock:"Forestry residues", ci:"30-40", rating:"CI-B/C", notes:"Collection logistics add CI", icon: Leaf },
+  { pathway:"Fischer-Tropsch", feedstock:"Biomass", ci:"35-50", rating:"CI-C", notes:"Energy-intensive process", icon: Factory },
+  { pathway:"Power-to-Liquid", feedstock:"Green H2 + DAC", ci:"5-15", rating:"CI-A*", notes:"Only with renewable electricity", icon: Zap },
+  { pathway:"Power-to-Liquid", feedstock:"Grid H2", ci:"60-100+", rating:"CI-D", notes:"Grid carbon intensity dependent", icon: AlertTriangle },
 ];
 
 // Australian project CI estimates
 const projectCIEstimates = [
-  { project: "Malabar Biomethane", pathway: "AD", feedstock: "Sewage sludge", ci: "~15", rating: "CI-A", eligible: true, notes: "Biomethane not SAF" },
-  { project: "Jet Zero Australia", pathway: "ATJ", feedstock: "Sugarcane/wheat ethanol", ci: "~28", rating: "CI-B", eligible: true, notes: "" },
-  { project: "Ampol-GrainCorp-IFM", pathway: "HEFA", feedstock: "Canola/tallow/UCO", ci: "~30", rating: "CI-B", eligible: true, notes: "" },
-  { project: "Licella Holdings", pathway: "HTL", feedstock: "Bagasse", ci: "~30", rating: "CI-B", eligible: true, notes: "" },
-  { project: "Manildra (as feedstock)", pathway: "ATJ", feedstock: "Wheat ethanol", ci: "~32", rating: "CI-B", eligible: true, notes: "" },
-  { project: "Wagner Sustainable", pathway: "ATJ", feedstock: "Various (imported)", ci: "~30", rating: "CI-B", eligible: true, notes: "" },
-  { project: "Viva Energy", pathway: "HEFA", feedstock: "UCO/tallow", ci: "~35", rating: "CI-B", eligible: true, notes: "" },
-  { project: "RDA Charters Towers", pathway: "ATJ", feedstock: "Integrated sugarcane", ci: "~25", rating: "CI-B", eligible: true, notes: "If feedstock exists" },
-  { project: "Northern Oil Yarwun", pathway: "Pyrolysis", feedstock: "Mixed biomass", ci: "~45", rating: "CI-C", eligible: true, notes: "" },
-  { project: "Zero Petroleum", pathway: "PtL", feedstock: "Green H2 + CO2", ci: "~10*", rating: "CI-A*", eligible: true, notes: "If green H2" },
-  { project: "Ethtec", pathway: "ATJ", feedstock: "Cellulosic ethanol", ci: "~35", rating: "CI-B", eligible: true, notes: "" },
-  { project: "XCF Global", pathway: "F-T", feedstock: "Biomass", ci: "~40", rating: "CI-C", eligible: true, notes: "" },
+  { project:"Malabar Biomethane", pathway:"AD", feedstock:"Sewage sludge", ci:"~15", rating:"CI-A", eligible: true, notes:"Biomethane not SAF" },
+  { project:"Jet Zero Australia", pathway:"ATJ", feedstock:"Sugarcane/wheat ethanol", ci:"~28", rating:"CI-B", eligible: true, notes:"" },
+  { project:"Ampol-GrainCorp-IFM", pathway:"HEFA", feedstock:"Canola/tallow/UCO", ci:"~30", rating:"CI-B", eligible: true, notes:"" },
+  { project:"Licella Holdings", pathway:"HTL", feedstock:"Bagasse", ci:"~30", rating:"CI-B", eligible: true, notes:"" },
+  { project:"Manildra (as feedstock)", pathway:"ATJ", feedstock:"Wheat ethanol", ci:"~32", rating:"CI-B", eligible: true, notes:"" },
+  { project:"Wagner Sustainable", pathway:"ATJ", feedstock:"Various (imported)", ci:"~30", rating:"CI-B", eligible: true, notes:"" },
+  { project:"Viva Energy", pathway:"HEFA", feedstock:"UCO/tallow", ci:"~35", rating:"CI-B", eligible: true, notes:"" },
+  { project:"RDA Charters Towers", pathway:"ATJ", feedstock:"Integrated sugarcane", ci:"~25", rating:"CI-B", eligible: true, notes:"If feedstock exists" },
+  { project:"Northern Oil Yarwun", pathway:"Pyrolysis", feedstock:"Mixed biomass", ci:"~45", rating:"CI-C", eligible: true, notes:"" },
+  { project:"Zero Petroleum", pathway:"PtL", feedstock:"Green H2 + CO2", ci:"~10*", rating:"CI-A*", eligible: true, notes:"If green H2" },
+  { project:"Ethtec", pathway:"ATJ", feedstock:"Cellulosic ethanol", ci:"~35", rating:"CI-B", eligible: true, notes:"" },
+  { project:"XCF Global", pathway:"F-T", feedstock:"Biomass", ci:"~40", rating:"CI-C", eligible: true, notes:"" },
 ];
 
 // CI Rating definitions
 const ciRatingDefs = [
-  { rating: "CI-A", range: "≤20 gCO₂e/MJ", reduction: "≥78%", color: "bg-[#D4AF37]" },
-  { rating: "CI-B", range: "21-35 gCO₂e/MJ", reduction: "61-77%", color: "bg-green-500" },
-  { rating: "CI-C", range: "36-53 gCO₂e/MJ", reduction: "40-60%", color: "bg-[#D4AF37]" },
-  { rating: "CI-D", range: "≥54 gCO₂e/MJ", reduction: "<40%", color: "bg-red-500" },
+  { rating:"CI-A", range:"≤20 gCO₂e/MJ", reduction:"≥78%", color:"bg-[#D4AF37]" },
+  { rating:"CI-B", range:"21-35 gCO₂e/MJ", reduction:"61-77%", color:"bg-green-500" },
+  { rating:"CI-C", range:"36-53 gCO₂e/MJ", reduction:"40-60%", color:"bg-[#D4AF37]" },
+  { rating:"CI-D", range:"≥54 gCO₂e/MJ", reduction:"<40%", color:"bg-red-500" },
 ];
 
 export default function CarbonIntensityAnalysis() {
@@ -98,13 +102,13 @@ export default function CarbonIntensityAnalysis() {
   const [pathwayFilter, setPathwayFilter] = useState("all");
 
   // Filter benchmarks by pathway
-  const filteredBenchmarks = pathwayFilter === "all"
+  const filteredBenchmarks = pathwayFilter ==="all"
     ? pathwayBenchmarks
     : pathwayBenchmarks.filter(b => b.pathway === pathwayFilter);
 
   // Calculate stats
   const ciACount = projectCIEstimates.filter(p => p.rating.includes("CI-A")).length;
-  const ciBCount = projectCIEstimates.filter(p => p.rating === "CI-B").length;
+  const ciBCount = projectCIEstimates.filter(p => p.rating ==="CI-B").length;
   const ciCCount = projectCIEstimates.filter(p => p.rating.includes("CI-C")).length;
   const eligibleCount = projectCIEstimates.filter(p => p.eligible).length;
 
@@ -117,7 +121,7 @@ export default function CarbonIntensityAnalysis() {
             <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Carbon Intensity Analysis</h1>
+            <H1 className="text-2xl  tracking-tight">Carbon Intensity Analysis</H1>
             <p className="text-gray-600">Lifecycle GHG emissions vs 89 gCO₂e/MJ baseline</p>
           </div>
         </div>
@@ -192,9 +196,9 @@ export default function CarbonIntensityAnalysis() {
                     <div
                       className={`h-full ${def.color} transition-all`}
                       style={{
-                        width: def.rating === "CI-A" ? "22%" :
-                               def.rating === "CI-B" ? "39%" :
-                               def.rating === "CI-C" ? "60%" : "100%"
+                        width: def.rating ==="CI-A" ?"22%" :
+                               def.rating ==="CI-B" ?"39%" :
+                               def.rating ==="CI-C" ?"60%" :"100%"
                       }}
                     />
                   </div>
@@ -293,7 +297,7 @@ export default function CarbonIntensityAnalysis() {
                       <TableCell className="text-xs">{item.pathway}</TableCell>
                       <TableCell className="text-center font-mono text-sm">{item.ci}</TableCell>
                       <TableCell className="text-center">
-                        <Badge className={`${getCIRatingColor(item.rating.replace("*", ""))} text-xs`}>
+                        <Badge className={`${getCIRatingColor(item.rating.replace("*",""))} text-xs`}>
                           {item.rating}
                         </Badge>
                       </TableCell>
@@ -406,22 +410,22 @@ export default function CarbonIntensityAnalysis() {
         <CardContent>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="p-4 border rounded-lg">
-              <h4 className="font-semibold mb-2">Australia Cleaner Fuels</h4>
+              <H4 className="mb-2">Australia Cleaner Fuels</H4>
               <p className="text-2xl font-mono text-[#D4AF37]">≤60 gCO₂e/MJ</p>
               <p className="text-xs text-gray-600 mt-1">Program threshold</p>
             </div>
             <div className="p-4 border rounded-lg">
-              <h4 className="font-semibold mb-2">EU RED III</h4>
+              <H4 className="mb-2">EU RED III</H4>
               <p className="text-2xl font-mono text-[#D4AF37]">≤35 gCO₂e/MJ</p>
               <p className="text-xs text-gray-600 mt-1">~60% reduction required</p>
             </div>
             <div className="p-4 border rounded-lg">
-              <h4 className="font-semibold mb-2">CORSIA</h4>
+              <H4 className="mb-2">CORSIA</H4>
               <p className="text-2xl font-mono text-[#D4AF37]">10% reduction</p>
               <p className="text-xs text-gray-600 mt-1">Minimum baseline</p>
             </div>
             <div className="p-4 border rounded-lg">
-              <h4 className="font-semibold mb-2">US RFS D7</h4>
+              <H4 className="mb-2">US RFS D7</H4>
               <p className="text-2xl font-mono text-green-600">≤50%</p>
               <p className="text-xs text-gray-600 mt-1">vs petroleum baseline</p>
             </div>
@@ -434,7 +438,7 @@ export default function CarbonIntensityAnalysis() {
         <CardContent className="p-4 flex items-start gap-3">
           <CheckCircle2 className="h-5 w-5 text-[#D4AF37] mt-0.5 shrink-0" />
           <div>
-            <h3 className="font-semibold text-emerald-900">Key Finding: Australian CI Competitive Advantage</h3>
+            <H3 className="text-emerald-900">Key Finding: Australian CI Competitive Advantage</H3>
             <p className="text-sm text-emerald-800 mt-1">
               Australian biofuels projects cluster in CI-B rating (61-77% reduction), meeting Cleaner Fuels Program thresholds.
               This represents a competitive advantage vs US corn ethanol pathways (typically CI-C or worse).

@@ -8,19 +8,19 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, Body } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, Body } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { trpc } from"@/lib/trpc";
 import {
   Package,
   Plus,
@@ -31,7 +31,7 @@ import {
   FileText,
   Download,
   ArrowLeft,
-} from "lucide-react";
+} from"lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -39,13 +39,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { toast } from "sonner";
-import { Link } from "wouter";
-import { formatDate } from "@/const";
+} from"@/components/ui/dialog";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { useState } from"react";
+import { toast } from"sonner";
+import { Link } from"wouter";
+import { formatDate } from"@/const";
 
 export default function SupplierFeedstocks() {
   const { user, loading: authLoading } = useAuth();
@@ -64,10 +64,10 @@ export default function SupplierFeedstocks() {
       onSuccess: data => {
         toast.success("Certificate generated successfully!");
         setShowCertDialog(false);
-        window.open(data.pdfUrl, "_blank");
+        window.open(data.pdfUrl,"_blank");
       },
       onError: error => {
-        toast.error(error.message || "Failed to generate certificate");
+        toast.error(error.message ||"Failed to generate certificate");
       },
     });
 
@@ -76,17 +76,17 @@ export default function SupplierFeedstocks() {
       toast.success("BADP generated successfully!");
       setShowBadpDialog(false);
       setBadpClientName("");
-      window.open(data.pdfUrl, "_blank");
+      window.open(data.pdfUrl,"_blank");
     },
     onError: error => {
-      toast.error(error.message || "Failed to generate BADP");
+      toast.error(error.message ||"Failed to generate BADP");
     },
   });
 
   const handleGenerateCertificate = (feedstock: any) => {
     if (!feedstock.abfiScore) {
       toast.error(
-        "Feedstock must have ABFI rating before generating certificate"
+"Feedstock must have ABFI rating before generating certificate"
       );
       return;
     }
@@ -129,29 +129,29 @@ export default function SupplierFeedstocks() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "draft":
-        return "bg-gray-100 text-gray-800";
-      case "suspended":
-        return "bg-red-100 text-red-800";
+      case"active":
+        return"bg-green-100 text-green-800";
+      case"pending":
+        return"bg-yellow-100 text-yellow-800";
+      case"draft":
+        return"bg-gray-100 text-gray-800";
+      case"suspended":
+        return"bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
   const getVerificationColor = (level: string) => {
     switch (level) {
-      case "verified":
-        return "bg-blue-100 text-blue-800";
-      case "self_reported":
-        return "bg-gray-100 text-gray-800";
-      case "third_party":
-        return "bg-purple-100 text-purple-800";
+      case"verified":
+        return"bg-blue-100 text-blue-800";
+      case"self_reported":
+        return"bg-gray-100 text-gray-800";
+      case"third_party":
+        return"bg-purple-100 text-purple-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
@@ -213,7 +213,7 @@ export default function SupplierFeedstocks() {
                         {feedstock.abfiId || `ABFI-${feedstock.id}`}
                       </CardTitle>
                       <CardDescription className="mt-2">
-                        {feedstock.category} • {feedstock.type} •{" "}
+                        {feedstock.category} • {feedstock.type} •{""}
                         {feedstock.state}
                       </CardDescription>
                     </div>
@@ -227,7 +227,7 @@ export default function SupplierFeedstocks() {
                         )}
                       >
                         {feedstock.verificationLevel
-                          ?.replace("_", " ")
+                          ?.replace("_","")
                           .toUpperCase()}
                       </Badge>
                     </div>
@@ -238,10 +238,10 @@ export default function SupplierFeedstocks() {
                     <div>
                       <div className="text-gray-600">ABFI Score</div>
                       <div className="text-2xl font-bold text-[#D4AF37]">
-                        {feedstock.abfiScore?.toFixed(1) || "N/A"}
+                        {feedstock.abfiScore?.toFixed(1) ||"N/A"}
                       </div>
                       <div className="text-xs text-gray-600">
-                        Grade: {feedstock.abfiGrade || "Pending"}
+                        Grade: {feedstock.abfiGrade ||"Pending"}
                       </div>
                     </div>
                     <div>
@@ -249,7 +249,7 @@ export default function SupplierFeedstocks() {
                         Annual Capacity
                       </div>
                       <div className="font-medium">
-                        {feedstock.annualCapacity?.toLocaleString() || "N/A"}{" "}
+                        {feedstock.annualCapacity?.toLocaleString() ||"N/A"}{""}
                         tonnes
                       </div>
                     </div>
@@ -258,19 +258,19 @@ export default function SupplierFeedstocks() {
                         Available Volume
                       </div>
                       <div className="font-medium">
-                        {feedstock.availableVolume?.toLocaleString() || "N/A"}{" "}
+                        {feedstock.availableVolume?.toLocaleString() ||"N/A"}{""}
                         tonnes
                       </div>
                     </div>
                     <div>
                       <div className="text-gray-600">Price</div>
                       <div className="font-medium">
-                        ${feedstock.pricePerTonne?.toFixed(2) || "N/A"}/tonne
+                        ${feedstock.pricePerTonne?.toFixed(2) ||"N/A"}/tonne
                       </div>
                     </div>
                   </div>
 
-                  {feedstock.status === "pending" && (
+                  {feedstock.status ==="pending" && (
                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 flex items-start gap-2">
                       <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
                       <div className="text-sm">
@@ -297,7 +297,7 @@ export default function SupplierFeedstocks() {
                         Edit
                       </Button>
                     </Link>
-                    {feedstock.abfiScore && feedstock.status === "active" && (
+                    {feedstock.abfiScore && feedstock.status ==="active" && (
                       <>
                         <Button
                           variant="outline"
@@ -319,12 +319,12 @@ export default function SupplierFeedstocks() {
                         </Button>
                       </>
                     )}
-                    {feedstock.status === "active" && (
+                    {feedstock.status ==="active" && (
                       <Button variant="outline" size="sm">
                         Suspend
                       </Button>
                     )}
-                    {feedstock.status === "suspended" && (
+                    {feedstock.status ==="suspended" && (
                       <Button variant="outline" size="sm">
                         Reactivate
                       </Button>
@@ -332,7 +332,7 @@ export default function SupplierFeedstocks() {
                   </div>
 
                   <div className="text-xs text-gray-600">
-                    Created {formatDate(feedstock.createdAt)} • Last updated{" "}
+                    Created {formatDate(feedstock.createdAt)} • Last updated{""}
                     {formatDate(feedstock.updatedAt)}
                   </div>
                 </CardContent>
@@ -343,9 +343,9 @@ export default function SupplierFeedstocks() {
           <Card>
             <CardContent className="py-12 text-center">
               <Package className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
+              <H3 className="text-lg  mb-2">
                 No feedstocks listed yet
-              </h3>
+              </H3>
               <p className="text-gray-600 mb-4">
                 Start by adding your first feedstock listing
               </p>
@@ -365,7 +365,7 @@ export default function SupplierFeedstocks() {
             <DialogHeader>
               <DialogTitle>Generate ABFI Rating Certificate</DialogTitle>
               <DialogDescription>
-                Generate a professional PDF certificate for feedstock{" "}
+                Generate a professional PDF certificate for feedstock{""}
                 {selectedFeedstock?.abfiId}
               </DialogDescription>
             </DialogHeader>

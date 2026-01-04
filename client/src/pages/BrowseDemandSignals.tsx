@@ -9,23 +9,23 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useLocation } from "wouter";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useLocation } from"wouter";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Checkbox } from "@/components/ui/checkbox";
-import { trpc } from "@/lib/trpc";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Checkbox } from"@/components/ui/checkbox";
+import { trpc } from"@/lib/trpc";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   Search,
   MapPin,
@@ -38,129 +38,129 @@ import {
   Filter,
   ArrowRight,
   Leaf,
-} from "lucide-react";
+} from"lucide-react";
 
 // Mock demand signals for demonstration
 const MOCK_DEMAND_SIGNALS = [
   {
     id: 1,
-    signalNumber: "DS-2025-0001",
-    title: "Wheat Straw for Bioenergy Plant - Hunter Valley",
+    signalNumber:"DS-2025-0001",
+    title:"Wheat Straw for Bioenergy Plant - Hunter Valley",
     description:
-      "Large-scale bioenergy facility seeking consistent supply of wheat straw for year-round operations. Long-term offtake agreements preferred.",
-    feedstockType: "Wheat Straw",
-    feedstockCategory: "agricultural_residue",
+"Large-scale bioenergy facility seeking consistent supply of wheat straw for year-round operations. Long-term offtake agreements preferred.",
+    feedstockType:"Wheat Straw",
+    feedstockCategory:"agricultural_residue",
     annualVolume: 75000,
-    deliveryLocation: "Muswellbrook",
-    deliveryState: "NSW",
+    deliveryLocation:"Muswellbrook",
+    deliveryState:"NSW",
     indicativePriceMin: 85,
     indicativePriceMax: 110,
-    pricingMechanism: "indexed",
-    supplyStartDate: "2025-07-01",
-    responseDeadline: "2025-03-15",
+    pricingMechanism:"indexed",
+    supplyStartDate:"2025-07-01",
+    responseDeadline:"2025-03-15",
     responseCount: 8,
-    buyerName: "Hunter Energy Partners",
-    urgency: "high",
+    buyerName:"Hunter Energy Partners",
+    urgency:"high",
   },
   {
     id: 2,
-    signalNumber: "DS-2025-0002",
-    title: "Bagasse Supply for Co-generation Facility",
+    signalNumber:"DS-2025-0002",
+    title:"Bagasse Supply for Co-generation Facility",
     description:
-      "Sugar mill expanding co-generation capacity requires additional bagasse supply from nearby operations.",
-    feedstockType: "Bagasse",
-    feedstockCategory: "agricultural_residue",
+"Sugar mill expanding co-generation capacity requires additional bagasse supply from nearby operations.",
+    feedstockType:"Bagasse",
+    feedstockCategory:"agricultural_residue",
     annualVolume: 120000,
-    deliveryLocation: "Mackay",
-    deliveryState: "QLD",
+    deliveryLocation:"Mackay",
+    deliveryState:"QLD",
     indicativePriceMin: 45,
     indicativePriceMax: 65,
-    pricingMechanism: "negotiable",
-    supplyStartDate: "2025-05-01",
-    responseDeadline: "2025-02-28",
+    pricingMechanism:"negotiable",
+    supplyStartDate:"2025-05-01",
+    responseDeadline:"2025-02-28",
     responseCount: 12,
-    buyerName: "Queensland Sugar Energy",
-    urgency: "medium",
+    buyerName:"Queensland Sugar Energy",
+    urgency:"medium",
   },
   {
     id: 3,
-    signalNumber: "DS-2025-0003",
-    title: "Forestry Residue for Biochar Production",
+    signalNumber:"DS-2025-0003",
+    title:"Forestry Residue for Biochar Production",
     description:
-      "Premium biochar producer seeking high-quality forestry residue for carbon sequestration products. Certification assistance available.",
-    feedstockType: "Forestry Residue",
-    feedstockCategory: "forestry_residue",
+"Premium biochar producer seeking high-quality forestry residue for carbon sequestration products. Certification assistance available.",
+    feedstockType:"Forestry Residue",
+    feedstockCategory:"forestry_residue",
     annualVolume: 25000,
-    deliveryLocation: "Ballarat",
-    deliveryState: "VIC",
+    deliveryLocation:"Ballarat",
+    deliveryState:"VIC",
     indicativePriceMin: 95,
     indicativePriceMax: 130,
-    pricingMechanism: "fixed",
-    supplyStartDate: "2025-04-01",
-    responseDeadline: "2025-02-15",
+    pricingMechanism:"fixed",
+    supplyStartDate:"2025-04-01",
+    responseDeadline:"2025-02-15",
     responseCount: 5,
-    buyerName: "Carbon Harvest Biochar",
-    urgency: "low",
+    buyerName:"Carbon Harvest Biochar",
+    urgency:"low",
   },
   {
     id: 4,
-    signalNumber: "DS-2025-0004",
-    title: "Miscanthus for Advanced Biofuel Refinery",
+    signalNumber:"DS-2025-0004",
+    title:"Miscanthus for Advanced Biofuel Refinery",
     description:
-      "Next-generation biofuel refinery under construction, seeking long-term contracts for miscanthus and similar energy crops.",
-    feedstockType: "Miscanthus",
-    feedstockCategory: "energy_crop",
+"Next-generation biofuel refinery under construction, seeking long-term contracts for miscanthus and similar energy crops.",
+    feedstockType:"Miscanthus",
+    feedstockCategory:"energy_crop",
     annualVolume: 50000,
-    deliveryLocation: "Geelong",
-    deliveryState: "VIC",
+    deliveryLocation:"Geelong",
+    deliveryState:"VIC",
     indicativePriceMin: 120,
     indicativePriceMax: 160,
-    pricingMechanism: "indexed",
-    supplyStartDate: "2026-01-01",
-    responseDeadline: "2025-06-30",
+    pricingMechanism:"indexed",
+    supplyStartDate:"2026-01-01",
+    responseDeadline:"2025-06-30",
     responseCount: 3,
-    buyerName: "Future Fuels Australia",
-    urgency: "medium",
+    buyerName:"Future Fuels Australia",
+    urgency:"medium",
   },
   {
     id: 5,
-    signalNumber: "DS-2025-0005",
-    title: "Cotton Trash for Biomass Power Station",
+    signalNumber:"DS-2025-0005",
+    title:"Cotton Trash for Biomass Power Station",
     description:
-      "Existing biomass power station diversifying feedstock base. Cotton trash from irrigation areas welcomed.",
-    feedstockType: "Cotton Trash",
-    feedstockCategory: "agricultural_residue",
+"Existing biomass power station diversifying feedstock base. Cotton trash from irrigation areas welcomed.",
+    feedstockType:"Cotton Trash",
+    feedstockCategory:"agricultural_residue",
     annualVolume: 40000,
-    deliveryLocation: "Narrabri",
-    deliveryState: "NSW",
+    deliveryLocation:"Narrabri",
+    deliveryState:"NSW",
     indicativePriceMin: 70,
     indicativePriceMax: 95,
-    pricingMechanism: "negotiable",
-    supplyStartDate: "2025-08-01",
-    responseDeadline: "2025-04-30",
+    pricingMechanism:"negotiable",
+    supplyStartDate:"2025-08-01",
+    responseDeadline:"2025-04-30",
     responseCount: 6,
-    buyerName: "Northern Plains Energy",
-    urgency: "medium",
+    buyerName:"Northern Plains Energy",
+    urgency:"medium",
   },
   {
     id: 6,
-    signalNumber: "DS-2025-0006",
-    title: "Mixed Agricultural Waste for Anaerobic Digestion",
+    signalNumber:"DS-2025-0006",
+    title:"Mixed Agricultural Waste for Anaerobic Digestion",
     description:
-      "Farm-scale anaerobic digestion facility expanding operations. Flexible on feedstock types - straw, stubble, crop residues accepted.",
-    feedstockType: "Mixed Residues",
-    feedstockCategory: "mixed",
+"Farm-scale anaerobic digestion facility expanding operations. Flexible on feedstock types - straw, stubble, crop residues accepted.",
+    feedstockType:"Mixed Residues",
+    feedstockCategory:"mixed",
     annualVolume: 15000,
-    deliveryLocation: "Murray Bridge",
-    deliveryState: "SA",
+    deliveryLocation:"Murray Bridge",
+    deliveryState:"SA",
     indicativePriceMin: 55,
     indicativePriceMax: 80,
-    pricingMechanism: "spot",
-    supplyStartDate: "2025-03-01",
-    responseDeadline: "2025-01-31",
+    pricingMechanism:"spot",
+    supplyStartDate:"2025-03-01",
+    responseDeadline:"2025-01-31",
     responseCount: 9,
-    buyerName: "Murray Biogas Collective",
-    urgency: "high",
+    buyerName:"Murray Biogas Collective",
+    urgency:"high",
   },
 ];
 
@@ -169,37 +169,37 @@ const CATEGORY_COLORS: Record<
   { bg: string; text: string; label: string }
 > = {
   agricultural_residue: {
-    bg: "bg-green-100",
-    text: "text-green-800",
-    label: "Agricultural Residue",
+    bg:"bg-green-100",
+    text:"text-green-800",
+    label:"Agricultural Residue",
   },
   forestry_residue: {
-    bg: "bg-amber-100",
-    text: "text-amber-800",
-    label: "Forestry Residue",
+    bg:"bg-amber-100",
+    text:"text-amber-800",
+    label:"Forestry Residue",
   },
   energy_crop: {
-    bg: "bg-blue-100",
-    text: "text-blue-800",
-    label: "Energy Crop",
+    bg:"bg-blue-100",
+    text:"text-blue-800",
+    label:"Energy Crop",
   },
   organic_waste: {
-    bg: "bg-purple-100",
-    text: "text-purple-800",
-    label: "Organic Waste",
+    bg:"bg-purple-100",
+    text:"text-purple-800",
+    label:"Organic Waste",
   },
   algae_aquatic: {
-    bg: "bg-cyan-100",
-    text: "text-cyan-800",
-    label: "Algae/Aquatic",
+    bg:"bg-cyan-100",
+    text:"text-cyan-800",
+    label:"Algae/Aquatic",
   },
-  mixed: { bg: "bg-gray-100", text: "text-gray-800", label: "Mixed" },
+  mixed: { bg:"bg-gray-100", text:"text-gray-800", label:"Mixed" },
 };
 
 const URGENCY_CONFIG: Record<string, { color: string; label: string }> = {
-  high: { color: "bg-red-500", label: "Urgent" },
-  medium: { color: "bg-[#D4AF37]", label: "Active" },
-  low: { color: "bg-[#D4AF37]", label: "Open" },
+  high: { color:"bg-red-500", label:"Urgent" },
+  medium: { color:"bg-[#D4AF37]", label:"Active" },
+  low: { color:"bg-[#D4AF37]", label:"Open" },
 };
 
 export default function BrowseDemandSignals() {
@@ -209,7 +209,7 @@ export default function BrowseDemandSignals() {
   const [selectedStates, setSelectedStates] = useState<string[]>([]);
 
   const { data: apiSignals, isLoading } = trpc.demandSignals.list.useQuery({
-    status: "published",
+    status:"published",
   });
 
   // Use mock data if API returns empty or is loading
@@ -249,11 +249,11 @@ export default function BrowseDemandSignals() {
   });
 
   const formatDate = (date: Date | string | null) => {
-    if (!date) return "N/A";
+    if (!date) return"N/A";
     return new Date(date).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+      day:"numeric",
+      month:"short",
+      year:"numeric",
     });
   };
 
@@ -302,9 +302,9 @@ export default function BrowseDemandSignals() {
                 Demo Data
               </Badge>
             )}
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            <H1 className="text-4xl md:text-5xl font-display  mb-4">
               Demand Signals
-            </h1>
+            </H1>
             <p className="text-lg md:text-xl text-black/80 mb-8">
               Connect with verified buyers seeking feedstock supply. Browse
               active requirements and submit your proposals.
@@ -369,9 +369,9 @@ export default function BrowseDemandSignals() {
 
                 {/* Category Filter */}
                 <div>
-                  <h4 className="font-medium text-sm mb-3">
+                  <H4 className="font-medium text-sm mb-3">
                     Feedstock Category
-                  </h4>
+                  </H4>
                   <div className="space-y-2">
                     {Object.entries(CATEGORY_COLORS).map(([key, config]) => (
                       <label
@@ -390,9 +390,9 @@ export default function BrowseDemandSignals() {
 
                 {/* State Filter */}
                 <div>
-                  <h4 className="font-medium text-sm mb-3">Delivery State</h4>
+                  <H4 className="font-medium text-sm mb-3">Delivery State</H4>
                   <div className="grid grid-cols-2 gap-2">
-                    {["NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"].map(
+                    {["NSW","VIC","QLD","SA","WA","TAS","NT","ACT"].map(
                       state => (
                         <label
                           key={state}
@@ -435,10 +435,10 @@ export default function BrowseDemandSignals() {
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
               <p className="text-gray-600">
-                Showing{" "}
+                Showing{""}
                 <span className="font-medium text-foreground">
                   {filteredSignals.length}
-                </span>{" "}
+                </span>{""}
                 demand signals
               </p>
             </div>
@@ -453,7 +453,7 @@ export default function BrowseDemandSignals() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <Package className="h-12 w-12 mx-auto mb-4 text-gray-600/50" />
-                  <h3 className="font-medium mb-2">No demand signals found</h3>
+                  <H3 className="font-medium mb-2">No demand signals found</H3>
                   <p className="text-gray-600 text-sm">
                     Try adjusting your filters or search query
                   </p>
@@ -549,9 +549,9 @@ export default function BrowseDemandSignals() {
                               {signal.indicativePriceMin &&
                               signal.indicativePriceMax
                                 ? `$${signal.indicativePriceMin}-${signal.indicativePriceMax}/t`
-                                : signal.pricingMechanism === "negotiable"
-                                  ? "Price Negotiable"
-                                  : "Price on Request"}
+                                : signal.pricingMechanism ==="negotiable"
+                                  ?"Price Negotiable"
+                                  :"Price on Request"}
                             </span>
                           </div>
                         </div>
@@ -595,9 +595,9 @@ export default function BrowseDemandSignals() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-100 text-purple-600 mb-6">
               <Leaf className="h-8 w-8" />
             </div>
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+            <H2 className="text-2xl md:text-3xl font-display  mb-4">
               Post Your Feedstock Requirements
-            </h2>
+            </H2>
             <p className="text-gray-600 mb-8">
               Are you a buyer looking for sustainable feedstock? Post a demand
               signal and connect with verified suppliers across Australia.

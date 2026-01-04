@@ -9,15 +9,15 @@
  * - Typography components for consistent styling
  */
 
-import { Button } from "@/components/ui/Button";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
 import {
   ArrowRight,
   Award,
@@ -46,9 +46,9 @@ import {
   History,
   GitBranch,
   Fingerprint,
-} from "lucide-react";
-import { Link } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Link } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   FadeInUp,
   StaggerContainer,
@@ -56,16 +56,16 @@ import {
   HoverCard,
   AnimatedCounter,
   motion,
-} from "@/components/ui/motion";
-import { H1, H2, H3, Body, MetricValue } from "@/components/Typography";
+} from"@/components/ui/motion";
+import { H1, H2, H3, Body, MetricValue } from"@/components/Typography";
 
 // Evidence Chain Visual
 function EvidenceChainDemo() {
   const blocks = [
-    { hash: "a3f8...", type: "Assessment", time: "2024-01-15" },
-    { hash: "7b2c...", type: "Contract", time: "2024-02-01" },
-    { hash: "9e4d...", type: "Delivery", time: "2024-03-15" },
-    { hash: "1f6a...", type: "Quality Test", time: "2024-03-20" },
+    { hash:"a3f8...", type:"Assessment", time:"2024-01-15" },
+    { hash:"7b2c...", type:"Contract", time:"2024-02-01" },
+    { hash:"9e4d...", type:"Delivery", time:"2024-03-15" },
+    { hash:"1f6a...", type:"Quality Test", time:"2024-03-20" },
   ];
 
   return (
@@ -174,10 +174,10 @@ export default function ForLenders() {
             </FadeInUp>
 
             <FadeInUp delay={0.1}>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
+              <H1 className="text-4xl sm:text-5xl lg:text-6xl font-display  mb-6 leading-tight">
                 Trust, But Verify —
                 <span className="block text-blue-300">Cryptographically</span>
-              </h1>
+              </H1>
             </FadeInUp>
 
             <FadeInUp delay={0.2}>
@@ -230,9 +230,9 @@ export default function ForLenders() {
             <Badge variant="outline" className="mb-4">
               Bank-Grade Infrastructure
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Built for Financial Due Diligence
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Every feature designed with lending compliance requirements in
               mind.
@@ -243,39 +243,39 @@ export default function ForLenders() {
             {[
               {
                 icon: Fingerprint,
-                title: "SHA-256 Evidence Chain",
+                title:"SHA-256 Evidence Chain",
                 description:
-                  "Every document, assessment, and update is cryptographically hashed and chained. Tampering is mathematically impossible.",
+"Every document, assessment, and update is cryptographically hashed and chained. Tampering is mathematically impossible.",
               },
               {
                 icon: History,
-                title: "Temporal Versioning",
+                title:"Temporal Versioning",
                 description:
-                  "Query any data point as it existed on any historical date. Perfect for 'as-of-date' covenant testing.",
+"Query any data point as it existed on any historical date. Perfect for 'as-of-date' covenant testing.",
               },
               {
                 icon: Activity,
-                title: "Real-Time Monitoring",
+                title:"Real-Time Monitoring",
                 description:
-                  "Covenant checks run daily. Breaches trigger instant alerts. No more quarterly surprises.",
+"Covenant checks run daily. Breaches trigger instant alerts. No more quarterly surprises.",
               },
               {
                 icon: Award,
-                title: "Standardized Ratings",
+                title:"Standardized Ratings",
                 description:
-                  "AAA-CCC scale mirrors credit ratings you already use. No learning curve for your team.",
+"AAA-CCC scale mirrors credit ratings you already use. No learning curve for your team.",
               },
               {
                 icon: FileCheck,
-                title: "Compliance Certificates",
+                title:"Compliance Certificates",
                 description:
-                  "Generate auditor-ready packages with embedded cryptographic signatures. Verify authenticity instantly.",
+"Generate auditor-ready packages with embedded cryptographic signatures. Verify authenticity instantly.",
               },
               {
                 icon: Shield,
-                title: "SOC 2 Type II",
+                title:"SOC 2 Type II",
                 description:
-                  "Enterprise security controls. Data residency in Australia. Full audit logging.",
+"Enterprise security controls. Data residency in Australia. Full audit logging.",
               },
             ].map((item, i) => (
               <StaggerItem key={i}>
@@ -309,9 +309,9 @@ export default function ForLenders() {
               >
                 Cryptographic Security
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+              <H2 className="text-3xl md:text-4xl font-display  mb-6">
                 Immutable Audit Trails
-              </h2>
+              </H2>
               <p className="text-lg text-gray-600 mb-6">
                 Every action on the platform creates a cryptographically-signed
                 record. The evidence chain is mathematically tamper-proof and
@@ -319,10 +319,10 @@ export default function ForLenders() {
               </p>
               <ul className="space-y-4 mb-8">
                 {[
-                  "Each record hashed with SHA-256",
-                  "Hashes chain to previous records",
-                  "Any modification breaks the chain",
-                  "Third-party verification available",
+"Each record hashed with SHA-256",
+"Hashes chain to previous records",
+"Any modification breaks the chain",
+"Third-party verification available",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-blue-400 shrink-0" />
@@ -362,9 +362,9 @@ export default function ForLenders() {
             <Badge variant="outline" className="mb-4">
               Automated Compliance
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Covenant Monitoring That Never Sleeps
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Automated systems check covenant compliance continuously. Get
               alerts before problems escalate.
@@ -388,11 +388,11 @@ export default function ForLenders() {
                 <CardContent>
                   <ul className="space-y-3 text-sm">
                     {[
-                      "Contract expiration monitoring",
-                      "Minimum volume thresholds",
-                      "Supplier qualification status",
-                      "Certification validity dates",
-                      "Price escalation triggers",
+"Contract expiration monitoring",
+"Minimum volume thresholds",
+"Supplier qualification status",
+"Certification validity dates",
+"Price escalation triggers",
                     ].map((item, i) => (
                       <li
                         key={i}
@@ -423,11 +423,11 @@ export default function ForLenders() {
                 <CardContent>
                   <ul className="space-y-3 text-sm">
                     {[
-                      "Covenant breach notifications",
-                      "Rating watch/downgrade alerts",
-                      "Contract renewal reminders",
-                      "Supplier status changes",
-                      "Volume shortfall warnings",
+"Covenant breach notifications",
+"Rating watch/downgrade alerts",
+"Contract renewal reminders",
+"Supplier status changes",
+"Volume shortfall warnings",
                     ].map((item, i) => (
                       <li
                         key={i}
@@ -452,9 +452,9 @@ export default function ForLenders() {
             <Badge variant="outline" className="mb-4">
               Lender Portal
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Everything You Need in One Place
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               A dedicated portal for financial institutions to monitor their
               bioenergy portfolio.
@@ -465,43 +465,43 @@ export default function ForLenders() {
             {[
               {
                 icon: Eye,
-                title: "Portfolio Overview",
-                desc: "All monitored projects in one dashboard",
+                title:"Portfolio Overview",
+                desc:"All monitored projects in one dashboard",
               },
               {
                 icon: Award,
-                title: "Rating Tracker",
-                desc: "Historical rating trends and forecasts",
+                title:"Rating Tracker",
+                desc:"Historical rating trends and forecasts",
               },
               {
                 icon: AlertTriangle,
-                title: "Risk Alerts",
-                desc: "Centralized breach notification center",
+                title:"Risk Alerts",
+                desc:"Centralized breach notification center",
               },
               {
                 icon: FileText,
-                title: "Report Generator",
-                desc: "Custom compliance report builder",
+                title:"Report Generator",
+                desc:"Custom compliance report builder",
               },
               {
                 icon: Calendar,
-                title: "Covenant Calendar",
-                desc: "Upcoming deadlines and renewals",
+                title:"Covenant Calendar",
+                desc:"Upcoming deadlines and renewals",
               },
               {
                 icon: BarChart3,
-                title: "Analytics",
-                desc: "Portfolio concentration analysis",
+                title:"Analytics",
+                desc:"Portfolio concentration analysis",
               },
               {
                 icon: Database,
-                title: "Evidence Vault",
-                desc: "Searchable document repository",
+                title:"Evidence Vault",
+                desc:"Searchable document repository",
               },
               {
                 icon: History,
-                title: "Time Machine",
-                desc: "Historical data reconstruction",
+                title:"Time Machine",
+                desc:"Historical data reconstruction",
               },
             ].map((item, i) => (
               <StaggerItem key={i}>
@@ -530,20 +530,20 @@ export default function ForLenders() {
               <Badge variant="outline" className="mb-4">
                 Enterprise Integration
               </Badge>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+              <H2 className="text-3xl md:text-4xl font-display  mb-6">
                 Fits Your Existing Workflows
-              </h2>
+              </H2>
               <p className="text-lg text-gray-600 mb-6">
                 ABFI integrates with your existing loan management and risk
                 systems. No disruption to established processes.
               </p>
               <ul className="space-y-4 mb-8">
                 {[
-                  "REST API for system integration",
-                  "Webhook notifications for real-time events",
-                  "Bulk export in standard formats (CSV, JSON)",
-                  "Single sign-on (SSO) support",
-                  "Custom reporting via API",
+"REST API for system integration",
+"Webhook notifications for real-time events",
+"Bulk export in standard formats (CSV, JSON)",
+"Single sign-on (SSO) support",
+"Custom reporting via API",
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-blue-500 shrink-0" />
@@ -568,13 +568,13 @@ export default function ForLenders() {
                     </div>
                     <pre className="text-xs leading-relaxed">
                       {`{
-  "project_id": "PRJ-2024-0042",
-  "current_rating": "AA+",
-  "rating_date": "2024-03-15",
-  "covenant_status": "compliant",
-  "next_review": "2024-06-15",
-  "alerts": [],
-  "evidence_hash": "a3f8b2c1..."
+"project_id":"PRJ-2024-0042",
+"current_rating":"AA+",
+"rating_date":"2024-03-15",
+"covenant_status":"compliant",
+"next_review":"2024-06-15",
+"alerts": [],
+"evidence_hash":"a3f8b2c1..."
 }`}
                     </pre>
                   </div>
@@ -596,9 +596,9 @@ export default function ForLenders() {
               <LineChart className="h-3 w-3 mr-1.5" />
               AI-Powered Intelligence
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            <H2 className="text-3xl md:text-4xl font-display  mb-4">
               Intelligence Suite for Financiers
-            </h2>
+            </H2>
             <p className="text-lg text-indigo-200 max-w-2xl mx-auto">
               Real-time market intelligence, sentiment analysis, and policy tracking
               powered by AI. Make data-driven financing decisions.
@@ -739,9 +739,9 @@ export default function ForLenders() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <FadeInUp className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            <H2 className="text-3xl md:text-4xl font-display  mb-6">
               Ready for Bank-Grade Bioenergy Monitoring?
-            </h2>
+            </H2>
             <p className="text-lg text-gray-600 mb-8">
               Join leading financial institutions using ABFI to confidently
               finance Australia's bioenergy future.

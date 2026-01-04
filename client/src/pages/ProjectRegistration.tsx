@@ -8,15 +8,15 @@
  * - Typography components for consistent styling
  */
 
-import { Link } from "wouter";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { Link } from"wouter";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   ArrowRight,
   Sprout,
   DollarSign,
   CheckCircle,
   TrendingUp,
-} from "lucide-react";
+} from"lucide-react";
 
 export default function ProjectRegistration() {
   return (
@@ -43,9 +43,9 @@ export default function ProjectRegistration() {
             Project Developer Portal
           </div>
 
-          <h1 className="font-serif text-4xl md:text-5xl font-normal mb-4">
+          <H1 className="font-serif text-4xl md:text-5xl font-normal mb-4">
             Register Your Bioenergy Project
-          </h1>
+          </H1>
 
           <p className="text-gray-400 text-lg max-w-2xl mx-auto font-light">
             Connect with verified feedstock supply, gain industry recognition,
@@ -59,23 +59,23 @@ export default function ProjectRegistration() {
           {[
             {
               icon: <Sprout className="w-6 h-6" />,
-              title: "Feedstock Matching",
-              desc: "Access verified supply projections",
+              title:"Feedstock Matching",
+              desc:"Access verified supply projections",
             },
             {
               icon: <DollarSign className="w-6 h-6" />,
-              title: "Investor Visibility",
-              desc: "Appear in deal flow for financiers",
+              title:"Investor Visibility",
+              desc:"Appear in deal flow for financiers",
             },
             {
               icon: <CheckCircle className="w-6 h-6" />,
-              title: "Credibility Signals",
-              desc: "Verified milestones & approvals",
+              title:"Credibility Signals",
+              desc:"Verified milestones & approvals",
             },
             {
               icon: <TrendingUp className="w-6 h-6" />,
-              title: "Industry Recognition",
-              desc: "Featured announcements & PR",
+              title:"Industry Recognition",
+              desc:"Featured announcements & PR",
             },
           ].map((benefit, idx) => (
             <div
@@ -85,7 +85,7 @@ export default function ProjectRegistration() {
               <div className="text-[#c9a962] mb-2 flex justify-center">
                 {benefit.icon}
               </div>
-              <h4 className="text-sm font-semibold mb-1">{benefit.title}</h4>
+              <H4 className="text-sm  mb-1">{benefit.title}</H4>
               <p className="text-xs text-gray-500 font-light">{benefit.desc}</p>
             </div>
           ))}
@@ -93,17 +93,17 @@ export default function ProjectRegistration() {
 
         {/* Registration Process Preview */}
         <div className="bg-[#111820] border border-[#c9a962]/15 rounded-2xl p-8 mb-8">
-          <h2 className="font-serif text-2xl mb-6">Registration Process</h2>
+          <H2 className="font-serif text-2xl mb-6">Registration Process</H2>
 
           <div className="grid grid-cols-1 md:grid-cols-7 gap-4 mb-8">
             {[
-              { num: 1, label: "Project" },
-              { num: 2, label: "Technology" },
-              { num: 3, label: "Feedstock" },
-              { num: 4, label: "Funding" },
-              { num: 5, label: "Approvals" },
-              { num: 6, label: "Verification" },
-              { num: 7, label: "Opportunities" },
+              { num: 1, label:"Project" },
+              { num: 2, label:"Technology" },
+              { num: 3, label:"Feedstock" },
+              { num: 4, label:"Funding" },
+              { num: 5, label:"Approvals" },
+              { num: 6, label:"Verification" },
+              { num: 7, label:"Opportunities" },
             ].map(step => (
               <div key={step.num} className="flex flex-col items-center">
                 <div className="w-9 h-9 rounded-full bg-[#1a222d] border-2 border-[#1a222d] flex items-center justify-center font-mono text-sm text-gray-500 mb-2">
@@ -120,9 +120,9 @@ export default function ProjectRegistration() {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-sm mb-1">
+                <H4 className="text-sm mb-1">
                   Comprehensive Project Profile
-                </h4>
+                </H4>
                 <p className="text-sm text-gray-400 font-light">
                   Provide detailed information about your bioenergy or
                   biorefinery project across 7 key areas
@@ -133,9 +133,9 @@ export default function ProjectRegistration() {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-sm mb-1">
+                <H4 className="text-sm mb-1">
                   Third-Party Verification
-                </h4>
+                </H4>
                 <p className="text-sm text-gray-400 font-light">
                   Upload supporting documents for independent verification of
                   milestones and approvals
@@ -146,9 +146,9 @@ export default function ProjectRegistration() {
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="font-semibold text-sm mb-1">
+                <H4 className="text-sm mb-1">
                   Automated Matching & Visibility
-                </h4>
+                </H4>
                 <p className="text-sm text-gray-400 font-light">
                   Get matched with suitable feedstock suppliers and appear in
                   investor deal flow
@@ -168,7 +168,7 @@ export default function ProjectRegistration() {
           </Link>
 
           <p className="mt-4 text-sm text-gray-500">
-            Already started?{" "}
+            Already started?{""}
             <Link
               href="/project-registration/flow"
               className="text-[#c9a962] hover:underline"
@@ -180,7 +180,7 @@ export default function ProjectRegistration() {
 
         {/* Info Box */}
         <div className="mt-12 bg-[#111820]/50 border border-[#c9a962]/10 rounded-xl p-6">
-          <h3 className="font-semibold mb-2 text-sm">What You'll Need</h3>
+          <H3 className="mb-2 text-sm">What You'll Need</H3>
           <ul className="text-sm text-gray-400 space-y-1 font-light">
             <li>• Project details (name, location, development stage)</li>
             <li>

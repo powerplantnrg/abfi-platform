@@ -1,3 +1,13 @@
+/**
+ * Quote Request - Nextgen Design
+ *
+ * Features:
+ * - Pricing quote submission
+ * - Volume and terms specification
+ * - Supplier communication
+ * - Typography components for consistent styling
+ */
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

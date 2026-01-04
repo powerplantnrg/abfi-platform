@@ -9,19 +9,19 @@
  * - Typography components for consistent styling
  */
 
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/Button";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { getLoginUrl } from "@/const";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/Card";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Badge } from"@/components/ui/badge";
+import { getLoginUrl } from"@/const";
+import { trpc } from"@/lib/trpc";
 import {
   Award,
   Building2,
@@ -42,9 +42,9 @@ import {
   DollarSign,
   BarChart3,
   AlertCircle,
-} from "lucide-react";
-import { Link, Redirect } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Link, Redirect } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   PageWrapper,
   FadeInUp,
@@ -52,45 +52,45 @@ import {
   StaggerItem,
   HoverCard,
   AnimatedCounter,
-} from "@/components/ui/motion";
-import DashboardLayout from "@/components/DashboardLayout";
-import { StatsCardPremium, GlassCard, ProgressRing, StatusIndicator } from "@/components/ui/premium-cards";
-import { H1, H3, Body, MetricValue } from "@/components/Typography";
+} from"@/components/ui/motion";
+import DashboardLayout from"@/components/DashboardLayout";
+import { StatsCardPremium, GlassCard, ProgressRing, StatusIndicator } from"@/components/ui/premium-cards";
+import { H1, H3, Body, MetricValue } from"@/components/Typography";
 
 // Australian feedstock types with bamboo focus
 const FEEDSTOCK_TYPES = [
-  "Bamboo",
-  "Eucalyptus",
-  "Sugarcane Bagasse",
-  "Wheat Straw",
-  "Cotton Gin Trash",
+"Bamboo",
+"Eucalyptus",
+"Sugarcane Bagasse",
+"Wheat Straw",
+"Cotton Gin Trash",
 ];
 
 // Sample activity data with Australian/bamboo context
 const SAMPLE_ACTIVITIES = [
   {
-    time: "10:30 AM",
-    message: "New contract signed for 500t Bamboo - Queensland Biomass Co.",
-    status: "Signed",
-    statusColor: "bg-[#D4AF37]",
+    time:"10:30 AM",
+    message:"New contract signed for 500t Bamboo - Queensland Biomass Co.",
+    status:"Signed",
+    statusColor:"bg-[#D4AF37]",
   },
   {
-    time: "09:15 AM",
-    message: "Listing approved: Premium Bamboo Chips - Darling Downs",
-    status: "Approved",
-    statusColor: "bg-blue-500",
+    time:"09:15 AM",
+    message:"Listing approved: Premium Bamboo Chips - Darling Downs",
+    status:"Approved",
+    statusColor:"bg-blue-500",
   },
   {
-    time: "Yesterday, 4:45 PM",
-    message: "Payment received for Contract #ABF-2025-0042",
-    status: "Received",
-    statusColor: "bg-[#D4AF37]",
+    time:"Yesterday, 4:45 PM",
+    message:"Payment received for Contract #ABF-2025-0042",
+    status:"Received",
+    statusColor:"bg-[#D4AF37]",
   },
   {
-    time: "Yesterday, 3:00 PM",
-    message: "Lab certificate uploaded for Bamboo Lot #BD-2025-178",
-    status: "Uploaded",
-    statusColor: "bg-[#D4AF37]",
+    time:"Yesterday, 3:00 PM",
+    message:"Lab certificate uploaded for Bamboo Lot #BD-2025-178",
+    status:"Uploaded",
+    statusColor:"bg-[#D4AF37]",
   },
 ];
 
@@ -99,25 +99,25 @@ function StatsCardNew({
   title,
   value,
   icon: Icon,
-  variant = "default",
+  variant ="default",
 }: {
   title: string;
   value: string | number;
   icon: React.ElementType;
-  variant?: "default" | "success" | "warning" | "info";
+  variant?:"default" |"success" |"warning" |"info";
 }) {
   const variantStyles = {
-    default: "bg-white",
-    success: "bg-emerald-50 border-emerald-200",
-    warning: "bg-amber-50 border-amber-200",
-    info: "bg-blue-50 border-blue-200",
+    default:"bg-white",
+    success:"bg-emerald-50 border-emerald-200",
+    warning:"bg-amber-50 border-amber-200",
+    info:"bg-blue-50 border-blue-200",
   };
 
   const iconStyles = {
-    default: "text-slate-600",
-    success: "text-[#D4AF37]",
-    warning: "text-[#D4AF37]",
-    info: "text-blue-600",
+    default:"text-slate-600",
+    success:"text-[#D4AF37]",
+    warning:"text-[#D4AF37]",
+    info:"text-blue-600",
   };
 
   return (
@@ -130,8 +130,8 @@ function StatsCardNew({
           </div>
           <div
             className={cn(
-              "p-2 rounded-lg bg-slate-100",
-              variant !== "default" && "bg-white/50"
+"p-2 rounded-lg bg-slate-100",
+              variant !=="default" &&"bg-white/50"
             )}
           >
             <Icon className={cn("h-5 w-5", iconStyles[variant])} />
@@ -147,21 +147,21 @@ function QuickActionButton({
   icon: Icon,
   label,
   href,
-  variant = "outline",
+  variant ="outline",
 }: {
   icon: React.ElementType;
   label: string;
   href: string;
-  variant?: "gold" | "outline";
+  variant?:"gold" |"outline";
 }) {
   return (
     <Link href={href}>
       <button
         className={cn(
-          "flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all",
-          variant === "gold"
-            ? "btn-gold"
-            : "bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300"
+"flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all",
+          variant ==="gold"
+            ?"btn-gold"
+            :"bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300"
         )}
       >
         <Icon className="h-4 w-4" />
@@ -173,9 +173,9 @@ function QuickActionButton({
 
 // Contract status data for donut chart
 const CONTRACT_STATUS_DATA = [
-  { label: "Active", value: 65, color: "#10B981" },
-  { label: "Pending", value: 20, color: "#F59E0B" },
-  { label: "Closed", value: 15, color: "#6B7280" },
+  { label:"Active", value: 65, color:"#10B981" },
+  { label:"Pending", value: 20, color:"#F59E0B" },
+  { label:"Closed", value: 15, color:"#6B7280" },
 ];
 
 // Simple donut chart component
@@ -239,7 +239,7 @@ function DonutChart({
 
 // Simple area chart component for supply volume
 function SupplyVolumeChart() {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+  const months = ["Jan","Feb","Mar","Apr","May","Jun"];
   const values = [120, 180, 220, 280, 350, 420];
   const maxValue = Math.max(...values);
   const chartHeight = 150;
@@ -254,7 +254,7 @@ function SupplyVolumeChart() {
     y: padding.top + plotHeight - (v / maxValue) * plotHeight,
   }));
 
-  const linePath = points.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(" ");
+  const linePath = points.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join("");
   const areaPath = `${linePath} L ${points[points.length - 1].x} ${padding.top + plotHeight} L ${points[0].x} ${padding.top + plotHeight} Z`;
 
   return (
@@ -353,14 +353,14 @@ export default function Dashboard() {
   // Check if user has supplier or buyer profile
   const hasSupplier = !!profile?.supplier;
   const hasBuyer = !!profile?.buyer;
-  const isAdmin = user?.role === "admin";
+  const isAdmin = user?.role ==="admin";
 
   // Example stats - would come from API in production
   const stats = {
     activeContracts: 12,
     pendingInquiries: 8,
-    totalVolume: "$2.4M",
-    riskScore: "A+",
+    totalVolume:"$2.4M",
+    riskScore:"A+",
   };
 
   return (
@@ -373,11 +373,11 @@ export default function Dashboard() {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <div className="h-10 w-10 rounded-full bg-gradient-to-br from-teal-500 to-[#D4AF37] flex items-center justify-center text-black font-semibold">
-                    {user?.name?.charAt(0) || "U" || "U"}
+                    {user?.name?.charAt(0) ||"U" ||"U"}
                   </div>
                   <div>
                     <H1 className="text-2xl text-slate-900">
-                      Welcome back, {user?.name || "User"}
+                      Welcome back, {user?.name ||"User"}
                     </H1>
                     <Body size="sm" className="text-gray-600">
                       Here's what's happening with your Australian biomass portfolio today.
@@ -404,7 +404,7 @@ export default function Dashboard() {
             value={stats.activeContracts}
             icon={FileText}
             description="Signed agreements"
-            trend={{ value: 12, direction: "up" }}
+            trend={{ value: 12, direction:"up" }}
           />
           <StatsCardPremium
             title="Pending Inquiries"
@@ -419,7 +419,7 @@ export default function Dashboard() {
             icon={DollarSign}
             variant="gold"
             description="Year to date"
-            trend={{ value: 8, direction: "up" }}
+            trend={{ value: 8, direction:"up" }}
           />
           <StatsCardPremium
             title="Risk Score"
@@ -600,7 +600,7 @@ export default function Dashboard() {
                         </div>
                         <Badge
                           className={cn(
-                            "ml-4 text-black border-0",
+"ml-4 text-black border-0",
                             activity.statusColor
                           )}
                         >
@@ -677,7 +677,7 @@ export default function Dashboard() {
               <GlassCard glow="subtle" className="p-5">
                 <div className="flex items-center gap-2 mb-4">
                   <FileText className="h-5 w-5 text-[#D4AF37]" />
-                  <h3 className="font-semibold">Contract Status</h3>
+                  <H3 className="">Contract Status</H3>
                 </div>
                 <div className="flex items-center justify-center gap-8">
                   <ProgressRing progress={65} color="success" label="Active" />
@@ -741,7 +741,7 @@ export default function Dashboard() {
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">
-                  {hasSupplier ? "Supplier" : "Buyer"} Overview
+                  {hasSupplier ?"Supplier" :"Buyer"} Overview
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -750,9 +750,9 @@ export default function Dashboard() {
                     <>
                       <div className="text-center p-4 bg-slate-50 rounded-lg">
                         <p className="text-3xl font-bold text-slate-900 font-mono">
-                          {profile.supplier?.verificationStatus === "verified"
-                            ? "Verified"
-                            : "Pending"}
+                          {profile.supplier?.verificationStatus ==="verified"
+                            ?"Verified"
+                            :"Pending"}
                         </p>
                         <p className="text-sm text-gray-600 mt-1">
                           Verification Status

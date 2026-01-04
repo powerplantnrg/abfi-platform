@@ -1,32 +1,42 @@
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { useAuth } from "@/_core/hooks/useAuth";
+/**
+ * Concentration Analysis - Nextgen Design
+ *
+ * Features:
+ * - Supply chain concentration metrics
+ * - Risk exposure assessment
+ * - Supplier diversity analysis
+ * - Typography components for consistent styling
+ */
+
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { useAuth } from"@/_core/hooks/useAuth";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/select";
+import { trpc } from"@/lib/trpc";
 import {
   AlertTriangle,
   TrendingUp,
   MapPin,
   PieChart,
   BarChart3,
-} from "lucide-react";
-import { useLocation } from "wouter";
+} from"lucide-react";
+import { useLocation } from"wouter";
 
 export default function ConcentrationAnalysis() {
   const { user, loading: authLoading } = useAuth();
@@ -149,7 +159,7 @@ export default function ConcentrationAnalysis() {
     // Group by state (simplified - in real implementation would use actual location data)
     const stateVolumes = agreements.reduce((acc: any, a: any) => {
       // For now, use a placeholder - in real implementation would fetch from supplier data
-      const state = "QLD"; // Placeholder
+      const state ="QLD"; // Placeholder
       if (!acc[state]) {
         acc[state] = {
           state,
@@ -179,23 +189,23 @@ export default function ConcentrationAnalysis() {
   const getHHIInterpretation = (hhi: number) => {
     if (hhi < 1500) {
       return {
-        level: "Low Concentration",
-        color: "bg-green-100 text-green-800",
-        description: "Competitive market with well-distributed supply",
+        level:"Low Concentration",
+        color:"bg-green-100 text-green-800",
+        description:"Competitive market with well-distributed supply",
         icon: <TrendingUp className="h-5 w-5 text-green-600" />,
       };
     } else if (hhi < 2500) {
       return {
-        level: "Moderate Concentration",
-        color: "bg-yellow-100 text-yellow-800",
-        description: "Moderately concentrated supply base - monitor closely",
+        level:"Moderate Concentration",
+        color:"bg-yellow-100 text-yellow-800",
+        description:"Moderately concentrated supply base - monitor closely",
         icon: <AlertTriangle className="h-5 w-5 text-yellow-600" />,
       };
     } else {
       return {
-        level: "High Concentration",
-        color: "bg-red-100 text-red-800",
-        description: "Highly concentrated supply - significant risk",
+        level:"High Concentration",
+        color:"bg-red-100 text-red-800",
+        description:"Highly concentrated supply - significant risk",
         icon: <AlertTriangle className="h-5 w-5 text-red-600" />,
       };
     }
@@ -209,7 +219,7 @@ export default function ConcentrationAnalysis() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <PieChart className="h-8 w-8 text-[#D4AF37]" />
-            <h1 className="text-3xl font-bold">Concentration Risk Analysis</h1>
+            <H1 className="text-3xl">Concentration Risk Analysis</H1>
           </div>
           <p className="text-gray-600">
             Analyze supplier concentration and geographic distribution for your
@@ -227,7 +237,7 @@ export default function ConcentrationAnalysis() {
           </CardHeader>
           <CardContent>
             <Select
-              value={selectedProjectId?.toString() || ""}
+              value={selectedProjectId?.toString() ||""}
               onValueChange={value => setSelectedProjectId(parseInt(value))}
             >
               <SelectTrigger className="w-full">
@@ -258,9 +268,9 @@ export default function ConcentrationAnalysis() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <BarChart3 className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">
+                  <H3 className="text-lg  mb-2">
                     No Supply Agreements
-                  </h3>
+                  </H3>
                   <p className="text-sm text-gray-600 mb-4">
                     Add supply agreements to analyze concentration risk
                   </p>
@@ -307,7 +317,7 @@ export default function ConcentrationAnalysis() {
                       </div>
 
                       <div className="p-4 bg-muted rounded-lg">
-                        <h4 className="font-semibold mb-2">HHI Benchmarks</h4>
+                        <H4 className="mb-2">HHI Benchmarks</H4>
                         <ul className="text-sm space-y-1 text-gray-600">
                           <li>
                             • <strong>0-1,500:</strong> Competitive market (low
@@ -371,7 +381,7 @@ export default function ConcentrationAnalysis() {
 
                     {/* Supplier Breakdown */}
                     <div className="space-y-3">
-                      <h4 className="font-semibold">Supplier Breakdown</h4>
+                      <H4 className="">Supplier Breakdown</H4>
                       {supplierMetrics.supplierShares.map(
                         (supplier: any, index: number) => (
                           <div
@@ -391,12 +401,12 @@ export default function ConcentrationAnalysis() {
                                 <div
                                   className={`h-full ${
                                     index === 0
-                                      ? "bg-primary"
+                                      ?"bg-primary"
                                       : index === 1
-                                        ? "bg-blue-500"
+                                        ?"bg-blue-500"
                                         : index === 2
-                                          ? "bg-green-500"
-                                          : "bg-gray-400"
+                                          ?"bg-green-500"
+                                          :"bg-gray-400"
                                   }`}
                                   style={{ width: `${supplier.percent}%` }}
                                 />
@@ -408,7 +418,7 @@ export default function ConcentrationAnalysis() {
                               </p>
                               <p className="text-xs text-gray-600">
                                 {supplier.agreements.length} agreement
-                                {supplier.agreements.length !== 1 ? "s" : ""}
+                                {supplier.agreements.length !== 1 ?"s" :""}
                               </p>
                             </div>
                           </div>
@@ -440,8 +450,8 @@ export default function ConcentrationAnalysis() {
                         </p>
                         <p className="text-xs text-gray-600 mt-1">
                           {geoDistribution.climateZones < 2
-                            ? "High geographic concentration"
-                            : "Good diversification"}
+                            ?"High geographic concentration"
+                            :"Good diversification"}
                         </p>
                       </div>
                       <div className="p-4 border rounded-lg">
@@ -458,24 +468,24 @@ export default function ConcentrationAnalysis() {
                     </div>
 
                     <div className="mt-6 p-4 bg-muted rounded-lg">
-                      <h4 className="font-semibold mb-2">Risk Assessment</h4>
+                      <H4 className="mb-2">Risk Assessment</H4>
                       <ul className="text-sm space-y-1 text-gray-600">
                         <li>
-                          • <strong>Single Event Exposure:</strong>{" "}
+                          • <strong>Single Event Exposure:</strong>{""}
                           {supplierMetrics.largestSupplierPercent}% of supply at
                           risk from single supplier failure
                         </li>
                         <li>
-                          • <strong>Geographic Risk:</strong>{" "}
+                          • <strong>Geographic Risk:</strong>{""}
                           {geoDistribution.climateZones < 2
-                            ? "High - limited geographic diversification"
-                            : "Moderate - reasonable geographic spread"}
+                            ?"High - limited geographic diversification"
+                            :"Moderate - reasonable geographic spread"}
                         </li>
                         <li>
-                          • <strong>Recommendation:</strong>{" "}
+                          • <strong>Recommendation:</strong>{""}
                           {supplierMetrics.largestSupplierPercent > 40
-                            ? "Consider diversifying away from dominant supplier"
-                            : "Maintain current diversification strategy"}
+                            ?"Consider diversifying away from dominant supplier"
+                            :"Maintain current diversification strategy"}
                         </li>
                       </ul>
                     </div>
@@ -508,7 +518,7 @@ export default function ConcentrationAnalysis() {
                             Dominant Supplier Risk
                           </p>
                           <p className="text-sm text-yellow-700 mt-1">
-                            Your largest supplier represents{" "}
+                            Your largest supplier represents{""}
                             {supplierMetrics.largestSupplierPercent}% of total
                             supply. Aim to reduce this to below 40% to improve
                             resilience.
@@ -521,7 +531,7 @@ export default function ConcentrationAnalysis() {
                             Geographic Concentration
                           </p>
                           <p className="text-sm text-orange-700 mt-1">
-                            Supply is concentrated in{" "}
+                            Supply is concentrated in{""}
                             {geoDistribution.climateZones} climate zone(s).
                             Consider sourcing from additional regions to
                             mitigate climate-related risks.

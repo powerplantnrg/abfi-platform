@@ -10,15 +10,15 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Input } from"@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from"@/components/ui/select";
+import { Progress } from"@/components/ui/progress";
 import {
   Search,
   Building2,
@@ -42,19 +42,19 @@ import {
   Filter,
   X,
   Database,
-} from "lucide-react";
-import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { useAuth } from "@/_core/hooks/useAuth";
-import { toast } from "sonner";
+} from"lucide-react";
+import { Link } from"wouter";
+import { trpc } from"@/lib/trpc";
+import { useAuth } from"@/_core/hooks/useAuth";
+import { toast } from"sonner";
 import {
   SIGNAL_TYPE_INFO,
   type EntitySummary,
   type EntityDetail,
   type Signal,
   type DashboardStats,
-} from "@/lib/stealthDiscoveryApi";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"@/lib/stealthDiscoveryApi";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 // Icon mapping for signal types
 const SIGNAL_ICONS: Record<string, React.ElementType> = {
@@ -73,25 +73,25 @@ const SIGNAL_ICONS: Record<string, React.ElementType> = {
 
 // Score color helper
 function getScoreColor(score: number): string {
-  if (score >= 80) return "text-[#D4AF37]";
-  if (score >= 60) return "text-blue-600";
-  if (score >= 40) return "text-[#D4AF37]";
-  return "text-gray-500";
+  if (score >= 80) return"text-[#D4AF37]";
+  if (score >= 60) return"text-blue-600";
+  if (score >= 40) return"text-[#D4AF37]";
+  return"text-gray-500";
 }
 
 function getScoreBadgeColor(score: number): string {
-  if (score >= 80) return "bg-emerald-100 text-emerald-800 border-emerald-200";
-  if (score >= 60) return "bg-blue-100 text-blue-800 border-blue-200";
-  if (score >= 40) return "bg-amber-100 text-amber-800 border-amber-200";
-  return "bg-gray-100 text-gray-600 border-gray-200";
+  if (score >= 80) return"bg-emerald-100 text-emerald-800 border-emerald-200";
+  if (score >= 60) return"bg-blue-100 text-blue-800 border-blue-200";
+  if (score >= 40) return"bg-amber-100 text-amber-800 border-amber-200";
+  return"bg-gray-100 text-gray-600 border-gray-200";
 }
 
 // Color palette for pie chart
-const PIE_COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#8b5cf6", "#ec4899"];
+const PIE_COLORS = ["#10b981","#3b82f6","#f59e0b","#8b5cf6","#ec4899"];
 
 export default function StealthDiscovery() {
   const { user } = useAuth();
-  const isAdmin = user?.role === "admin";
+  const isAdmin = user?.role ==="admin";
   const [selectedEntityId, setSelectedEntityId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [minScore, setMinScore] = useState<string>("0");
@@ -214,9 +214,9 @@ export default function StealthDiscovery() {
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
+      day:"numeric",
+      month:"short",
+      year:"numeric",
     });
   };
 
@@ -226,8 +226,8 @@ export default function StealthDiscovery() {
     const diffMs = now.getTime() - date.getTime();
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    if (diffDays === 0) return "Today";
-    if (diffDays === 1) return "Yesterday";
+    if (diffDays === 0) return"Today";
+    if (diffDays === 1) return"Yesterday";
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
     return formatDate(dateStr);
@@ -266,7 +266,7 @@ export default function StealthDiscovery() {
           <Card>
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
+              <H3 className="text-lg  mb-2">Error Loading Data</H3>
               <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
@@ -291,7 +291,7 @@ export default function StealthDiscovery() {
                 Stealth Mode
               </Badge>
             </div>
-            <h1 className="text-3xl font-bold">Stealth Discovery</h1>
+            <H1 className="text-3xl">Stealth Discovery</H1>
             <p className="text-gray-600 mt-1">
               Surface unannounced biofuel projects through signal analysis
             </p>
@@ -304,12 +304,12 @@ export default function StealthDiscovery() {
                 disabled={isIngesting}
                 className="bg-purple-50 border-purple-200 hover:bg-purple-100"
               >
-                <Database className={`h-4 w-4 mr-2 ${isIngesting ? "animate-pulse" : ""}`} />
-                {isIngesting ? "Ingesting..." : "Ingest Data"}
+                <Database className={`h-4 w-4 mr-2 ${isIngesting ?"animate-pulse" :""}`} />
+                {isIngesting ?"Ingesting..." :"Ingest Data"}
               </Button>
             )}
             <Button variant="outline" onClick={loadData}>
-              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+              <RefreshCw className={`h-4 w-4 mr-2 ${loading ?"animate-spin" :""}`} />
               Refresh
             </Button>
           </div>
@@ -423,7 +423,7 @@ export default function StealthDiscovery() {
                       placeholder="Search entities..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                      onKeyDown={(e) => e.key ==="Enter" && handleSearch()}
                       className="pl-9"
                     />
                     {searchQuery && (
@@ -450,8 +450,8 @@ export default function StealthDiscovery() {
                       key={entity.id}
                       className={`p-4 rounded-lg border cursor-pointer transition-colors ${
                         selectedEntity?.id === entity.id
-                          ? "bg-primary/5 border-primary"
-                          : "hover:bg-muted/50"
+                          ?"bg-primary/5 border-primary"
+                          :"hover:bg-muted/50"
                       }`}
                       onClick={() => loadEntityDetails(entity.id)}
                     >
@@ -459,7 +459,7 @@ export default function StealthDiscovery() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <Building2 className="h-4 w-4 text-gray-600" />
-                            <h4 className="font-medium">{entity.canonical_name}</h4>
+                            <H4 className="font-medium">{entity.canonical_name}</H4>
                           </div>
                           <div className="flex items-center gap-3 mt-2 text-sm text-gray-600">
                             <span className="flex items-center gap-1">
@@ -526,7 +526,7 @@ export default function StealthDiscovery() {
                   </div>
                   <div className="flex-1 space-y-2">
                     {signalTypesChartData.map((item, index) => {
-                      const Icon = SIGNAL_ICONS[stats?.top_signal_types[index]?.type || ""] || FileText;
+                      const Icon = SIGNAL_ICONS[stats?.top_signal_types[index]?.type ||""] || FileText;
                       return (
                         <div key={item.name} className="flex items-center gap-2">
                           <div
@@ -558,7 +558,7 @@ export default function StealthDiscovery() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <h3 className="font-semibold text-lg">{selectedEntity.canonical_name}</h3>
+                    <H3 className="text-lg">{selectedEntity.canonical_name}</H3>
                     <Badge variant="outline" className="mt-1">
                       {selectedEntity.entity_type}
                     </Badge>
@@ -583,8 +583,8 @@ export default function StealthDiscovery() {
                       <div className="space-y-1">
                         {Object.entries(selectedEntity.identifiers).map(([key, values]) => (
                           <div key={key} className="text-sm">
-                            <span className="uppercase text-gray-600">{key}:</span>{" "}
-                            {(values as string[]).join(", ")}
+                            <span className="uppercase text-gray-600">{key}:</span>{""}
+                            {(values as string[]).join(",")}
                           </div>
                         ))}
                       </div>
@@ -640,9 +640,9 @@ export default function StealthDiscovery() {
                       <div className="flex items-start gap-2">
                         <Icon className="h-4 w-4 mt-0.5 text-gray-600" />
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium line-clamp-2">
+                          <H4 className="text-sm font-medium line-clamp-2">
                             {signal.title || info?.label || signal.signal_type}
-                          </h4>
+                          </H4>
                           {signal.description && (
                             <p className="text-xs text-gray-600 line-clamp-2 mt-1">
                               {signal.description}

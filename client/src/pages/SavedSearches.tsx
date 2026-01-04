@@ -1,15 +1,25 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+/**
+ * Saved Searches - Nextgen Design
+ *
+ * Features:
+ * - Search query management
+ * - Alert configuration
+ * - Quick access shortcuts
+ * - Typography components for consistent styling
+ */
+
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Skeleton } from"@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,
@@ -18,14 +28,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { trpc } from "@/lib/trpc";
-import { Bookmark, Search, Trash2, Bell, BellOff } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import { useLocation } from "wouter";
+} from"@/components/ui/dialog";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { trpc } from"@/lib/trpc";
+import { Bookmark, Search, Trash2, Bell, BellOff } from"lucide-react";
+import { useState } from"react";
+import { toast } from"sonner";
+import { useLocation } from"wouter";
 
 export default function SavedSearches() {
   const { user, loading: authLoading } = useAuth();
@@ -49,7 +59,7 @@ export default function SavedSearches() {
       refetch();
     },
     onError: error => {
-      toast.error(error.message || "Failed to save search");
+      toast.error(error.message ||"Failed to save search");
     },
   });
 
@@ -59,7 +69,7 @@ export default function SavedSearches() {
       refetch();
     },
     onError: error => {
-      toast.error(error.message || "Failed to delete search");
+      toast.error(error.message ||"Failed to delete search");
     },
   });
 
@@ -71,7 +81,7 @@ export default function SavedSearches() {
 
     createMutation.mutate({
       name: searchName,
-      criteria: searchCriteria || "{}",
+      criteria: searchCriteria ||"{}",
       notifyOnNewMatches: false,
     });
   };
@@ -109,7 +119,7 @@ export default function SavedSearches() {
       <div className="container py-8">
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Saved Searches</h1>
+            <H1 className="text-4xl  mb-2">Saved Searches</H1>
             <p className="text-gray-600">
               Save your search criteria and get alerts for new matches
             </p>
@@ -142,7 +152,7 @@ export default function SavedSearches() {
                   <Label htmlFor="criteria">Filter Criteria (JSON)</Label>
                   <Input
                     id="criteria"
-                    placeholder='{"category": ["oilseed"], "state": ["NSW"]}'
+                    placeholder='{"category": ["oilseed"],"state": ["NSW"]}'
                     value={searchCriteria}
                     onChange={e => setSearchCriteria(e.target.value)}
                   />
@@ -159,7 +169,7 @@ export default function SavedSearches() {
                   onClick={handleCreate}
                   disabled={createMutation.isPending}
                 >
-                  {createMutation.isPending ? "Saving..." : "Save Search"}
+                  {createMutation.isPending ?"Saving..." :"Save Search"}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -195,7 +205,7 @@ export default function SavedSearches() {
                         {search.name}
                       </CardTitle>
                       <CardDescription className="mt-2">
-                        Created{" "}
+                        Created{""}
                         {new Date(search.createdAt).toLocaleDateString()}
                       </CardDescription>
                     </div>
@@ -215,7 +225,7 @@ export default function SavedSearches() {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {search.criteria && search.criteria !== "{}" && (
+                  {search.criteria && search.criteria !=="{}" && (
                     <div className="bg-muted rounded-lg p-3">
                       <div className="text-xs font-mono text-gray-600 overflow-x-auto">
                         {search.criteria}
@@ -250,9 +260,9 @@ export default function SavedSearches() {
           <Card>
             <CardContent className="py-12 text-center">
               <Bookmark className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
+              <H3 className="text-lg  mb-2">
                 No saved searches yet
-              </h3>
+              </H3>
               <p className="text-gray-600 mb-4">
                 Save your search criteria to quickly find feedstocks that match
                 your requirements
@@ -285,7 +295,7 @@ export default function SavedSearches() {
                       <Label htmlFor="criteria">Filter Criteria (JSON)</Label>
                       <Input
                         id="criteria"
-                        placeholder='{"category": ["oilseed"], "state": ["NSW"]}'
+                        placeholder='{"category": ["oilseed"],"state": ["NSW"]}'
                         value={searchCriteria}
                         onChange={e => setSearchCriteria(e.target.value)}
                       />
@@ -302,7 +312,7 @@ export default function SavedSearches() {
                       onClick={handleCreate}
                       disabled={createMutation.isPending}
                     >
-                      {createMutation.isPending ? "Saving..." : "Save Search"}
+                      {createMutation.isPending ?"Saving..." :"Save Search"}
                     </Button>
                   </DialogFooter>
                 </DialogContent>

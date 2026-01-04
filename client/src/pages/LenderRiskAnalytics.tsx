@@ -9,27 +9,27 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from"@/components/ui/Card";
+import { Button } from"@/components/ui/Button";
+import { Badge } from"@/components/ui/badge";
+import { Progress } from"@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from"@/components/ui/tabs";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
+} from"@/components/ui/select";
+import { Slider } from"@/components/ui/slider";
 import {
   Table,
   TableBody,
@@ -37,8 +37,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+} from"@/components/ui/table";
+import { Alert, AlertDescription, AlertTitle } from"@/components/ui/alert";
 import {
   ShieldAlert,
   TrendingDown,
@@ -51,10 +51,10 @@ import {
   RefreshCw,
   Zap,
   Loader2,
-} from "lucide-react";
-import { Link } from "wouter";
-import { LazyChart } from "@/components/ui/lazy-charts";
-import { trpc } from "@/lib/trpc";
+} from"lucide-react";
+import { Link } from"wouter";
+import { LazyChart } from"@/components/ui/lazy-charts";
+import { trpc } from"@/lib/trpc";
 
 const formatCurrency = (value: number) => {
   if (value >= 1000000000) return `$${(value / 1000000000).toFixed(1)}B`;
@@ -63,15 +63,15 @@ const formatCurrency = (value: number) => {
 };
 
 const getHHIColor = (hhi: number) => {
-  if (hhi < 1000) return "text-green-600";
-  if (hhi < 2500) return "text-amber-600";
-  return "text-red-600";
+  if (hhi < 1000) return"text-green-600";
+  if (hhi < 2500) return"text-amber-600";
+  return"text-red-600";
 };
 
 const getHHILabel = (hhi: number) => {
-  if (hhi < 1000) return "Low Concentration";
-  if (hhi < 2500) return "Moderate Concentration";
-  return "High Concentration";
+  if (hhi < 1000) return"Low Concentration";
+  if (hhi < 2500) return"Moderate Concentration";
+  return"High Concentration";
 };
 
 export default function LenderRiskAnalytics() {
@@ -117,7 +117,7 @@ export default function LenderRiskAnalytics() {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-2xl font-bold">Risk Analytics</h1>
+                <H1 className="text-2xl">Risk Analytics</H1>
                 <p className="text-muted-foreground text-sm">
                   Portfolio risk assessment and stress testing
                 </p>
@@ -160,11 +160,11 @@ export default function LenderRiskAnalytics() {
                   <Badge
                     variant="secondary"
                     className={
-                      concentrationMetrics?.hhiStatus === "low"
-                        ? "bg-green-100 text-green-800"
-                        : concentrationMetrics?.hhiStatus === "moderate"
-                          ? "bg-amber-100 text-amber-800"
-                          : "bg-red-100 text-red-800"
+                      concentrationMetrics?.hhiStatus ==="low"
+                        ?"bg-green-100 text-green-800"
+                        : concentrationMetrics?.hhiStatus ==="moderate"
+                          ?"bg-amber-100 text-amber-800"
+                          :"bg-red-100 text-red-800"
                     }
                   >
                     {getHHILabel(concentrationMetrics?.hhiIndex ?? 0)}
@@ -217,17 +217,17 @@ export default function LenderRiskAnalytics() {
                           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                           <XAxis type="number" unit="%" fontSize={12} />
                           <YAxis dataKey="name" type="category" fontSize={12} width={120} />
-                          <Tooltip formatter={(value: number) => [`${value}%`, "Share"]} />
+                          <Tooltip formatter={(value: number) => [`${value}%`,"Share"]} />
                           <Bar dataKey="share" radius={[0, 4, 4, 0]}>
                             {(supplierConcentration ?? []).map((entry, index) => (
                               <Cell
                                 key={`cell-${index}`}
                                 fill={
-                                  entry.risk === "low"
-                                    ? "#22c55e"
-                                    : entry.risk === "medium"
-                                      ? "#f59e0b"
-                                      : "#ef4444"
+                                  entry.risk ==="low"
+                                    ?"#22c55e"
+                                    : entry.risk ==="medium"
+                                      ?"#f59e0b"
+                                      :"#ef4444"
                                 }
                               />
                             ))}
@@ -300,13 +300,13 @@ export default function LenderRiskAnalytics() {
                               variant="secondary"
                               className={
                                 combinedRisk < 40
-                                  ? "bg-green-100 text-green-800"
+                                  ?"bg-green-100 text-green-800"
                                   : combinedRisk < 60
-                                    ? "bg-amber-100 text-amber-800"
-                                    : "bg-red-100 text-red-800"
+                                    ?"bg-amber-100 text-amber-800"
+                                    :"bg-red-100 text-red-800"
                               }
                             >
-                              {combinedRisk < 40 ? "Low" : combinedRisk < 60 ? "Medium" : "High"}
+                              {combinedRisk < 40 ?"Low" : combinedRisk < 60 ?"Medium" :"High"}
                             </Badge>
                           </TableCell>
                         </TableRow>
@@ -344,7 +344,7 @@ export default function LenderRiskAnalytics() {
                             fillOpacity={0.3}
                             strokeWidth={2}
                           />
-                          <Tooltip formatter={(value: number) => [`${value}/100`, "Score"]} />
+                          <Tooltip formatter={(value: number) => [`${value}/100`,"Score"]} />
                         </RadarChart>
                       </ResponsiveContainer>
                     )}
@@ -362,10 +362,10 @@ export default function LenderRiskAnalytics() {
                       <span
                         className={`text-lg font-bold ${
                           factor.score >= 70
-                            ? "text-green-600"
+                            ?"text-green-600"
                             : factor.score >= 50
-                              ? "text-amber-600"
-                              : "text-red-600"
+                              ?"text-amber-600"
+                              :"text-red-600"
                         }`}
                       >
                         {factor.score}
@@ -374,10 +374,10 @@ export default function LenderRiskAnalytics() {
                     <Progress value={factor.score} className="h-2" />
                     <p className="text-xs text-muted-foreground mt-2">
                       {factor.score >= 70
-                        ? "Well managed"
+                        ?"Well managed"
                         : factor.score >= 50
-                          ? "Needs attention"
-                          : "High risk"}
+                          ?"Needs attention"
+                          :"High risk"}
                     </p>
                   </CardContent>
                 </Card>
@@ -470,7 +470,7 @@ export default function LenderRiskAnalytics() {
               <AlertTriangle className="h-4 w-4" />
               <AlertTitle>Unmitigated Risk Alert</AlertTitle>
               <AlertDescription>
-                The "Price Shock" scenario is currently unmitigated and could result in
+                The"Price Shock" scenario is currently unmitigated and could result in
                 significant portfolio losses. Consider hedging strategies or diversification.
               </AlertDescription>
             </Alert>

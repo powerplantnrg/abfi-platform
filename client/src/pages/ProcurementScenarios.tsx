@@ -1,29 +1,35 @@
 /**
- * ProcurementScenarios - Volume security modeling and scenario planning for buyers.
- * Phase 5: Buyer Procurement & Scenario Tools
+ * Procurement Scenarios - Nextgen Design
+ *
+ * Features:
+ * - Supply chain scenario modeling
+ * - What-if analysis tools
+ * - Cost optimization simulation
+ * - Typography components for consistent styling
  */
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
+
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
-import { Progress } from "@/components/ui/progress";
+} from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
+import { Slider } from"@/components/ui/slider";
+import { Progress } from"@/components/ui/progress";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -31,14 +37,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
-import { PageLayout, PageContainer } from "@/components/layout";
+} from"@/components/ui/tabs";
+import { PageLayout, PageContainer } from"@/components/layout";
 import {
   LineChart,
   Shield,
@@ -54,16 +60,16 @@ import {
   RefreshCw,
   Download,
   ChevronRight,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { cn } from"@/lib/utils";
 
 // Mock data for scenarios
 const MOCK_SUPPLIERS = [
-  { id: 1, name: "Murray Biomass Co", capacity: 25000, reliability: 0.95, price: 85, location: "VIC", rating: "A" },
-  { id: 2, name: "Hunter Valley Ag", capacity: 18000, reliability: 0.92, price: 78, location: "NSW", rating: "A" },
-  { id: 3, name: "Darling Downs Farm", capacity: 35000, reliability: 0.88, price: 72, location: "QLD", rating: "B+" },
-  { id: 4, name: "Riverina Producers", capacity: 22000, reliability: 0.94, price: 82, location: "NSW", rating: "A-" },
-  { id: 5, name: "SA Grain Residues", capacity: 15000, reliability: 0.91, price: 88, location: "SA", rating: "B+" },
+  { id: 1, name:"Murray Biomass Co", capacity: 25000, reliability: 0.95, price: 85, location:"VIC", rating:"A" },
+  { id: 2, name:"Hunter Valley Ag", capacity: 18000, reliability: 0.92, price: 78, location:"NSW", rating:"A" },
+  { id: 3, name:"Darling Downs Farm", capacity: 35000, reliability: 0.88, price: 72, location:"QLD", rating:"B+" },
+  { id: 4, name:"Riverina Producers", capacity: 22000, reliability: 0.94, price: 82, location:"NSW", rating:"A-" },
+  { id: 5, name:"SA Grain Residues", capacity: 15000, reliability: 0.91, price: 88, location:"SA", rating:"B+" },
 ];
 
 interface ScenarioResult {
@@ -136,9 +142,9 @@ export default function ProcurementScenarios() {
   };
 
   const getConcentrationLabel = (hhi: number) => {
-    if (hhi < 1500) return { label: "Low", color: "text-green-600 bg-green-50" };
-    if (hhi < 2500) return { label: "Moderate", color: "text-[#D4AF37] bg-amber-50" };
-    return { label: "High", color: "text-red-600 bg-red-50" };
+    if (hhi < 1500) return { label:"Low", color:"text-green-600 bg-green-50" };
+    if (hhi < 2500) return { label:"Moderate", color:"text-[#D4AF37] bg-amber-50" };
+    return { label:"High", color:"text-red-600 bg-red-50" };
   };
 
   const toggleSupplier = (id: number) => {
@@ -170,9 +176,9 @@ export default function ProcurementScenarios() {
                 </Badge>
               </div>
 
-              <h1 className="text-4xl lg:text-5xl font-display font-bold mb-4">
+              <H1 className="text-4xl lg:text-5xl font-display  mb-4">
                 Procurement Scenarios
-              </h1>
+              </H1>
               <p className="text-xl text-gray-600 leading-relaxed">
                 Model volume security, optimize supplier portfolios, and stress-test 
                 your feedstock procurement strategy.
@@ -353,7 +359,7 @@ export default function ProcurementScenarios() {
                           <div className="text-sm text-gray-600">Concentration</div>
                           <Badge 
                             className={cn(
-                              "text-xs mt-1",
+"text-xs mt-1",
                               getConcentrationLabel(scenarioResults.concentrationRisk).color
                             )}
                           >
@@ -367,16 +373,16 @@ export default function ProcurementScenarios() {
 
                       {/* Coverage Visualization */}
                       <div className="bg-slate-50 dark:bg-white/50 rounded-lg p-6">
-                        <h4 className="font-semibold mb-4">Volume Coverage Analysis</h4>
+                        <H4 className="mb-4">Volume Coverage Analysis</H4>
                         <div className="relative h-8 bg-slate-200 dark:bg-white rounded-full overflow-hidden">
                           <div 
                             className={cn(
-                              "h-full rounded-full transition-all",
+"h-full rounded-full transition-all",
                               scenarioResults.coveragePercent >= 100 
-                                ? "bg-green-500" 
+                                ?"bg-green-500" 
                                 : scenarioResults.coveragePercent >= 80 
-                                  ? "bg-[#D4AF37]" 
-                                  : "bg-red-500"
+                                  ?"bg-[#D4AF37]" 
+                                  :"bg-red-500"
                             )}
                             style={{ width: `${Math.min(scenarioResults.coveragePercent, 100)}%` }}
                           />
@@ -398,10 +404,10 @@ export default function ProcurementScenarios() {
                       {/* Recommendations */}
                       {scenarioResults.recommendations.length > 0 && (
                         <div className="border rounded-lg p-4">
-                          <h4 className="font-semibold mb-3 flex items-center gap-2">
+                          <H4 className="mb-3 flex items-center gap-2">
                             <CheckCircle2 className="h-4 w-4 text-[#D4AF37]" />
                             Recommendations
-                          </h4>
+                          </H4>
                           <ul className="space-y-2">
                             {scenarioResults.recommendations.map((rec, i) => (
                               <li key={i} className="flex items-start gap-2 text-sm">
@@ -456,8 +462,8 @@ export default function ProcurementScenarios() {
                         <TableRow 
                           key={supplier.id}
                           className={cn(
-                            "cursor-pointer transition-colors",
-                            isSelected ? "bg-primary/5" : "hover:bg-muted/50"
+"cursor-pointer transition-colors",
+                            isSelected ?"bg-primary/5" :"hover:bg-muted/50"
                           )}
                           onClick={() => toggleSupplier(supplier.id)}
                         >
@@ -471,10 +477,10 @@ export default function ProcurementScenarios() {
                           <TableCell className="text-right">
                             <Badge 
                               className={cn(
-                                "font-mono",
+"font-mono",
                                 supplier.reliability >= 0.9 
-                                  ? "bg-green-100 text-green-800" 
-                                  : "bg-amber-100 text-amber-800"
+                                  ?"bg-green-100 text-green-800" 
+                                  :"bg-amber-100 text-amber-800"
                               )}
                             >
                               {(supplier.reliability * 100).toFixed(0)}%
@@ -539,10 +545,10 @@ export default function ProcurementScenarios() {
               <CardContent>
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                   <div className="space-y-4">
-                    <h4 className="font-semibold flex items-center gap-2">
+                    <H4 className="flex items-center gap-2">
                       <Target className="h-4 w-4 text-[#D4AF37]" />
                       Optimization Goals
-                    </h4>
+                    </H4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <span className="text-sm">Minimize Cost</span>
@@ -560,10 +566,10 @@ export default function ProcurementScenarios() {
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="font-semibold flex items-center gap-2">
+                    <H4 className="flex items-center gap-2">
                       <Shield className="h-4 w-4 text-[#D4AF37]" />
                       Constraints
-                    </h4>
+                    </H4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <span className="text-sm">Max per Supplier</span>
@@ -596,10 +602,10 @@ export default function ProcurementScenarios() {
                   </div>
 
                   <div className="space-y-4">
-                    <h4 className="font-semibold flex items-center gap-2">
+                    <H4 className="flex items-center gap-2">
                       <LineChart className="h-4 w-4 text-[#D4AF37]" />
                       Output
-                    </h4>
+                    </H4>
                     <Button className="w-full">
                       <Calculator className="h-4 w-4 mr-2" />
                       Run Optimization
@@ -611,7 +617,7 @@ export default function ProcurementScenarios() {
                 </div>
 
                 <div className="bg-slate-50 dark:bg-white/50 rounded-lg p-6">
-                  <h4 className="font-semibold mb-4">Optimal Portfolio Allocation</h4>
+                  <H4 className="mb-4">Optimal Portfolio Allocation</H4>
                   <div className="space-y-3">
                     {MOCK_SUPPLIERS.slice(0, 4).map((supplier, i) => {
                       const allocation = [35, 30, 20, 15][i];

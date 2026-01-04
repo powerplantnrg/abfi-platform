@@ -1,24 +1,34 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Button } from "@/components/ui/Button";
+/**
+ * Guarantee of Origin Scheme Dashboard - Nextgen Design
+ *
+ * Features:
+ * - GO certificate tracking
+ * - Renewable energy credits management
+ * - Scheme compliance monitoring
+ * - Typography components for consistent styling
+ */
+
+import { useAuth } from"@/_core/hooks/useAuth";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Button } from"@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from"@/components/ui/Card";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Badge } from"@/components/ui/badge";
+import { Input } from"@/components/ui/input";
+import { Label } from"@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from"@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -26,7 +36,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from"@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -34,14 +44,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from"@/components/ui/table";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
-import { trpc } from "@/lib/trpc";
+} from"@/components/ui/tabs";
+import { trpc } from"@/lib/trpc";
 import {
   Award,
   FileText,
@@ -62,43 +72,43 @@ import {
   AlertCircle,
   Building2,
   Calendar,
-} from "lucide-react";
-import { Redirect } from "wouter";
-import { cn } from "@/lib/utils";
+} from"lucide-react";
+import { Redirect } from"wouter";
+import { cn } from"@/lib/utils";
 import {
   PageWrapper,
   FadeInUp,
-} from "@/components/ui/motion";
-import DashboardLayout from "@/components/DashboardLayout";
-import { useState, useCallback } from "react";
-import { toast } from "sonner";
+} from"@/components/ui/motion";
+import DashboardLayout from"@/components/DashboardLayout";
+import { useState, useCallback } from"react";
+import { toast } from"sonner";
 
 // Stats card component
 function StatsCard({
   title,
   value,
   icon: Icon,
-  variant = "default",
+  variant ="default",
   description,
 }: {
   title: string;
   value: string | number;
   icon: React.ElementType;
-  variant?: "default" | "success" | "warning" | "info";
+  variant?:"default" |"success" |"warning" |"info";
   description?: string;
 }) {
   const variantStyles = {
-    default: "bg-white",
-    success: "bg-emerald-50 border-emerald-200",
-    warning: "bg-amber-50 border-amber-200",
-    info: "bg-blue-50 border-blue-200",
+    default:"bg-white",
+    success:"bg-emerald-50 border-emerald-200",
+    warning:"bg-amber-50 border-amber-200",
+    info:"bg-blue-50 border-blue-200",
   };
 
   const iconStyles = {
-    default: "text-slate-600",
-    success: "text-[#D4AF37]",
-    warning: "text-[#D4AF37]",
-    info: "text-blue-600",
+    default:"text-slate-600",
+    success:"text-[#D4AF37]",
+    warning:"text-[#D4AF37]",
+    info:"text-blue-600",
   };
 
   return (
@@ -114,8 +124,8 @@ function StatsCard({
           </div>
           <div
             className={cn(
-              "p-2 rounded-lg bg-slate-100",
-              variant !== "default" && "bg-white/50"
+"p-2 rounded-lg bg-slate-100",
+              variant !=="default" &&"bg-white/50"
             )}
           >
             <Icon className={cn("h-5 w-5", iconStyles[variant])} />
@@ -129,14 +139,14 @@ function StatsCard({
 // Certificate status badge
 function CertificateStatusBadge({ status }: { status: string }) {
   const statusConfig: Record<string, { label: string; className: string; icon: React.ElementType }> = {
-    issued: { label: "Issued", className: "bg-emerald-100 text-emerald-800", icon: CheckCircle2 },
-    transferred: { label: "Transferred", className: "bg-blue-100 text-blue-800", icon: ArrowRight },
-    cancelled: { label: "Cancelled", className: "bg-red-100 text-red-800", icon: XCircle },
-    retired: { label: "Retired", className: "bg-purple-100 text-purple-800", icon: Award },
-    expired: { label: "Expired", className: "bg-slate-100 text-slate-800", icon: Clock },
+    issued: { label:"Issued", className:"bg-emerald-100 text-emerald-800", icon: CheckCircle2 },
+    transferred: { label:"Transferred", className:"bg-blue-100 text-blue-800", icon: ArrowRight },
+    cancelled: { label:"Cancelled", className:"bg-red-100 text-red-800", icon: XCircle },
+    retired: { label:"Retired", className:"bg-purple-100 text-purple-800", icon: Award },
+    expired: { label:"Expired", className:"bg-slate-100 text-slate-800", icon: Clock },
   };
 
-  const config = statusConfig[status] || { label: status, className: "bg-slate-100 text-slate-800", icon: AlertCircle };
+  const config = statusConfig[status] || { label: status, className:"bg-slate-100 text-slate-800", icon: AlertCircle };
   const Icon = config.icon;
 
   return (
@@ -150,14 +160,14 @@ function CertificateStatusBadge({ status }: { status: string }) {
 // GO Scheme badge
 function GOSchemeBadge({ scheme }: { scheme: string }) {
   const schemeConfig: Record<string, { label: string; className: string }> = {
-    REGO: { label: "REGO", className: "bg-green-100 text-green-800" },
-    PGO: { label: "PGO", className: "bg-blue-100 text-blue-800" },
-    GO_AU: { label: "GO AU", className: "bg-amber-100 text-amber-800" },
-    ISCC_PLUS: { label: "ISCC+", className: "bg-purple-100 text-purple-800" },
-    RSB: { label: "RSB", className: "bg-teal-100 text-teal-800" },
+    REGO: { label:"REGO", className:"bg-green-100 text-green-800" },
+    PGO: { label:"PGO", className:"bg-blue-100 text-blue-800" },
+    GO_AU: { label:"GO AU", className:"bg-amber-100 text-amber-800" },
+    ISCC_PLUS: { label:"ISCC+", className:"bg-purple-100 text-purple-800" },
+    RSB: { label:"RSB", className:"bg-teal-100 text-teal-800" },
   };
 
-  const config = schemeConfig[scheme] || { label: scheme, className: "bg-slate-100 text-slate-800" };
+  const config = schemeConfig[scheme] || { label: scheme, className:"bg-slate-100 text-slate-800" };
 
   return (
     <Badge className={cn("font-medium", config.className)}>
@@ -183,12 +193,12 @@ function EnergySourceIcon({ source }: { source: string }) {
 function IssueCertificateDialog({ onSuccess }: { onSuccess: () => void }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    goScheme: "REGO" as "REGO" | "PGO" | "GO_AU" | "ISCC_PLUS" | "RSB",
-    currentHolderId: "",
-    energySource: "biomass",
-    energyMwh: "",
-    productionPeriodStart: "",
-    productionPeriodEnd: "",
+    goScheme:"REGO" as"REGO" |"PGO" |"GO_AU" |"ISCC_PLUS" |"RSB",
+    currentHolderId:"",
+    energySource:"biomass",
+    energyMwh:"",
+    productionPeriodStart:"",
+    productionPeriodEnd:"",
   });
 
   const issueMutation = trpc.goScheme.createGoCertificate.useMutation({
@@ -297,7 +307,7 @@ function IssueCertificateDialog({ onSuccess }: { onSuccess: () => void }) {
               Cancel
             </Button>
             <Button type="submit" disabled={issueMutation.isPending}>
-              {issueMutation.isPending ? "Issuing..." : "Issue Certificate"}
+              {issueMutation.isPending ?"Issuing..." :"Issue Certificate"}
             </Button>
           </div>
         </form>
@@ -310,11 +320,11 @@ function IssueCertificateDialog({ onSuccess }: { onSuccess: () => void }) {
 function GenerateAuditPackDialog({ onSuccess }: { onSuccess: () => void }) {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
-    packType: "lender_assurance" as const,
-    entityType: "project" as const,
-    entityId: "",
-    periodStart: "",
-    periodEnd: "",
+    packType:"lender_assurance" as const,
+    entityType:"project" as const,
+    entityId:"",
+    periodStart:"",
+    periodEnd:"",
   });
 
   const generateMutation = trpc.goScheme.generateAuditPack.useMutation({
@@ -428,7 +438,7 @@ function GenerateAuditPackDialog({ onSuccess }: { onSuccess: () => void }) {
               Cancel
             </Button>
             <Button type="submit" disabled={generateMutation.isPending}>
-              {generateMutation.isPending ? "Generating..." : "Generate Pack"}
+              {generateMutation.isPending ?"Generating..." :"Generate Pack"}
             </Button>
           </div>
         </form>
@@ -446,7 +456,7 @@ export default function GOSchemeDashboard() {
 
   // Fetch certificates
   const { data: certificatesData, isLoading: certificatesLoading, refetch: refetchCertificates } = trpc.goScheme.listGoCertificates.useQuery({
-    status: statusFilter !== "all" ? statusFilter as any : undefined,
+    status: statusFilter !=="all" ? statusFilter as any : undefined,
     limit: 50,
   });
 
@@ -489,10 +499,10 @@ export default function GOSchemeDashboard() {
         <FadeInUp className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 mb-1 flex items-center gap-3">
+              <H1 className="text-3xl  text-slate-900 mb-1 flex items-center gap-3">
                 <Award className="h-8 w-8 text-[#D4AF37]" />
                 GO Certificates
-              </h1>
+              </H1>
               <p className="text-gray-600">
                 REGO, PGO, and sustainability certification management
               </p>
@@ -613,7 +623,7 @@ export default function GOSchemeDashboard() {
                               <GOSchemeBadge scheme={cert.goScheme} />
                             </TableCell>
                             <TableCell className="font-mono">
-                              {parseFloat(cert.energySourceMwh || "0").toLocaleString()}
+                              {parseFloat(cert.energySourceMwh ||"0").toLocaleString()}
                             </TableCell>
                             <TableCell className="text-sm text-gray-600">
                               {cert.productionPeriodStart && cert.productionPeriodEnd ? (
@@ -678,7 +688,7 @@ export default function GOSchemeDashboard() {
                               <FileText className="h-5 w-5 text-slate-600" />
                             </div>
                             <div>
-                              <h4 className="font-medium">{pack.title}</h4>
+                              <H4 className="font-medium">{pack.title}</H4>
                               <div className="flex items-center gap-2 text-sm text-gray-600">
                                 <Badge variant="outline" className="text-xs capitalize">
                                   {pack.packType?.replace(/_/g, ' ')}
@@ -690,9 +700,9 @@ export default function GOSchemeDashboard() {
                           </div>
                           <div className="flex items-center gap-2">
                             <Badge className={cn(
-                              pack.status === "completed" && "bg-emerald-100 text-emerald-800",
-                              pack.status === "pending" && "bg-amber-100 text-amber-800",
-                              pack.status === "draft" && "bg-slate-100 text-slate-800"
+                              pack.status ==="completed" &&"bg-emerald-100 text-emerald-800",
+                              pack.status ==="pending" &&"bg-amber-100 text-amber-800",
+                              pack.status ==="draft" &&"bg-slate-100 text-slate-800"
                             )}>
                               {pack.status}
                             </Badge>
@@ -726,11 +736,11 @@ export default function GOSchemeDashboard() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {[
-                    { scheme: "REGO", name: "Renewable Energy Guarantee of Origin", region: "United Kingdom" },
-                    { scheme: "PGO", name: "Proof of Green Origin", region: "European Union" },
-                    { scheme: "GO_AU", name: "Australian GreenPower", region: "Australia" },
-                    { scheme: "ISCC_PLUS", name: "ISCC+ Sustainability Certification", region: "Global" },
-                    { scheme: "RSB", name: "Roundtable on Sustainable Biomaterials", region: "Global" },
+                    { scheme:"REGO", name:"Renewable Energy Guarantee of Origin", region:"United Kingdom" },
+                    { scheme:"PGO", name:"Proof of Green Origin", region:"European Union" },
+                    { scheme:"GO_AU", name:"Australian GreenPower", region:"Australia" },
+                    { scheme:"ISCC_PLUS", name:"ISCC+ Sustainability Certification", region:"Global" },
+                    { scheme:"RSB", name:"Roundtable on Sustainable Biomaterials", region:"Global" },
                   ].map(({ scheme, name, region }) => (
                     <div key={scheme} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                       <div className="flex items-center gap-3">
@@ -754,11 +764,11 @@ export default function GOSchemeDashboard() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {[
-                    { source: "solar", name: "Solar PV", icon: Sun },
-                    { source: "wind", name: "Wind Power", icon: Wind },
-                    { source: "hydro", name: "Hydroelectric", icon: Droplets },
-                    { source: "biomass", name: "Biomass", icon: Leaf },
-                    { source: "biogas", name: "Biogas/Biofuel", icon: Zap },
+                    { source:"solar", name:"Solar PV", icon: Sun },
+                    { source:"wind", name:"Wind Power", icon: Wind },
+                    { source:"hydro", name:"Hydroelectric", icon: Droplets },
+                    { source:"biomass", name:"Biomass", icon: Leaf },
+                    { source:"biogas", name:"Biogas/Biofuel", icon: Zap },
                   ].map(({ source, name, icon: Icon }) => (
                     <div key={source} className="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
                       <div className="p-2 bg-white rounded-lg">

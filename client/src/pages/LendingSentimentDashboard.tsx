@@ -10,13 +10,13 @@
  * - Typography components for consistent styling
  */
 
-import { useState } from "react";
-import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from "@/components/Typography";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/Button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState } from"react";
+import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from"@/components/ui/Card";
+import { Badge } from"@/components/ui/badge";
+import { Button } from"@/components/ui/Button";
+import { Skeleton } from"@/components/ui/skeleton";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from"@/components/ui/select";
 import {
   TrendingUp,
   TrendingDown,
@@ -28,31 +28,31 @@ import {
   ExternalLink,
   Building2,
   ChevronRight,
-} from "lucide-react";
-import { Link } from "wouter";
-import { trpc } from "@/lib/trpc";
-import { LazyChart } from "@/components/ui/lazy-charts";
+} from"lucide-react";
+import { Link } from"wouter";
+import { trpc } from"@/lib/trpc";
+import { LazyChart } from"@/components/ui/lazy-charts";
 
 const FEAR_COLORS: Record<string, string> = {
-  regulatory_risk: "#ef4444",
-  technology_risk: "#f97316",
-  feedstock_risk: "#eab308",
-  counterparty_risk: "#22c55e",
-  market_risk: "#3b82f6",
-  esg_concerns: "#8b5cf6",
+  regulatory_risk:"#ef4444",
+  technology_risk:"#f97316",
+  feedstock_risk:"#eab308",
+  counterparty_risk:"#22c55e",
+  market_risk:"#3b82f6",
+  esg_concerns:"#8b5cf6",
 };
 
 const FEAR_LABELS: Record<string, string> = {
-  regulatory_risk: "Regulatory",
-  technology_risk: "Technology",
-  feedstock_risk: "Feedstock",
-  counterparty_risk: "Counterparty",
-  market_risk: "Market",
-  esg_concerns: "ESG",
+  regulatory_risk:"Regulatory",
+  technology_risk:"Technology",
+  feedstock_risk:"Feedstock",
+  counterparty_risk:"Counterparty",
+  market_risk:"Market",
+  esg_concerns:"ESG",
 };
 
 export default function LendingSentimentDashboard() {
-  const [period, setPeriod] = useState<"1m" | "3m" | "6m" | "12m" | "24m">("12m");
+  const [period, setPeriod] = useState<"1m" |"3m" |"6m" |"12m" |"24m">("12m");
   const [feedFilter, setFeedFilter] = useState<string>("all");
 
   // tRPC queries
@@ -78,27 +78,27 @@ export default function LendingSentimentDashboard() {
 
   const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString("en-AU", {
-      day: "numeric",
-      month: "short",
+      day:"numeric",
+      month:"short",
     });
   };
 
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
-      case "BULLISH":
-        return "bg-green-100 text-green-800";
-      case "BEARISH":
-        return "bg-red-100 text-red-800";
+      case"BULLISH":
+        return"bg-green-100 text-green-800";
+      case"BEARISH":
+        return"bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return"bg-gray-100 text-gray-800";
     }
   };
 
   const getSentimentIcon = (sentiment: string) => {
     switch (sentiment) {
-      case "BULLISH":
+      case"BULLISH":
         return <TrendingUp className="h-4 w-4 text-green-600" />;
-      case "BEARISH":
+      case"BEARISH":
         return <TrendingDown className="h-4 w-4 text-red-600" />;
       default:
         return <Minus className="h-4 w-4 text-gray-600" />;
@@ -109,7 +109,7 @@ export default function LendingSentimentDashboard() {
     ? Object.entries(sentimentIndex.fear_components).map(([key, value]) => ({
         name: FEAR_LABELS[key] || key,
         value: value,
-        color: FEAR_COLORS[key] || "#888",
+        color: FEAR_COLORS[key] ||"#888",
       }))
     : [];
 
@@ -136,7 +136,7 @@ export default function LendingSentimentDashboard() {
           <Card>
             <CardContent className="py-12 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold mb-2">Error Loading Data</h3>
+              <H3 className="text-lg  mb-2">Error Loading Data</H3>
               <p className="text-gray-600 mb-4">{error}</p>
               <Button onClick={loadData}>
                 <RefreshCw className="h-4 w-4 mr-2" />
@@ -163,13 +163,13 @@ export default function LendingSentimentDashboard() {
                 </Button>
               </Link>
             </div>
-            <h1 className="text-3xl font-bold">Lending Sentiment Dashboard</h1>
+            <H1 className="text-3xl">Lending Sentiment Dashboard</H1>
             <p className="text-gray-600 mt-1">
               AI-powered analysis of bioenergy lending sentiment from 47+ data sources
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Select value={period} onValueChange={(v) => setPeriod(v as "1m" | "3m" | "6m" | "12m" | "24m")}>
+            <Select value={period} onValueChange={(v) => setPeriod(v as"1m" |"3m" |"6m" |"12m" |"24m")}>
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Period" />
               </SelectTrigger>
@@ -182,7 +182,7 @@ export default function LendingSentimentDashboard() {
               </SelectContent>
             </Select>
             <Button variant="outline" onClick={loadData}>
-              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+              <RefreshCw className={`h-4 w-4 mr-2 ${loading ?"animate-spin" :""}`} />
               Refresh
             </Button>
           </div>
@@ -204,13 +204,13 @@ export default function LendingSentimentDashboard() {
                     variant="outline"
                     className={
                       sentimentIndex.daily_change > 0
-                        ? "text-green-600 border-green-600"
+                        ?"text-green-600 border-green-600"
                         : sentimentIndex.daily_change < 0
-                          ? "text-red-600 border-red-600"
-                          : ""
+                          ?"text-red-600 border-red-600"
+                          :""
                     }
                   >
-                    {sentimentIndex.daily_change > 0 ? "+" : ""}
+                    {sentimentIndex.daily_change > 0 ?"+" :""}
                     {sentimentIndex.daily_change.toFixed(1)}%
                   </Badge>
                 )}
@@ -390,7 +390,7 @@ export default function LendingSentimentDashboard() {
                                 <Line
                                   type="monotone"
                                   dataKey="value"
-                                  stroke={lender.sentiment >= 0 ? "#22c55e" : "#ef4444"}
+                                  stroke={lender.sentiment >= 0 ?"#22c55e" :"#ef4444"}
                                   strokeWidth={2}
                                   dot={false}
                                 />
@@ -402,18 +402,18 @@ export default function LendingSentimentDashboard() {
                       <div className="text-right w-20">
                         <div
                           className={`text-lg font-bold ${
-                            lender.sentiment >= 0 ? "text-green-600" : "text-red-600"
+                            lender.sentiment >= 0 ?"text-green-600" :"text-red-600"
                           }`}
                         >
-                          {lender.sentiment > 0 ? "+" : ""}
+                          {lender.sentiment > 0 ?"+" :""}
                           {lender.sentiment}
                         </div>
                         <div
                           className={`text-xs ${
-                            lender.change_30d >= 0 ? "text-green-600" : "text-red-600"
+                            lender.change_30d >= 0 ?"text-green-600" :"text-red-600"
                           }`}
                         >
-                          {lender.change_30d > 0 ? "+" : ""}
+                          {lender.change_30d > 0 ?"+" :""}
                           {lender.change_30d}% 30d
                         </div>
                       </div>
@@ -449,7 +449,7 @@ export default function LendingSentimentDashboard() {
               </CardHeader>
               <CardContent className="space-y-3 max-h-[600px] overflow-y-auto">
                 {documentFeed
-                  .filter((doc) => feedFilter === "all" || doc.sentiment === feedFilter)
+                  .filter((doc) => feedFilter ==="all" || doc.sentiment === feedFilter)
                   .map((doc) => (
                     <div
                       key={doc.id}
@@ -458,17 +458,17 @@ export default function LendingSentimentDashboard() {
                       <div className="flex items-start gap-2">
                         {getSentimentIcon(doc.sentiment)}
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium line-clamp-2">
+                          <H4 className="text-sm font-medium line-clamp-2">
                             {doc.title}
-                          </h4>
+                          </H4>
                           <div className="flex items-center gap-2 mt-1">
                             <span className="text-xs text-gray-600">
                               {doc.source}
                             </span>
                             <span className="text-xs text-gray-600">
                               {new Date(doc.published_date).toLocaleDateString(
-                                "en-AU",
-                                { day: "numeric", month: "short" }
+"en-AU",
+                                { day:"numeric", month:"short" }
                               )}
                             </span>
                             <Badge
