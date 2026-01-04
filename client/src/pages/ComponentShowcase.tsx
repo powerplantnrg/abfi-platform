@@ -1,3 +1,13 @@
+/**
+ * Component Showcase - Nextgen Design
+ *
+ * Features:
+ * - Design system component library
+ * - Interactive component examples
+ * - Usage documentation
+ * - Typography components for consistent styling
+ */
+
 import {
   Accordion,
   AccordionContent,

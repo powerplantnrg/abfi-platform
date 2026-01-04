@@ -1,3 +1,13 @@
+/**
+ * Platform Health - Nextgen Design
+ *
+ * Features:
+ * - System status monitoring
+ * - Service health indicators
+ * - Performance metrics
+ * - Typography components for consistent styling
+ */
+
 import { useState, useEffect } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {

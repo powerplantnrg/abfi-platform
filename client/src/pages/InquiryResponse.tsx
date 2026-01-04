@@ -1,3 +1,13 @@
+/**
+ * Inquiry Response - Nextgen Design
+ *
+ * Features:
+ * - Buyer inquiry management
+ * - Response templates
+ * - Communication tracking
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useParams, useLocation } from"wouter";

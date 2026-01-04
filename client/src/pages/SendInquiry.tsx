@@ -1,3 +1,13 @@
+/**
+ * Send Inquiry - Nextgen Design
+ *
+ * Features:
+ * - Supplier inquiry form
+ * - Message composition
+ * - Request tracking
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/Button";
 import {

@@ -1,3 +1,13 @@
+/**
+ * Financial Onboarding Success - Nextgen Design
+ *
+ * Features:
+ * - Registration completion confirmation
+ * - Next steps guidance
+ * - Dashboard navigation
+ * - Typography components for consistent styling
+ */
+
 import { Link } from"wouter";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { Check, ArrowRight, FileText, Clock, Mail, Shield } from"lucide-react";

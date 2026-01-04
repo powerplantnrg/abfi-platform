@@ -1,3 +1,13 @@
+/**
+ * Platform Features - Nextgen Design
+ *
+ * Features:
+ * - Feature overview and documentation
+ * - Capability showcase
+ * - Use case examples
+ * - Typography components for consistent styling
+ */
+
 import { Button } from"@/components/ui/Button";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {

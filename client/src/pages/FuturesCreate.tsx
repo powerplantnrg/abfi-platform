@@ -1,12 +1,11 @@
 /**
- * Futures Create - Multi-step Wizard
+ * Create Futures Contract - Nextgen Design
  *
  * Features:
- * - Hero section with gradient background
- * - 6-step wizard with progress indicators
+ * - Forward contract creation form
+ * - Pricing and terms configuration
+ * - Volume and delivery scheduling
  * - Typography components for consistent styling
- * - Dynamic yield projections table
- * - Draft/Publish workflow
  */
 
 import { useAuth } from"@/_core/hooks/useAuth";

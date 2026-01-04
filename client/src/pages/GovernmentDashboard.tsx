@@ -1,12 +1,12 @@
 /**
- * Government Dashboard
+ * Government Dashboard - Nextgen Design
  *
  * Features:
  * - Compliance monitoring overview
  * - Registry audit trail
  * - Policy impact analysis
  * - Report generation
- * - Certification verification stats
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";

@@ -1,8 +1,11 @@
 /**
- * Growing Calendar
+ * Growing Calendar - Nextgen Design
  *
- * Shows regional planting/harvest timeline by feedstock type,
- * personal grower schedule view, and contract alignment with harvest dates.
+ * Features:
+ * - Seasonal production planning
+ * - Harvest scheduling
+ * - Weather integration
+ * - Typography components for consistent styling
  */
 
 import { useState, useMemo } from "react";

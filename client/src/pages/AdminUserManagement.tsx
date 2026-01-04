@@ -1,13 +1,11 @@
 /**
- * Admin User Management
+ * Admin User Management - Nextgen Design
  *
- * Comprehensive user management interface for administrators.
  * Features:
- * - User listing with search and filters
- * - Role management (grower, developer, lender, government, admin)
- * - User status (active, suspended, pending verification)
- * - Invite new users
- * - View user details
+ * - User account administration
+ * - Role and permission management
+ * - Access control configuration
+ * - Typography components for consistent styling
  */
 
 import { useState } from "react";

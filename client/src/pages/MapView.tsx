@@ -1,9 +1,13 @@
 /**
- * @deprecated This component is superseded by UnifiedMapPage.tsx
- * Routes are redirected to /map which uses the consolidated UnifiedMap component.
- * This file can be removed once migration is complete.
- * @see client/src/pages/UnifiedMapPage.tsx
+ * Map View - Nextgen Design
+ *
+ * Features:
+ * - Interactive feedstock location map
+ * - Supplier visualization
+ * - Regional filtering
+ * - Typography components for consistent styling
  */
+
 import { Button } from"@/components/ui/Button";
 import {
   Card,

@@ -1,7 +1,13 @@
 /**
- * ProcurementScenarios - Volume security modeling and scenario planning for buyers.
- * Phase 5: Buyer Procurement & Scenario Tools
+ * Procurement Scenarios - Nextgen Design
+ *
+ * Features:
+ * - Supply chain scenario modeling
+ * - What-if analysis tools
+ * - Cost optimization simulation
+ * - Typography components for consistent styling
  */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {

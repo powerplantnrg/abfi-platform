@@ -1,3 +1,13 @@
+/**
+ * Monitoring Jobs Scheduler - Nextgen Design
+ *
+ * Features:
+ * - Automated task scheduling
+ * - Data sync job management
+ * - Alert configuration
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useAuth } from"@/_core/hooks/useAuth";

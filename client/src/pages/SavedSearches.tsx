@@ -1,3 +1,13 @@
+/**
+ * Saved Searches - Nextgen Design
+ *
+ * Features:
+ * - Search query management
+ * - Alert configuration
+ * - Quick access shortcuts
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from"@/_core/hooks/useAuth";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { Button } from"@/components/ui/Button";

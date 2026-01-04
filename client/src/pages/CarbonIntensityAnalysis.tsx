@@ -1,7 +1,11 @@
 /**
- * ABFI Carbon Intensity Analysis Page
+ * Carbon Intensity Analysis - Nextgen Design
  *
- * Detailed lifecycle GHG emissions analysis for Australian biofuels projects
+ * Features:
+ * - Feedstock carbon intensity calculations
+ * - Emissions pathway modeling
+ * - Comparative analysis tools
+ * - Typography components for consistent styling
  */
 
 import { useState } from"react";

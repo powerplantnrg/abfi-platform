@@ -1,11 +1,12 @@
 /**
- * Grower Dashboard - Redesigned
+ * Grower Dashboard - Nextgen Design
  *
  * Features:
- * - Split layout with interactive map and listings sidebar
- * - Priority actions section with smart recommendations
- * - Expandable property cards with yield/quality metrics
- * - Real-time data integration
+ * - Feedstock producer overview
+ * - Contract management
+ * - Certification tracking
+ * - Market opportunity alerts
+ * - Typography components for consistent styling
  */
 
 import { useState, useEffect } from"react";

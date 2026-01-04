@@ -1,3 +1,13 @@
+/**
+ * My Expressions of Interest - Nextgen Design
+ *
+ * Features:
+ * - EOI submission tracking
+ * - Status monitoring
+ * - Response management
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from"@/_core/hooks/useAuth";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { Button } from"@/components/ui/Button";

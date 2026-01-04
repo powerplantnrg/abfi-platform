@@ -1,3 +1,13 @@
+/**
+ * ABARES Land Use Mapping - Nextgen Design
+ *
+ * Features:
+ * - Interactive land use map visualization
+ * - Regional feedstock potential analysis
+ * - Agricultural commodity data integration
+ * - Typography components for consistent styling
+ */
+
 import { useState, useEffect } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {

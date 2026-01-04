@@ -1,3 +1,13 @@
+/**
+ * Supply Agreements - Nextgen Design
+ *
+ * Features:
+ * - Contract management dashboard
+ * - Agreement status tracking
+ * - Renewal notifications
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useParams, useLocation } from"wouter";

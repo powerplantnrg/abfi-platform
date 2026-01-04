@@ -1,3 +1,13 @@
+/**
+ * Evidence Management - Nextgen Design
+ *
+ * Features:
+ * - Document evidence tracking
+ * - Cryptographic hash verification
+ * - Audit trail management
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useAuth } from"@/_core/hooks/useAuth";

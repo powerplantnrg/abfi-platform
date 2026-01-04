@@ -1,3 +1,13 @@
+/**
+ * Notifications - Nextgen Design
+ *
+ * Features:
+ * - System notification center
+ * - Alert preferences
+ * - Read/unread management
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from"@/_core/hooks/useAuth";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { Button } from"@/components/ui/Button";

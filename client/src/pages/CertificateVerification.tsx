@@ -1,3 +1,13 @@
+/**
+ * Certificate Verification - Nextgen Design
+ *
+ * Features:
+ * - Certificate authenticity verification
+ * - Blockchain evidence chain validation
+ * - Compliance status checking
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { trpc } from"@/lib/trpc";

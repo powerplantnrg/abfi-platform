@@ -1,3 +1,13 @@
+/**
+ * Audit Logs - Nextgen Design
+ *
+ * Features:
+ * - Transaction audit trail viewer
+ * - Compliance evidence logging
+ * - Search and filter capabilities
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useAuth } from"@/_core/hooks/useAuth";

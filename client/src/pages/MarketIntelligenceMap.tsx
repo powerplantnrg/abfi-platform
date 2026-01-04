@@ -1,9 +1,11 @@
 /**
- * Market Intelligence Map
+ * Market Intelligence Map - Nextgen Design
  *
- * Unified map view showing market intelligence data with role-based filtering.
- * Displays growing intentions, demand signals, power stations, logistics hubs,
- * contracts, price heatmaps, and transport costs.
+ * Features:
+ * - Geographic market analysis
+ * - Supply/demand visualization
+ * - Price signal mapping
+ * - Typography components for consistent styling
  */
 
 import { useEffect, useRef, useState, useCallback } from "react";

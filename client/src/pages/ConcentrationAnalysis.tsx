@@ -1,3 +1,13 @@
+/**
+ * Concentration Analysis - Nextgen Design
+ *
+ * Features:
+ * - Supply chain concentration metrics
+ * - Risk exposure assessment
+ * - Supplier diversity analysis
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useAuth } from"@/_core/hooks/useAuth";

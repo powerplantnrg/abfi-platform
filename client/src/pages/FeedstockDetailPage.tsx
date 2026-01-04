@@ -1,3 +1,13 @@
+/**
+ * Feedstock Detail Page - Nextgen Design
+ *
+ * Features:
+ * - Comprehensive feedstock information
+ * - Quality test results display
+ * - Certification status tracking
+ * - Typography components for consistent styling
+ */
+
 import React, { useState } from 'react';
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 

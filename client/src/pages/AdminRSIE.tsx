@@ -1,7 +1,14 @@
 /**
- * RSIE Admin Dashboard - Risk & Supply Intelligence Engine
- * Admin-only page for managing data sources, weather integration, risk events, and monitoring.
+ * RSIE Admin Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Risk & Supply Intelligence Engine management
+ * - Data source configuration
+ * - Weather integration monitoring
+ * - Risk event management
+ * - Typography components for consistent styling
  */
+
 import { useAuth } from"@/_core/hooks/useAuth";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import DashboardLayout from"@/components/DashboardLayout";

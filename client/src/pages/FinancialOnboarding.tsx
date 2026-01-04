@@ -1,3 +1,13 @@
+/**
+ * Financial Onboarding - Nextgen Design
+ *
+ * Features:
+ * - Lender registration workflow
+ * - KYC/AML compliance steps
+ * - Account setup wizard
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useLocation } from"wouter";

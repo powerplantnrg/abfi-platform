@@ -1,3 +1,13 @@
+/**
+ * Grant Verification - Nextgen Design
+ *
+ * Features:
+ * - Government grant validation
+ * - Funding milestone tracking
+ * - Compliance documentation
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {

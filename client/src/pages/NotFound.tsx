@@ -1,3 +1,12 @@
+/**
+ * 404 Not Found - Nextgen Design
+ *
+ * Features:
+ * - Error page display
+ * - Navigation assistance
+ * - Typography components for consistent styling
+ */
+
 import { Button } from"@/components/ui/Button";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { Card, CardContent } from"@/components/ui/Card";

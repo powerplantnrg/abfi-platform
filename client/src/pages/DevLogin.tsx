@@ -1,8 +1,11 @@
 /**
- * Development Login Page
+ * Developer Login - Nextgen Design
  *
- * A simple login page for development that allows selecting from demo users.
- * This page is only available in development mode.
+ * Features:
+ * - Development environment authentication
+ * - Quick role switching
+ * - Debug session management
+ * - Typography components for consistent styling
  */
 
 import { useState, useEffect } from"react";

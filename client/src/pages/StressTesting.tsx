@@ -1,3 +1,13 @@
+/**
+ * Stress Testing - Nextgen Design
+ *
+ * Features:
+ * - Supply chain stress scenarios
+ * - Risk exposure analysis
+ * - Resilience metrics
+ * - Typography components for consistent styling
+ */
+
 import { useState } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { useAuth } from"@/_core/hooks/useAuth";

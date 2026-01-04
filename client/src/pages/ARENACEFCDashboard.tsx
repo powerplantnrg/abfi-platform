@@ -1,3 +1,14 @@
+/**
+ * ARENA & CEFC Integration Dashboard - Nextgen Design
+ *
+ * Features:
+ * - Government funding program tracking
+ * - Grant application status monitoring
+ * - Funding allocation visualization
+ * - Program milestone tracking
+ * - Typography components for consistent styling
+ */
+
 import { useState, useEffect } from"react";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import {

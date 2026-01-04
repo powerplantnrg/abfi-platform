@@ -1,8 +1,11 @@
 /**
- * Admin Audit Logs
+ * Admin Audit Logs - Nextgen Design
  *
- * View and search system audit logs for compliance and security monitoring.
- * Essential Eight requirement for audit logging.
+ * Features:
+ * - System audit log viewer with search
+ * - Essential Eight compliance monitoring
+ * - Security event tracking
+ * - Typography components for consistent styling
  */
 
 import { useState, useMemo } from "react";

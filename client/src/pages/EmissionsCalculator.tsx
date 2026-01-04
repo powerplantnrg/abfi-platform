@@ -1,3 +1,13 @@
+/**
+ * Emissions Calculator - Nextgen Design
+ *
+ * Features:
+ * - GHG emissions estimation tools
+ * - Scope 1/2/3 calculations
+ * - Reduction pathway modeling
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from"@/_core/hooks/useAuth";
 import { Button } from"@/components/ui/Button";
 import {

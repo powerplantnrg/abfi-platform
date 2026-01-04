@@ -1,3 +1,13 @@
+/**
+ * Certificate Upload - Nextgen Design
+ *
+ * Features:
+ * - Document upload interface
+ * - Certificate validation workflow
+ * - File type verification
+ * - Typography components for consistent styling
+ */
+
 import { useAuth } from"@/_core/hooks/useAuth";
 import { H1, H2, H3, H4, Body, MetricValue, DataLabel } from"@/components/Typography";
 import { Button } from"@/components/ui/Button";

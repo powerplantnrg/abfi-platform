@@ -1,7 +1,11 @@
 /**
- * Changelog Page
+ * Platform Changelog - Nextgen Design
  *
- * Displays version history and recent platform updates.
+ * Features:
+ * - Version history display
+ * - Feature release notes
+ * - Update notifications
+ * - Typography components for consistent styling
  */
 
 import { Card, CardContent, CardHeader, CardTitle } from"@/components/ui/Card";
